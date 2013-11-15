@@ -5,7 +5,11 @@ using System.Web;
 
 namespace Bros.Models
 {
-    public class User
+    public class User : Entity
     {
+        public Profile Profile { get; set; }
+        public int ID { get; set; }
+        public List<Circle> CircleList { get; set; }
+        public string Email { get; set; }
     }
 }

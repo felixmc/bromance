@@ -5,7 +5,7 @@ using System.Web;
 
 namespace Bros.Models
 {
-    public class Hobbies
+    public class Notification
     {
     }
 }

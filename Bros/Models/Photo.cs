@@ -5,7 +5,9 @@ using System.Web;
 
 namespace Bros.Models
 {
-    public class Notifications
+    public class Photo
     {
+        public int ID { get; set; }
+
     }
 }
