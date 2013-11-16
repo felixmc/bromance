@@ -5,9 +5,10 @@ using System.Web;
 
 namespace Bros.Models
 {
-    public class Photo
+    public class Photo : Entity
     {
-        public int ID { get; set; }
+        public Album Album { get; set; }
+        public string Caption { get; set; }
 
     }
 }

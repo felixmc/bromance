@@ -5,7 +5,9 @@ using System.Web;
 
 namespace Bros.Models
 {
-    public class Post
+    public class Post : Entity
     {
+        public bool isFlagged { get; set; }
+        public Comment Comments { get; set; }
     }
 }

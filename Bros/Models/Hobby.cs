@@ -7,5 +7,6 @@ namespace Bros.Models
 {
     public class Hobby
     {
+
     }
 }

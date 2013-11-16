@@ -5,7 +5,7 @@ using System.Web;
 
 namespace Bros.Models
 {
-    public class Circle
+    public class Circle : Entity
     {
         public int ID { get; set; }
         public string Name { get; set; }
