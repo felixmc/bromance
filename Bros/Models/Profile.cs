@@ -7,6 +7,7 @@ namespace Bros.Models
 {
     public enum Gender
     {
+<<<<<<< HEAD
         Female, Male
     }
 
@@ -20,5 +21,34 @@ namespace Bros.Models
         public DateTime MyProperty { get; set; }
         public Gender Gender { get; set; }
         
+=======
+        public User Owner { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string[] Hobbies { get; set; } //made this a string, may later change to enum
+        public string ZipCode { get; set; } //need to force this to only be 5 long and numbers
+        public DateTime Birthdate { get; set; }
+        // TODO add gender enums
+        public Liking[] Likings { get; set; }
+        // TODO add Job /Career Maybe Enums or string arrays?
+        // TODO add pet Enums
+        // TODO add Religion Enums
+        // TODO add Education Enums
+        // TODO add Sexual Orentation Enums
+        // TODO add Ethnicity Enums
+        // TODO add Athleticism Enums
+        // TODO add Marriage Status Enums or do we want to do a true false?
+        // TODO add Chilrdren Enums or do we want to do a true false?
+        
+
+
+
+
+
+
+
+
+
+>>>>>>> ef27a5ab59cf7619a3cf11f1b876b4c62cda350c
     }
 }
