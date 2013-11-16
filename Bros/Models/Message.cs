@@ -5,7 +5,11 @@ using System.Web;
 
 namespace Bros.Models
 {
-    public class Message
+    public class Message : Entity
     {
+        public User Sender { get; set; }
+        public User Receiver { get; set; }
+        public string Message { get; set; }
+        public DateTime Seen { get; set; }
     }
 }

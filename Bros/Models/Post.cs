@@ -5,7 +5,9 @@ using System.Web;
 
 namespace Bros.Models
 {
-    public class Post
+    public class Post : Entity
     {
+        public int ID { get; set; }
+        public int MyProperty { get; set; }
     }
 }

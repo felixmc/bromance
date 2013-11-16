@@ -5,7 +5,8 @@ using System.Web;
 
 namespace Bros.Models
 {
-    public class Hobby : Entity
+    public class PhotoPost
     {
+
     }
 }

@@ -5,9 +5,8 @@ using System.Web;
 
 namespace Bros.Models
 {
-    public class BroRequest
+    public class BroRequest : Entity
     {
-        public int ID { get; set; }
         public User Sender { get; set; }
         public User Receiver { get; set; }
         public string Message { get; set; }

@@ -5,7 +5,9 @@ using System.Web;
 
 namespace Bros.Models
 {
-    public class Album
+    public class Album : Entity
     {
+        public User Owner { get; set; }
+        public string Name { get; set; }
     }
 }
