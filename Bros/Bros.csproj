@@ -126,15 +126,11 @@
     <Compile Include="Models\Comment.cs" />
     <Compile Include="Models\Entity.cs" />
     <Compile Include="Models\Hobby.cs" />
-    <Compile Include="Models\Photo.cs" />
     <Compile Include="Models\Liking.cs" />
     <Compile Include="Models\Message.cs" />
     <Compile Include="Models\Notification.cs" />
+    <Compile Include="Models\Photo.cs" />
     <Compile Include="Models\PhotoPost.cs" />
-    <Compile Include="Models\Liking.cs" />
-    <Compile Include="Models\Message.cs" />
-    <Compile Include="Models\Notification.cs" />
-    <Compile Include="Models\Photo.cs" />
     <Compile Include="Models\Post.cs" />
     <Compile Include="Models\Preference.cs" />
     <Compile Include="Models\Product.cs" />

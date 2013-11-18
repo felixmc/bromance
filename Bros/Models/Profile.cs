@@ -7,28 +7,19 @@ namespace Bros.Models
 {
     public enum Gender
     {
-<<<<<<< HEAD
         Female, Male
     }
 
     public class Profile : Entity
     {
-        public int ID { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
         public List<Hobby> HobbyList { get; set; }
-        public int Zipcode { get; set; }
-        public DateTime MyProperty { get; set; }
         public Gender Gender { get; set; }
         
-=======
         public User Owner { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public string[] Hobbies { get; set; } //made this a string, may later change to enum
         public string ZipCode { get; set; } //need to force this to only be 5 long and numbers
         public DateTime Birthdate { get; set; }
-        // TODO add gender enums
         public Liking[] Likings { get; set; }
         // TODO add Job /Career Maybe Enums or string arrays?
         // TODO add pet Enums
