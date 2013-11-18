@@ -16,7 +16,7 @@ namespace Bros.Models
         public Notification[] Notifications { get; set; }
         public Message[] Messages { get; set; } 
         public Post[] Posts { get; set; }
-        public Comment[] Comments { get; set;  // TODO Maybe make these Lists? end
+        public Comment[] Comments { get; set; } // TODO Maybe make these Lists? end
 
     }
 }
