@@ -19,7 +19,7 @@ namespace Bros.Models
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string ZipCode { get; set; } //need to force this to only be 5 long and numbers
-        public DateTime Birthdate { get; set; }
+        public DateTime BirthDate { get; set; }
         public Liking[] Likings { get; set; }
         // TODO add Job /Career Maybe Enums or string arrays?
         // TODO add pet Enums
@@ -31,13 +31,5 @@ namespace Bros.Models
         // TODO add Marriage Status Enums or do we want to do a true false?
         // TODO add Chilrdren Enums or do we want to do a true false?
         
-
-
-
-
-
-
-
-
     }
 }

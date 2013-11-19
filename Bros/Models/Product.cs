@@ -9,10 +9,9 @@ namespace Bros.Models
     {
         public string Name { get; set; }
         public double Price { get; set; }
-        public string Image { get; set; }
-        public List<string> Tags { get; set; }
-        public string Description { get; set; }
-
-        public string Catagory { get; set; }
+        public String ImageFile { get; set; }
+        public List<String> Tags { get; set; }
+        public String Description { get; set; }
+        public String Catagory { get; set; }
     }
 }

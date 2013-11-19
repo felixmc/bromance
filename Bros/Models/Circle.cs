@@ -9,6 +9,6 @@ namespace Bros.Models
     {
         public string Name { get; set; }
         public List<User> UserList { get; set; }
-
+		public User Owner { get; set; }
     }
 }

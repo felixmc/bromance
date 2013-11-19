@@ -9,7 +9,5 @@ namespace Bros.Models
     {
         public User Receiver { get; set; }
         public bool IsRead { get; set; }
-        public User Reciever { get; set; }
-        public bool isRead { get; set; }
     }
 }

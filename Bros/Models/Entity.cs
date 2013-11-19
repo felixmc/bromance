@@ -9,8 +9,7 @@ namespace Bros.Models
     {
         public int ID { get; set; }
         public DateTime DateCreated { get; set; }
-        public DateTime LastDateModified { get; set; }
-        public bool isDeleated { get; set; }
-
+        public DateTime DateUpdated { get; set; }
+        public bool IsDeleated { get; set; }
     }
 }

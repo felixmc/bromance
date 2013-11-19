@@ -7,6 +7,6 @@ namespace Bros.Models
 {
     public class Hobby : Entity
     {
-
+		public String Name { get; set; }
     }
 }

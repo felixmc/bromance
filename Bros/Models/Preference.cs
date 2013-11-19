@@ -7,5 +7,7 @@ namespace Bros.Models
 {
     public class Preference : Entity
     {
+		public String Key { get; set; }
+		public String Value { get; set; }
     }
 }

@@ -7,5 +7,6 @@ namespace Bros.Models
 {
     public class Liking : Entity
     {
+		public String Name { get; set; }
     }
 }
