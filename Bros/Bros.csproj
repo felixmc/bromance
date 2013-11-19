@@ -49,9 +49,6 @@
     <Reference Include="MySql.Data">
       <HintPath>..\packages\MySql.Data.6.7.4\lib\net40\MySql.Data.dll</HintPath>
     </Reference>
-    <Reference Include="MySql.Data.Entity, Version=6.7.4.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
-      <HintPath>..\packages\MySQL.Data.Entities.6.7.4.1\lib\net45\MySql.Data.Entity.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -120,6 +117,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\AuthenticationController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ProfileController.cs" />
     <Compile Include="Controllers\StoreController.cs" />
@@ -205,6 +203,13 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Profile\_UserPartialView.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Authentication\_LoginPartial.cshtml" />
+    <Content Include="Views\Authentication\_SignupPartial.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Store\_ProductPartial.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
