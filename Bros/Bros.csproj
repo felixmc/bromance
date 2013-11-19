@@ -186,6 +186,21 @@
   <ItemGroup>
     <Content Include="Views\Profile\Index.cshtml" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Profile\_NewsFeedPartial.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\MessagePartial.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Mail.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Search.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Profile\_UserPartialView.cshtml" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
