@@ -7,8 +7,8 @@ namespace Bros.Models
 {
     public class Post : Entity
     {
-        public User Owner { get; set; }
+		public virtual User Owner { get; set; }
         public bool IsFlagged { get; set; }
-        public Comment[] Comments { get; set; }
+		public virtual Comment[] Comments { get; set; }
     }
 }

@@ -7,8 +7,8 @@ namespace Bros.Models
 {
     public class Album : Entity
     {
-        public User Owner { get; set; }
+		public virtual User Owner { get; set; }
         public string Title { get; set; }
-        public Photo[] Photos { get; set; }
+		public virtual Photo[] Photos { get; set; }
     }
 }
