@@ -8,7 +8,7 @@ namespace Bros.Models
     public class Circle : Entity
     {
         public string Name { get; set; }
-        public List<User> UserList { get; set; }
-		public User Owner { get; set; }
+		public virtual List<User> UserList { get; set; }
+		public virtual User Owner { get; set; }
     }
 }
