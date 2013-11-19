@@ -173,9 +173,6 @@
     <Content Include="Views\Home\BroCode.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Home\TermsOfUs.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\ProductPartialView.cshtml" />
   </ItemGroup>
@@ -187,6 +184,27 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Store\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Home\TermsOfUse.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Profile\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Profile\_NewsFeedPartial.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\MessagePartial.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Mail.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Search.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Profile\_UserPartialView.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
