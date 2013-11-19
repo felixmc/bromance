@@ -133,7 +133,6 @@
     <Compile Include="Models\Message.cs" />
     <Compile Include="Models\Notification.cs" />
     <Compile Include="Models\Photo.cs" />
-    <Compile Include="Models\PhotoPost.cs" />
     <Compile Include="Models\Post.cs" />
     <Compile Include="Models\Preference.cs" />
     <Compile Include="Models\Product.cs" />
@@ -169,9 +168,6 @@
     <Content Include="Views\Home\BroCode.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Home\TermsOfUs.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\ProductPartialView.cshtml" />
   </ItemGroup>
@@ -183,6 +179,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Store\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Home\TermsOfUse.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Profile\Index.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
