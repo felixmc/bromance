@@ -20,7 +20,7 @@ namespace Bros.Models
         public string LastName { get; set; }
         public string ZipCode { get; set; } //need to force this to only be 5 long and numbers
         public DateTime BirthDate { get; set; }
-        public Liking[] Likings { get; set; }
+        public List<Liking> Likings { get; set; }
         // TODO add Job /Career Maybe Enums or string arrays?
         // TODO add pet Enums
         // TODO add Religion Enums
