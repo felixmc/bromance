@@ -211,6 +211,9 @@
   <ItemGroup>
     <Content Include="Views\Store\_ProductPartial.cshtml" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Layouts\_LayoutPageNavBar.cshtml" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
