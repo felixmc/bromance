@@ -7,9 +7,9 @@ namespace Bros.Models
 {
     public class Comment : Entity
     {
-        public User Owner { get; set; }
+		public virtual User Owner { get; set; }
         public string Content { get; set; }
-        public Post ParentPost { get; set; }
+		public virtual Post ParentPost { get; set; }
         public bool IsFlagged { get; set; }
     }
 }
