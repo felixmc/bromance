@@ -13,7 +13,32 @@ namespace Bros.Controllers
 
         public ActionResult Index()
         {
-            return View();
+            string password = this.Request["password"];
+            string username = this.Request["username"];
+
+            if (Login(password, username))
+            {
+
+            }
+            HomeController controller = new HomeController();
+            return controller.Index();
+        }
+
+        private bool Login(string password, string username)
+        {
+            bool isLoggedIn = false;
+            using (BroContext context = new BroContext())
+            {
+                Models.User user = context.User.Where(n => n.Email == username).First();
+                byte[] enteredPassword = Models.User.GeneratedSaltedHash(password, user.salt);
+                if (Models.User.CompareByteArrays(enteredPassword, user.password))
+                {
+                    //LoginUser();
+                    isLoggedIn = true;
+                }
+
+            }
+            return isLoggedIn;
         }
 
     }

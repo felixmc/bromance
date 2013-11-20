@@ -14,7 +14,7 @@ namespace Bros.Models
     public class User : Entity
     {
 
-        //public byte[] salt { get; set; }
+        public byte[] salt { get; set; }
 
         public string Email { get; set; }
         public byte[] password { get; set; }
@@ -31,45 +31,45 @@ namespace Bros.Models
         public virtual ICollection<Comment> Comments { get; set; }
         public virtual ICollection<Preference> Preferences { get; set; }
 
-    //    public static byte[] GeneratedSaltedHash(string plainText, byte[] salt)
-    //    {
-    //        HashAlgorithm algorithm = new SHA256Managed();
-    //        byte[] plainTextBytes = Encoding.UTF8.GetBytes(plainText);
-    //        byte[]  plainTextWithSaltedBytes = new byte[plainTextBytes.Length+salt.Length];
+        public static byte[] GeneratedSaltedHash(string plainText, byte[] salt)
+        {
+            HashAlgorithm algorithm = new SHA256Managed();
+            byte[] plainTextBytes = Encoding.UTF8.GetBytes(plainText);
+            byte[] plainTextWithSaltedBytes = new byte[plainTextBytes.Length + salt.Length];
 
-    //        for (int i = 0; i < plainTextBytes.Length; i++)
-    //        {
-    //            plainTextWithSaltedBytes[i] = plainTextBytes[i];
-    //        }
-    //        for (int i = 0; i < salt.Length; i++)
-    //        {
-    //            plainTextWithSaltedBytes[i + plainTextBytes.Length] = salt[i];
-    //        }
+            for (int i = 0; i < plainTextBytes.Length; i++)
+            {
+                plainTextWithSaltedBytes[i] = plainTextBytes[i];
+            }
+            for (int i = 0; i < salt.Length; i++)
+            {
+                plainTextWithSaltedBytes[i + plainTextBytes.Length] = salt[i];
+            }
 
-    //        return algorithm.ComputeHash(plainTextWithSaltedBytes);
-    //    }
+            return algorithm.ComputeHash(plainTextWithSaltedBytes);
+        }
 
-    //    public static bool CompareByteArrays(byte[] array1, byte[] array2)
-    //    {
-    //        if (array1.Length != array2.Length)
-    //            return false;
+        public static bool CompareByteArrays(byte[] array1, byte[] array2)
+        {
+            if (array1.Length != array2.Length)
+                return false;
 
-    //        for (int i = 0; i < array1.Length; i++)
-    //        {
-    //            if (array1[i] != array2[i])
-    //                return false;
-    //        }
+            for (int i = 0; i < array1.Length; i++)
+            {
+                if (array1[i] != array2[i])
+                    return false;
+            }
 
-    //        return true;
-    //    }
+            return true;
+        }
 
-    //    public static byte[] CreateSalt(int size)
-    //    {
-    //        RNGCryptoServiceProvider rng = new RNGCryptoServiceProvider();
-    //        byte[] salt = new byte[size];
-    //        rng.GetBytes(salt);
+        public static byte[] CreateSalt(int size)
+        {
+            RNGCryptoServiceProvider rng = new RNGCryptoServiceProvider();
+            byte[] salt = new byte[size];
+            rng.GetBytes(salt);
 
-    //        return salt;
-    //    }
+            return salt;
+        }
     }
 }
