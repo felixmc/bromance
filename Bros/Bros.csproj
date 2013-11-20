@@ -184,7 +184,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Home\HomeIndex.cshtml" />
-    <Content Include="Views\ProductPartialView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\_ViewStart.cshtml" />
@@ -205,7 +204,7 @@
     <Content Include="Views\Profile\_NewsFeedPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\MessagePartial.cshtml" />
+    <Content Include="Views\_MessagePartialView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Mail.cshtml" />
@@ -226,6 +225,9 @@
     <EmbeddedResource Include="Migrations\201311200802344_tir.resx">
       <DependentUpon>201311200802344_tir.cs</DependentUpon>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Store\_ProductPartial.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

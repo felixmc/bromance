@@ -9,6 +9,6 @@ namespace Bros.Models
     {
 		public virtual User Owner { get; set; }
         public bool IsFlagged { get; set; }
-		public virtual Comment[] Comments { get; set; }
+		public virtual ICollection<Comment> Comments { get; set; }
     }
 }
