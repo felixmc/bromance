@@ -174,7 +174,7 @@
     <Content Include="Views\Home\BroCode.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Home\HomeIndex.cshtml" />
     <Content Include="Views\ProductPartialView.cshtml" />
   </ItemGroup>
   <ItemGroup>
@@ -184,13 +184,13 @@
     <Content Include="Views\Shared\_DefaultLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Store\Index.cshtml" />
+    <Content Include="Views\Store\StoreIndex.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Home\TermsOfUse.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Profile\Index.cshtml" />
+    <Content Include="Views\Profile\ProfileIndex.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Profile\_NewsFeedPartial.cshtml" />
