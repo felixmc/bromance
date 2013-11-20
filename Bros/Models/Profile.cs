@@ -52,6 +52,7 @@ namespace Bros.Models
         public DateTime BirthDate { get; set; }
 		public virtual ICollection<Liking> Likings { get; set; }
 		public virtual ICollection<Hobby> HobbyList { get; set; }
+		public virtual Photo ProfilePhoto;
 
 		public Gender Gender { get; set; }
 		public Pets? Pets { get; set; }

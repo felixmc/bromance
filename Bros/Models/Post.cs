@@ -7,7 +7,7 @@ using System.Web;
 namespace Bros.Models
 {
     [Table("Post")]
-    public class Post : Entity
+    public abstract class Post : Entity
     {
 		public virtual User Owner { get; set; }
         public bool IsFlagged { get; set; }
