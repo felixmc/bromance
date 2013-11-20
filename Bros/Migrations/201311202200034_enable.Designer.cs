@@ -5,13 +5,13 @@ namespace Bros.Migrations
     using System.Data.Entity.Migrations.Infrastructure;
     using System.Resources;
     
-    public sealed partial class tir : IMigrationMetadata
+    public sealed partial class enable : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(tir));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(enable));
         
         string IMigrationMetadata.Id
         {
-            get { return "201311200802344_tir"; }
+            get { return "201311202200034_enable"; }
         }
         
         string IMigrationMetadata.Source
