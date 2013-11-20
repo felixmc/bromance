@@ -1,5 +1,9 @@
-﻿@{
+﻿@model Bros.Models.User
+@{
     ViewBag.Title = "_UserPartialView";
 }
 
 <h2>_UserPartialView</h2>
+<!-- User Profile Image? -->
+<div class="UserName">@Model.Profile.FirstName @Model.Profile.LastName</div>
+<div class="UserGender">@Model.Profile.Gender</div>
