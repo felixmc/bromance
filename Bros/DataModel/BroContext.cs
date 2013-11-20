@@ -24,6 +24,6 @@ namespace Bros.DataModel
         public DbSet<Product> Products { get; set; }
         public DbSet<Profile> Profiles { get; set; }
         public DbSet<TextPost> TextPosts { get; set; }
-        public DbSet<User> Users { get; set; }
+        public DbSet<User> User { get; set; }
     }
 }

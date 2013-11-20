@@ -39,11 +39,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="EntityFramework">
-      <HintPath>..\packages\EntityFramework.6.0.1\lib\net45\EntityFramework.dll</HintPath>
-    </Reference>
-    <Reference Include="EntityFramework.SqlServer">
-      <HintPath>..\packages\EntityFramework.6.0.1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    <Reference Include="EntityFramework, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\EntityFramework.5.0.0\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="MySql.Data">
@@ -54,6 +52,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Data.Entity" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
@@ -120,12 +119,17 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\AuthenticationController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ProfileController.cs" />
     <Compile Include="Controllers\StoreController.cs" />
     <Compile Include="DataModel\BroContext.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201311202200034_enable.cs" />
+    <Compile Include="Migrations\201311202200034_enable.Designer.cs">
+      <DependentUpon>201311202200034_enable.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Album.cs" />
@@ -151,7 +155,9 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Content Include="Global.asax" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -174,7 +180,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Home\HomeIndex.cshtml" />
-    <Content Include="Views\ProductPartialView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\_ViewStart.cshtml" />
@@ -195,7 +200,7 @@
     <Content Include="Views\Profile\_NewsFeedPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\MessagePartial.cshtml" />
+    <Content Include="Views\_MessagePartialView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Mail.cshtml" />
@@ -209,12 +214,20 @@
   <ItemGroup>
     <Content Include="Views\Authentication\_LoginPartial.cshtml" />
     <Content Include="Views\Authentication\_SignupPartial.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Store\_ProductPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Layouts\_LayoutPageNavBar.cshtml" />
+    <EmbeddedResource Include="Migrations\201311202200034_enable.resx">
+      <DependentUpon>201311202200034_enable.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Authentication\_LoginPartial.cshtml" />
+    <Content Include="Views\Authentication\_SignupPartial.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

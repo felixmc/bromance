@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
@@ -10,9 +11,10 @@ namespace Bros.Models
         Female, Male
     }
 
+    [Table("Profile")]
     public class Profile : Entity
     {
-		public virtual List<Hobby> HobbyList { get; set; }
+		public virtual ICollection<Hobby> HobbyList { get; set; }
         public Gender Gender { get; set; }
 
 		public virtual User Owner { get; set; }
@@ -20,7 +22,7 @@ namespace Bros.Models
         public string LastName { get; set; }
         public string ZipCode { get; set; } //need to force this to only be 5 long and numbers
         public DateTime BirthDate { get; set; }
-		public virtual List<Liking> Likings { get; set; }
+		public virtual ICollection<Liking> Likings { get; set; }
         // TODO add Job /Career Maybe Enums or string arrays?
         // TODO add pet Enums
         // TODO add Religion Enums
