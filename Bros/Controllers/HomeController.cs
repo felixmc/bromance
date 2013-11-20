@@ -18,15 +18,11 @@ namespace Bros.Controllers
         public ActionResult Index()
         {
 
-            List<User> userList = new List<User>();
+            List<TextPost> userList = new List<TextPost>();
             using(var context = new BroContext()){
 
-                User user = new User()
-                {
-                    Email = "AwesomePossume@gmail.com"
-                };
-
-                context.User.Add(user);
+                TextPost tp = new TextPost { Content = "test" };
+                context.Entities.Add(tp);
                 try
                 {
                     context.SaveChanges();
@@ -40,7 +36,7 @@ namespace Bros.Controllers
                         }
                     }
                 }
-                userList.Add(user);
+                userList.Add(tp);
             }
             return View();
         }
