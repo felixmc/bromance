@@ -7,8 +7,8 @@ using System.Web;
 
 namespace Bros.Models
 {
-    [NotMapped]
-    public class Entity
+
+    public abstract class Entity
     {
 		[Key]
         public int ID { get; set; }

@@ -127,9 +127,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201311202142192_Initial.cs" />
-    <Compile Include="Migrations\201311202142192_Initial.Designer.cs">
-      <DependentUpon>201311202142192_Initial.cs</DependentUpon>
+    <Compile Include="Migrations\201311202200034_enable.cs" />
+    <Compile Include="Migrations\201311202200034_enable.Designer.cs">
+      <DependentUpon>201311202200034_enable.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Album.cs" />
@@ -218,8 +218,8 @@
     <Content Include="Views\Store\_ProductPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201311202142192_Initial.resx">
-      <DependentUpon>201311202142192_Initial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201311202200034_enable.resx">
+      <DependentUpon>201311202200034_enable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
