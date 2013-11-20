@@ -10,28 +10,25 @@ using System.Collections;
 
 namespace Bros.Models
 {
-    public class User
+    public class User : Entity
     {
 
-        //public byte[] password { get; set; }
         //public byte[] salt { get; set; }
 
-        [Key]
-        public int UserID { get; set; }
         public string Email { get; set; }
-
+        public byte[] password { get; set; }
 		public virtual ICollection BlockedBros { get; set; }
 
-        //[Required]
-        //public virtual Profile Profile { get; set; }
-		//public virtual ICollection<Circle> Circles { get; set; }
-		//public virtual ICollection<BroRequest> SentBroRequests { get; set; }
-		//public virtual ICollection<BroRequest> ReceivedBroRequest { get; set; }
-		//public virtual ICollection<Notification> Notifications { get; set; }
-		//public virtual ICollection<Message> Messages { get; set; }
-		//public virtual ICollection<Post> Posts { get; set; }
-		//public virtual ICollection<Comment> Comments { get; set; }
-		//public virtual ICollection<Preference> Preferences { get; set; }
+        [Required]
+        public virtual Profile Profile { get; set; }
+        public virtual ICollection<Circle> Circles { get; set; }
+        public virtual ICollection<BroRequest> SentBroRequests { get; set; }
+        public virtual ICollection<BroRequest> ReceivedBroRequest { get; set; }
+        public virtual ICollection<Notification> Notifications { get; set; }
+        public virtual ICollection<Message> Messages { get; set; }
+        public virtual ICollection<Post> Posts { get; set; }
+        public virtual ICollection<Comment> Comments { get; set; }
+        public virtual ICollection<Preference> Preferences { get; set; }
 
     //    public static byte[] GeneratedSaltedHash(string plainText, byte[] salt)
     //    {
