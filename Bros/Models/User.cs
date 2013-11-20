@@ -6,6 +6,7 @@ using System.Text;
 using System.Web;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Collections;
 
 namespace Bros.Models
 {
@@ -19,15 +20,17 @@ namespace Bros.Models
         public int UserID { get; set; }
         public string Email { get; set; }
 
+		public virtual ICollection BlockedBros { get; set; }
+
         //[Required]
         //public virtual Profile Profile { get; set; }
-        //public virtual List<Circle> Circles { get; set; }
-        //public virtual List<BroRequest> SentBroRequests { get; set; }
-        //public virtual List<BroRequest> ReceivedBroRequest { get; set; }
-        //public virtual List<Notification> Notifications { get; set; }
-        //public virtual List<Message> Messages { get; set; }
-        //public virtual List<Post> Posts { get; set; }
-        //public virtual List<Comment> Comments { get; set; }
+		//public virtual ICollection<Circle> Circles { get; set; }
+		//public virtual ICollection<BroRequest> SentBroRequests { get; set; }
+		//public virtual ICollection<BroRequest> ReceivedBroRequest { get; set; }
+		//public virtual ICollection<Notification> Notifications { get; set; }
+		//public virtual ICollection<Message> Messages { get; set; }
+		//public virtual ICollection<Post> Posts { get; set; }
+		//public virtual ICollection<Comment> Comments { get; set; }
 		//public virtual ICollection<Preference> Preferences { get; set; }
 
     //    public static byte[] GeneratedSaltedHash(string plainText, byte[] salt)
