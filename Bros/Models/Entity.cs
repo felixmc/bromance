@@ -12,6 +12,6 @@ namespace Bros.Models
         public int ID { get; set; }
         public DateTime DateCreated { get; set; }
         public DateTime DateUpdated { get; set; }
-        public bool IsDeleated { get; set; }
+        public bool IsDeleted { get; set; }
     }
 }

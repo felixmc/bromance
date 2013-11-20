@@ -24,7 +24,7 @@ namespace Bros.Controllers
                     Email = "AwesomePossume@gmail.com"
                 };
 
-                context.Users.Add(user);
+                context.User.Add(user);
                 context.SaveChanges();
                 userList.Add(user);
             }
