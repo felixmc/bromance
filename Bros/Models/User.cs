@@ -10,7 +10,12 @@ using System.Collections;
 
 namespace Bros.Models
 {
+<<<<<<< HEAD
     public class User : Entity
+=======
+    [Table("User")]
+    public class User
+>>>>>>> 2aefc7da70a8035342aa8971eb164e3d2834d500
     {
 
         //public byte[] salt { get; set; }

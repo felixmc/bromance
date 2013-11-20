@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
@@ -10,6 +11,7 @@ namespace Bros.Models
         Female, Male
     }
 
+    [Table("Profile")]
     public class Profile : Entity
     {
 		public virtual ICollection<Hobby> HobbyList { get; set; }
