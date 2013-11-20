@@ -9,6 +9,6 @@ namespace Bros.Models
     {
 		public virtual User Owner { get; set; }
         public string Title { get; set; }
-		public virtual Photo[] Photos { get; set; }
+		public virtual ICollection<Photo> Photos { get; set; }
     }
 }

@@ -28,6 +28,7 @@ namespace Bros.Models
         //public virtual List<Message> Messages { get; set; }
         //public virtual List<Post> Posts { get; set; }
         //public virtual List<Comment> Comments { get; set; }
+		//public virtual ICollection<Preference> Preferences { get; set; }
 
     //    public static byte[] GeneratedSaltedHash(string plainText, byte[] salt)
     //    {
