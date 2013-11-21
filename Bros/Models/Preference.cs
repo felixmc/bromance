@@ -9,7 +9,7 @@ namespace Bros.Models
     [Table("Preference")]
     public class Preference : Entity
     {
-        [InverseProperty("ID")]
+        [InverseProperty("Id")]
         [ForeignKey("User")]
 		public virtual User Owner { get; set; }
 		public String Key { get; set; }

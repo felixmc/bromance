@@ -9,7 +9,7 @@ namespace Bros.Models
     [Table("Photo")]
     public class Photo : Post
     {
-        [InverseProperty("ID")]
+        [InverseProperty("Id")]
         [ForeignKey("Album")]
 		public virtual Album Album { get; set; }
         public String Caption { get; set; }

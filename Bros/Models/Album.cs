@@ -9,12 +9,12 @@ namespace Bros.Models
     [Table("Album")]
     public class Album : Entity
     {
-        [InverseProperty("ID")]
+        [InverseProperty("Id")]
         [ForeignKey("User")]
 		public virtual User Owner { get; set; }
         public string Title { get; set; }
 
-        [InverseProperty("ID")]
+        [InverseProperty("Id")]
         [ForeignKey("PhotoId")]
 		public virtual ICollection<Photo> Photos { get; set; }
     }
