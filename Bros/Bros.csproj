@@ -54,6 +54,8 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Data.Entity" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -124,6 +126,84 @@
     <Compile Include="Controllers\ProfileController.cs" />
     <Compile Include="Controllers\StoreController.cs" />
     <Compile Include="DataModel\BroContext.cs" />
+    <Compile Include="DataSchema\Album.cs">
+      <DependentUpon>ModelWKeys.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataSchema\BroRequest.cs">
+      <DependentUpon>ModelWKeys.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataSchema\Circle.cs">
+      <DependentUpon>ModelWKeys.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataSchema\Comment.cs">
+      <DependentUpon>ModelWKeys.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataSchema\Entity.cs">
+      <DependentUpon>ModelWKeys.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataSchema\Hobby.cs">
+      <DependentUpon>ModelWKeys.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataSchema\Liking.cs">
+      <DependentUpon>ModelWKeys.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataSchema\Message.cs">
+      <DependentUpon>ModelWKeys.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataSchema\Model1.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model1.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataSchema\Model1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataSchema\Model1.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model1.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="DataSchema\ModelWKeys.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModelWKeys.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataSchema\ModelWKeys.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModelWKeys.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataSchema\ModelWKeys.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModelWKeys.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="DataSchema\Notification.cs">
+      <DependentUpon>ModelWKeys.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataSchema\Photo.cs">
+      <DependentUpon>ModelWKeys.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataSchema\Post.cs">
+      <DependentUpon>ModelWKeys.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataSchema\Preference.cs">
+      <DependentUpon>ModelWKeys.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataSchema\Product.cs">
+      <DependentUpon>ModelWKeys.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataSchema\Profile.cs">
+      <DependentUpon>ModelWKeys.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataSchema\TextPost.cs">
+      <DependentUpon>ModelWKeys.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataSchema\User.cs">
+      <DependentUpon>ModelWKeys.tt</DependentUpon>
+    </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -231,6 +311,51 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Store\ProductView.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EntityDeploy Include="DataSchema\Model1.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>Model1.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="DataSchema\Model1.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Model1.edmx</DependentUpon>
+      <LastGenOutput>Model1.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="DataSchema\Model1.edmx.diagram">
+      <DependentUpon>Model1.edmx</DependentUpon>
+    </Content>
+    <Content Include="DataSchema\Model1.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Model1.edmx</DependentUpon>
+      <LastGenOutput>Model1.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <EntityDeploy Include="DataSchema\ModelWKeys.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>ModelWKeys.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="DataSchema\ModelWKeys.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ModelWKeys.edmx</DependentUpon>
+      <LastGenOutput>ModelWKeys.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="DataSchema\ModelWKeys.edmx.diagram">
+      <DependentUpon>ModelWKeys.edmx</DependentUpon>
+    </Content>
+    <Content Include="DataSchema\ModelWKeys.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ModelWKeys.edmx</DependentUpon>
+      <LastGenOutput>ModelWKeys.cs</LastGenOutput>
+    </Content>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

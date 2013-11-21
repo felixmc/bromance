@@ -9,10 +9,10 @@ namespace Bros.Models
     [Table("Message")]
     public class Message : Entity
     {
-        [InverseProperty("Id")]
+        [InverseProperty("ID")]
         [ForeignKey("Sender")]
 		public virtual User Sender { get; set; }
-        [InverseProperty("Id")]
+        [InverseProperty("ID")]
         [ForeignKey("Receiver")]
 		public virtual User Receiver { get; set; }
         public string Content { get; set; }

@@ -10,10 +10,10 @@ namespace Bros.Models
     public class Circle : Entity
     {
         public string Name { get; set; }
-        [InverseProperty("Id")]
+        [InverseProperty("ID")]
         [ForeignKey("Member")]
 		public virtual ICollection<User> UserList { get; set; }
-        [InverseProperty("Id")]
+        [InverseProperty("ID")]
         [ForeignKey("User")]
 		public virtual User Owner { get; set; }
     }

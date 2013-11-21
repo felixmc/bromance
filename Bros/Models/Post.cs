@@ -9,11 +9,11 @@ namespace Bros.Models
     [Table("Post")]
     public abstract class Post : Entity
     {
-        [InverseProperty("Id")]
+        [InverseProperty("ID")]
         [ForeignKey("User")]
 		public virtual User Owner { get; set; }
         public bool IsFlagged { get; set; }
-        [InverseProperty("Id")]
+        [InverseProperty("ID")]
         [ForeignKey("Comment")]
 		public virtual ICollection<Comment> Comments { get; set; }
     }

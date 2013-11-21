@@ -18,35 +18,35 @@ namespace Bros.Models
         public string Email { get; set; }
         public byte[] password { get; set; }
         
-        [InverseProperty("Id")]
+        [InverseProperty("ID")]
         [ForeignKey("BlockedUser")]
 		public virtual ICollection<User> BlockedBros { get; set; }
         [Required]
-        [InverseProperty("Id")]
+        [InverseProperty("ID")]
         [ForeignKey("Profile")]
         public virtual Profile Profile { get; set; }
-        [InverseProperty("Id")]
+        [InverseProperty("ID")]
         [ForeignKey("Circle")]
         public virtual ICollection<Circle> Circles { get; set; }
-        [InverseProperty("Id")]
+        [InverseProperty("ID")]
         [ForeignKey("SentRequest")]
         public virtual ICollection<BroRequest> SentBroRequests { get; set; }
-        [InverseProperty("Id")]
+        [InverseProperty("ID")]
         [ForeignKey("ReceivedRequest")]
         public virtual ICollection<BroRequest> ReceivedBroRequest { get; set; }
-        [InverseProperty("Id")]
+        [InverseProperty("ID")]
         [ForeignKey("Notification")]
         public virtual ICollection<Notification> Notifications { get; set; }
-        [InverseProperty("Id")]
+        [InverseProperty("ID")]
         [ForeignKey("Message")]
         public virtual ICollection<Message> Messages { get; set; }
-        [InverseProperty("Id")]
+        [InverseProperty("ID")]
         [ForeignKey("Post")]
         public virtual ICollection<Post> Posts { get; set; }
-        [InverseProperty("Id")]
+        [InverseProperty("ID")]
         [ForeignKey("Comment")]
         public virtual ICollection<Comment> Comments { get; set; }
-        [InverseProperty("Id")]
+        [InverseProperty("ID")]
         [ForeignKey("Preference")]
         public virtual ICollection<Preference> Preferences { get; set; }
 
