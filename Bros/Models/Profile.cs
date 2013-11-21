@@ -45,14 +45,22 @@ namespace Bros.Models
     [Table("Profile")]
     public class Profile : Entity
     {
+        [InverseProperty("Id")]
+        [ForeignKey("User")]
 		public virtual User Owner { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string ZipCode { get; set; } //need to force this to only be 5 long and numbers
         public DateTime BirthDate { get; set; }
+        [InverseProperty("Id")]
+        [ForeignKey("Liking")]
 		public virtual ICollection<Liking> Likings { get; set; }
+        [InverseProperty("Id")]
+        [ForeignKey("Hobby")]
 		public virtual ICollection<Hobby> HobbyList { get; set; }
-		public virtual Photo ProfilePhoto;
+        [InverseProperty("Id")]
+        [ForeignKey("Photo")]
+		public virtual Photo ProfilePhoto { get; set; }
 
 		public Gender Gender { get; set; }
 		public Pets? Pets { get; set; }
