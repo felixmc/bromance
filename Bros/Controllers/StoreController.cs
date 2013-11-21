@@ -11,7 +11,7 @@ namespace Bros.Controllers
         //
         // GET: /Store/
 
-        public ActionResult Index()
+        public ActionResult StoreIndex()
         {
             return View();
         }
