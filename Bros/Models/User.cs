@@ -20,7 +20,7 @@ namespace Bros.Models
         
         [InverseProperty("Id")]
         [ForeignKey("BlockedUser")]
-		public virtual ICollection BlockedBros { get; set; }
+		public virtual ICollection<User> BlockedBros { get; set; }
         [Required]
         [InverseProperty("Id")]
         [ForeignKey("Profile")]
