@@ -12,6 +12,8 @@ namespace Bros.Models
         public string Name { get; set; }
         public decimal Price { get; set; }
         public String ImageFile { get; set; }
+        [InverseProperty("Id")]
+        [ForeignKey("Tag")]
 		public ICollection<String> Tags { get; set; }
         public String Description { get; set; }
         public String Catagory { get; set; }

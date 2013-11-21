@@ -15,20 +15,39 @@ namespace Bros.Models
     {
 
         public byte[] salt { get; set; }
-
         public string Email { get; set; }
         public byte[] password { get; set; }
+        
+        [InverseProperty("Id")]
+        [ForeignKey("BlockedUser")]
 		public virtual ICollection BlockedBros { get; set; }
-
         [Required]
+        [InverseProperty("Id")]
+        [ForeignKey("Profile")]
         public virtual Profile Profile { get; set; }
+        [InverseProperty("Id")]
+        [ForeignKey("Circle")]
         public virtual ICollection<Circle> Circles { get; set; }
+        [InverseProperty("Id")]
+        [ForeignKey("SentRequest")]
         public virtual ICollection<BroRequest> SentBroRequests { get; set; }
+        [InverseProperty("Id")]
+        [ForeignKey("ReceivedRequest")]
         public virtual ICollection<BroRequest> ReceivedBroRequest { get; set; }
+        [InverseProperty("Id")]
+        [ForeignKey("Notification")]
         public virtual ICollection<Notification> Notifications { get; set; }
+        [InverseProperty("Id")]
+        [ForeignKey("Message")]
         public virtual ICollection<Message> Messages { get; set; }
+        [InverseProperty("Id")]
+        [ForeignKey("Post")]
         public virtual ICollection<Post> Posts { get; set; }
+        [InverseProperty("Id")]
+        [ForeignKey("Comment")]
         public virtual ICollection<Comment> Comments { get; set; }
+        [InverseProperty("Id")]
+        [ForeignKey("Preference")]
         public virtual ICollection<Preference> Preferences { get; set; }
 
         public static byte[] GeneratedSaltedHash(string plainText, byte[] salt)
