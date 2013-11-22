@@ -33,6 +33,9 @@ namespace Bros.DataModel
     
         public int Id { get; set; }
         public System.DateTime DateCreated { get; set; }
+        public string Email { get; set; }
+        public byte[] Password { get; set; }
+        public byte[] Salt { get; set; }
     
         public virtual ICollection<Album> Albums { get; set; }
         public virtual ICollection<Post> Posts { get; set; }

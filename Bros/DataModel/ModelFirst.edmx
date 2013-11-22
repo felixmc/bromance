@@ -134,6 +134,9 @@
           <NavigationProperty Name="Profiles" Relationship="ModelFirst.UserProfile" FromRole="User" ToRole="Profile" />
           <NavigationProperty Name="BlockedBros" Relationship="ModelFirst.UserUser" FromRole="User" ToRole="User1" />
           <NavigationProperty Name="BlockedByBros" Relationship="ModelFirst.UserUser" FromRole="User1" ToRole="User" />
+          <Property Type="String" Name="Email" Nullable="false" />
+          <Property Type="Binary" Name="Password" Nullable="false" />
+          <Property Type="Binary" Name="Salt" Nullable="false" />
         </EntityType>
         <EntityType Name="Photo" BaseType="ModelFirst.Post">
           <NavigationProperty Name="Album" Relationship="ModelFirst.AlbumPhoto" FromRole="Photo" ToRole="Album" />
