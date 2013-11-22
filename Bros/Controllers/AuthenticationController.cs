@@ -1,5 +1,4 @@
 ﻿using Bros.DataModel;
-using Bros.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,17 +28,17 @@ namespace Bros.Controllers
         private bool Login(string password, string username)
         {
             bool isLoggedIn = false;
-            using (BroContext context = new BroContext())
-            {
-                Models.User user = ((IEnumerable<Models.User>)context.Entities.Where(n => n is Models.User && ((Models.User)n).Email == username)).First();
-                byte[] enteredPassword = Models.User.GeneratedSaltedHash(password, user.salt);
-                if (Models.User.CompareByteArrays(enteredPassword, user.password))
-                {
-                    //LoginUser();
-                    isLoggedIn = true;
-                }
+			//using (BroContext context = new BroContext())
+			//{
+			//	Models.User user = ((IEnumerable<Models.User>)context.Entities.Where(n => n is Models.User && ((Models.User)n).Email == username)).First();
+			//	byte[] enteredPassword = Models.User.GeneratedSaltedHash(password, user.salt);
+			//	if (Models.User.CompareByteArrays(enteredPassword, user.password))
+			//	{
+			//		//LoginUser();
+			//		isLoggedIn = true;
+			//	}
 
-            }
+			//}
             return isLoggedIn;
         }
 
