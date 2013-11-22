@@ -127,10 +127,6 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201311202200034_enable.cs" />
-    <Compile Include="Migrations\201311202200034_enable.Designer.cs">
-      <DependentUpon>201311202200034_enable.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Album.cs" />
     <Compile Include="Models\BroRequest.cs" />
@@ -146,6 +142,7 @@
     <Compile Include="Models\Preference.cs" />
     <Compile Include="Models\Product.cs" />
     <Compile Include="Models\Profile.cs" />
+    <Compile Include="Models\ProfileFactory.cs" />
     <Compile Include="Models\TextPost.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -221,9 +218,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Layouts\_LayoutPageNavBar.cshtml" />
-    <EmbeddedResource Include="Migrations\201311202200034_enable.resx">
-      <DependentUpon>201311202200034_enable.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Authentication\_LoginPartial.cshtml" />
