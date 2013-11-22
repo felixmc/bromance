@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Bros.Controllers;
+using Bros.DataModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,24 +10,44 @@ namespace Bros.Models
     public class ProfileFactory
     {
 
-        public Profile GetProfile()
+        Profile _Profile = new Profile()
         {
-            Profile prof = new Profile()
+            FirstName = "BroDude",
+            LastName = "Browser"
+        };
+        public Profile Profile
+        {
+              get
             {
-
-            };
-
-            return prof;
+                return Profile;
+            }
+            set
+            {
+                if (Profile == null){
+                    Profile = _Profile;
+                }
+            }
         }
 
-        public User GetUser()
+
+        User _User = new User()
         {
-            User use = new User()
+            //Salt = AuthenticationController
+            //Password = 
+
+        };
+        public User User
+        {
+            get
             {
-
-            };
-
-            return use;
+                return User;
+            }
+            set
+            {
+                if (User == null){
+                    User = _User;
+                }
+            }
         }
     }
 }
