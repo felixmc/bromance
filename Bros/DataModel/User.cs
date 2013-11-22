@@ -30,6 +30,16 @@ namespace Bros.DataModel
             this.BlockedBros = new HashSet<User>();
             this.BlockedByBros = new HashSet<User>();
         }
+
+        public void CreateCircle(string CircleName)
+        {
+            OwnedCircles.Add(new Circle(CircleName, this));
+        }
+
+        public void AddBroToCircle(User Bro, Circle targetCircle)
+        {
+            targetCircle.AddBro(Bro);
+        }
     
         public int Id { get; set; }
         public System.DateTime DateCreated { get; set; }
