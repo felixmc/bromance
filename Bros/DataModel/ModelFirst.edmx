@@ -1,0 +1,382 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl" Namespace="ModelFirst.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2005">
+        <EntityContainer Name="ModelFirstTargetContainer" >
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="ModelFirst" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
+        <EntityContainer Name="ModelFirstContainer" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Albums" EntityType="ModelFirst.Album" />
+          <EntitySet Name="Users" EntityType="ModelFirst.User" />
+          <AssociationSet Name="AlbumPhoto" Association="ModelFirst.AlbumPhoto">
+            <End Role="Album" EntitySet="Albums" />
+            <End Role="Photo" EntitySet="Posts" />
+          </AssociationSet>
+          <AssociationSet Name="UserAlbum" Association="ModelFirst.UserAlbum">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Album" EntitySet="Albums" />
+          </AssociationSet>
+          <EntitySet Name="Posts" EntityType="ModelFirst.Post" />
+          <AssociationSet Name="UserPost" Association="ModelFirst.UserPost">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Post" EntitySet="Posts" />
+          </AssociationSet>
+          <EntitySet Name="Comments" EntityType="ModelFirst.Comment" />
+          <AssociationSet Name="UserComment" Association="ModelFirst.UserComment">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Comment" EntitySet="Comments" />
+          </AssociationSet>
+          <AssociationSet Name="CommentPost" Association="ModelFirst.CommentPost">
+            <End Role="Comment" EntitySet="Comments" />
+            <End Role="Post" EntitySet="Posts" />
+          </AssociationSet>
+          <EntitySet Name="BroRequests" EntityType="ModelFirst.BroRequest" />
+          <AssociationSet Name="BroRequestUser" Association="ModelFirst.BroRequestUser">
+            <End Role="BroRequest" EntitySet="BroRequests" />
+            <End Role="User" EntitySet="Users" />
+          </AssociationSet>
+          <AssociationSet Name="UserBroRequest" Association="ModelFirst.UserBroRequest">
+            <End Role="User" EntitySet="Users" />
+            <End Role="BroRequest" EntitySet="BroRequests" />
+          </AssociationSet>
+          <EntitySet Name="Circles" EntityType="ModelFirst.Circle" />
+          <AssociationSet Name="CircleUser" Association="ModelFirst.CircleUser">
+            <End Role="Circle" EntitySet="Circles" />
+            <End Role="User" EntitySet="Users" />
+          </AssociationSet>
+          <AssociationSet Name="UserCircle" Association="ModelFirst.UserCircle">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Circle" EntitySet="Circles" />
+          </AssociationSet>
+          <EntitySet Name="Interests" EntityType="ModelFirst.Interest" />
+          <EntitySet Name="Messages" EntityType="ModelFirst.Message" />
+          <AssociationSet Name="UserMessage" Association="ModelFirst.UserMessage">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Message" EntitySet="Messages" />
+          </AssociationSet>
+          <AssociationSet Name="UserMessage1" Association="ModelFirst.UserMessage1">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Message" EntitySet="Messages" />
+          </AssociationSet>
+          <EntitySet Name="Notifications" EntityType="ModelFirst.Notification" />
+          <AssociationSet Name="UserNotification" Association="ModelFirst.UserNotification">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Notification" EntitySet="Notifications" />
+          </AssociationSet>
+          <EntitySet Name="Preferences" EntityType="ModelFirst.Preference" />
+          <AssociationSet Name="UserPreference" Association="ModelFirst.UserPreference">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Preference" EntitySet="Preferences" />
+          </AssociationSet>
+          <EntitySet Name="Products" EntityType="ModelFirst.Product" />
+          <EntitySet Name="Tags" EntityType="ModelFirst.Tag" />
+          <EntitySet Name="Categories" EntityType="ModelFirst.Category" />
+          <AssociationSet Name="TagProduct" Association="ModelFirst.TagProduct">
+            <End Role="Tag" EntitySet="Tags" />
+            <End Role="Product" EntitySet="Products" />
+          </AssociationSet>
+          <AssociationSet Name="CategoryProduct" Association="ModelFirst.CategoryProduct">
+            <End Role="Category" EntitySet="Categories" />
+            <End Role="Product" EntitySet="Products" />
+          </AssociationSet>
+          <EntitySet Name="Profiles" EntityType="ModelFirst.Profile" />
+          <AssociationSet Name="UserProfile" Association="ModelFirst.UserProfile">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Profile" EntitySet="Profiles" />
+          </AssociationSet>
+          <AssociationSet Name="UserUser" Association="ModelFirst.UserUser">
+            <End Role="User" EntitySet="Users" />
+            <End Role="User1" EntitySet="Users" />
+          </AssociationSet>
+          <AssociationSet Name="InterestProfile" Association="ModelFirst.InterestProfile">
+            <End Role="Interest" EntitySet="Interests" />
+            <End Role="Profile" EntitySet="Profiles" />
+          </AssociationSet>
+          <AssociationSet Name="PhotoProfile" Association="ModelFirst.PhotoProfile">
+            <End Role="Photo" EntitySet="Posts" />
+            <End Role="Profile" EntitySet="Profiles" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Album">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="Title" Nullable="false" />
+          <NavigationProperty Name="Photos" Relationship="ModelFirst.AlbumPhoto" FromRole="Album" ToRole="Photo" />
+          <NavigationProperty Name="Owner" Relationship="ModelFirst.UserAlbum" FromRole="Album" ToRole="User" />
+          <Property Type="DateTime" Name="DateCreated" Nullable="false" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Albums" Relationship="ModelFirst.UserAlbum" FromRole="User" ToRole="Album" />
+          <NavigationProperty Name="Posts" Relationship="ModelFirst.UserPost" FromRole="User" ToRole="Post" />
+          <NavigationProperty Name="Comments" Relationship="ModelFirst.UserComment" FromRole="User" ToRole="Comment" />
+          <Property Type="DateTime" Name="DateCreated" Nullable="false" />
+          <NavigationProperty Name="SentBroRequests" Relationship="ModelFirst.BroRequestUser" FromRole="User" ToRole="BroRequest" />
+          <NavigationProperty Name="ReceivedBroRequests" Relationship="ModelFirst.UserBroRequest" FromRole="User" ToRole="BroRequest" />
+          <NavigationProperty Name="JoinedCircles" Relationship="ModelFirst.CircleUser" FromRole="User" ToRole="Circle" />
+          <NavigationProperty Name="OwnedCircles" Relationship="ModelFirst.UserCircle" FromRole="User" ToRole="Circle" />
+          <NavigationProperty Name="MessagesSent" Relationship="ModelFirst.UserMessage" FromRole="User" ToRole="Message" />
+          <NavigationProperty Name="MessagesReceived" Relationship="ModelFirst.UserMessage1" FromRole="User" ToRole="Message" />
+          <NavigationProperty Name="Notifications" Relationship="ModelFirst.UserNotification" FromRole="User" ToRole="Notification" />
+          <NavigationProperty Name="Preferences" Relationship="ModelFirst.UserPreference" FromRole="User" ToRole="Preference" />
+          <NavigationProperty Name="Profiles" Relationship="ModelFirst.UserProfile" FromRole="User" ToRole="Profile" />
+          <NavigationProperty Name="BlockedBros" Relationship="ModelFirst.UserUser" FromRole="User" ToRole="User1" />
+          <NavigationProperty Name="BlockedByBros" Relationship="ModelFirst.UserUser" FromRole="User1" ToRole="User" />
+        </EntityType>
+        <EntityType Name="Photo" BaseType="ModelFirst.Post">
+          <NavigationProperty Name="Album" Relationship="ModelFirst.AlbumPhoto" FromRole="Photo" ToRole="Album" />
+          <Property Type="String" Name="Caption" Nullable="false" />
+          <NavigationProperty Name="ProfilePhotoOf" Relationship="ModelFirst.PhotoProfile" FromRole="Photo" ToRole="Profile" />
+        </EntityType>
+        <Association Name="AlbumPhoto">
+          <End Type="ModelFirst.Album" Role="Album" Multiplicity="1" />
+          <End Type="ModelFirst.Photo" Role="Photo" Multiplicity="*" />
+        </Association>
+        <Association Name="UserAlbum">
+          <End Type="ModelFirst.User" Role="User" Multiplicity="1" />
+          <End Type="ModelFirst.Album" Role="Album" Multiplicity="*" />
+        </Association>
+        <EntityType Name="Post">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Owner" Relationship="ModelFirst.UserPost" FromRole="Post" ToRole="User" />
+          <Property Type="Boolean" Name="IsFlagged" Nullable="false" />
+          <NavigationProperty Name="Comments" Relationship="ModelFirst.CommentPost" FromRole="Post" ToRole="Comment" />
+          <Property Type="DateTime" Name="DateCreated" Nullable="false" />
+          <Property Type="DateTime" Name="DateUpdated" Nullable="false" />
+        </EntityType>
+        <Association Name="UserPost">
+          <End Type="ModelFirst.User" Role="User" Multiplicity="1" />
+          <End Type="ModelFirst.Post" Role="Post" Multiplicity="*" />
+        </Association>
+        <EntityType Name="Comment">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Owner" Relationship="ModelFirst.UserComment" FromRole="Comment" ToRole="User" />
+          <Property Type="String" Name="Content" Nullable="false" />
+          <Property Type="Boolean" Name="IsFlagged" Nullable="false" />
+          <NavigationProperty Name="ParentPost" Relationship="ModelFirst.CommentPost" FromRole="Comment" ToRole="Post" />
+          <Property Type="DateTime" Name="DateCreated" Nullable="false" />
+        </EntityType>
+        <Association Name="UserComment">
+          <End Type="ModelFirst.User" Role="User" Multiplicity="1" />
+          <End Type="ModelFirst.Comment" Role="Comment" Multiplicity="*" />
+        </Association>
+        <Association Name="CommentPost">
+          <End Type="ModelFirst.Comment" Role="Comment" Multiplicity="*" />
+          <End Type="ModelFirst.Post" Role="Post" Multiplicity="1" />
+        </Association>
+        <EntityType Name="BroRequest">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Sender" Relationship="ModelFirst.BroRequestUser" FromRole="BroRequest" ToRole="User" />
+          <NavigationProperty Name="Receiver" Relationship="ModelFirst.UserBroRequest" FromRole="BroRequest" ToRole="User" />
+          <Property Type="String" Name="Message" Nullable="false" />
+          <Property Type="DateTime" Name="DateCreated" Nullable="false" />
+        </EntityType>
+        <Association Name="BroRequestUser">
+          <End Type="ModelFirst.BroRequest" Role="BroRequest" Multiplicity="*" />
+          <End Type="ModelFirst.User" Role="User" Multiplicity="1" />
+        </Association>
+        <Association Name="UserBroRequest">
+          <End Type="ModelFirst.User" Role="User" Multiplicity="1" />
+          <End Type="ModelFirst.BroRequest" Role="BroRequest" Multiplicity="*" />
+        </Association>
+        <EntityType Name="Circle">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Members" Relationship="ModelFirst.CircleUser" FromRole="Circle" ToRole="User" />
+          <NavigationProperty Name="Owner" Relationship="ModelFirst.UserCircle" FromRole="Circle" ToRole="User" />
+          <Property Type="String" Name="Name" Nullable="false" />
+        </EntityType>
+        <Association Name="CircleUser">
+          <End Type="ModelFirst.Circle" Role="Circle" Multiplicity="*" />
+          <End Type="ModelFirst.User" Role="User" Multiplicity="*" />
+        </Association>
+        <Association Name="UserCircle">
+          <End Type="ModelFirst.User" Role="User" Multiplicity="1" />
+          <End Type="ModelFirst.Circle" Role="Circle" Multiplicity="*" />
+        </Association>
+        <EntityType Name="Interest">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="Name" Nullable="false" />
+          <NavigationProperty Name="InterestedProfiles" Relationship="ModelFirst.InterestProfile" FromRole="Interest" ToRole="Profile" />
+        </EntityType>
+        <EntityType Name="Message">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Sender" Relationship="ModelFirst.UserMessage" FromRole="Message" ToRole="User" />
+          <NavigationProperty Name="Receiver" Relationship="ModelFirst.UserMessage1" FromRole="Message" ToRole="User" />
+          <Property Type="String" Name="Content" Nullable="false" />
+          <Property Type="DateTime" Name="DateSent" Nullable="false" />
+          <Property Type="DateTime" Name="DateRead" Nullable="false" />
+        </EntityType>
+        <Association Name="UserMessage">
+          <End Type="ModelFirst.User" Role="User" Multiplicity="1" />
+          <End Type="ModelFirst.Message" Role="Message" Multiplicity="*" />
+        </Association>
+        <Association Name="UserMessage1">
+          <End Type="ModelFirst.User" Role="User" Multiplicity="1" />
+          <End Type="ModelFirst.Message" Role="Message" Multiplicity="*" />
+        </Association>
+        <EntityType Name="Notification">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Receiver" Relationship="ModelFirst.UserNotification" FromRole="Notification" ToRole="User" />
+          <Property Type="Boolean" Name="IsRead" Nullable="false" />
+        </EntityType>
+        <Association Name="UserNotification">
+          <End Type="ModelFirst.User" Role="User" Multiplicity="1" />
+          <End Type="ModelFirst.Notification" Role="Notification" Multiplicity="*" />
+        </Association>
+        <EntityType Name="Preference">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Owner" Relationship="ModelFirst.UserPreference" FromRole="Preference" ToRole="User" />
+          <Property Type="String" Name="Key" Nullable="false" />
+          <Property Type="String" Name="Value" Nullable="false" />
+        </EntityType>
+        <Association Name="UserPreference">
+          <End Type="ModelFirst.User" Role="User" Multiplicity="1" />
+          <End Type="ModelFirst.Preference" Role="Preference" Multiplicity="*" />
+        </Association>
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="Name" Nullable="false" />
+          <Property Type="Decimal" Name="Price" Nullable="false" />
+          <Property Type="String" Name="Image" Nullable="false" />
+          <NavigationProperty Name="Tags" Relationship="ModelFirst.TagProduct" FromRole="Product" ToRole="Tag" />
+          <NavigationProperty Name="Category" Relationship="ModelFirst.CategoryProduct" FromRole="Product" ToRole="Category" />
+        </EntityType>
+        <EntityType Name="Tag">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Products" Relationship="ModelFirst.TagProduct" FromRole="Tag" ToRole="Product" />
+          <Property Type="String" Name="Name" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Category">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Products" Relationship="ModelFirst.CategoryProduct" FromRole="Category" ToRole="Product" />
+          <Property Type="String" Name="Name" Nullable="false" />
+        </EntityType>
+        <Association Name="TagProduct">
+          <End Type="ModelFirst.Tag" Role="Tag" Multiplicity="*" />
+          <End Type="ModelFirst.Product" Role="Product" Multiplicity="*" />
+        </Association>
+        <Association Name="CategoryProduct">
+          <End Type="ModelFirst.Category" Role="Category" Multiplicity="1" />
+          <End Type="ModelFirst.Product" Role="Product" Multiplicity="*" />
+        </Association>
+        <EntityType Name="Profile">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Owner" Relationship="ModelFirst.UserProfile" FromRole="Profile" ToRole="User" />
+          <Property Type="String" Name="FirstName" Nullable="false" />
+          <Property Type="String" Name="LastName" Nullable="false" />
+          <Property Type="String" Name="ZipCode" Nullable="false" />
+          <Property Type="DateTime" Name="BirthDate" Nullable="false" />
+          <NavigationProperty Name="Interests" Relationship="ModelFirst.InterestProfile" FromRole="Profile" ToRole="Interest" />
+          <NavigationProperty Name="ProfilePhoto" Relationship="ModelFirst.PhotoProfile" FromRole="Profile" ToRole="Photo" />
+          <Property Type="String" Name="Gender" Nullable="false" />
+          <Property Type="String" Name="Pets" Nullable="false" />
+          <Property Type="String" Name="Religion" Nullable="false" />
+          <Property Type="String" Name="Job" Nullable="false" />
+          <Property Type="String" Name="Education" Nullable="false" />
+          <Property Type="String" Name="Ethnicity" Nullable="false" />
+          <Property Type="String" Name="Athleticism" Nullable="false" />
+          <Property Type="String" Name="SexualOrientation" Nullable="false" />
+          <Property Type="String" Name="MarriageStatus" Nullable="false" />
+          <Property Type="String" Name="Children" Nullable="false" />
+          <Property Type="String" Name="Smokes" Nullable="false" />
+          <Property Type="String" Name="Drinks" Nullable="false" />
+          <Property Type="String" Name="Drugs" Nullable="false" />
+        </EntityType>
+        <Association Name="UserProfile">
+          <End Type="ModelFirst.User" Role="User" Multiplicity="1" />
+          <End Type="ModelFirst.Profile" Role="Profile" Multiplicity="1" />
+        </Association>
+        <EntityType Name="TextPost" BaseType="ModelFirst.Post">
+          <Property Type="String" Name="Content" Nullable="false" />
+        </EntityType>
+        <Association Name="UserUser">
+          <End Type="ModelFirst.User" Role="User" Multiplicity="*" />
+          <End Type="ModelFirst.User" Role="User1" Multiplicity="*" />
+        </Association>
+        <Association Name="InterestProfile">
+          <End Type="ModelFirst.Interest" Role="Interest" Multiplicity="*" />
+          <End Type="ModelFirst.Profile" Role="Profile" Multiplicity="*" />
+        </Association>
+        <Association Name="PhotoProfile">
+          <End Type="ModelFirst.Photo" Role="Photo" Multiplicity="1" />
+          <End Type="ModelFirst.Profile" Role="Profile" Multiplicity="1" />
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs" Space="C-S">
+        <Alias Key="Model" Value="ModelFirst" />
+        <Alias Key="Target" Value="ModelFirst.Store" />
+        <EntityContainerMapping CdmEntityContainer="ModelFirstContainer" StorageEntityContainer="ModelFirstTargetContainer">
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <edmx:Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </edmx:Connection>
+    <edmx:Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </edmx:Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
