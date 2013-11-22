@@ -128,8 +128,22 @@
     <Compile Include="DataModel\Album.cs">
       <DependentUpon>ModelFirst.tt</DependentUpon>
     </Compile>
-    <Compile Include="DataModel\BroContext.cs" />
+    <Compile Include="DataModel\BroRequest.cs">
+      <DependentUpon>ModelFirst.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\Category.cs">
+      <DependentUpon>ModelFirst.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\Circle.cs">
+      <DependentUpon>ModelFirst.tt</DependentUpon>
+    </Compile>
     <Compile Include="DataModel\Comment.cs">
+      <DependentUpon>ModelFirst.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\Interest.cs">
+      <DependentUpon>ModelFirst.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\Message.cs">
       <DependentUpon>ModelFirst.tt</DependentUpon>
     </Compile>
     <Compile Include="DataModel\ModelFirst.Context.cs">
@@ -147,10 +161,28 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ModelFirst.edmx</DependentUpon>
     </Compile>
+    <Compile Include="DataModel\Notification.cs">
+      <DependentUpon>ModelFirst.tt</DependentUpon>
+    </Compile>
     <Compile Include="DataModel\Photo.cs">
       <DependentUpon>ModelFirst.tt</DependentUpon>
     </Compile>
     <Compile Include="DataModel\Post.cs">
+      <DependentUpon>ModelFirst.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\Preference.cs">
+      <DependentUpon>ModelFirst.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\Product.cs">
+      <DependentUpon>ModelFirst.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\Profile.cs">
+      <DependentUpon>ModelFirst.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\Tag.cs">
+      <DependentUpon>ModelFirst.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\TextPost.cs">
       <DependentUpon>ModelFirst.tt</DependentUpon>
     </Compile>
     <Compile Include="DataModel\User.cs">
@@ -237,27 +269,6 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201311202200034_enable.cs" />
-    <Compile Include="Migrations\201311202200034_enable.Designer.cs">
-      <DependentUpon>201311202200034_enable.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\Configuration.cs" />
-    <Compile Include="Models\Album.cs" />
-    <Compile Include="Models\BroRequest.cs" />
-    <Compile Include="Models\Circle.cs" />
-    <Compile Include="Models\Comment.cs" />
-    <Compile Include="Models\Entity.cs" />
-    <Compile Include="Models\Hobby.cs" />
-    <Compile Include="Models\Liking.cs" />
-    <Compile Include="Models\Message.cs" />
-    <Compile Include="Models\Notification.cs" />
-    <Compile Include="Models\Photo.cs" />
-    <Compile Include="Models\Post.cs" />
-    <Compile Include="Models\Preference.cs" />
-    <Compile Include="Models\Product.cs" />
-    <Compile Include="Models\Profile.cs" />
-    <Compile Include="Models\TextPost.cs" />
-    <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -331,9 +342,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Layouts\_LayoutPageNavBar.cshtml" />
-    <EmbeddedResource Include="Migrations\201311202200034_enable.resx">
-      <DependentUpon>201311202200034_enable.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Authentication\_LoginPartial.cshtml" />
@@ -401,6 +409,7 @@
     </Content>
     <Content Include="DataModel\ModelFirst.edmx.diagram">
       <DependentUpon>ModelFirst.edmx</DependentUpon>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="DataModel\ModelFirst.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
