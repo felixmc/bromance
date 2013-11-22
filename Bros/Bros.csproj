@@ -140,6 +140,12 @@
     <Compile Include="DataModel\Comment.cs">
       <DependentUpon>ModelFirst.tt</DependentUpon>
     </Compile>
+    <Compile Include="DataModel\CommentNotification.cs">
+      <DependentUpon>ModelFirst.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\FirstBump.cs">
+      <DependentUpon>ModelFirst.tt</DependentUpon>
+    </Compile>
     <Compile Include="DataModel\Interest.cs">
       <DependentUpon>ModelFirst.tt</DependentUpon>
     </Compile>
@@ -177,6 +183,9 @@
       <DependentUpon>ModelFirst.tt</DependentUpon>
     </Compile>
     <Compile Include="DataModel\Profile.cs">
+      <DependentUpon>ModelFirst.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\RequestNotification.cs">
       <DependentUpon>ModelFirst.tt</DependentUpon>
     </Compile>
     <Compile Include="DataModel\Tag.cs">

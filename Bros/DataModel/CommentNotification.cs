@@ -12,14 +12,9 @@ namespace Bros.DataModel
     using System;
     using System.Collections.Generic;
     
-    public partial class BroRequest
+    public partial class CommentNotification : Notification
     {
-        public int Id { get; set; }
-        public string Message { get; set; }
-        public System.DateTime DateCreated { get; set; }
     
-        public virtual User Sender { get; set; }
-        public virtual User Receiver { get; set; }
-        public virtual RequestNotification RequestNotification { get; set; }
+        public virtual Comment Comment { get; set; }
     }
 }

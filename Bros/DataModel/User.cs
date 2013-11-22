@@ -51,5 +51,6 @@ namespace Bros.DataModel
         public virtual Profile Profiles { get; set; }
         public virtual ICollection<User> BlockedBros { get; set; }
         public virtual ICollection<User> BlockedByBros { get; set; }
+        public virtual FirstBump SentFirstBumps { get; set; }
     }
 }

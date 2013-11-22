@@ -103,6 +103,18 @@
             <End Role="Photo" EntitySet="Posts" />
             <End Role="Profile" EntitySet="Profiles" />
           </AssociationSet>
+          <AssociationSet Name="RequestNotificationBroRequest" Association="ModelFirst.RequestNotificationBroRequest">
+            <End Role="RequestNotification" EntitySet="Notifications" />
+            <End Role="BroRequest" EntitySet="BroRequests" />
+          </AssociationSet>
+          <AssociationSet Name="CommentNotificationComment" Association="ModelFirst.CommentNotificationComment">
+            <End Role="CommentNotification" EntitySet="Notifications" />
+            <End Role="Comment" EntitySet="Comments" />
+          </AssociationSet>
+          <AssociationSet Name="FirstBumpUser" Association="ModelFirst.FirstBumpUser">
+            <End Role="FirstBump" EntitySet="Notifications" />
+            <End Role="User" EntitySet="Users" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Album">
           <Key>
@@ -137,6 +149,7 @@
           <Property Type="String" Name="Email" Nullable="false" />
           <Property Type="Binary" Name="Password" Nullable="false" />
           <Property Type="Binary" Name="Salt" Nullable="false" />
+          <NavigationProperty Name="SentFirstBumps" Relationship="ModelFirst.FirstBumpUser" FromRole="User" ToRole="FirstBump" />
         </EntityType>
         <EntityType Name="Photo" BaseType="ModelFirst.Post">
           <NavigationProperty Name="Album" Relationship="ModelFirst.AlbumPhoto" FromRole="Photo" ToRole="Album" />
@@ -176,6 +189,7 @@
           <Property Type="Boolean" Name="IsFlagged" Nullable="false" />
           <NavigationProperty Name="ParentPost" Relationship="ModelFirst.CommentPost" FromRole="Comment" ToRole="Post" />
           <Property Type="DateTime" Name="DateCreated" Nullable="false" />
+          <NavigationProperty Name="CommentNotifications" Relationship="ModelFirst.CommentNotificationComment" FromRole="Comment" ToRole="CommentNotification" />
         </EntityType>
         <Association Name="UserComment">
           <End Type="ModelFirst.User" Role="User" Multiplicity="1" />
@@ -194,6 +208,7 @@
           <NavigationProperty Name="Receiver" Relationship="ModelFirst.UserBroRequest" FromRole="BroRequest" ToRole="User" />
           <Property Type="String" Name="Message" Nullable="false" />
           <Property Type="DateTime" Name="DateCreated" Nullable="false" />
+          <NavigationProperty Name="RequestNotification" Relationship="ModelFirst.RequestNotificationBroRequest" FromRole="BroRequest" ToRole="RequestNotification" />
         </EntityType>
         <Association Name="BroRequestUser">
           <End Type="ModelFirst.BroRequest" Role="BroRequest" Multiplicity="*" />
@@ -254,6 +269,7 @@
           <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <NavigationProperty Name="Receiver" Relationship="ModelFirst.UserNotification" FromRole="Notification" ToRole="User" />
           <Property Type="Boolean" Name="IsRead" Nullable="false" />
+          <Property Type="DateTime" Name="DateCreated" Nullable="false" />
         </EntityType>
         <Association Name="UserNotification">
           <End Type="ModelFirst.User" Role="User" Multiplicity="1" />
@@ -351,6 +367,27 @@
         <Association Name="PhotoProfile">
           <End Type="ModelFirst.Photo" Role="Photo" Multiplicity="1" />
           <End Type="ModelFirst.Profile" Role="Profile" Multiplicity="1" />
+        </Association>
+        <EntityType Name="RequestNotification" BaseType="ModelFirst.Notification">
+          <NavigationProperty Name="BroRequest" Relationship="ModelFirst.RequestNotificationBroRequest" FromRole="RequestNotification" ToRole="BroRequest" />
+        </EntityType>
+        <Association Name="RequestNotificationBroRequest">
+          <End Type="ModelFirst.RequestNotification" Role="RequestNotification" Multiplicity="1" />
+          <End Type="ModelFirst.BroRequest" Role="BroRequest" Multiplicity="1" />
+        </Association>
+        <EntityType Name="CommentNotification" BaseType="ModelFirst.Notification">
+          <NavigationProperty Name="Comment" Relationship="ModelFirst.CommentNotificationComment" FromRole="CommentNotification" ToRole="Comment" />
+        </EntityType>
+        <Association Name="CommentNotificationComment">
+          <End Type="ModelFirst.CommentNotification" Role="CommentNotification" Multiplicity="*" />
+          <End Type="ModelFirst.Comment" Role="Comment" Multiplicity="1" />
+        </Association>
+        <EntityType Name="FirstBump" BaseType="ModelFirst.Notification">
+          <NavigationProperty Name="Sender" Relationship="ModelFirst.FirstBumpUser" FromRole="FirstBump" ToRole="User" />
+        </EntityType>
+        <Association Name="FirstBumpUser">
+          <End Type="ModelFirst.FirstBump" Role="FirstBump" Multiplicity="1" />
+          <End Type="ModelFirst.User" Role="User" Multiplicity="*" />
         </Association>
       </Schema>
     </edmx:ConceptualModels>

@@ -12,20 +12,14 @@ namespace Bros.DataModel
     using System;
     using System.Collections.Generic;
     
-    public partial class Comment
+    public partial class FirstBump : Notification
     {
-        public Comment()
+        public FirstBump()
         {
-            this.CommentNotifications = new HashSet<CommentNotification>();
+            this.Sender = new HashSet<User>();
         }
     
-        public int Id { get; set; }
-        public string Content { get; set; }
-        public bool IsFlagged { get; set; }
-        public System.DateTime DateCreated { get; set; }
     
-        public virtual User Owner { get; set; }
-        public virtual Post ParentPost { get; set; }
-        public virtual ICollection<CommentNotification> CommentNotifications { get; set; }
+        public virtual ICollection<User> Sender { get; set; }
     }
 }
