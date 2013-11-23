@@ -14,31 +14,9 @@ namespace Bros.DataModel
     
     public partial class Circle
     {
-        public Circle(string Name, User Owner)
+        public Circle()
         {
             this.Members = new HashSet<User>();
-            this.Name = Name;
-            this.Owner = Owner;
-        }
-
-        public bool AddBro(User Bro){
-            bool BroValid = ValidateBro(Bro);
-
-            if (BroValid)
-            {
-                Members.Add(Bro);
-            }
-
-            return BroValid;
-        }
-
-        public bool ValidateBro(User Bro)
-        {
-            bool broValid = true;
-
-            broValid = !Members.Contains(Bro);
-
-            return broValid;
         }
     
         public int Id { get; set; }
