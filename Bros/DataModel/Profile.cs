@@ -39,7 +39,7 @@ namespace Bros.DataModel
         public string Drugs { get; set; }
     
         public virtual ICollection<Interest> Interests { get; set; }
-        public virtual Photo ProfilePhoto { get; set; }
         public virtual User User { get; set; }
+        public virtual Photo ProfilePhoto { get; set; }
     }
 }

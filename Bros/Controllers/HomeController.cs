@@ -17,31 +17,27 @@ namespace Bros.Controllers
         ProfileFactory fact = new ProfileFactory();
         public ActionResult Index()
         {
-
-            List<User> userList = new List<User>();
             using (var context = new ModelFirstContainer())
             {
+				User user = fact.User;
+				
+				context.Users.Add(user);
+				try
+				{
+					context.SaveChanges();
+				}
+				catch (DbEntityValidationException e)
+				{
+					foreach (var validationErrors in e.EntityValidationErrors)
+					{
+						foreach (var validationError in validationErrors.ValidationErrors)
+						{
+							Trace.TraceInformation("Property: {0} Error: {1}", validationError.PropertyName, validationError.ErrorMessage);
+						}
+					}
+				}
 
-				//User user = fact.User;
-				//context.Users.Add(user);
-				//try
-				//{
-				//	context.SaveChanges();
-				//}
-				//catch (DbEntityValidationException e)
-				//{
-				//	foreach (var validationErrors in e.EntityValidationErrors)
-				//	{
-				//		foreach (var validationError in validationErrors.ValidationErrors)
-				//		{
-				//			Trace.TraceInformation("Property: {0} Error: {1}", validationError.PropertyName, validationError.ErrorMessage);
-				//		}
-				//	}
-				//}
-				//userList.Add(user);
-
-				context.Tags.Add(new Tag() { Name = "MyTag" });
-				context.SaveChanges();
+				//context.SaveChanges();
 
             }
             return View();

@@ -5,7 +5,7 @@
 -- -----------------------------------------------------------
 -- Entity Designer DDL Script for MySQL Server 4.1 and higher
 -- -----------------------------------------------------------
--- Date Created: 11/23/2013 23:59:13
+-- Date Created: 11/24/2013 11:04:20
 -- Generated from EDMX file: C:\Users\Felix\Documents\GitHub\bromance\Bros\DataModel\ModelFirst.edmx
 -- Target version: 3.0.0.0
 -- --------------------------------------------------
@@ -19,11 +19,65 @@ USE `bromance`;
 -- NOTE: if the constraint does not exist, an ignorable error will be reported.
 -- --------------------------------------------------
 
+--    ALTER TABLE `CircleUser` DROP CONSTRAINT `FK_CircleUser_Circle`;
+--    ALTER TABLE `CircleUser` DROP CONSTRAINT `FK_CircleUser_User`;
+--    ALTER TABLE `UserUser` DROP CONSTRAINT `FK_UserUser_User`;
+--    ALTER TABLE `UserUser` DROP CONSTRAINT `FK_UserUser_User1`;
+--    ALTER TABLE `InterestProfile` DROP CONSTRAINT `FK_InterestProfile_Interest`;
+--    ALTER TABLE `InterestProfile` DROP CONSTRAINT `FK_InterestProfile_Profile`;
+--    ALTER TABLE `Posts_Photo` DROP CONSTRAINT `FK_PhotoProfile`;
+--    ALTER TABLE `Notifications_RequestNotification` DROP CONSTRAINT `FK_RequestNotificationBroRequest`;
+--    ALTER TABLE `Products` DROP CONSTRAINT `FK_ProductCategory`;
+--    ALTER TABLE `ProductTags` DROP CONSTRAINT `FK_ProductTag_Product`;
+--    ALTER TABLE `ProductTags` DROP CONSTRAINT `FK_ProductTag_Tag`;
+--    ALTER TABLE `Comments` DROP CONSTRAINT `FK_PostComment`;
+--    ALTER TABLE `Posts` DROP CONSTRAINT `FK_UserPost`;
+--    ALTER TABLE `Users` DROP CONSTRAINT `FK_UserProfile`;
+--    ALTER TABLE `Messages` DROP CONSTRAINT `FK_MessagesSent`;
+--    ALTER TABLE `Messages` DROP CONSTRAINT `FK_MessageUser`;
+--    ALTER TABLE `Circles` DROP CONSTRAINT `FK_CircleOwner`;
+--    ALTER TABLE `Albums` DROP CONSTRAINT `FK_AlbumUser`;
+--    ALTER TABLE `Posts_Photo` DROP CONSTRAINT `FK_AlbumPhoto`;
+--    ALTER TABLE `Preferences` DROP CONSTRAINT `FK_UserPreferences`;
+--    ALTER TABLE `BroRequests` DROP CONSTRAINT `FK_SentBroRequest`;
+--    ALTER TABLE `BroRequests` DROP CONSTRAINT `FK_BroRequestUser`;
+--    ALTER TABLE `Notifications_FirstBump` DROP CONSTRAINT `FK_SentFirstBump`;
+--    ALTER TABLE `Notifications_CommentNotification` DROP CONSTRAINT `FK_CommentNotificationComment`;
+--    ALTER TABLE `Notifications` DROP CONSTRAINT `FK_NotificationUser`;
+--    ALTER TABLE `Comments` DROP CONSTRAINT `FK_CommentUser`;
+--    ALTER TABLE `Posts_Photo` DROP CONSTRAINT `FK_Photo_inherits_Post`;
+--    ALTER TABLE `Notifications_RequestNotification` DROP CONSTRAINT `FK_RequestNotification_inherits_Notification`;
+--    ALTER TABLE `Notifications_FirstBump` DROP CONSTRAINT `FK_FirstBump_inherits_Notification`;
+--    ALTER TABLE `Notifications_CommentNotification` DROP CONSTRAINT `FK_CommentNotification_inherits_Notification`;
+--    ALTER TABLE `Posts_TextPost` DROP CONSTRAINT `FK_TextPost_inherits_Post`;
 
 -- --------------------------------------------------
 -- Dropping existing tables
 -- --------------------------------------------------
 SET foreign_key_checks = 0;
+    DROP TABLE IF EXISTS `Albums`;
+    DROP TABLE IF EXISTS `Users`;
+    DROP TABLE IF EXISTS `Posts`;
+    DROP TABLE IF EXISTS `Comments`;
+    DROP TABLE IF EXISTS `BroRequests`;
+    DROP TABLE IF EXISTS `Circles`;
+    DROP TABLE IF EXISTS `Interests`;
+    DROP TABLE IF EXISTS `Messages`;
+    DROP TABLE IF EXISTS `Notifications`;
+    DROP TABLE IF EXISTS `Preferences`;
+    DROP TABLE IF EXISTS `Products`;
+    DROP TABLE IF EXISTS `Tags`;
+    DROP TABLE IF EXISTS `Categories`;
+    DROP TABLE IF EXISTS `Profiles`;
+    DROP TABLE IF EXISTS `Posts_Photo`;
+    DROP TABLE IF EXISTS `Notifications_RequestNotification`;
+    DROP TABLE IF EXISTS `Notifications_FirstBump`;
+    DROP TABLE IF EXISTS `Notifications_CommentNotification`;
+    DROP TABLE IF EXISTS `Posts_TextPost`;
+    DROP TABLE IF EXISTS `CircleUser`;
+    DROP TABLE IF EXISTS `UserUser`;
+    DROP TABLE IF EXISTS `InterestProfile`;
+    DROP TABLE IF EXISTS `ProductTags`;
 SET foreign_key_checks = 1;
 
 -- --------------------------------------------------
@@ -200,22 +254,22 @@ ALTER TABLE `Profiles` ADD PRIMARY KEY (Id);
 
 
 
-CREATE TABLE `Posts_Photo`(
-	`Caption` varchar (1000) NOT NULL, 
-	`AlbumId` int NOT NULL, 
-	`Id` int NOT NULL, 
-	`ProfilePhotoOf_Id` int NOT NULL);
-
-ALTER TABLE `Posts_Photo` ADD PRIMARY KEY (Id);
-
-
-
-
 CREATE TABLE `Notifications_RequestNotification`(
 	`Id` int NOT NULL, 
 	`BroRequest_Id` int NOT NULL);
 
 ALTER TABLE `Notifications_RequestNotification` ADD PRIMARY KEY (Id);
+
+
+
+
+CREATE TABLE `Posts_Photo`(
+	`Caption` varchar (1000) NOT NULL, 
+	`AlbumId` int NOT NULL, 
+	`Id` int NOT NULL, 
+	`ProfilePhotoOf_Id` int);
+
+ALTER TABLE `Posts_Photo` ADD PRIMARY KEY (Id);
 
 
 
@@ -360,21 +414,6 @@ ADD CONSTRAINT `FK_InterestProfile_Profile`
 CREATE INDEX `IX_FK_InterestProfile_Profile` 
     ON `InterestProfile`
     (`InterestedProfiles_Id`);
-
--- Creating foreign key on `ProfilePhotoOf_Id` in table 'Posts_Photo'
-
-ALTER TABLE `Posts_Photo`
-ADD CONSTRAINT `FK_PhotoProfile`
-    FOREIGN KEY (`ProfilePhotoOf_Id`)
-    REFERENCES `Profiles`
-        (`Id`)
-    ON DELETE NO ACTION ON UPDATE NO ACTION;
-
--- Creating non-clustered index for FOREIGN KEY 'FK_PhotoProfile'
-
-CREATE INDEX `IX_FK_PhotoProfile` 
-    ON `Posts_Photo`
-    (`ProfilePhotoOf_Id`);
 
 -- Creating foreign key on `BroRequest_Id` in table 'Notifications_RequestNotification'
 
@@ -655,14 +694,20 @@ CREATE INDEX `IX_FK_CommentUser`
     ON `Comments`
     (`UserId`);
 
--- Creating foreign key on `Id` in table 'Posts_Photo'
+-- Creating foreign key on `ProfilePhotoOf_Id` in table 'Posts_Photo'
 
 ALTER TABLE `Posts_Photo`
-ADD CONSTRAINT `FK_Photo_inherits_Post`
-    FOREIGN KEY (`Id`)
-    REFERENCES `Posts`
+ADD CONSTRAINT `FK_ProfilePhoto`
+    FOREIGN KEY (`ProfilePhotoOf_Id`)
+    REFERENCES `Profiles`
         (`Id`)
-    ON DELETE CASCADE ON UPDATE NO ACTION;
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_ProfilePhoto'
+
+CREATE INDEX `IX_FK_ProfilePhoto` 
+    ON `Posts_Photo`
+    (`ProfilePhotoOf_Id`);
 
 -- Creating foreign key on `Id` in table 'Notifications_RequestNotification'
 
@@ -670,6 +715,15 @@ ALTER TABLE `Notifications_RequestNotification`
 ADD CONSTRAINT `FK_RequestNotification_inherits_Notification`
     FOREIGN KEY (`Id`)
     REFERENCES `Notifications`
+        (`Id`)
+    ON DELETE CASCADE ON UPDATE NO ACTION;
+
+-- Creating foreign key on `Id` in table 'Posts_Photo'
+
+ALTER TABLE `Posts_Photo`
+ADD CONSTRAINT `FK_Photo_inherits_Post`
+    FOREIGN KEY (`Id`)
+    REFERENCES `Posts`
         (`Id`)
     ON DELETE CASCADE ON UPDATE NO ACTION;
 

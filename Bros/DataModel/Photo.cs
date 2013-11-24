@@ -17,7 +17,7 @@ namespace Bros.DataModel
         public string Caption { get; set; }
         public int AlbumId { get; set; }
     
-        public virtual Profile ProfilePhotoOf { get; set; }
         public virtual Album Album { get; set; }
+        public virtual Profile ProfilePhotoOf { get; set; }
     }
 }

@@ -20,8 +20,8 @@
     <EntitySet Name="Tags" EntityType="ModelFirst.Store.Tags" store:Type="Tables" Schema="bromance" />
     <EntitySet Name="Categories" EntityType="ModelFirst.Store.Categories" store:Type="Tables" Schema="bromance" />
     <EntitySet Name="Profiles" EntityType="ModelFirst.Store.Profiles" store:Type="Tables" Schema="bromance" />
-    <EntitySet Name="Posts_Photo" EntityType="ModelFirst.Store.Posts_Photo" store:Type="Tables" Schema="bromance" />
     <EntitySet Name="Notifications_RequestNotification" EntityType="ModelFirst.Store.Notifications_RequestNotification" store:Type="Tables" Schema="bromance" />
+    <EntitySet Name="Posts_Photo" EntityType="ModelFirst.Store.Posts_Photo" store:Type="Tables" Schema="bromance" />
     <EntitySet Name="Notifications_FirstBump" EntityType="ModelFirst.Store.Notifications_FirstBump" store:Type="Tables" Schema="bromance" />
     <EntitySet Name="Notifications_CommentNotification" EntityType="ModelFirst.Store.Notifications_CommentNotification" store:Type="Tables" Schema="bromance" />
     <EntitySet Name="Posts_TextPost" EntityType="ModelFirst.Store.Posts_TextPost" store:Type="Tables" Schema="bromance" />
@@ -52,10 +52,6 @@
     <AssociationSet Name="FK_InterestProfile_Profile" Association="ModelFirst.Store.FK_InterestProfile_Profile">
       <End Role="Profile" EntitySet="Profiles" />
       <End Role="InterestProfile" EntitySet="InterestProfile" />
-    </AssociationSet>
-    <AssociationSet Name="PhotoProfile" Association="ModelFirst.Store.PhotoProfile">
-      <End Role="Photo" EntitySet="Posts_Photo" />
-      <End Role="Profile" EntitySet="Profiles" />
     </AssociationSet>
     <AssociationSet Name="RequestNotificationBroRequest" Association="ModelFirst.Store.RequestNotificationBroRequest">
       <End Role="RequestNotification" EntitySet="Notifications_RequestNotification" />
@@ -133,13 +129,17 @@
       <End Role="Comment" EntitySet="Comments" />
       <End Role="User" EntitySet="Users" />
     </AssociationSet>
-    <AssociationSet Name="FK_Photo_inherits_Post" Association="ModelFirst.Store.FK_Photo_inherits_Post">
-      <End Role="Post" EntitySet="Posts" />
+    <AssociationSet Name="ProfilePhoto" Association="ModelFirst.Store.ProfilePhoto">
+      <End Role="Profile" EntitySet="Profiles" />
       <End Role="Photo" EntitySet="Posts_Photo" />
     </AssociationSet>
     <AssociationSet Name="FK_RequestNotification_inherits_Notification" Association="ModelFirst.Store.FK_RequestNotification_inherits_Notification">
       <End Role="Notification" EntitySet="Notifications" />
       <End Role="RequestNotification" EntitySet="Notifications_RequestNotification" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Photo_inherits_Post" Association="ModelFirst.Store.FK_Photo_inherits_Post">
+      <End Role="Post" EntitySet="Posts" />
+      <End Role="Photo" EntitySet="Posts_Photo" />
     </AssociationSet>
     <AssociationSet Name="FK_FirstBump_inherits_Notification" Association="ModelFirst.Store.FK_FirstBump_inherits_Notification">
       <End Role="Notification" EntitySet="Notifications" />
@@ -296,6 +296,13 @@
     <Property Name="Drinks" Type="varchar" Nullable="true" />
     <Property Name="Drugs" Type="varchar" Nullable="true" />
   </EntityType>
+  <EntityType Name="Notifications_RequestNotification">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="BroRequest_Id" Type="int" Nullable="false" />
+  </EntityType>
   <EntityType Name="Posts_Photo">
     <Key>
       <PropertyRef Name="Id" />
@@ -303,14 +310,7 @@
     <Property Name="Caption" Type="varchar" Nullable="false" />
     <Property Name="AlbumId" Type="int" Nullable="false" />
     <Property Name="Id" Type="int" Nullable="false" />
-    <Property Name="ProfilePhotoOf_Id" Type="int" Nullable="false" />
-  </EntityType>
-  <EntityType Name="Notifications_RequestNotification">
-    <Key>
-      <PropertyRef Name="Id" />
-    </Key>
-    <Property Name="Id" Type="int" Nullable="false" />
-    <Property Name="BroRequest_Id" Type="int" Nullable="false" />
+    <Property Name="ProfilePhotoOf_Id" Type="int" Nullable="true" />
   </EntityType>
   <EntityType Name="Notifications_FirstBump">
     <Key>
@@ -365,18 +365,6 @@
     <Property Name="Products_Id" Type="int" Nullable="false" />
     <Property Name="Tags_Id" Type="int" Nullable="false" />
   </EntityType>
-  <Association Name="PhotoProfile">
-    <End Role="Photo" Type="ModelFirst.Store.Posts_Photo" Multiplicity="*" />
-    <End Role="Profile" Type="ModelFirst.Store.Profiles" Multiplicity="1" />
-    <ReferentialConstraint>
-      <Principal Role="Profile">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="Photo">
-        <PropertyRef Name="ProfilePhotoOf_Id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="RequestNotificationBroRequest">
     <End Role="RequestNotification" Type="ModelFirst.Store.Notifications_RequestNotification" Multiplicity="*" />
     <End Role="BroRequest" Type="ModelFirst.Store.BroRequests" Multiplicity="1" />
@@ -581,6 +569,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="ProfilePhoto">
+    <End Role="Profile" Type="ModelFirst.Store.Profiles" Multiplicity="0..1" />
+    <End Role="Photo" Type="ModelFirst.Store.Posts_Photo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Profile">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Photo">
+        <PropertyRef Name="ProfilePhotoOf_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_CircleUser_Circle">
     <End Role="Circle" Type="ModelFirst.Store.Circles" Multiplicity="1" />
     <End Role="CircleUser" Type="ModelFirst.Store.CircleUser" Multiplicity="*" />
@@ -677,20 +677,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_Photo_inherits_Post">
-    <End Role="Post" Type="ModelFirst.Store.Posts" Multiplicity="1">
-      <OnDelete Action="Cascade" />
-    </End>
-    <End Role="Photo" Type="ModelFirst.Store.Posts_Photo" Multiplicity="0..1" />
-    <ReferentialConstraint>
-      <Principal Role="Post">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="Photo">
-        <PropertyRef Name="Id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK_RequestNotification_inherits_Notification">
     <End Role="Notification" Type="ModelFirst.Store.Notifications" Multiplicity="1">
       <OnDelete Action="Cascade" />
@@ -701,6 +687,20 @@
         <PropertyRef Name="Id" />
       </Principal>
       <Dependent Role="RequestNotification">
+        <PropertyRef Name="Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Photo_inherits_Post">
+    <End Role="Post" Type="ModelFirst.Store.Posts" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Photo" Type="ModelFirst.Store.Posts_Photo" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Post">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Photo">
         <PropertyRef Name="Id" />
       </Dependent>
     </ReferentialConstraint>
@@ -778,10 +778,6 @@
             <End Role="Interest" EntitySet="Interests" />
             <End Role="Profile" EntitySet="Profiles" />
           </AssociationSet>
-          <AssociationSet Name="PhotoProfile" Association="ModelFirst.PhotoProfile">
-            <End Role="Photo" EntitySet="Posts" />
-            <End Role="Profile" EntitySet="Profiles" />
-          </AssociationSet>
           <AssociationSet Name="RequestNotificationBroRequest" Association="ModelFirst.RequestNotificationBroRequest">
             <End Role="RequestNotification" EntitySet="Notifications" />
             <End Role="BroRequest" EntitySet="BroRequests" />
@@ -854,6 +850,10 @@
             <End Role="Comment" EntitySet="Comments" />
             <End Role="User" EntitySet="Users" />
           </AssociationSet>
+          <AssociationSet Name="ProfilePhoto" Association="ModelFirst.ProfilePhoto">
+            <End Role="Profile" EntitySet="Profiles" />
+            <End Role="Photo" EntitySet="Posts" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Album">
           <Key>
@@ -893,9 +893,9 @@
         </EntityType>
         <EntityType Name="Photo" BaseType="ModelFirst.Post">
           <Property Type="String" Name="Caption" Nullable="false" />
-          <NavigationProperty Name="ProfilePhotoOf" Relationship="ModelFirst.PhotoProfile" FromRole="Photo" ToRole="Profile" />
           <NavigationProperty Name="Album" Relationship="ModelFirst.AlbumPhoto" FromRole="Photo" ToRole="Album" />
           <Property Type="Int32" Name="AlbumId" Nullable="false" />
+          <NavigationProperty Name="ProfilePhotoOf" Relationship="ModelFirst.ProfilePhoto" FromRole="Photo" ToRole="Profile" />
         </EntityType>
         <EntityType Name="Post">
           <Key>
@@ -1029,7 +1029,6 @@
           <Property Type="String" Name="ZipCode" Nullable="false" />
           <Property Type="DateTime" Name="BirthDate" Nullable="false" />
           <NavigationProperty Name="Interests" Relationship="ModelFirst.InterestProfile" FromRole="Profile" ToRole="Interest" />
-          <NavigationProperty Name="ProfilePhoto" Relationship="ModelFirst.PhotoProfile" FromRole="Profile" ToRole="Photo" />
           <Property Type="String" Name="Gender" Nullable="false" />
           <Property Type="String" Name="Pets" Nullable="true" />
           <Property Type="String" Name="Religion" Nullable="true" />
@@ -1044,6 +1043,7 @@
           <Property Type="String" Name="Drinks" Nullable="true" />
           <Property Type="String" Name="Drugs" Nullable="true" />
           <NavigationProperty Name="User" Relationship="ModelFirst.UserProfile" FromRole="Profile" ToRole="User" />
+          <NavigationProperty Name="ProfilePhoto" Relationship="ModelFirst.ProfilePhoto" FromRole="Profile" ToRole="Photo" />
         </EntityType>
         <EntityType Name="TextPost" BaseType="ModelFirst.Post">
           <Property Type="String" Name="Content" Nullable="false" />
@@ -1055,10 +1055,6 @@
         <Association Name="InterestProfile">
           <End Type="ModelFirst.Interest" Role="Interest" Multiplicity="*" />
           <End Type="ModelFirst.Profile" Role="Profile" Multiplicity="*" />
-        </Association>
-        <Association Name="PhotoProfile">
-          <End Type="ModelFirst.Photo" Role="Photo" Multiplicity="1" />
-          <End Type="ModelFirst.Profile" Role="Profile" Multiplicity="1" />
         </Association>
         <EntityType Name="RequestNotification" BaseType="ModelFirst.Notification">
           <NavigationProperty Name="BroRequest" Relationship="ModelFirst.RequestNotificationBroRequest" FromRole="RequestNotification" ToRole="BroRequest" />
@@ -1253,6 +1249,10 @@
               <PropertyRef Name="UserId" />
             </Dependent>
           </ReferentialConstraint>
+        </Association>
+        <Association Name="ProfilePhoto">
+          <End Type="ModelFirst.Profile" Role="Profile" Multiplicity="0..1" />
+          <End Type="ModelFirst.Photo" Role="Photo" Multiplicity="0..1" />
         </Association>
       </Schema>
     </edmx:ConceptualModels>
@@ -1468,14 +1468,6 @@
         <ScalarProperty Name="Id" ColumnName="InterestedProfiles_Id" />
       </EndProperty>
     </AssociationSetMapping>
-    <AssociationSetMapping Name="PhotoProfile" TypeName="ModelFirst.PhotoProfile" StoreEntitySet="Posts_Photo">
-      <EndProperty Name="Profile">
-        <ScalarProperty Name="Id" ColumnName="ProfilePhotoOf_Id" />
-      </EndProperty>
-      <EndProperty Name="Photo">
-        <ScalarProperty Name="Id" ColumnName="Id" />
-      </EndProperty>
-    </AssociationSetMapping>
     <AssociationSetMapping Name="RequestNotificationBroRequest" TypeName="ModelFirst.RequestNotificationBroRequest" StoreEntitySet="Notifications_RequestNotification">
       <EndProperty Name="BroRequest">
         <ScalarProperty Name="Id" ColumnName="BroRequest_Id" />
@@ -1507,6 +1499,15 @@
       <EndProperty Name="CommentNotification">
         <ScalarProperty Name="Id" ColumnName="Id" />
       </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="ProfilePhoto" TypeName="ModelFirst.ProfilePhoto" StoreEntitySet="Posts_Photo">
+      <EndProperty Name="Profile">
+        <ScalarProperty Name="Id" ColumnName="ProfilePhotoOf_Id" />
+      </EndProperty>
+      <EndProperty Name="Photo">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+      <Condition ColumnName="ProfilePhotoOf_Id" IsNull="false" />
     </AssociationSetMapping>
   </EntityContainerMapping>
 </Mapping></edmx:Mappings>

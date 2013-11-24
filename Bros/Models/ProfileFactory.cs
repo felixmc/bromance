@@ -11,26 +11,22 @@ namespace Bros.Models
     {
 
         private static byte[] salt = AuthenticationController.CreateSalt(256);
-        static User _User = new User()
-        {
-            Salt = salt,
-            Password = AuthenticationController.GeneratedSaltedHash("Donkey", salt),
-            Email = "BroBWishing@gmail.com",
-            DateCreated = DateTime.Today
 
-        };
         public User User
         {
             get
             {
-                return _User;
-            }
-            set
-            {
-                if (User == null)
-                {
-                    User = _User;
-                }
+                User _User = new User () {
+					Salt = salt,
+					Password = AuthenticationController.GeneratedSaltedHash("Donkey", salt),
+					Email = "BroBWishing@gmail.com",
+					DateCreated = DateTime.Today,
+				};
+
+				_Profile.User = _User;
+				_User.Profile = _Profile;
+
+				return _User;
             }
         }
 
@@ -54,10 +50,6 @@ namespace Bros.Models
             Smokes = "Meh",
             Drinks = "Definitely",
             Drugs = "Nahh dude.",
-
-            User = _User,
-
-
         };
         public Profile Profile
         {
