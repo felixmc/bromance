@@ -6,7 +6,6 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Web;
 using System.Web.Mvc;
-using Bros.DataModel;
 
 namespace Bros.Controllers
 {

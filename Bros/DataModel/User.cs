@@ -16,19 +16,20 @@ namespace Bros.DataModel
     {
         public User()
         {
-            this.Albums = new HashSet<Album>();
-            this.Posts = new HashSet<Post>();
-            this.Comments = new HashSet<Comment>();
-            this.SentBroRequests = new HashSet<BroRequest>();
-            this.ReceivedBroRequests = new HashSet<BroRequest>();
             this.JoinedCircles = new HashSet<Circle>();
-            this.OwnedCircles = new HashSet<Circle>();
-            this.MessagesSent = new HashSet<Message>();
-            this.MessagesReceived = new HashSet<Message>();
-            this.Notifications = new HashSet<Notification>();
-            this.Preferences = new HashSet<Preference>();
             this.BlockedBros = new HashSet<User>();
             this.BlockedByBros = new HashSet<User>();
+            this.Posts = new HashSet<Post>();
+            this.SentMessages = new HashSet<Message>();
+            this.ReceivedMessages = new HashSet<Message>();
+            this.Circles = new HashSet<Circle>();
+            this.Albums = new HashSet<Album>();
+            this.Preferences = new HashSet<Preference>();
+            this.SentBroRequests = new HashSet<BroRequest>();
+            this.ReceivedBroRequests = new HashSet<BroRequest>();
+            this.SentFirstBumps = new HashSet<FirstBump>();
+            this.Notifications = new HashSet<Notification>();
+            this.Comments = new HashSet<Comment>();
         }
     
         public int Id { get; set; }
@@ -37,20 +38,20 @@ namespace Bros.DataModel
         public byte[] Password { get; set; }
         public byte[] Salt { get; set; }
     
-        public virtual ICollection<Album> Albums { get; set; }
-        public virtual ICollection<Post> Posts { get; set; }
-        public virtual ICollection<Comment> Comments { get; set; }
-        public virtual ICollection<BroRequest> SentBroRequests { get; set; }
-        public virtual ICollection<BroRequest> ReceivedBroRequests { get; set; }
         public virtual ICollection<Circle> JoinedCircles { get; set; }
-        public virtual ICollection<Circle> OwnedCircles { get; set; }
-        public virtual ICollection<Message> MessagesSent { get; set; }
-        public virtual ICollection<Message> MessagesReceived { get; set; }
-        public virtual ICollection<Notification> Notifications { get; set; }
-        public virtual ICollection<Preference> Preferences { get; set; }
-        public virtual Profile Profiles { get; set; }
         public virtual ICollection<User> BlockedBros { get; set; }
         public virtual ICollection<User> BlockedByBros { get; set; }
-        public virtual FirstBump SentFirstBumps { get; set; }
+        public virtual ICollection<Post> Posts { get; set; }
+        public virtual Profile Profile { get; set; }
+        public virtual ICollection<Message> SentMessages { get; set; }
+        public virtual ICollection<Message> ReceivedMessages { get; set; }
+        public virtual ICollection<Circle> Circles { get; set; }
+        public virtual ICollection<Album> Albums { get; set; }
+        public virtual ICollection<Preference> Preferences { get; set; }
+        public virtual ICollection<BroRequest> SentBroRequests { get; set; }
+        public virtual ICollection<BroRequest> ReceivedBroRequests { get; set; }
+        public virtual ICollection<FirstBump> SentFirstBumps { get; set; }
+        public virtual ICollection<Notification> Notifications { get; set; }
+        public virtual ICollection<Comment> Comments { get; set; }
     }
 }

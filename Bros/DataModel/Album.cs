@@ -22,8 +22,9 @@ namespace Bros.DataModel
         public int Id { get; set; }
         public string Title { get; set; }
         public System.DateTime DateCreated { get; set; }
+        public int UserId { get; set; }
     
-        public virtual ICollection<Photo> Photos { get; set; }
         public virtual User Owner { get; set; }
+        public virtual ICollection<Photo> Photos { get; set; }
     }
 }

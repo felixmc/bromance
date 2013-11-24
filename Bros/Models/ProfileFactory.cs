@@ -55,7 +55,7 @@ namespace Bros.Models
             Drinks = "Definitely",
             Drugs = "Nahh dude.",
 
-            Owner = _User,
+            User = _User,
 
 
         };

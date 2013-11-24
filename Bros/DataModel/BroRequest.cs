@@ -17,9 +17,11 @@ namespace Bros.DataModel
         public int Id { get; set; }
         public string Message { get; set; }
         public System.DateTime DateCreated { get; set; }
+        public int UserId { get; set; }
+        public int UserId1 { get; set; }
     
+        public virtual RequestNotification RequestNotification { get; set; }
         public virtual User Sender { get; set; }
         public virtual User Receiver { get; set; }
-        public virtual RequestNotification RequestNotification { get; set; }
     }
 }

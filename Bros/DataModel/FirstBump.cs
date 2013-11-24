@@ -14,12 +14,8 @@ namespace Bros.DataModel
     
     public partial class FirstBump : Notification
     {
-        public FirstBump()
-        {
-            this.Sender = new HashSet<User>();
-        }
+        public int UserId { get; set; }
     
-    
-        public virtual ICollection<User> Sender { get; set; }
+        public virtual User Sender { get; set; }
     }
 }

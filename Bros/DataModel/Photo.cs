@@ -15,8 +15,9 @@ namespace Bros.DataModel
     public partial class Photo : Post
     {
         public string Caption { get; set; }
+        public int AlbumId { get; set; }
     
-        public virtual Album Album { get; set; }
         public virtual Profile ProfilePhotoOf { get; set; }
+        public virtual Album Album { get; set; }
     }
 }
