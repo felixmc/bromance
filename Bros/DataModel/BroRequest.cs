@@ -23,5 +23,20 @@ namespace Bros.DataModel
         public virtual RequestNotification RequestNotification { get; set; }
         public virtual User Sender { get; set; }
         public virtual User Receiver { get; set; }
+
+        public bool Accept()
+        {
+            bool successful = false;
+
+            successful = Sender.GetCircleByName("Bros").AddBro(Receiver);
+            successful = Receiver.GetCircleByName("Bros").AddBro(Sender);
+
+            return successful;
+        }
+
+        public void Dismiss()
+        {
+            this.RequestNotification.IsRead = true;
+        }
     }
 }
