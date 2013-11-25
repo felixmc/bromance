@@ -9,7 +9,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
 using WebMatrix.WebData;
-
+using Bros.DataModel;
 namespace Bros.Controllers
 {
     [AllowAnonymous]
@@ -17,6 +17,21 @@ namespace Bros.Controllers
     {
         //
         // GET: /Authentication/
+        [HttpPost]
+        public ActionResult Login(RegisterModel model)
+        {
+            bool isLoggedIn = WebSecurity.Login(model.UserName, model.Password);
+            using (ModelFirstContainer context = new ModelFirstContainer())
+            {
+                Bros.DataModel.User user = 
+                    (from u in context.Users
+                    where u.Email == model.UserName
+                    select u).FirstOrDefault<User>();
+                Session.Add("User", user);
+            }
+            return View();
+        }
+
         [HttpGet]
         public ActionResult Login()
         {
