@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Bros.Enums;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -9,7 +10,7 @@ namespace Bros.Models
     public class RegisterModel
     {
         [Required]
-        [Display(Name = "User name")]
+        [Display(Name = "User Name")]
         public string UserName { get; set; }
 
         [Required]
@@ -22,5 +23,27 @@ namespace Bros.Models
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
+
+        [Required]
+        [DataType(DataType.EmailAddress)]
+        [Display(Name="Email")]
+        public string Email { get; set; }
+
+        [Required]
+        [Display(Name="FirstName")]
+        public string FirstName { get; set; }
+
+        [Required]
+        [Display(Name="LastName")]
+        public string LastName { get; set; }
+
+        [Required]
+        [Display(Name="Gender")]
+        public Gender MyProperty { get; set; }
+
+        [Required]
+        [DataType(DataType.PostalCode)]
+        [Display(Name="Zipcode")]
+        public int MyProperty { get; set; }
     }
 }
