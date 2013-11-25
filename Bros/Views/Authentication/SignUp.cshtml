@@ -18,19 +18,18 @@
 
         <h2>Username</h2>
         @Html.ValidationSummary()
-    @using (Html.BeginForm("UserForm","Home", FormMethod.Post, new {enctype="multipart/form-data"}))
+    @using (Html.BeginForm("UserForm","Authentication", FormMethod.Post))
     {
        
         <p>UserName: @Html.TextBoxFor(x => x.UserName)</p>
-       
         <p>Email: @Html.TextBoxFor(x => x.Email)</p>
-        <p>Password: @Html.TextBoxFor(x => x.Password)</p>
-        <p>Confirm Password: @Html.TextBoxFor(x => x.ConfirmPassword)</p> 
+        <p>Password: @Html.PasswordFor(x => x.Password)</p>
+        <p>Confirm Password: @Html.PasswordFor(x => x.ConfirmPassword)</p> 
         <p>First Name: @Html.TextBoxFor(x => x.FirstName)</p>
         <p>Last Name: @Html.TextBoxFor(x => x.LastName)</p>
-        <p>Birthdate: <input type="date" name ="Birthdate" /></p>
-        <p></p>
-        <p></p>
+        <p>Birthdate: <input type="date" name ="BirthDate" placeholder="Enter Birthday"/></p>
+        <p>Zipcode: <input type="number" name="Zipcode" placeholder="Zipcode"/></p>
+        <p>Gender: @Html.RadioButtonFor(x => x.Gender, "Female") @Html.RadioButtonFor(x => x.Gender, "Male")</p>
         <input type="submit" value="Submit Product" class="my-button"/>
         
         
