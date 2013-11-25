@@ -309,6 +309,12 @@
       <LastGenOutput>ModelFirst.cs</LastGenOutput>
     </Content>
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Profile\_StatusUpdateForm.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Profile\Feed.cshtml" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
