@@ -208,6 +208,7 @@
     </Compile>
     <Compile Include="Models\Enums.cs" />
     <Compile Include="Models\ProfileFactory.cs" />
+    <Compile Include="Models\RegisterModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -273,8 +274,6 @@
     <Content Include="Views\Profile\_UserPartialView.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Authentication\_LoginPartial.cshtml" />
-    <Content Include="Views\Authentication\_SignupPartial.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
@@ -282,10 +281,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Layouts\_LayoutPageNavBar.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Authentication\_LoginPartial.cshtml" />
-    <Content Include="Views\Authentication\_SignupPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Store\ProductView.cshtml" />
@@ -314,6 +309,9 @@
       <DependentUpon>ModelFirst.edmx</DependentUpon>
       <LastGenOutput>ModelFirst.cs</LastGenOutput>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Authentication\SignUp.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

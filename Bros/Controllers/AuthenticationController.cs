@@ -131,9 +131,11 @@ namespace Bros.Controllers
         }
 
         [HttpPost]
-        public ActionResult UserForm()
+        public ActionResult UserForm(RegisterModel user)
         {
 
+
+            return View();
         }
 
     }
