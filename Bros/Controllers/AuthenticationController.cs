@@ -1,4 +1,5 @@
 ﻿using Bros.DataModel;
+using Bros.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,45 +7,87 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
+using WebMatrix.WebData;
 
 namespace Bros.Controllers
 {
+    [AllowAnonymous]
     public class AuthenticationController : Controller
     {
         //
         // GET: /Authentication/
-
-        public ActionResult Index()
+        [HttpGet]
+        public ActionResult Login()
         {
-            string password = this.Request["password"];
-            string username = this.Request["username"];
-            HomeController controller = new HomeController();
-            User user = new User();
-            if (Login(password, username, out user))
-            {
-                Session["user"] = user;
-                return View("Home/Index");
-            }
-
-            return View("Home/Index");
+            return View();
         }
 
-        private bool Login(string password, string username, out User user)
+        [HttpPost]
+        public ActionResult Register(RegisterModel model)
         {
-            bool isLoggedIn = false;
-            using (ModelFirstContainer context = new ModelFirstContainer())
+            if (ModelState.IsValid)
             {
-                user = ((IEnumerable<User>)context.Users.Where(n => n is User && ((User)n).Email == username)).First();
-                byte[] enteredPassword = GeneratedSaltedHash(password, user.Salt);
-                if (CompareByteArrays(enteredPassword, user.Password))
+                // Attempt to register the user
+                try
                 {
-                    Session["user"] = user;
-                    isLoggedIn = true;
+                    WebSecurity.CreateUserAndAccount(model.UserName, model.Password);
+                    WebSecurity.Login(model.UserName, model.Password);
+                    return RedirectToAction("Index", "Home");
                 }
-
+                catch (MembershipCreateUserException e)
+                {
+                    ModelState.AddModelError("", ErrorCodeToString(e.StatusCode));
+                }
             }
-            return isLoggedIn;
+
+            // If we got this far, something failed, redisplay form
+            return View(model);
         }
+
+        private static string ErrorCodeToString(MembershipCreateStatus createStatus)
+        {
+            switch (createStatus)
+            {
+                case MembershipCreateStatus.DuplicateUserName:
+                    return "User name already exists. Please enter a different user name.";
+
+                case MembershipCreateStatus.DuplicateEmail:
+                    return "A user name for that e-mail address already exists. Please enter a different e-mail address.";
+
+                case MembershipCreateStatus.InvalidPassword:
+                    return "The password provided is invalid. Please enter a valid password value.";
+
+                case MembershipCreateStatus.InvalidEmail:
+                    return "The e-mail address provided is invalid. Please check the value and try again.";
+
+                case MembershipCreateStatus.InvalidAnswer:
+                    return "The password retrieval answer provided is invalid. Please check the value and try again.";
+
+                case MembershipCreateStatus.InvalidQuestion:
+                    return "The password retrieval question provided is invalid. Please check the value and try again.";
+
+                case MembershipCreateStatus.InvalidUserName:
+                    return "The user name provided is invalid. Please check the value and try again.";
+
+                case MembershipCreateStatus.ProviderError:
+                    return "The authentication provider returned an error. Please verify your entry and try again. If the problem persists, please contact your system administrator.";
+
+                case MembershipCreateStatus.UserRejected:
+                    return "The user creation request has been canceled. Please verify your entry and try again. If the problem persists, please contact your system administrator.";
+
+                default:
+                    return "An unknown error occurred. Please verify your entry and try again. If the problem persists, please contact your system administrator.";
+            }
+        }
+
+
+        [HttpGet]
+        public ActionResult Register()
+        {
+            return View();
+        }
+
 
         public static byte[] GeneratedSaltedHash(string plainText, byte[] salt)
         {
@@ -85,6 +128,14 @@ namespace Bros.Controllers
             rng.GetBytes(salt);
 
             return salt;
+        }
+
+        [HttpPost]
+        public ActionResult UserForm(RegisterModel user)
+        {
+
+
+            return View();
         }
 
     }

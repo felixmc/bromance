@@ -119,6 +119,12 @@
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.WebPages.Razor.dll</HintPath>
     </Reference>
+    <Reference Include="WebMatrix.Data, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="WebMatrix.WebData, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\AuthenticationController.cs" />
@@ -202,6 +208,7 @@
     </Compile>
     <Compile Include="Models\Enums.cs" />
     <Compile Include="Models\ProfileFactory.cs" />
+    <Compile Include="Models\RegisterModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -267,8 +274,6 @@
     <Content Include="Views\Profile\_UserPartialView.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Authentication\_LoginPartial.cshtml" />
-    <Content Include="Views\Authentication\_SignupPartial.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
@@ -276,10 +281,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Layouts\_LayoutPageNavBar.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Authentication\_LoginPartial.cshtml" />
-    <Content Include="Views\Authentication\_SignupPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Store\ProductView.cshtml" />
@@ -314,6 +315,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Profile\Feed.cshtml" />
+    <Content Include="Views\Authentication\SignUp.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
