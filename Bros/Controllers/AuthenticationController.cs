@@ -145,5 +145,13 @@ namespace Bros.Controllers
             return salt;
         }
 
+        [HttpPost]
+        public ActionResult UserForm(RegisterModel user)
+        {
+
+
+            return View();
+        }
+
     }
 }

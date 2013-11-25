@@ -311,6 +311,10 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Views\Profile\_StatusUpdateForm.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Profile\Feed.cshtml" />
     <Content Include="Views\Authentication\SignUp.cshtml" />
   </ItemGroup>
   <PropertyGroup>
