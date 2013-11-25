@@ -1,7 +1,8 @@
 ﻿@using Bros.Models
 @model RegisterModel
 @{
-    Layout = null
+    Layout = null;
+    ViewBag.Title = "Sign-Up Here!";
 }
 
 <!DOCTYPE html>
@@ -9,11 +10,31 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <title>Sign-Up Here!</title>
+    <title>@ViewBag.Title</title>
 </head>
 <body>
     <div>
-    
+
+
+        <h2>Username</h2>
+        @Html.ValidationSummary()
+    @using (Html.BeginForm("UserForm","Home", FormMethod.Post, new {enctype="multipart/form-data"}))
+    {
+       
+        <p>UserName: @Html.TextBoxFor(x => x.UserName)</p>
+       
+        <p>Email: @Html.TextBoxFor(x => x.Email)</p>
+        <p>Password: @Html.TextBoxFor(x => x.Password)</p>
+        <p>Confirm Password: @Html.TextBoxFor(x => x.ConfirmPassword)</p> 
+        <p>First Name: @Html.TextBoxFor(x => x.FirstName)</p>
+        <p>Last Name: @Html.TextBoxFor(x => x.LastName)</p>
+        <p>Birthdate: <input type="date" name ="Birthdate" /></p>
+        <p></p>
+        <p></p>
+        <input type="submit" value="Submit Product" class="my-button"/>
+        
+        
+    }
     </div>
 </body>
 </html>
