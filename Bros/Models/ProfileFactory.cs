@@ -11,7 +11,6 @@ namespace Bros.Models
 {
     public class ProfileFactory
     {
-        List<string> enumList = new List<string>() { "Ethnicity", "Education", "Gender", "Children", "Religion", "Pets", "Athleticism", "MarriageStatus", "SexualOrientation", "Smokes", "Drinks", "Drugs", "Job"};
         private static byte[] salt = AuthenticationController.CreateSalt(256);
         Random rand = new Random();
         public User User
@@ -58,10 +57,6 @@ namespace Bros.Models
             Drugs = RandomEnum<Drugs>(),
             };
                 return _Profile;
-            }
-            private set
-            {
-
             }
         }
 
