@@ -39,11 +39,15 @@ namespace Bros.Models
 
         [Required]
         [Display(Name="Gender")]
-        public Gender MyProperty { get; set; }
+        public Gender Gender { get; set; }
 
         [Required]
         [DataType(DataType.PostalCode)]
         [Display(Name="Zipcode")]
-        public int MyProperty { get; set; }
+        public int Zipcode { get; set; }
+
+        [Required]
+        [DataType(DataType.Date)]
+        public DateTime BirthDate { get; set; }
     }
 }
