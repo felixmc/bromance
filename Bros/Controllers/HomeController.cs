@@ -10,11 +10,13 @@ using System.Web.Mvc;
 
 namespace Bros.Controllers
 {
+    [AllowAnonymous]
     public class HomeController : Controller
     {
         //
         // GET: /Home/
         ProfileFactory fact = new ProfileFactory();
+
         public ActionResult Index()
         {
             using (var context = new ModelFirstContainer())
@@ -43,6 +45,7 @@ namespace Bros.Controllers
             return View();
         }
 
+        [AllowAnonymous]
         public ActionResult AboutUs()
         {
             return View();
