@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace Bros.Enum
+namespace Bros.Enums
 {
     public enum Gender { Female, Male }
     public enum Ethnicity { Asian, Native_American, Hispanic, Middle_Eastern, Indian, White, Black, Pacific_Islander, Other }
@@ -16,7 +16,7 @@ namespace Bros.Enum
     public enum SexualOrientation { Heterosexual, Homosexual, Bisexual, Asexual, Pansexual, Other }
     public enum Smokes { Often, Sometimes, When_Drinking, Not_Anymore, Never }
     public enum Drinks { Often, Socially, Rarely, Not_Anymore, Never }
-    public enum Drugs { Often, Sometimes, Rarely, Not_Anymore, Never }
+    public enum Drugs { Often, Sometimes, Rarely, Medicinally, Not_Anymore, Never }
     public enum Job
     {
         Student,

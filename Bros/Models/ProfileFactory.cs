@@ -1,74 +1,73 @@
 ﻿using Bros.Controllers;
 using Bros.DataModel;
+using Bros.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Web;
 
 namespace Bros.Models
 {
     public class ProfileFactory
     {
-
+        List<string> enumList = new List<string>() { "Ethnicity", "Education", "Gender", "Children", "Religion", "Pets", "Athleticism", "MarriageStatus", "SexualOrientation", "Smokes", "Drinks", "Drugs", "Job"};
         private static byte[] salt = AuthenticationController.CreateSalt(256);
-
+        Random rand = new Random();
         public User User
         {
             get
             {
                 User _User = new User () {
 					Salt = salt,
-					Password = AuthenticationController.GeneratedSaltedHash("Donkey", salt),
-					Email = "BroBWishing@gmail.com",
+					Password = AuthenticationController.GeneratedSaltedHash(RandomWord(), salt),
+					Email = RandomWord() + "@gmail.com",
 					DateCreated = DateTime.Today,
 				};
 
-				_Profile.User = _User;
-				_User.Profile = _Profile;
+				Profile.User = _User;
+				_User.Profile = Profile;
 
 				return _User;
             }
         }
 
         static DateTime birth = new DateTime(1994, 4, 12);
-        static Profile _Profile = new Profile()
-        {
-            FirstName = "BroDude",
-            LastName = "Browser",
-            ZipCode = "12345",
-            BirthDate = birth,
-            Gender = "Male",
-            Pets = "None",
-            Religion = "Agnostic",
-            Job = "Brobo",
-            Education = "NU",
-            Ethnicity = "AZN",
-            Athleticism = "Built",
-            SexualOrientation = "Straight",
-            MarriageStatus = "Open",
-            Children = "No way",
-            Smokes = "Meh",
-            Drinks = "Definitely",
-            Drugs = "Nahh dude.",
-        };
+
         public Profile Profile
         {
             get
-            {
+            { 
+            Profile _Profile = new Profile(){
+            FirstName = RandomWord(),
+            LastName = RandomWord(),
+            ZipCode = RandomZip(),
+            BirthDate = birth,
+            Gender = RandomEnum<Gender>(),
+            Pets = RandomEnum<Pets>(),
+            Religion = RandomEnum<Religion>(),
+            Job = RandomEnum<Job>(),
+            Education = RandomEnum<Education>(),
+            Ethnicity = RandomEnum<Ethnicity>(),
+            Athleticism = RandomEnum<Athleticism>(),
+            SexualOrientation = RandomEnum<SexualOrientation>(),
+            MarriageStatus = RandomEnum<MariageStatus>(),
+            Children = RandomEnum<Children>(),
+            Smokes = RandomEnum<Smokes>(),
+            Drinks = RandomEnum<Drinks>(),
+            Drugs = RandomEnum<Drugs>(),
+            };
                 return _Profile;
             }
-            set
+            private set
             {
-                if (Profile == null)
-                {
-                    Profile = _Profile;
-                }
+
             }
         }
 
         static List<Profile> InterestedList = new List<Profile>()
         {
-            _Profile
+           
         };
         static Interest _Interest = new Interest()
         {
@@ -82,13 +81,56 @@ namespace Bros.Models
             {
                 return _Interest;
             }
-            set
+        }
+
+        private string RandomEnum<T>()
+        {
+
+            T[] items = (T[])Enum.GetValues(typeof(T));
+
+            return items[rand.Next(0, items.Length)].ToString();
+            
+        }
+
+        string RandomZip()
+        {
+            string zip = "";
+            for (int i = 0; i < 5; i++)
             {
-                if (Interest == null)
-                {
-                    Interest = _Interest;
-                }
+                int x = rand.Next(0, 10);
+                zip += (x + "");
             }
+
+                return zip;
+        }
+
+        string RandomWord()
+        {
+            string word = "";
+            int length = rand.Next(4, 15);
+
+            for (int i = 0; i < length; i++)
+            {
+                word += RandomLetter(i);
+            }
+
+
+                return word;
+        }
+
+        char RandomLetter(int index)
+        {
+            char letter = ' ';
+            if (index == 0)
+            {
+                letter = (char)rand.Next(65, 91);
+            }
+            else
+            {
+                letter = (char)rand.Next(97,123);
+            }
+
+            return letter;
         }
 
 
