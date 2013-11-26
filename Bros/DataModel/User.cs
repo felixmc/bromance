@@ -11,7 +11,6 @@ namespace Bros.DataModel
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
     
     public partial class User
     {
@@ -31,11 +30,6 @@ namespace Bros.DataModel
             this.SentFirstBumps = new HashSet<FirstBump>();
             this.Notifications = new HashSet<Notification>();
             this.Comments = new HashSet<Comment>();
-
-            if (this.GetCircleByName("Bros") == null)
-            {
-                this.CreateCircle("Bros");
-            }
         }
     
         public int Id { get; set; }
@@ -60,6 +54,7 @@ namespace Bros.DataModel
         public virtual ICollection<Notification> Notifications { get; set; }
         public virtual ICollection<Comment> Comments { get; set; }
 
+<<<<<<< HEAD
         public void SendBroRequest(User bro)
         {
             using (ModelFirstContainer context = new ModelFirstContainer())
@@ -91,5 +86,18 @@ namespace Bros.DataModel
         {
             return Circles.Where(c => c.Name == CircleName).FirstOrDefault();
         }
+=======
+        
+ 
+         public void CreateCircle(string CircleName)
+         {
+             Circles.Add(new Circle(CircleName, this));
+         }
+ 
+         public void AddBroToCircle(User Bro, Circle targetCircle)
+         {
+             targetCircle.AddBro(Bro);
+         }
+>>>>>>> d6249ace141befa332a328838a3d20faa93c3c65
     }
 }

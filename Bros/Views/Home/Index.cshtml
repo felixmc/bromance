@@ -1,7 +1,5 @@
-﻿
-<h2>Home Index</h2>
-
-@section LoginRegister
+<<<<<<< HEAD
+﻿@section LoginRegister
 {
     <div class="loginRegister">
         <ul>
@@ -13,8 +11,13 @@
 
 @section MainNavigation
 {
-    <li>@Html.ActionLink("Home", "Index", "Home")</li>  
+    <li>@Html.ActionLink("Home", "Index", "Home")</li>
+    <li>@Html.ActionLink("Store", "StoreIndex", "Store")</li>       
 }
+
+<!--Body -->
+<h1>Bromance</h1>
+<h3>You can't have enough bros!</h3>
 
 @section Footer
 {
@@ -22,7 +25,14 @@
         <ul>
             <li>&copy; Bromance, 2013</li>
             <li>@Html.ActionLink("About", "AboutUs", "Home")</li>
+@*            <li>@Html.ActionLink("Legal", "TermsOfUse", "Home")</li>       *@
         </ul>
-    </div>
-    
+    </div>   
 }
+=======
+﻿@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+>>>>>>> 2ec8d1ef5bd726c54f2519b16a85ddf7d0b01970

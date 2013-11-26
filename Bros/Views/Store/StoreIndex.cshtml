@@ -1,13 +1,28 @@
-﻿<!DOCTYPE html>
+﻿@section Logout
+{
+@*    <div class="logout">*@
+@*        <ul>*@
+@*            <li>@Html.ActionLink("Logout", "Logout", "Authentication")</li>*@
+@*        </ul>    *@
+@*    </div>          *@
+}
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Store</title>
-</head>
-<body>
-    <div>
-        Store Index Page
-    </div>
-</body>
-</html>
+@section MainNavigation
+{
+    <li>@Html.ActionLink("Home", "Index", "Home")</li>       
+}
+
+<!--Body -->
+<h1>Store</h1>
+<h3>Pound it!</h3>
+
+@section Footer
+{
+    <div class="footerNav">
+        <ul>
+            <li>&copy; Bromance, 2013</li>
+            <li>@Html.ActionLink("About", "AboutUs", "Home")</li>
+@*            <li>@Html.ActionLink("Legal", "TermsOfUse", "Home")</li>       *@
+        </ul>
+    </div>   
+}
