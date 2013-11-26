@@ -85,8 +85,6 @@ namespace Bros.DataModel
         {
             return Circles.Where(c => c.Name == CircleName).FirstOrDefault();
         }
-=======
-        
  
          public void CreateCircle(string CircleName)
          {
@@ -97,7 +95,6 @@ namespace Bros.DataModel
          {
              targetCircle.AddBro(Bro);
          }
->>>>>>> d6249ace141befa332a328838a3d20faa93c3c65
->>>>>>> fc887f673f8d0245ea942091a5542b27d2db1b8d
+
     }
 }
