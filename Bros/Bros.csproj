@@ -123,6 +123,7 @@
   <ItemGroup>
     <Compile Include="Controllers\AuthenticationController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\MessagingController.cs" />
     <Compile Include="Controllers\ProfileController.cs" />
     <Compile Include="Controllers\StoreController.cs" />
     <Compile Include="DataModel\Album.cs">
@@ -416,6 +417,15 @@
       <DependentUpon>ModelFirst.edmx</DependentUpon>
       <LastGenOutput>ModelFirst.cs</LastGenOutput>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Messaging\MessageHome.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\_SendMessagePartialView.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\_MessageInbox.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

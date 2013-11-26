@@ -1,0 +1,11 @@
+﻿@model Bros.DataModel.Message
+
+@{
+    ViewBag.Title = "MessageHome";
+}
+
+@foreach (Bros.DataModel.User u in ViewBag.UserConversations)
+{
+    @{Html.RenderPartial("_MessageInbox", u);}
+}
+
