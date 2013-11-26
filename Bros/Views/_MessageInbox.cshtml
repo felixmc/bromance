@@ -1,4 +1,6 @@
 ﻿@model Bros.DataModel.User
 
     
-   @Html.ActionLink(""+Model.Profiles.FirstName+" "+ Model.Profiles.LastName,"LoadMessage", Model);
+   @Html.ActionLink(""+Model.Profiles.FirstName+" "+ Model.Profiles.LastName,"LoadMessage","Message", Model);
+    <br />
+    
