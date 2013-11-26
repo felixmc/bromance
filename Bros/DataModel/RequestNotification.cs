@@ -7,18 +7,14 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Bros.DataSchema
+namespace Bros.DataModel
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class Profile
+    public partial class RequestNotification : Notification
     {
-        public int ID { get; set; }
-        public int Gender { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public string ZipCode { get; set; }
-        public System.DateTime BirthDate { get; set; }
+    
+        public virtual BroRequest BroRequest { get; set; }
     }
 }

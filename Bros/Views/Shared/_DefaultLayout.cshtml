@@ -1,14 +1,46 @@
 ﻿<!DOCTYPE html>
 
 <html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>@ViewBag.Title</title>
-</head>
-<body>
-    <p>Default layout</p>
-    <div>
-        @RenderBody()
-    </div>
-</body>
+    <head>
+        <meta name="viewport" content="width=device-width" />
+        <title>@ViewBag.Title</title>
+@*        <link href="~/Content/default.css" rel="stylesheet" type="text/css"/>*@
+    </head>
+    <body>
+        <div class="container">
+            <header>
+                @RenderSection("LoginSignup", required: false)
+                @RenderSection("Logout", required: false)
+                <nav class="mainNav">
+                    <ul>
+@*                        Change to true when pages are created*@
+                        @RenderSection("MainNavigation", required: false)
+                    </ul>
+                </nav>             
+            </header>
+            
+            <aside class="leftSidebar">
+                @RenderSection("LeftSideBar", required: false)
+            </aside>
+
+            <div class="content">
+                <h2>@ViewBag.Title</h2>               
+
+                <div class="content-main">
+                    <p>@ViewBag.Title content here.</p>
+                    @RenderBody()
+                </div>
+            </div>
+            
+            <aside class="rightSidebar">
+                @RenderSection("RightSideBar", required: false)
+            </aside>
+            
+            <footer>
+@*                Change to true when pages are created*@
+                @RenderSection("Footer", required: false)
+            </footer>
+                
+        </div>       
+    </body>
 </html>

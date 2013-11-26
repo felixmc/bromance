@@ -16,6 +16,8 @@ namespace Bros.DataModel
     {
         public int Id { get; set; }
         public bool IsRead { get; set; }
+        public System.DateTime DateCreated { get; set; }
+        public int UserId1 { get; set; }
     
         public virtual User Receiver { get; set; }
     }

@@ -25,6 +25,8 @@ namespace Bros.DataModel
         public string Content { get; set; }
         public System.DateTime DateSent { get; set; }
         public System.DateTime DateRead { get; set; }
+        public int UserId { get; set; }
+        public int UserId1 { get; set; }
     
         public virtual User Sender { get; set; }
         public virtual User Receiver { get; set; }

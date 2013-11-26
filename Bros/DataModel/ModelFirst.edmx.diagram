@@ -4,44 +4,53 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="3c95218c3b414532b65f4d288d62be80" Name="Diagram1" >
+      <Diagram DiagramId="3c95218c3b414532b65f4d288d62be80" Name="Diagram1" ZoomLevel="85" >
         <EntityTypeShape EntityType="ModelFirst.Album" Width="1.5" PointX="0.625" PointY="8.875" />
-        <EntityTypeShape EntityType="ModelFirst.User" Width="1.5" PointX="4.375" PointY="7.25" />
-        <EntityTypeShape EntityType="ModelFirst.Photo" Width="1.5" PointX="0.625" PointY="11.25" />
-        <AssociationConnector Association="ModelFirst.AlbumPhoto" />
-        <AssociationConnector Association="ModelFirst.UserAlbum" />
-        <EntityTypeShape EntityType="ModelFirst.Post" Width="1.5" PointX="4.375" PointY="12.5" />
+        <EntityTypeShape EntityType="ModelFirst.User" Width="1.5" PointX="3.375" PointY="7.25" />
+        <EntityTypeShape EntityType="ModelFirst.Photo" Width="1.5" PointX="0.625" PointY="11.5" />
+        <EntityTypeShape EntityType="ModelFirst.Post" Width="1.5" PointX="4.375" PointY="13" />
         <InheritanceConnector EntityType="ModelFirst.Photo" />
-        <AssociationConnector Association="ModelFirst.UserPost" />
-        <EntityTypeShape EntityType="ModelFirst.Comment" Width="1.5" PointX="6.75" PointY="12.375" />
-        <AssociationConnector Association="ModelFirst.UserComment" />
-        <AssociationConnector Association="ModelFirst.CommentPost" />
-        <EntityTypeShape EntityType="ModelFirst.BroRequest" Width="1.5" PointX="6.5" PointY="4.625" />
-        <AssociationConnector Association="ModelFirst.BroRequestUser" />
-        <AssociationConnector Association="ModelFirst.UserBroRequest" />
-        <EntityTypeShape EntityType="ModelFirst.Circle" Width="1.5" PointX="0.625" PointY="6.75" />
+        <EntityTypeShape EntityType="ModelFirst.Comment" Width="1.5" PointX="6.875" PointY="13.25" />
+        <EntityTypeShape EntityType="ModelFirst.BroRequest" Width="1.5" PointX="5.375" PointY="4.125" />
+        <EntityTypeShape EntityType="ModelFirst.Circle" Width="1.5" PointX="0.625" PointY="6.5" />
         <AssociationConnector Association="ModelFirst.CircleUser" />
-        <AssociationConnector Association="ModelFirst.UserCircle" />
-        <EntityTypeShape EntityType="ModelFirst.Interest" Width="1.5" PointX="2.5" PointY="3.375" />
-        <EntityTypeShape EntityType="ModelFirst.Message" Width="1.5" PointX="4.75" PointY="4.25" IsExpanded="true" />
-        <AssociationConnector Association="ModelFirst.UserMessage" />
-        <AssociationConnector Association="ModelFirst.UserMessage1" />
-        <EntityTypeShape EntityType="ModelFirst.Notification" Width="1.5" PointX="0.625" PointY="4.875" />
-        <AssociationConnector Association="ModelFirst.UserNotification" />
+        <EntityTypeShape EntityType="ModelFirst.Interest" Width="1.5" PointX="0.875" PointY="4.25" />
+        <EntityTypeShape EntityType="ModelFirst.Message" Width="1.5" PointX="3.25" PointY="4.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ModelFirst.Notification" Width="1.5" PointX="7.625" PointY="4.125" />
         <EntityTypeShape EntityType="ModelFirst.Preference" Width="1.5" PointX="8.75" PointY="10.5" />
-        <AssociationConnector Association="ModelFirst.UserPreference" />
-        <EntityTypeShape EntityType="ModelFirst.Product" Width="1.5" PointX="13.25" PointY="6" />
-        <EntityTypeShape EntityType="ModelFirst.Tag" Width="1.5" PointX="16.75" PointY="5" />
-        <EntityTypeShape EntityType="ModelFirst.Category" Width="1.5" PointX="16.75" PointY="7.25" />
-        <AssociationConnector Association="ModelFirst.TagProduct" />
-        <AssociationConnector Association="ModelFirst.CategoryProduct" />
-        <EntityTypeShape EntityType="ModelFirst.Profile" Width="1.5" PointX="6.375" PointY="6.875" />
-        <AssociationConnector Association="ModelFirst.UserProfile" />
+        <EntityTypeShape EntityType="ModelFirst.Product" Width="1.5" PointX="9.625" PointY="6.875" />
+        <EntityTypeShape EntityType="ModelFirst.Tag" Width="1.5" PointX="13.125" PointY="5.875" />
+        <EntityTypeShape EntityType="ModelFirst.Category" Width="1.5" PointX="13.125" PointY="8.125" />
+        <EntityTypeShape EntityType="ModelFirst.Profile" Width="1.5" PointX="6.375" PointY="6.875" IsExpanded="true" />
         <EntityTypeShape EntityType="ModelFirst.TextPost" Width="1.5" PointX="1.875" PointY="13.375" />
         <InheritanceConnector EntityType="ModelFirst.TextPost" />
         <AssociationConnector Association="ModelFirst.UserUser" />
         <AssociationConnector Association="ModelFirst.InterestProfile" />
-        <AssociationConnector Association="ModelFirst.PhotoProfile" />
+        <EntityTypeShape EntityType="ModelFirst.RequestNotification" Width="1.5" PointX="7.75" PointY="2.5" />
+        <InheritanceConnector EntityType="ModelFirst.RequestNotification" />
+        <AssociationConnector Association="ModelFirst.RequestNotificationBroRequest" />
+        <EntityTypeShape EntityType="ModelFirst.CommentNotification" Width="1.5" PointX="10.5" PointY="3" />
+        <InheritanceConnector EntityType="ModelFirst.CommentNotification" />
+        <EntityTypeShape EntityType="ModelFirst.FirstBump" Width="1.5" PointX="10.625" PointY="4.75" />
+        <InheritanceConnector EntityType="ModelFirst.FirstBump" />
+        <AssociationConnector Association="ModelFirst.ProductCategory" />
+        <AssociationConnector Association="ModelFirst.ProductTag" />
+        <AssociationConnector Association="ModelFirst.PostComment" />
+        <AssociationConnector Association="ModelFirst.UserPost" />
+        <AssociationConnector Association="ModelFirst.UserProfile" />
+        <AssociationConnector Association="ModelFirst.MessagesSent" />
+        <AssociationConnector Association="ModelFirst.MessageUser" />
+        <AssociationConnector Association="ModelFirst.CircleOwner" />
+        <AssociationConnector Association="ModelFirst.AlbumUser" />
+        <AssociationConnector Association="ModelFirst.AlbumPhoto" />
+        <AssociationConnector Association="ModelFirst.UserPreferences" />
+        <AssociationConnector Association="ModelFirst.SentBroRequest" />
+        <AssociationConnector Association="ModelFirst.BroRequestUser" />
+        <AssociationConnector Association="ModelFirst.SentFirstBump" />
+        <AssociationConnector Association="ModelFirst.CommentNotificationComment" />
+        <AssociationConnector Association="ModelFirst.NotificationUser" />
+        <AssociationConnector Association="ModelFirst.CommentUser" />
+        <AssociationConnector Association="ModelFirst.ProfilePhoto" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -44,7 +44,7 @@
       <HintPath>..\packages\EntityFramework.5.0.0\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="MySql.Data">
+    <Reference Include="MySql.Data, Version=6.7.4.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
       <HintPath>..\packages\MySql.Data.6.7.4\lib\net40\MySql.Data.dll</HintPath>
     </Reference>
     <Reference Include="MySql.Data.Entity, Version=6.7.4.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
@@ -119,6 +119,12 @@
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.WebPages.Razor.dll</HintPath>
     </Reference>
+    <Reference Include="WebMatrix.Data, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="WebMatrix.WebData, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\AuthenticationController.cs" />
@@ -139,6 +145,12 @@
       <DependentUpon>ModelFirst.tt</DependentUpon>
     </Compile>
     <Compile Include="DataModel\Comment.cs">
+      <DependentUpon>ModelFirst.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\CommentNotification.cs">
+      <DependentUpon>ModelFirst.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\FirstBump.cs">
       <DependentUpon>ModelFirst.tt</DependentUpon>
     </Compile>
     <Compile Include="DataModel\Interest.cs">
@@ -180,6 +192,9 @@
     <Compile Include="DataModel\Profile.cs">
       <DependentUpon>ModelFirst.tt</DependentUpon>
     </Compile>
+    <Compile Include="DataModel\RequestNotification.cs">
+      <DependentUpon>ModelFirst.tt</DependentUpon>
+    </Compile>
     <Compile Include="DataModel\Tag.cs">
       <DependentUpon>ModelFirst.tt</DependentUpon>
     </Compile>
@@ -189,93 +204,19 @@
     <Compile Include="DataModel\User.cs">
       <DependentUpon>ModelFirst.tt</DependentUpon>
     </Compile>
-    <Compile Include="DataSchema\Album.cs">
-      <DependentUpon>ModelWKeys.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataSchema\BroRequest.cs">
-      <DependentUpon>ModelWKeys.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataSchema\Circle.cs">
-      <DependentUpon>ModelWKeys.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataSchema\Comment.cs">
-      <DependentUpon>ModelWKeys.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataSchema\Entity.cs">
-      <DependentUpon>ModelWKeys.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataSchema\Hobby.cs">
-      <DependentUpon>ModelWKeys.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataSchema\Liking.cs">
-      <DependentUpon>ModelWKeys.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataSchema\Message.cs">
-      <DependentUpon>ModelWKeys.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataSchema\Model1.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Model1.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataSchema\Model1.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataSchema\Model1.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Model1.edmx</DependentUpon>
-    </Compile>
-    <Compile Include="DataSchema\ModelWKeys.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>ModelWKeys.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataSchema\ModelWKeys.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>ModelWKeys.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataSchema\ModelWKeys.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>ModelWKeys.edmx</DependentUpon>
-    </Compile>
-    <Compile Include="DataSchema\Notification.cs">
-      <DependentUpon>ModelWKeys.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataSchema\Photo.cs">
-      <DependentUpon>ModelWKeys.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataSchema\Post.cs">
-      <DependentUpon>ModelWKeys.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataSchema\Preference.cs">
-      <DependentUpon>ModelWKeys.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataSchema\Product.cs">
-      <DependentUpon>ModelWKeys.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataSchema\Profile.cs">
-      <DependentUpon>ModelWKeys.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataSchema\TextPost.cs">
-      <DependentUpon>ModelWKeys.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataSchema\User.cs">
-      <DependentUpon>ModelWKeys.tt</DependentUpon>
-    </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Enums.cs" />
+    <Compile Include="Models\ProfileFactory.cs" />
+    <Compile Include="Models\RegisterModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Content Include="DataModel\ModelFirst.edmx.sql" />
     <Content Include="Global.asax" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -334,8 +275,6 @@
     <Content Include="Views\Profile\_UserPartialView.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Authentication\_LoginPartial.cshtml" />
-    <Content Include="Views\Authentication\_SignupPartial.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
@@ -345,56 +284,10 @@
     <Content Include="Views\Layouts\_LayoutPageNavBar.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Authentication\_LoginPartial.cshtml" />
-    <Content Include="Views\Authentication\_SignupPartial.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Views\Store\ProductView.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <EntityDeploy Include="DataSchema\Model1.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>Model1.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="DataSchema\Model1.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Model1.edmx</DependentUpon>
-      <LastGenOutput>Model1.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="DataSchema\Model1.edmx.diagram">
-      <DependentUpon>Model1.edmx</DependentUpon>
-    </Content>
-    <Content Include="DataSchema\Model1.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Model1.edmx</DependentUpon>
-      <LastGenOutput>Model1.cs</LastGenOutput>
-    </Content>
-  </ItemGroup>
-  <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
-  </ItemGroup>
-  <ItemGroup>
-    <EntityDeploy Include="DataSchema\ModelWKeys.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>ModelWKeys.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="DataSchema\ModelWKeys.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>ModelWKeys.edmx</DependentUpon>
-      <LastGenOutput>ModelWKeys.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="DataSchema\ModelWKeys.edmx.diagram">
-      <DependentUpon>ModelWKeys.edmx</DependentUpon>
-    </Content>
-    <Content Include="DataSchema\ModelWKeys.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>ModelWKeys.edmx</DependentUpon>
-      <LastGenOutput>ModelWKeys.cs</LastGenOutput>
-    </Content>
   </ItemGroup>
   <ItemGroup>
     <EntityDeploy Include="DataModel\ModelFirst.edmx">
@@ -426,6 +319,20 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\_MessageInbox.cshtml" />
+    <Content Include="Views\Profile\_StatusUpdateForm.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Profile\Feed.cshtml" />
+    <Content Include="Views\Authentication\SignUp.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Profile\_BroRequestPartial.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Profile\BroAccept.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Profile\_BroRequestAcceptedPartial.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

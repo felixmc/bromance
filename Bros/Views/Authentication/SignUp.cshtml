@@ -1,0 +1,39 @@
+﻿@using Bros.Models
+@model RegisterModel
+@{
+    Layout = null;
+    ViewBag.Title = "Sign-Up Here!";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+</head>
+<body>
+    <div>
+
+
+        <h2>Username</h2>
+        @Html.ValidationSummary()
+    @using (Html.BeginForm("UserForm","Authentication", FormMethod.Post))
+    {
+       
+        <p>UserName: @Html.TextBoxFor(x => x.UserName)</p>
+        <p>Email: @Html.TextBoxFor(x => x.Email)</p>
+        <p>Password: @Html.PasswordFor(x => x.Password)</p>
+        <p>Confirm Password: @Html.PasswordFor(x => x.ConfirmPassword)</p> 
+        <p>First Name: @Html.TextBoxFor(x => x.FirstName)</p>
+        <p>Last Name: @Html.TextBoxFor(x => x.LastName)</p>
+        <p>Birthdate: <input type="date" name ="BirthDate" placeholder="Enter Birthday"/></p>
+        <p>Zipcode: <input type="number" name="Zipcode" placeholder="Zipcode"/></p>
+        <p>Gender: @Html.RadioButtonFor(x => x.Gender, "Female") @Html.RadioButtonFor(x => x.Gender, "Male")</p>
+        <input type="submit" value="Submit Product" class="my-button"/>
+        
+        
+    }
+    </div>
+</body>
+</html>

@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Routing;
+using WebMatrix.WebData;
 
 namespace Bros
 {
@@ -14,6 +15,7 @@ namespace Bros
 	{
 		protected void Application_Start()
 		{
+            WebSecurity.InitializeDatabaseConnection("ModelFirstContainer", "User", "Id", "Email", false);
 			AreaRegistration.RegisterAllAreas();
 
 			WebApiConfig.Register(GlobalConfiguration.Configuration);
