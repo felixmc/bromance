@@ -20,12 +20,12 @@ namespace Bros.Controllers
         [HttpPost]
         public ActionResult Login(RegisterModel model)
         {
-            bool isLoggedIn = WebSecurity.Login(model.UserName, model.Password);
+            bool isLoggedIn = WebSecurity.Login(model.Email, model.Password);
             using (ModelFirstContainer context = new ModelFirstContainer())
             {
                 Bros.DataModel.User user = 
                     (from u in context.Users
-                    where u.Email == model.UserName
+                    where u.Email == model.Email
                     select u).FirstOrDefault<User>();
                 Session.Add("User", user);
             }
@@ -46,8 +46,8 @@ namespace Bros.Controllers
                 // Attempt to register the user
                 try
                 {
-                    WebSecurity.CreateUserAndAccount(model.UserName, model.Password);
-                    WebSecurity.Login(model.UserName, model.Password);
+                    WebSecurity.CreateUserAndAccount(model.Email, model.Password);
+                    WebSecurity.Login(model.Email, model.Password);
                     return RedirectToAction("Index", "Home");
                 }
                 catch (MembershipCreateUserException e)
