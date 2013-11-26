@@ -14,6 +14,13 @@ namespace Bros.DataModel
     
     public partial class Message
     {
+       
+        
+        public Message()
+        {
+            DateSent = new DateTime();
+
+        }
         public int Id { get; set; }
         public string Content { get; set; }
         public System.DateTime DateSent { get; set; }
