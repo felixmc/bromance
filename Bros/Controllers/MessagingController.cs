@@ -16,8 +16,8 @@ namespace Bros.Controllers
         public ActionResult MessageHome()
         {
             Bros.DataModel.User thisUser = (Bros.DataModel.User)Session["User"];
-            List<Message> allMessages = thisUser.MessagesSent.ToList();
-            allMessages.AddRange(thisUser.MessagesReceived.ToList());
+            List<Message> allMessages = thisUser.SentMessages.ToList();
+            allMessages.AddRange(thisUser.ReceivedMessages.ToList());
 
             allMessages = allMessages.OrderBy(x => x.DateSent).ToList();
             List<User> uniqueUsers = allMessages.Select(m => m.Receiver).OrderBy(m => m.Id).Distinct().ToList();
@@ -29,8 +29,8 @@ namespace Bros.Controllers
         public ActionResult LoadMessage(User u)
         {
             Bros.DataModel.User thisUser = (Bros.DataModel.User)Session["User"];
-            List<Message> allMessages = thisUser.MessagesSent.ToList();
-            allMessages.AddRange(thisUser.MessagesReceived.ToList());
+            List<Message> allMessages = thisUser.SentMessages.ToList();
+            allMessages.AddRange(thisUser.ReceivedMessages.ToList());
             allMessages = allMessages.Where(x => u.Id == x.Receiver.Id || x.Sender.Id == u.Id).OrderBy(x => x.DateSent).ToList();
 
             return View();
