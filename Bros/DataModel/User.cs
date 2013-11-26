@@ -60,7 +60,22 @@ namespace Bros.DataModel
         public virtual ICollection<Notification> Notifications { get; set; }
         public virtual ICollection<Comment> Comments { get; set; }
 
+        public void SendBroRequest(User bro)
+        {
+            using (ModelFirstContainer context = new ModelFirstContainer())
+            {
+                BroRequest request = new BroRequest();
+                request.SetUsers(this, bro);
 
+                this.SentBroRequests.Add(request);
+                this.Notifications.Add(request.RequestNotification);
+
+                bro.ReceivedBroRequests.Add(request);
+                bro.Notifications.Add(request.RequestNotification);
+
+                context.SaveChanges();
+            }
+        }
 
         public void CreateCircle(string CircleName)
         {
