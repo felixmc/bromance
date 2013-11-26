@@ -53,17 +53,5 @@ namespace Bros.DataModel
         public virtual ICollection<FirstBump> SentFirstBumps { get; set; }
         public virtual ICollection<Notification> Notifications { get; set; }
         public virtual ICollection<Comment> Comments { get; set; }
-
-        
- 
-         public void CreateCircle(string CircleName)
-         {
-             Circles.Add(new Circle(CircleName, this));
-         }
- 
-         public void AddBroToCircle(User Bro, Circle targetCircle)
-         {
-             targetCircle.AddBro(Bro);
-         }
     }
 }

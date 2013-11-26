@@ -4,31 +4,31 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="ModelFirst.Store" Alias="Self" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.5" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="ModelFirst.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
   <EntityContainer Name="ModelFirstStoreContainer">
-    <EntitySet Name="Albums" EntityType="ModelFirst.Store.Albums" store:Type="Tables" Schema="bromance" />
-    <EntitySet Name="Users" EntityType="ModelFirst.Store.Users" store:Type="Tables" Schema="bromance" />
-    <EntitySet Name="Posts" EntityType="ModelFirst.Store.Posts" store:Type="Tables" Schema="bromance" />
-    <EntitySet Name="Comments" EntityType="ModelFirst.Store.Comments" store:Type="Tables" Schema="bromance" />
-    <EntitySet Name="BroRequests" EntityType="ModelFirst.Store.BroRequests" store:Type="Tables" Schema="bromance" />
-    <EntitySet Name="Circles" EntityType="ModelFirst.Store.Circles" store:Type="Tables" Schema="bromance" />
-    <EntitySet Name="Interests" EntityType="ModelFirst.Store.Interests" store:Type="Tables" Schema="bromance" />
-    <EntitySet Name="Messages" EntityType="ModelFirst.Store.Messages" store:Type="Tables" Schema="bromance" />
-    <EntitySet Name="Notifications" EntityType="ModelFirst.Store.Notifications" store:Type="Tables" Schema="bromance" />
-    <EntitySet Name="Preferences" EntityType="ModelFirst.Store.Preferences" store:Type="Tables" Schema="bromance" />
-    <EntitySet Name="Products" EntityType="ModelFirst.Store.Products" store:Type="Tables" Schema="bromance" />
-    <EntitySet Name="Tags" EntityType="ModelFirst.Store.Tags" store:Type="Tables" Schema="bromance" />
-    <EntitySet Name="Categories" EntityType="ModelFirst.Store.Categories" store:Type="Tables" Schema="bromance" />
-    <EntitySet Name="Profiles" EntityType="ModelFirst.Store.Profiles" store:Type="Tables" Schema="bromance" />
-    <EntitySet Name="Notifications_RequestNotification" EntityType="ModelFirst.Store.Notifications_RequestNotification" store:Type="Tables" Schema="bromance" />
-    <EntitySet Name="Posts_Photo" EntityType="ModelFirst.Store.Posts_Photo" store:Type="Tables" Schema="bromance" />
-    <EntitySet Name="Notifications_FirstBump" EntityType="ModelFirst.Store.Notifications_FirstBump" store:Type="Tables" Schema="bromance" />
-    <EntitySet Name="Notifications_CommentNotification" EntityType="ModelFirst.Store.Notifications_CommentNotification" store:Type="Tables" Schema="bromance" />
-    <EntitySet Name="Posts_TextPost" EntityType="ModelFirst.Store.Posts_TextPost" store:Type="Tables" Schema="bromance" />
-    <EntitySet Name="CircleUser" EntityType="ModelFirst.Store.CircleUser" store:Type="Tables" Schema="bromance" />
-    <EntitySet Name="UserUser" EntityType="ModelFirst.Store.UserUser" store:Type="Tables" Schema="bromance" />
-    <EntitySet Name="InterestProfile" EntityType="ModelFirst.Store.InterestProfile" store:Type="Tables" Schema="bromance" />
-    <EntitySet Name="ProductTags" EntityType="ModelFirst.Store.ProductTag" store:Type="Tables" Schema="bromance" />
+    <EntitySet Name="Albums" EntityType="ModelFirst.Store.Albums" store:Type="Tables" Schema="bromance_DB" />
+    <EntitySet Name="Users" EntityType="ModelFirst.Store.Users" store:Type="Tables" Schema="bromance_DB" />
+    <EntitySet Name="Posts" EntityType="ModelFirst.Store.Posts" store:Type="Tables" Schema="bromance_DB" />
+    <EntitySet Name="Comments" EntityType="ModelFirst.Store.Comments" store:Type="Tables" Schema="bromance_DB" />
+    <EntitySet Name="BroRequests" EntityType="ModelFirst.Store.BroRequests" store:Type="Tables" Schema="bromance_DB" />
+    <EntitySet Name="Circles" EntityType="ModelFirst.Store.Circles" store:Type="Tables" Schema="bromance_DB" />
+    <EntitySet Name="Interests" EntityType="ModelFirst.Store.Interests" store:Type="Tables" Schema="bromance_DB" />
+    <EntitySet Name="Messages" EntityType="ModelFirst.Store.Messages" store:Type="Tables" Schema="bromance_DB" />
+    <EntitySet Name="Notifications" EntityType="ModelFirst.Store.Notifications" store:Type="Tables" Schema="bromance_DB" />
+    <EntitySet Name="Preferences" EntityType="ModelFirst.Store.Preferences" store:Type="Tables" Schema="bromance_DB" />
+    <EntitySet Name="Products" EntityType="ModelFirst.Store.Products" store:Type="Tables" Schema="bromance_DB" />
+    <EntitySet Name="Tags" EntityType="ModelFirst.Store.Tags" store:Type="Tables" Schema="bromance_DB" />
+    <EntitySet Name="Categories" EntityType="ModelFirst.Store.Categories" store:Type="Tables" Schema="bromance_DB" />
+    <EntitySet Name="Profiles" EntityType="ModelFirst.Store.Profiles" store:Type="Tables" Schema="bromance_DB" />
+    <EntitySet Name="Notifications_RequestNotification" EntityType="ModelFirst.Store.Notifications_RequestNotification" store:Type="Tables" Schema="bromance_DB" />
+    <EntitySet Name="Posts_Photo" EntityType="ModelFirst.Store.Posts_Photo" store:Type="Tables" Schema="bromance_DB" />
+    <EntitySet Name="Notifications_FirstBump" EntityType="ModelFirst.Store.Notifications_FirstBump" store:Type="Tables" Schema="bromance_DB" />
+    <EntitySet Name="Notifications_CommentNotification" EntityType="ModelFirst.Store.Notifications_CommentNotification" store:Type="Tables" Schema="bromance_DB" />
+    <EntitySet Name="Posts_TextPost" EntityType="ModelFirst.Store.Posts_TextPost" store:Type="Tables" Schema="bromance_DB" />
+    <EntitySet Name="CircleUser" EntityType="ModelFirst.Store.CircleUser" store:Type="Tables" Schema="bromance_DB" />
+    <EntitySet Name="UserUser" EntityType="ModelFirst.Store.UserUser" store:Type="Tables" Schema="bromance_DB" />
+    <EntitySet Name="InterestProfile" EntityType="ModelFirst.Store.InterestProfile" store:Type="Tables" Schema="bromance_DB" />
+    <EntitySet Name="ProductTags" EntityType="ModelFirst.Store.ProductTag" store:Type="Tables" Schema="bromance_DB" />
     <AssociationSet Name="FK_CircleUser_Circle" Association="ModelFirst.Store.FK_CircleUser_Circle">
       <End Role="Circle" EntitySet="Circles" />
       <End Role="CircleUser" EntitySet="CircleUser" />
@@ -159,7 +159,7 @@
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Title" Type="varchar" Nullable="false" />
+    <Property Name="Title" Type="nvarchar(max)" Nullable="false" />
     <Property Name="DateCreated" Type="datetime" Nullable="false" />
     <Property Name="UserId" Type="int" Nullable="false" />
   </EntityType>
@@ -169,9 +169,9 @@
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="DateCreated" Type="datetime" Nullable="false" />
-    <Property Name="Email" Type="varchar" Nullable="false" />
-    <Property Name="Password" Type="longblob" Nullable="false" />
-    <Property Name="Salt" Type="longblob" Nullable="false" />
+    <Property Name="Email" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Password" Type="varbinary(max)" Nullable="false" />
+    <Property Name="Salt" Type="varbinary(max)" Nullable="false" />
     <Property Name="Profile_Id" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="Posts">
@@ -179,7 +179,7 @@
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="IsFlagged" Type="bool" Nullable="false" />
+    <Property Name="IsFlagged" Type="bit" Nullable="false" />
     <Property Name="DateCreated" Type="datetime" Nullable="false" />
     <Property Name="DateUpdated" Type="datetime" Nullable="false" />
     <Property Name="UserId" Type="int" Nullable="false" />
@@ -189,8 +189,8 @@
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Content" Type="varchar" Nullable="false" />
-    <Property Name="IsFlagged" Type="bool" Nullable="false" />
+    <Property Name="Content" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="IsFlagged" Type="bit" Nullable="false" />
     <Property Name="DateCreated" Type="datetime" Nullable="false" />
     <Property Name="PostId" Type="int" Nullable="false" />
     <Property Name="UserId" Type="int" Nullable="false" />
@@ -200,7 +200,7 @@
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Message" Type="varchar" Nullable="false" />
+    <Property Name="Message" Type="nvarchar(max)" Nullable="false" />
     <Property Name="DateCreated" Type="datetime" Nullable="false" />
     <Property Name="UserId" Type="int" Nullable="false" />
     <Property Name="UserId1" Type="int" Nullable="false" />
@@ -210,7 +210,7 @@
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Name" Type="varchar" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
     <Property Name="UserId" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="Interests">
@@ -218,14 +218,14 @@
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Name" Type="varchar" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
   </EntityType>
   <EntityType Name="Messages">
     <Key>
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Content" Type="varchar" Nullable="false" />
+    <Property Name="Content" Type="nvarchar(max)" Nullable="false" />
     <Property Name="DateSent" Type="datetime" Nullable="false" />
     <Property Name="DateRead" Type="datetime" Nullable="false" />
     <Property Name="UserId" Type="int" Nullable="false" />
@@ -236,7 +236,7 @@
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="IsRead" Type="bool" Nullable="false" />
+    <Property Name="IsRead" Type="bit" Nullable="false" />
     <Property Name="DateCreated" Type="datetime" Nullable="false" />
     <Property Name="UserId1" Type="int" Nullable="false" />
   </EntityType>
@@ -245,8 +245,8 @@
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Key" Type="varchar" Nullable="false" />
-    <Property Name="Value" Type="varchar" Nullable="false" />
+    <Property Name="Key" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Value" Type="nvarchar(max)" Nullable="false" />
     <Property Name="UserId" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="Products">
@@ -254,9 +254,9 @@
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Name" Type="varchar" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
     <Property Name="Price" Type="decimal" Nullable="false" />
-    <Property Name="Image" Type="varchar" Nullable="true" />
+    <Property Name="Image" Type="nvarchar(max)" Nullable="true" />
     <Property Name="CategoryId" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="Tags">
@@ -264,37 +264,37 @@
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Name" Type="varchar" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
   </EntityType>
   <EntityType Name="Categories">
     <Key>
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Name" Type="varchar" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
   </EntityType>
   <EntityType Name="Profiles">
     <Key>
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="FirstName" Type="varchar" Nullable="false" />
-    <Property Name="LastName" Type="varchar" Nullable="false" />
-    <Property Name="ZipCode" Type="varchar" Nullable="false" />
+    <Property Name="FirstName" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="LastName" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="ZipCode" Type="nvarchar(max)" Nullable="false" />
     <Property Name="BirthDate" Type="datetime" Nullable="false" />
-    <Property Name="Gender" Type="varchar" Nullable="false" />
-    <Property Name="Pets" Type="varchar" Nullable="true" />
-    <Property Name="Religion" Type="varchar" Nullable="true" />
-    <Property Name="Job" Type="varchar" Nullable="true" />
-    <Property Name="Education" Type="varchar" Nullable="true" />
-    <Property Name="Ethnicity" Type="varchar" Nullable="true" />
-    <Property Name="Athleticism" Type="varchar" Nullable="true" />
-    <Property Name="SexualOrientation" Type="varchar" Nullable="true" />
-    <Property Name="MarriageStatus" Type="varchar" Nullable="true" />
-    <Property Name="Children" Type="varchar" Nullable="true" />
-    <Property Name="Smokes" Type="varchar" Nullable="true" />
-    <Property Name="Drinks" Type="varchar" Nullable="true" />
-    <Property Name="Drugs" Type="varchar" Nullable="true" />
+    <Property Name="Gender" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Pets" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="Religion" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="Job" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="Education" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="Ethnicity" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="Athleticism" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="SexualOrientation" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="MarriageStatus" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="Children" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="Smokes" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="Drinks" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="Drugs" Type="nvarchar(max)" Nullable="true" />
   </EntityType>
   <EntityType Name="Notifications_RequestNotification">
     <Key>
@@ -307,7 +307,7 @@
     <Key>
       <PropertyRef Name="Id" />
     </Key>
-    <Property Name="Caption" Type="varchar" Nullable="false" />
+    <Property Name="Caption" Type="nvarchar(max)" Nullable="false" />
     <Property Name="AlbumId" Type="int" Nullable="false" />
     <Property Name="Id" Type="int" Nullable="false" />
     <Property Name="ProfilePhotoOf_Id" Type="int" Nullable="true" />
@@ -330,7 +330,7 @@
     <Key>
       <PropertyRef Name="Id" />
     </Key>
-    <Property Name="Content" Type="varchar" Nullable="false" />
+    <Property Name="Content" Type="nvarchar(max)" Nullable="false" />
     <Property Name="Id" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="CircleUser">
@@ -1524,8 +1524,8 @@
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
         <DesignerProperty Name="EnablePluralization" Value="True" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
-        <DesignerProperty Name="DDLGenerationTemplate" Value="$(VSEFTools)\DBGen\SSDLToMySQL.tt" />
-        <DesignerProperty Name="DefaultDatabaseSchema" Value="bromance" />
+        <DesignerProperty Name="DDLGenerationTemplate" Value="$(VSEFTools)\DBGen\SSDLToSQL10.tt" />
+        <DesignerProperty Name="DefaultDatabaseSchema" Value="bromance_DB" />
       </DesignerInfoPropertySet>
     </edmx:Options>
     <!-- Diagram content (shape and connector positions) -->
