@@ -1,6 +1,11 @@
-﻿@{
-    Layout = null;
+﻿@model IEnumerable<Bros.DataModel.Post>
+
+@{
+    
 }
 
-
-@Html.Partial("_StatusUpdateForm")
+<h2>News Feed</h2>
+@foreach(Bros.DataModel.Post post in @Model)
+{
+	Html.Partial("_NewsFeedPartial", post);
+}
