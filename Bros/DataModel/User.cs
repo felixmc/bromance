@@ -53,5 +53,51 @@ namespace Bros.DataModel
         public virtual ICollection<FirstBump> SentFirstBumps { get; set; }
         public virtual ICollection<Notification> Notifications { get; set; }
         public virtual ICollection<Comment> Comments { get; set; }
+
+        public void SendBroRequest(User bro)
+        {
+            using (ModelFirstContainer context = new ModelFirstContainer())
+            {
+                BroRequest request = new BroRequest();
+                request.SetUsers(this, bro);
+
+                this.SentBroRequests.Add(request);
+                this.Notifications.Add(request.RequestNotification);
+
+                bro.ReceivedBroRequests.Add(request);
+                bro.Notifications.Add(request.RequestNotification);
+
+                context.SaveChanges();
+            }
+        }
+
+        public void CreateCircle(string CircleName)
+        {
+            Circles.Add(new Circle(CircleName, this));
+        }
+
+        public void AddBroToCircle(User Bro, Circle targetCircle)
+        {
+            targetCircle.AddBro(Bro);
+        }
+
+        public Circle GetCircleByName(string CircleName)
+        {
+            return Circles.Where(c => c.Name == CircleName).FirstOrDefault();
+        }
+=======
+        
+ 
+         public void CreateCircle(string CircleName)
+         {
+             Circles.Add(new Circle(CircleName, this));
+         }
+ 
+         public void AddBroToCircle(User Bro, Circle targetCircle)
+         {
+             targetCircle.AddBro(Bro);
+         }
+>>>>>>> d6249ace141befa332a328838a3d20faa93c3c65
+>>>>>>> fc887f673f8d0245ea942091a5542b27d2db1b8d
     }
 }
