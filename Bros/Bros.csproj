@@ -129,7 +129,6 @@
   <ItemGroup>
     <Compile Include="Controllers\AuthenticationController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\MessagingController.cs" />
     <Compile Include="Controllers\ProfileController.cs" />
     <Compile Include="Controllers\StoreController.cs" />
     <Compile Include="DataModel\Album.cs">
@@ -312,13 +311,6 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Messaging\MessageHome.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\_SendMessagePartialView.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\_MessageInbox.cshtml" />
     <Content Include="Views\Profile\_StatusUpdateForm.cshtml" />
   </ItemGroup>
   <ItemGroup>
@@ -329,10 +321,24 @@
     <Content Include="Views\Profile\_BroRequestPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Profile\BroAccept.cshtml" />
+    <Content Include="Views\Profile\_CommentFeed.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Views\Profile\_SingleComment.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Profile\_CommentForm.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Profile\BroAccept.cshtml" />
     <Content Include="Views\Profile\_BroRequestAcceptedPartial.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Messaging\MessageHome.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\_MessageInbox.cshtml" />
+    <Content Include="Views\_SendMessagePartialView.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
