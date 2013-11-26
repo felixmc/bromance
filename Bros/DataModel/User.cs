@@ -73,35 +73,27 @@ namespace Bros.DataModel
 
         public void CreateCircle(string CircleName)
         {
-			Circles.Add(new Circle() { Name = CircleName, Owner= this });
+            Circles.Add(new Circle(CircleName, this));
         }
 
         public void AddBroToCircle(User Bro, Circle targetCircle)
         {
-            targetCircle.Members.Add(Bro);
+            targetCircle.AddBro(Bro);
         }
 
         public Circle GetCircleByName(string CircleName)
         {
-			//List<Circle> list = new List<Circle>();
-			//list.AddRange(Circles);
-
-			//this.Circles.
-
-			//return list.Where(c => c.Name == CircleName).FirstOrDefault();
-
-			// TODO: FIX THIS METHOD
-			return null;
+            return Circles.Where(c => c.Name == CircleName).FirstOrDefault();
         }
  
          public void CreateCircle(string CircleName)
          {
-			 Circles.Add(new Circle() { Name = CircleName, Owner = this });
+             Circles.Add(new Circle(CircleName, this));
          }
  
          public void AddBroToCircle(User Bro, Circle targetCircle)
          {
-             targetCircle.Members.Add(Bro);
+             targetCircle.AddBro(Bro);
          }
 
     }
