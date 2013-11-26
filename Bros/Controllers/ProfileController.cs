@@ -27,6 +27,22 @@ namespace Bros.Controllers
 			return View();
 		}
 
+        public ActionResult BroAccept(BroRequest request)
+        {
+
+            using (ModelFirstContainer context = new ModelFirstContainer())
+            {
+                request.Accept();
+                context.SaveChanges();
+
+                User user = (User)Session["User"];
+                ViewBag.Bros = user.GetCircleByName("Bros").Members;
+                ViewBag.Request = request;
+            }
+
+            return View();
+        }
+
 		[HttpPost]
 		public ActionResult PostStatus()
 		{

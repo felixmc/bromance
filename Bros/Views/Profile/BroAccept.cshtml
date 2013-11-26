@@ -1,0 +1,12 @@
+﻿@{
+    ViewBag.Title = "BroAccept";
+    Layout = "~/Views/Shared/_DefaultLayout.cshtml";
+}
+
+<div class="BroAccepted">
+    @Html.Render("_BroRequestAcceptedPartial", (Bros.DataModel.BroRequest)ViewBag.Request);
+
+    @foreach(Bros.DataModel.Bro bro in ViewBag.Bros){
+           @Html.Render("_UserPartialView", bro);
+    }
+</div>

@@ -320,6 +320,12 @@
   <ItemGroup>
     <Content Include="Views\Profile\_BroRequestPartial.cshtml" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Profile\BroAccept.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Profile\_BroRequestAcceptedPartial.cshtml" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
