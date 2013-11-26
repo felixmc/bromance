@@ -2,8 +2,6 @@
 using Bros.Models;
 using System;
 using System.Collections.Generic;
-using System.Data.Entity.Validation;
-using System.Diagnostics;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
@@ -21,12 +19,12 @@ namespace Bros.Controllers
         [HttpPost]
         public ActionResult Login(RegisterModel model)
         {
-            bool isLoggedIn = WebSecurity.Login(model.UserName, model.Password);
+            bool isLoggedIn = WebSecurity.Login(model.Email, model.Password);
             using (ModelFirstContainer context = new ModelFirstContainer())
             {
                 Bros.DataModel.User user = 
                     (from u in context.Users
-                    where u.Email == model.UserName
+                    where u.Email == model.Email
                     select u).FirstOrDefault<User>();
                 Session.Add("User", user);
             }
@@ -47,8 +45,8 @@ namespace Bros.Controllers
                 // Attempt to register the user
                 try
                 {
-                    WebSecurity.CreateUserAndAccount(model.UserName, model.Password);
-                    WebSecurity.Login(model.UserName, model.Password);
+                    WebSecurity.CreateUserAndAccount(model.Email, model.Password);
+                    WebSecurity.Login(model.Email, model.Password);
                     return RedirectToAction("Index", "Home");
                 }
                 catch (MembershipCreateUserException e)
@@ -147,31 +145,9 @@ namespace Bros.Controllers
         }
 
         [HttpPost]
-        public ActionResult UserForm(RegisterModel model)
+        public ActionResult UserForm(RegisterModel user)
         {
-            using (var context = new ModelFirstContainer())
-            {
-                User user = new User();
 
-                context.Users.Add(user);
-                try
-                {
-                    context.SaveChanges();
-                }
-                catch (DbEntityValidationException e)
-                {
-                    foreach (var validationErrors in e.EntityValidationErrors)
-                    {
-                        foreach (var validationError in validationErrors.ValidationErrors)
-                        {
-                            Trace.TraceInformation("Property: {0} Error: {1}", validationError.PropertyName, validationError.ErrorMessage);
-                        }
-                    }
-                }
-
-                //context.SaveChanges();
-
-            }
 
             return View();
         }
