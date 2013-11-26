@@ -1,0 +1,8 @@
+﻿@model Bros.DataModel.Post
+
+@using(Html.BeginForm("PostComment", "Profile", FormMethod.Post))
+{
+	<input type="hidden" name="post" value="@Model.Id" />
+	<textarea name="comment" placeholder="Enter comment"></textarea>
+	<input type="submit" />
+}

@@ -1,0 +1,7 @@
+﻿@model Bros.DataModel.Post
+
+@foreach (Bros.DataModel.Comment comment in @Model.Comments)
+{
+	Html.Partial("_SingleComment", comment);
+}
+@Html.Partial("_CommentForm", @Model);
