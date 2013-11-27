@@ -1,0 +1,9 @@
+﻿@{
+    ViewBag.Title = "SendBroRequest";
+    Layout = "~/Views/Shared/_DefaultLayout.cshtml";
+}
+
+@if (ViewBag.Request != null)
+{
+    @Html.Render("_BroRequestPartial", ViewBag.Request);
+}

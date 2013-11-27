@@ -342,6 +342,9 @@
     <Content Include="Views\Shared\Preferences.cshtml" />
     <Content Include="Views\Authentication\Login.cshtml" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Profile\SendBroRequest.cshtml" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
