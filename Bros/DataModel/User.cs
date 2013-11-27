@@ -71,33 +71,23 @@ namespace Bros.DataModel
             }
         }
 
+		// TODO: FIX THESE METHODS
+
         public void CreateCircle(string CircleName)
         {
-            Circles.Add(new Circle(CircleName, this));
+//            Circles.Add(new Circle(CircleName, this));
         }
 
         public void AddBroToCircle(User Bro, Circle targetCircle)
         {
-            targetCircle.AddBro(Bro);
+//            targetCircle.AddBro(Bro);
         }
 
         public Circle GetCircleByName(string CircleName)
         {
-            return Circles.Where(c => c.Name == CircleName).FirstOrDefault();
+//           return Circles.Where(c => c.Name == CircleName).FirstOrDefault();
+			return null;
         }
-<<<<<<< HEAD
-=======
- 
-         public void CreateCircle(string CircleName)
-         {
-             Circles.Add(new Circle(CircleName, this));
-         }
- 
-         public void AddBroToCircle(User Bro, Circle targetCircle)
-         {
-             targetCircle.AddBro(Bro);
-         }
->>>>>>> 3680c1ac6b0f64ca008cbfefb5378dc73953a0da
 
     }
 }
