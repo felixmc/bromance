@@ -85,5 +85,19 @@ namespace Bros.Controllers
 				return Redirect(Request.UrlReferrer.AbsolutePath);
 		}
 
+        [HttpPost]
+        public ActionResult SetPreference(Preference pref)
+        {
+
+            if(ModelState.IsValid)
+            using (ModelFirstContainer context = new ModelFirstContainer())
+            {
+                
+
+            }
+
+            return View("Index");
+        }
+
 	}
 }
