@@ -41,4 +41,14 @@ namespace Bros.Enums
         Rather_Not_Say,
         Other
     }
+
+	public static class Utils
+	{
+		public static T[] GetEnumValues<T>()
+		{
+			T[] items = (T[])Enum.GetValues(typeof(T));
+
+			return items;
+		}
+	}
 }
