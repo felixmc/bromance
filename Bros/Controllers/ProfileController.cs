@@ -17,6 +17,16 @@ namespace Bros.Controllers
 			return View();
 		}
 
+        public ActionResult SendBroRequest(User reciever)
+        {
+            using (ModelFirstContainer context = new ModelFirstContainer())
+            {
+                User user = (User)Session["User"];
+            }
+
+            return View();
+        }
+
 		public ActionResult Feed()
 		{
 			List<Post> feedPosts = new List<Post>();
@@ -33,6 +43,23 @@ namespace Bros.Controllers
 
 			return View(feedPosts);
 		}
+
+
+        public ActionResult BroAccept(BroRequest request)
+        {
+
+            using (ModelFirstContainer context = new ModelFirstContainer())
+            {
+                request.Accept();
+                context.SaveChanges();
+
+                User user = (User)Session["User"];
+                ViewBag.Bros = user.GetCircleByName("Bros").Members;
+                ViewBag.Request = request;
+            }
+
+            return View();
+        }
 
 		public new ActionResult Profile()
 		{
@@ -90,6 +117,20 @@ namespace Bros.Controllers
 			else
 				return Redirect(Request.UrlReferrer.AbsolutePath);
 		}
+
+        [HttpPost]
+        public ActionResult SetPreference(Preference pref)
+        {
+
+            if(ModelState.IsValid)
+            using (ModelFirstContainer context = new ModelFirstContainer())
+            {
+                
+
+            }
+
+            return View("Index");
+        }
 
 	}
 }

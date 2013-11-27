@@ -202,6 +202,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Enums.cs" />
+    <Compile Include="Models\Preference.cs" />
     <Compile Include="Models\ProfileFactory.cs" />
     <Compile Include="Models\RegisterModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -338,6 +339,7 @@
     <Content Include="Views\_SendMessagePartialView.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Views\Shared\Preferences.cshtml" />
     <Content Include="Views\Authentication\Login.cshtml" />
   </ItemGroup>
   <PropertyGroup>

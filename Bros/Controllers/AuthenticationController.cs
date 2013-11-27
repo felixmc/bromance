@@ -113,7 +113,6 @@ namespace Bros.Controllers
             }
         }
 
-
         [HttpGet]
         public ActionResult Register()
         {
@@ -179,13 +178,6 @@ namespace Bros.Controllers
 
             return RedirectToAction("Index", "Home");
 		}
-
-        public T[] GetEnumValues<T>()
-        {
-            T[] items = (T[])Enum.GetValues(typeof(T));
-
-            return items;
-        }
 
     }
 }
