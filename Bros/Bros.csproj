@@ -310,7 +310,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Profile\Feed.cshtml" />
-    <Content Include="Views\Authentication\SignUp.cshtml" />
+    <Content Include="Views\Authentication\Register.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Profile\_BroRequestPartial.cshtml" />

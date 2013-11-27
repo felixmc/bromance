@@ -2,6 +2,8 @@
 using Bros.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity.Validation;
+using System.Diagnostics;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
@@ -144,13 +146,35 @@ namespace Bros.Controllers
             return salt;
         }
 
-        [HttpPost]
-        public ActionResult UserForm(RegisterModel user)
-        {
+		[HttpPost]
+		public ActionResult UserForm(RegisterModel model)
+		{
+			using (var context = new ModelFirstContainer())
+			{
+				User user = new User();
 
+				context.Users.Add(user);
+				try
+				{
+					context.SaveChanges();
+				}
+				catch (DbEntityValidationException e)
+				{
+					foreach (var validationErrors in e.EntityValidationErrors)
+					{
+						foreach (var validationError in validationErrors.ValidationErrors)
+						{
+							Trace.TraceInformation("Property: {0} Error: {1}", validationError.PropertyName, validationError.ErrorMessage);
+						}
+					}
+				}
 
-            return View();
-        }
+				//context.SaveChanges();
+
+			}
+
+			return View();
+		}
 
     }
 }
