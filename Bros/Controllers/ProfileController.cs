@@ -50,7 +50,7 @@ namespace Bros.Controllers
 
             using (ModelFirstContainer context = new ModelFirstContainer())
             {
-                request.Accept();
+                //request.Accept();
                 context.SaveChanges();
 
                 User user = (User)Session["User"];
@@ -118,8 +118,15 @@ namespace Bros.Controllers
 				return Redirect(Request.UrlReferrer.AbsolutePath);
 		}
 
+        [HttpGet]
+        public ActionResult ProfileAttribute()
+        {
+            User user = (User)Session["User"];
+            return View(user);
+        }
+
         [HttpPost]
-        public ActionResult SetPreference(Preference pref)
+        public ActionResult SetProfileAttributes(Profile prof)
         {
 
             if(ModelState.IsValid)

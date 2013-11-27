@@ -1,5 +1,6 @@
-﻿@using Bros.Models
-@model RegisterModel
+﻿@using Bros.DataModel
+
+@model Profile
 @{
     Layout = null;
     ViewBag.Title = "Sign-Up Here!";
@@ -14,8 +15,10 @@
 </head>
 <body>
     <div>
-
-        @Html.Partial("RegisterPartial", @Model);
+        @Html.Partial("ProfileAttribute_Partial", @Model)
     </div>
 </body>
 </html>
+
+
+

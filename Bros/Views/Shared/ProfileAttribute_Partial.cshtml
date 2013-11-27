@@ -1,22 +1,7 @@
-﻿@using Bros.DataModel
-@model Profile
-@{
-    Layout = null;
-    ViewBag.Title = "Sign-Up Here!";
-}
-
-<!DOCTYPE html>
-
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>@ViewBag.Title</title>
-</head>
-<body>
-    <div>
-        <h2>Preferences</h2>
+﻿@model Bros.DataModel.Profile       
+ <h2>Preferences</h2>
         @Html.ValidationSummary()
-    @using (Html.BeginForm("SetPreference","Profile", FormMethod.Post))
+    @using (Html.BeginForm("SetProfileAttribute","Profile", FormMethod.Post))
     {       
         <p>Athletic: @Html.DropDownList("Athleticism", new SelectList(Enum.GetValues(typeof(Bros.Enums.Athleticism))))</p>
         <p>Children: @Html.DropDownList("Children", new SelectList(Enum.GetValues(typeof(Bros.Enums.Children))))</p>
@@ -30,9 +15,3 @@
         <input type="submit" value="Save Changes" />
         
     }
-    </div>
-</body>
-</html>
-
-
-

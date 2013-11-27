@@ -19,6 +19,7 @@ namespace Bros.Models
                 User _User = new User () {
 					Email = RandomWord() + "@gmail.com",
 					DateCreated = DateTime.Today,
+
 				};
 
 				Profile.User = _User;
@@ -47,7 +48,7 @@ namespace Bros.Models
             Ethnicity = RandomEnum<Ethnicity>(),
             Athleticism = RandomEnum<Athleticism>(),
             SexualOrientation = RandomEnum<SexualOrientation>(),
-            MarriageStatus = RandomEnum<MariageStatus>(),
+            MarriageStatus = RandomEnum<MarriageStatus>(),
             Children = RandomEnum<Children>(),
             Smokes = RandomEnum<Smokes>(),
             Drinks = RandomEnum<Drinks>(),
