@@ -12,20 +12,10 @@ namespace Bros.Controllers
 		//
 		// GET: /Profile/
 
-		public ActionResult Index()
+		public ActionResult ProfileIndex()
 		{
 			return View();
 		}
-
-        public ActionResult SendBroRequest(User reciever)
-        {
-            using (ModelFirstContainer context = new ModelFirstContainer())
-            {
-                User user = (User)Session["User"];
-            }
-
-            return View();
-        }
 
 		public ActionResult Feed()
 		{
@@ -44,24 +34,115 @@ namespace Bros.Controllers
 			return View(feedPosts);
 		}
 
+        #region BroRequest
+
+        public ActionResult SendBroRequest(User receiver)
+        {
+            using (ModelFirstContainer context = new ModelFirstContainer())
+            {
+                User user = (User)Session["User"];
+                BroRequest request = CreateRequest(user, receiver);
+
+                user.SentBroRequests.Add(request);
+                user.Notifications.Add(request.RequestNotification);
+
+                receiver.ReceivedBroRequests.Add(request);
+                receiver.Notifications.Add(request.RequestNotification);
+
+                ViewBag.Request = request;
+
+                context.SaveChanges();
+            }
+
+            return View();
+        }
+
+        public void CreateCircle(string CircleName)
+        {
+            using (ModelFirstContainer context = new ModelFirstContainer())
+            {
+                User user = (User)Session["User"];
+                Circle targetCircle = new Circle();
+                targetCircle.Name = CircleName;
+                targetCircle.Owner = user;
+                user.Circles.Add(targetCircle);
+
+                context.SaveChanges();
+            }
+        }
+
+        public BroRequest CreateRequest(User Sender, User Reciever)
+        {
+            BroRequest request = new BroRequest();
+
+            request.Sender = Sender;
+            request.Receiver = Reciever;
+
+            request.RequestNotification = new Bros.DataModel.RequestNotification();
+            request.RequestNotification.BroRequest = request;
+            request.RequestNotification.IsRead = false;
+
+            request.Message = "Bro request from " + Sender.Profile.FirstName + " " + Sender.Profile.LastName + " to " + Reciever.Profile.FirstName + " " + Reciever.Profile.LastName + ".";
+
+            return request;
+        }
 
         public ActionResult BroAccept(BroRequest request)
         {
 
             using (ModelFirstContainer context = new ModelFirstContainer())
             {
+<<<<<<< HEAD
                 //request.Accept();
+=======
+                AcceptRequest(request);
+>>>>>>> 19b039925ee224bdf8a513fde2acd99a98537db5
                 context.SaveChanges();
 
                 User user = (User)Session["User"];
-                ViewBag.Bros = user.GetCircleByName("Bros").Members;
+                ViewBag.Bros = GetCircleByName(user, "Bros").Members;
                 ViewBag.Request = request;
             }
 
             return View();
         }
 
-		public new ActionResult Profile()
+        public void AddBroToCircle(string CircleName, User bro)
+        {
+            User user = (User)Session["User"];
+            Circle targetCircle = GetCircleByName(user, CircleName);
+            if (!targetCircle.Members.Contains(bro))
+            {
+                targetCircle.Members.Add(bro);
+            }
+        }
+
+        public Circle GetCircleByName(User user, string CircleName)
+        {
+            return user.Circles.FirstOrDefault(m => m.Name == CircleName);
+        }
+
+        public void AcceptRequest(BroRequest request)
+        {
+            using (ModelFirstContainer context = new ModelFirstContainer())
+            {
+                GetCircleByName(request.Sender, "Bros").Members.Add(request.Receiver); 
+                GetCircleByName(request.Receiver, "Bros").Members.Add(request.Sender);
+                request.RequestNotification.IsRead = true;
+            }
+        }
+
+        public void DismissRequest(BroRequest request)
+        {
+            using (ModelFirstContainer context = new ModelFirstContainer())
+            {
+                request.RequestNotification.IsRead = true;
+            }
+        }
+
+        #endregion
+
+        public new ActionResult Profile()
 		{
 			return View();
 		}

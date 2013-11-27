@@ -31,11 +31,6 @@ namespace Bros.DataModel
             this.SentFirstBumps = new HashSet<FirstBump>();
             this.Notifications = new HashSet<Notification>();
             this.Comments = new HashSet<Comment>();
-
-            if (this.GetCircleByName("Bros") == null)
-            {
-                this.CreateCircle("Bros");
-            }
         }
     
         public int Id { get; set; }
@@ -60,39 +55,5 @@ namespace Bros.DataModel
         public virtual ICollection<Notification> Notifications { get; set; }
         public virtual ICollection<Comment> Comments { get; set; }
 
-        public void SendBroRequest(User bro)
-        {
-            using (ModelFirstContainer context = new ModelFirstContainer())
-            {
-                BroRequest request = new BroRequest();
-                request.SetUsers(this, bro);
-
-                this.SentBroRequests.Add(request);
-                this.Notifications.Add(request.RequestNotification);
-
-                bro.ReceivedBroRequests.Add(request);
-                bro.Notifications.Add(request.RequestNotification);
-
-                context.SaveChanges();
-            }
-        }
-
-        public void AddBroToCircle(User Bro, Circle targetCircle)
-        {
-            targetCircle.AddBro(Bro);
-        }
-
-        public Circle GetCircleByName(string CircleName)
-          {
-              return Circles.Where(c => c.Name == CircleName).FirstOrDefault();
-          }
-
-        public void CreateCircle(string CircleName)
-        {
-            Circle targetCircle = new Circle();
-            targetCircle.Name = CircleName;
-            targetCircle.Owner = this;
-            Circles.Add(targetCircle);
-        }
     }
 }

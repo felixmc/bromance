@@ -23,12 +23,5 @@ namespace Bros.DataModel
         public virtual RequestNotification RequestNotification { get; set; }
         public virtual User Sender { get; set; }
         public virtual User Receiver { get; set; }
-
-        public void SetUsers(User Sender, User Reciever)
-        {
-            this.Sender = Sender;
-            this.Receiver = Receiver;
-            this.Message = "Bro request from " + Sender.Profile.FirstName + " " + Sender.Profile.LastName + " to " + Receiver.Profile.FirstName + " " + Reciever.Profile.LastName + ".";
-        }
     }
 }
