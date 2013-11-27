@@ -25,5 +25,10 @@ namespace Bros.DataModel
     
         public virtual ICollection<User> Members { get; set; }
         public virtual User Owner { get; set; }
+
+        public void AddBro(User bro)
+        {
+            Members.Add(bro);
+        }
     }
 }
