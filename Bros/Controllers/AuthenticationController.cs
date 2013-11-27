@@ -23,14 +23,22 @@ namespace Bros.Controllers
         public ActionResult Login(RegisterModel model)
         {
             bool isLoggedIn = WebSecurity.Login(model.Email, model.Password);
-            using (ModelFirstContainer context = new ModelFirstContainer())
-            {
-                Bros.DataModel.User user = 
-                    (from u in context.Users
-                    where u.Email == model.Email
-                    select u).FirstOrDefault<User>();
-                Session.Add("User", user);
-            }
+			if (isLoggedIn)
+			{
+				using (ModelFirstContainer context = new ModelFirstContainer())
+				{
+					Bros.DataModel.User user =
+						(from u in context.Users
+						 where u.Email == model.Email
+						 select u).FirstOrDefault<User>();
+					Session.Add("User", user);
+				}
+
+				RedirectToAction("Index", "Home");
+			}
+
+			ViewBag.Error = "Invalid username or password.";
+
             return View();
         }
 
@@ -39,6 +47,13 @@ namespace Bros.Controllers
         {
             return View();
         }
+
+		public ActionResult Logout()
+		{
+			WebSecurity.Logout();
+			Session.Clear();
+			return RedirectToAction("Index", "Home");
+		}
 
         //[HttpPost]
         //public ActionResult Register(RegisterModel model)
