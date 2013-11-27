@@ -18,7 +18,7 @@
 
         <h2>Username</h2>
         @Html.ValidationSummary()
-    @using (Html.BeginForm("UserForm","Authentication", FormMethod.Post, new {enctype="multipart/form-data"}))
+    @using (Html.BeginForm("RegisterUser","Authentication", FormMethod.Post, new {enctype="multipart/form-data"}))
     {       
         <p>Email: @Html.TextBoxFor(x => x.Email)</p>
         <p>Password: @Html.PasswordFor(x => x.Password)</p>

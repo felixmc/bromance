@@ -15,33 +15,9 @@ namespace Bros.Controllers
     {
         //
         // GET: /Home/
-        ProfileFactory fact = new ProfileFactory();
 
         public ActionResult Index()
         {
-            using (var context = new ModelFirstContainer())
-            {
-				User user = fact.User;
-				
-				context.Users.Add(user);
-				try
-				{
-					context.SaveChanges();
-				}
-				catch (DbEntityValidationException e)
-				{
-					foreach (var validationErrors in e.EntityValidationErrors)
-					{
-						foreach (var validationError in validationErrors.ValidationErrors)
-						{
-							Trace.TraceInformation("Property: {0} Error: {1}", validationError.PropertyName, validationError.ErrorMessage);
-						}
-					}
-				}
-
-				//context.SaveChanges();
-
-            }
             return View();
         }
 

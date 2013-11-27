@@ -1,4 +1,5 @@
 ﻿using Bros.DataModel;
+using Bros.Enums;
 using Bros.Models;
 using System;
 using System.Collections.Generic;
@@ -39,27 +40,27 @@ namespace Bros.Controllers
             return View();
         }
 
-        [HttpPost]
-        public ActionResult Register(RegisterModel model)
-        {
-            if (ModelState.IsValid)
-            {
-                // Attempt to register the user
-                try
-                {
-                    WebSecurity.CreateUserAndAccount(model.Email, model.Password);
-                    WebSecurity.Login(model.Email, model.Password);
-                    return RedirectToAction("Index", "Home");
-                }
-                catch (MembershipCreateUserException e)
-                {
-                    ModelState.AddModelError("", ErrorCodeToString(e.StatusCode));
-                }
-            }
+        //[HttpPost]
+        //public ActionResult Register(RegisterModel model)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        // Attempt to register the user
+        //        try
+        //        {
+        //            WebSecurity.CreateUserAndAccount(model.Email, model.Password);
+        //            WebSecurity.Login(model.Email, model.Password);
+        //            return RedirectToAction("Index", "Home");
+        //        }
+        //        catch (MembershipCreateUserException e)
+        //        {
+        //            ModelState.AddModelError("", ErrorCodeToString(e.StatusCode));
+        //        }
+        //    }
 
-            // If we got this far, something failed, redisplay form
-            return View(model);
-        }
+        //    // If we got this far, something failed, redisplay form
+        //    return View(model);
+        //}
 
         private static string ErrorCodeToString(MembershipCreateStatus createStatus)
         {
@@ -104,54 +105,43 @@ namespace Bros.Controllers
             return View();
         }
 
-
-        public static byte[] GeneratedSaltedHash(string plainText, byte[] salt)
-        {
-            HashAlgorithm algorithm = new SHA256Managed();
-            byte[] plainTextBytes = Encoding.UTF8.GetBytes(plainText);
-            byte[] plainTextWithSaltedBytes = new byte[plainTextBytes.Length + salt.Length];
-
-            for (int i = 0; i < plainTextBytes.Length; i++)
-            {
-                plainTextWithSaltedBytes[i] = plainTextBytes[i];
-            }
-            for (int i = 0; i < salt.Length; i++)
-            {
-                plainTextWithSaltedBytes[i + plainTextBytes.Length] = salt[i];
-            }
-
-            return algorithm.ComputeHash(plainTextWithSaltedBytes);
-        }
-
-        public static bool CompareByteArrays(byte[] array1, byte[] array2)
-        {
-            if (array1.Length != array2.Length)
-                return false;
-
-            for (int i = 0; i < array1.Length; i++)
-            {
-                if (array1[i] != array2[i])
-                    return false;
-            }
-
-            return true;
-        }
-
-        public static byte[] CreateSalt(int size)
-        {
-            RNGCryptoServiceProvider rng = new RNGCryptoServiceProvider();
-            byte[] salt = new byte[size];
-            rng.GetBytes(salt);
-
-            return salt;
-        }
-
 		[HttpPost]
-		public ActionResult UserForm(RegisterModel model)
+		public ActionResult RegisterUser(RegisterModel model)
 		{
+            if (ModelState.IsValid)
+            {
+                // Attempt to register the user
+                try
+                {
+                    WebSecurity.CreateUserAndAccount(model.Email, model.Password);
+                    WebSecurity.Login(model.Email, model.Password);
+                }
+                catch (MembershipCreateUserException e)
+                {
+                    ModelState.AddModelError("", ErrorCodeToString(e.StatusCode));
+                }
+            }
+
 			using (var context = new ModelFirstContainer())
 			{
-				User user = new User();
+                
+                Profile prof = new Profile()
+                {   
+                    FirstName = model.FirstName,
+                    LastName = model.LastName,
+                    BirthDate = model.BirthDate,
+                    ZipCode = model.Zipcode + "",
+                    Gender = Request["Gender"],
+                    
+                };
+
+                context.Profiles.Add(prof);
+                User user = new User()
+                {
+                    Email = model.Email,
+                    DateCreated = DateTime.Today,
+                    Profile = prof
+                };
 
 				context.Users.Add(user);
 				try
@@ -173,8 +163,15 @@ namespace Bros.Controllers
 
 			}
 
-			return View();
+            return RedirectToAction("Index", "Home");
 		}
+
+        public T[] GetEnumValues<T>()
+        {
+            T[] items = (T[])Enum.GetValues(typeof(T));
+
+            return items;
+        }
 
     }
 }

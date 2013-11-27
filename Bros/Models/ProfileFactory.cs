@@ -9,11 +9,10 @@ using System.Web;
 
 namespace Bros.Models
 {
-    public class ProfileFactory
+    public static class ProfileFactory
     {
-        private static byte[] salt = AuthenticationController.CreateSalt(256);
-        Random rand = new Random();
-        public User User
+        static Random rand = new Random();
+        public static User User
         {
             get
             {
@@ -31,7 +30,7 @@ namespace Bros.Models
 
         static DateTime birth = new DateTime(1994, 4, 12);
 
-        public Profile Profile
+        public static Profile Profile
         {
             get
             { 
@@ -68,7 +67,7 @@ namespace Bros.Models
             InterestedProfiles = InterestedList
 
         };
-        public Interest Interest
+        static public Interest Interest
         {
             get
             {
@@ -76,7 +75,7 @@ namespace Bros.Models
             }
         }
 
-        private string RandomEnum<T>()
+        static private string RandomEnum<T>()
         {
 
             T[] items = (T[])Enum.GetValues(typeof(T));
@@ -85,7 +84,7 @@ namespace Bros.Models
             
         }
 
-        string RandomZip()
+        static string RandomZip()
         {
             string zip = "";
             for (int i = 0; i < 5; i++)
@@ -97,7 +96,7 @@ namespace Bros.Models
                 return zip;
         }
 
-        string RandomWord()
+        static string RandomWord()
         {
             string word = "";
             int length = rand.Next(4, 15);
@@ -111,7 +110,7 @@ namespace Bros.Models
                 return word;
         }
 
-        char RandomLetter(int index)
+        static char RandomLetter(int index)
         {
             char letter = ' ';
             if (index == 0)
