@@ -92,12 +92,8 @@ namespace Bros.Controllers
 
             using (ModelFirstContainer context = new ModelFirstContainer())
             {
-<<<<<<< HEAD
-                //request.Accept();
-=======
                 AcceptRequest(request);
->>>>>>> 19b039925ee224bdf8a513fde2acd99a98537db5
-                context.SaveChanges();
+
 
                 User user = (User)Session["User"];
                 ViewBag.Bros = GetCircleByName(user, "Bros").Members;

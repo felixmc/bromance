@@ -347,7 +347,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Shared\ProfileAttribute_Partial.cshtml" />
-    <Content Include="Views\Profile\SendBroRequest.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

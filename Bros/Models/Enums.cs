@@ -12,7 +12,7 @@ namespace Bros.Enums
     public enum Education { High_School, College, Masters, Doctorate }
     public enum Pets { No_Pets, Dog_Person, Cat_Person, Animal_Lover }
     public enum Athleticism { Not_Athletic, Casually_Athletic, Very_Athletic }
-    public enum MariageStatus { Single, Taken, Married, Divorced, Widowed }
+    public enum MarriageStatus { Single, Taken, Married, Divorced, Widowed }
     public enum SexualOrientation { Heterosexual, Homosexual, Bisexual, Asexual, Pansexual, Other }
     public enum Smokes { Often, Sometimes, When_Drinking, Not_Anymore, Never }
     public enum Drinks { Often, Socially, Rarely, Not_Anymore, Never }
