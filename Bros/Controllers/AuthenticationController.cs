@@ -128,8 +128,8 @@ namespace Bros.Controllers
                 // Attempt to register the user
                 try
                 {
-                    WebSecurity.CreateUserAndAccount(model.Email, model.Password);
-                    WebSecurity.Login(model.Email, model.Password);
+                    WebSecurity.CreateUserAndAccount(model.Email, model.Password, new {dateCreated = DateTime.Now,isbanned = false, isdeleted = false});
+                    //WebSecurity.Login(model.Email, model.Password);
                 }
                 catch (MembershipCreateUserException e)
                 {
@@ -150,15 +150,14 @@ namespace Bros.Controllers
                     
                 };
 
-                context.Profiles.Add(prof);
-                User user = new User()
-                {
-                    Email = model.Email,
-                    DateCreated = DateTime.Today,
-                    Profile = prof
-                };
+				User newUser = context.Users.Where(u=>u.Email.Equals(model.Email)).FirstOrDefault();
 
-				context.Users.Add(user);
+                prof.User = newUser;
+
+                newUser.Profile = prof;
+
+                context.Profiles.Add(prof);
+
 				try
 				{
 					context.SaveChanges();
