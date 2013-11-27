@@ -23,14 +23,22 @@ namespace Bros.Controllers
         public ActionResult Login(RegisterModel model)
         {
             bool isLoggedIn = WebSecurity.Login(model.Email, model.Password);
-            using (ModelFirstContainer context = new ModelFirstContainer())
-            {
-                Bros.DataModel.User user = 
-                    (from u in context.Users
-                    where u.Email == model.Email
-                    select u).FirstOrDefault<User>();
-                Session.Add("User", user);
-            }
+			if (isLoggedIn)
+			{
+				using (ModelFirstContainer context = new ModelFirstContainer())
+				{
+					Bros.DataModel.User user =
+						(from u in context.Users
+						 where u.Email == model.Email
+						 select u).FirstOrDefault<User>();
+					Session.Add("User", user);
+				}
+
+				RedirectToAction("Index", "Home");
+			}
+
+			ViewBag.Error = "Invalid username or password.";
+
             return View();
         }
 
@@ -39,6 +47,13 @@ namespace Bros.Controllers
         {
             return View();
         }
+
+		public ActionResult Logout()
+		{
+			WebSecurity.Logout();
+			Session.Clear();
+			return RedirectToAction("Index", "Home");
+		}
 
         //[HttpPost]
         //public ActionResult Register(RegisterModel model)
@@ -98,7 +113,6 @@ namespace Bros.Controllers
             }
         }
 
-
         [HttpGet]
         public ActionResult Register()
         {
@@ -113,8 +127,8 @@ namespace Bros.Controllers
                 // Attempt to register the user
                 try
                 {
-                    WebSecurity.CreateUserAndAccount(model.Email, model.Password);
-                    WebSecurity.Login(model.Email, model.Password);
+                    WebSecurity.CreateUserAndAccount(model.Email, model.Password, new {dateCreated = DateTime.Now,isbanned = false, isdeleted = false});
+                    //WebSecurity.Login(model.Email, model.Password);
                 }
                 catch (MembershipCreateUserException e)
                 {
@@ -135,15 +149,14 @@ namespace Bros.Controllers
                     
                 };
 
-                context.Profiles.Add(prof);
-                User user = new User()
-                {
-                    Email = model.Email,
-                    DateCreated = DateTime.Today,
-                    Profile = prof
-                };
+				User newUser = context.Users.Where(u=>u.Email.Equals(model.Email)).FirstOrDefault();
 
-				context.Users.Add(user);
+                prof.User = newUser;
+
+                newUser.Profile = prof;
+
+                context.Profiles.Add(prof);
+
 				try
 				{
 					context.SaveChanges();
@@ -165,13 +178,6 @@ namespace Bros.Controllers
 
             return RedirectToAction("Index", "Home");
 		}
-
-        public T[] GetEnumValues<T>()
-        {
-            T[] items = (T[])Enum.GetValues(typeof(T));
-
-            return items;
-        }
 
     }
 }

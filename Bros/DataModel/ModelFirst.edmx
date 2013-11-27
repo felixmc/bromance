@@ -6,29 +6,29 @@
     <edmx:StorageModels>
     <Schema Namespace="ModelFirst.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
   <EntityContainer Name="ModelFirstStoreContainer">
-    <EntitySet Name="Albums" EntityType="ModelFirst.Store.Albums" store:Type="Tables" Schema="bromance_DB" />
-    <EntitySet Name="Users" EntityType="ModelFirst.Store.Users" store:Type="Tables" Schema="bromance_DB" />
-    <EntitySet Name="Posts" EntityType="ModelFirst.Store.Posts" store:Type="Tables" Schema="bromance_DB" />
-    <EntitySet Name="Comments" EntityType="ModelFirst.Store.Comments" store:Type="Tables" Schema="bromance_DB" />
-    <EntitySet Name="BroRequests" EntityType="ModelFirst.Store.BroRequests" store:Type="Tables" Schema="bromance_DB" />
-    <EntitySet Name="Circles" EntityType="ModelFirst.Store.Circles" store:Type="Tables" Schema="bromance_DB" />
-    <EntitySet Name="Interests" EntityType="ModelFirst.Store.Interests" store:Type="Tables" Schema="bromance_DB" />
-    <EntitySet Name="Messages" EntityType="ModelFirst.Store.Messages" store:Type="Tables" Schema="bromance_DB" />
-    <EntitySet Name="Notifications" EntityType="ModelFirst.Store.Notifications" store:Type="Tables" Schema="bromance_DB" />
-    <EntitySet Name="Preferences" EntityType="ModelFirst.Store.Preferences" store:Type="Tables" Schema="bromance_DB" />
-    <EntitySet Name="Products" EntityType="ModelFirst.Store.Products" store:Type="Tables" Schema="bromance_DB" />
-    <EntitySet Name="Tags" EntityType="ModelFirst.Store.Tags" store:Type="Tables" Schema="bromance_DB" />
-    <EntitySet Name="Categories" EntityType="ModelFirst.Store.Categories" store:Type="Tables" Schema="bromance_DB" />
-    <EntitySet Name="Profiles" EntityType="ModelFirst.Store.Profiles" store:Type="Tables" Schema="bromance_DB" />
-    <EntitySet Name="Notifications_RequestNotification" EntityType="ModelFirst.Store.Notifications_RequestNotification" store:Type="Tables" Schema="bromance_DB" />
-    <EntitySet Name="Posts_Photo" EntityType="ModelFirst.Store.Posts_Photo" store:Type="Tables" Schema="bromance_DB" />
-    <EntitySet Name="Notifications_FirstBump" EntityType="ModelFirst.Store.Notifications_FirstBump" store:Type="Tables" Schema="bromance_DB" />
-    <EntitySet Name="Notifications_CommentNotification" EntityType="ModelFirst.Store.Notifications_CommentNotification" store:Type="Tables" Schema="bromance_DB" />
-    <EntitySet Name="Posts_TextPost" EntityType="ModelFirst.Store.Posts_TextPost" store:Type="Tables" Schema="bromance_DB" />
-    <EntitySet Name="CircleUser" EntityType="ModelFirst.Store.CircleUser" store:Type="Tables" Schema="bromance_DB" />
-    <EntitySet Name="UserUser" EntityType="ModelFirst.Store.UserUser" store:Type="Tables" Schema="bromance_DB" />
-    <EntitySet Name="InterestProfile" EntityType="ModelFirst.Store.InterestProfile" store:Type="Tables" Schema="bromance_DB" />
-    <EntitySet Name="ProductTags" EntityType="ModelFirst.Store.ProductTag" store:Type="Tables" Schema="bromance_DB" />
+    <EntitySet Name="Albums" EntityType="ModelFirst.Store.Albums" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Users" EntityType="ModelFirst.Store.Users" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Posts" EntityType="ModelFirst.Store.Posts" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Comments" EntityType="ModelFirst.Store.Comments" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="BroRequests" EntityType="ModelFirst.Store.BroRequests" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Circles" EntityType="ModelFirst.Store.Circles" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Interests" EntityType="ModelFirst.Store.Interests" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Messages" EntityType="ModelFirst.Store.Messages" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Notifications" EntityType="ModelFirst.Store.Notifications" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Preferences" EntityType="ModelFirst.Store.Preferences" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Products" EntityType="ModelFirst.Store.Products" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Tags" EntityType="ModelFirst.Store.Tags" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Categories" EntityType="ModelFirst.Store.Categories" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Profiles" EntityType="ModelFirst.Store.Profiles" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Notifications_RequestNotification" EntityType="ModelFirst.Store.Notifications_RequestNotification" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Posts_Photo" EntityType="ModelFirst.Store.Posts_Photo" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Notifications_FirstBump" EntityType="ModelFirst.Store.Notifications_FirstBump" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Notifications_CommentNotification" EntityType="ModelFirst.Store.Notifications_CommentNotification" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Posts_TextPost" EntityType="ModelFirst.Store.Posts_TextPost" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="CircleUser" EntityType="ModelFirst.Store.CircleUser" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="UserUser" EntityType="ModelFirst.Store.UserUser" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="InterestProfile" EntityType="ModelFirst.Store.InterestProfile" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ProductTags" EntityType="ModelFirst.Store.ProductTag" store:Type="Tables" Schema="dbo" />
     <AssociationSet Name="FK_CircleUser_Circle" Association="ModelFirst.Store.FK_CircleUser_Circle">
       <End Role="Circle" EntitySet="Circles" />
       <End Role="CircleUser" EntitySet="CircleUser" />
@@ -173,7 +173,6 @@
     <Property Name="Email" Type="nvarchar(max)" Nullable="false" />
     <Property Name="IsDeleted" Type="bit" Nullable="false" />
     <Property Name="IsBanned" Type="bit" Nullable="false" />
-    <Property Name="Profile_Id" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="Posts">
     <Key>
@@ -298,6 +297,7 @@
     <Property Name="Smokes" Type="nvarchar(max)" Nullable="true" />
     <Property Name="Drinks" Type="nvarchar(max)" Nullable="true" />
     <Property Name="Drugs" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="User_Id" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="Notifications_RequestNotification">
     <Key>
@@ -417,14 +417,14 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="UserProfile">
-    <End Role="User" Type="ModelFirst.Store.Users" Multiplicity="*" />
-    <End Role="Profile" Type="ModelFirst.Store.Profiles" Multiplicity="1" />
+    <End Role="User" Type="ModelFirst.Store.Users" Multiplicity="1" />
+    <End Role="Profile" Type="ModelFirst.Store.Profiles" Multiplicity="*" />
     <ReferentialConstraint>
-      <Principal Role="Profile">
+      <Principal Role="User">
         <PropertyRef Name="Id" />
       </Principal>
-      <Dependent Role="User">
-        <PropertyRef Name="Profile_Id" />
+      <Dependent Role="Profile">
+        <PropertyRef Name="User_Id" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -1118,7 +1118,7 @@
         </Association>
         <Association Name="UserProfile">
           <End Type="ModelFirst.User" Role="User" Multiplicity="1" />
-          <End Type="ModelFirst.Profile" Role="Profile" Multiplicity="1" />
+          <End Type="ModelFirst.Profile" Role="Profile" Multiplicity="0..1" />
         </Association>
         <Association Name="MessagesSent">
           <End Type="ModelFirst.Message" Role="Message" Multiplicity="*" />
@@ -1493,11 +1493,11 @@
         <ScalarProperty Name="Id" ColumnName="Tags_Id" />
       </EndProperty>
     </AssociationSetMapping>
-    <AssociationSetMapping Name="UserProfile" TypeName="ModelFirst.UserProfile" StoreEntitySet="Users">
-      <EndProperty Name="Profile">
-        <ScalarProperty Name="Id" ColumnName="Profile_Id" />
-      </EndProperty>
+    <AssociationSetMapping Name="UserProfile" TypeName="ModelFirst.UserProfile" StoreEntitySet="Profiles">
       <EndProperty Name="User">
+        <ScalarProperty Name="Id" ColumnName="User_Id" />
+      </EndProperty>
+      <EndProperty Name="Profile">
         <ScalarProperty Name="Id" ColumnName="Id" />
       </EndProperty>
     </AssociationSetMapping>
@@ -1534,7 +1534,7 @@
         <DesignerProperty Name="EnablePluralization" Value="True" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
         <DesignerProperty Name="DDLGenerationTemplate" Value="$(VSEFTools)\DBGen\SSDLToSQL10.tt" />
-        <DesignerProperty Name="DefaultDatabaseSchema" Value="bromance_DB" />
+        <DesignerProperty Name="DefaultDatabaseSchema" Value="" />
       </DesignerInfoPropertySet>
     </edmx:Options>
     <!-- Diagram content (shape and connector positions) -->

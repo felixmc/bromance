@@ -340,6 +340,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Shared\Preferences.cshtml" />
+    <Content Include="Views\Authentication\Login.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

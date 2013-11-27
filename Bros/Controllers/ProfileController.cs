@@ -40,6 +40,12 @@ namespace Bros.Controllers
 		}
 
 		[HttpPost]
+		public ActionResult UpdateProfile(Profile profile)
+		{
+			return null;
+		}
+
+		[HttpPost]
 		public ActionResult PostStatus()
 		{
 			using (ModelFirstContainer context = new ModelFirstContainer())

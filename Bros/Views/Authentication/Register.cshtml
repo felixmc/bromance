@@ -18,7 +18,7 @@
 
         <h2>Register</h2>
         @Html.ValidationSummary()
-    @using (Html.BeginForm("RegisterUser","Authentication", FormMethod.Post, new {enctype="multipart/form-data"}))
+    @using (Html.BeginForm("RegisterUser","Authentication", FormMethod.Post))
     {       
         <p>Email: @Html.TextBoxFor(x => x.Email)</p>
         <p>Password: @Html.PasswordFor(x => x.Password)</p>
@@ -29,7 +29,6 @@
 		<p>Gender: @Html.DropDownList("Gender", new SelectList(Enum.GetValues(typeof(Bros.Enums.Gender))))</p>
         <p>Zipcode: @Html.TextBoxFor(x => x.Zipcode)</p>
         <input type="submit" value="Sign Up" />
-        
     }
     </div>
 </body>
