@@ -40,8 +40,8 @@ namespace Bros.DataModel
             bool successful = false;
             this.RequestNotification.IsRead = true;
 
-            successful = Sender.GetCircleByName("Bros").AddBro(Receiver);
-            successful = Receiver.GetCircleByName("Bros").AddBro(Sender);
+			//successful = Sender.GetCircleByName("Bros").AddBro(Receiver);
+			//successful = Receiver.GetCircleByName("Bros").AddBro(Sender);
 
             return successful;
         }
