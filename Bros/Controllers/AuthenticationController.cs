@@ -34,7 +34,7 @@ namespace Bros.Controllers
 					Session.Add("User", user);
 				}
 
-				RedirectToAction("Index", "Home");
+				return RedirectToAction("Index", "Home");
 			}
 
 			ViewBag.Error = "Invalid username or password.";
@@ -128,7 +128,7 @@ namespace Bros.Controllers
                 // Attempt to register the user
                 try
                 {
-                    WebSecurity.CreateUserAndAccount(model.Email, model.Password, new {dateCreated = DateTime.Now,isbanned = false, isdeleted = false});
+                    string data = WebSecurity.CreateUserAndAccount(model.Email, model.Password, new {dateCreated = DateTime.Now,isbanned = false, isdeleted = false});
                     //WebSecurity.Login(model.Email, model.Password);
                 }
                 catch (MembershipCreateUserException e)

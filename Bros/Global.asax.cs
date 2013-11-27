@@ -16,7 +16,7 @@ namespace Bros
 	{
 		protected void Application_Start()
 		{
-			WebSecurity.InitializeDatabaseConnection("WebSecurityConectionString", "Users", "Id", "Email", false);
+			WebSecurity.InitializeDatabaseConnection("WebSecurityConectionString", "Users", "Id", "Email", true);
 			AreaRegistration.RegisterAllAreas();
 
 			WebApiConfig.Register(GlobalConfiguration.Configuration);
