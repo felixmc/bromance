@@ -162,6 +162,7 @@
     <Property Name="Title" Type="nvarchar(max)" Nullable="false" />
     <Property Name="DateCreated" Type="datetime" Nullable="false" />
     <Property Name="UserId" Type="int" Nullable="false" />
+    <Property Name="IsDeleted" Type="bit" Nullable="false" />
   </EntityType>
   <EntityType Name="Users">
     <Key>
@@ -170,8 +171,8 @@
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="DateCreated" Type="datetime" Nullable="false" />
     <Property Name="Email" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="Password" Type="varbinary(max)" Nullable="false" />
-    <Property Name="Salt" Type="varbinary(max)" Nullable="false" />
+    <Property Name="IsDeleted" Type="bit" Nullable="false" />
+    <Property Name="IsBanned" Type="bit" Nullable="false" />
     <Property Name="Profile_Id" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="Posts">
@@ -183,6 +184,7 @@
     <Property Name="DateCreated" Type="datetime" Nullable="false" />
     <Property Name="DateUpdated" Type="datetime" Nullable="false" />
     <Property Name="UserId" Type="int" Nullable="false" />
+    <Property Name="IsDeleted" Type="bit" Nullable="false" />
   </EntityType>
   <EntityType Name="Comments">
     <Key>
@@ -194,6 +196,7 @@
     <Property Name="DateCreated" Type="datetime" Nullable="false" />
     <Property Name="PostId" Type="int" Nullable="false" />
     <Property Name="UserId" Type="int" Nullable="false" />
+    <Property Name="IsDeleted" Type="bit" Nullable="false" />
   </EntityType>
   <EntityType Name="BroRequests">
     <Key>
@@ -865,6 +868,7 @@
           <NavigationProperty Name="Owner" Relationship="ModelFirst.AlbumUser" FromRole="Album" ToRole="User" />
           <Property Type="Int32" Name="UserId" Nullable="false" />
           <NavigationProperty Name="Photos" Relationship="ModelFirst.AlbumPhoto" FromRole="Album" ToRole="Photo" />
+          <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -876,8 +880,6 @@
           <NavigationProperty Name="BlockedBros" Relationship="ModelFirst.UserUser" FromRole="User" ToRole="User1" />
           <NavigationProperty Name="BlockedByBros" Relationship="ModelFirst.UserUser" FromRole="User1" ToRole="User" />
           <Property Type="String" Name="Email" Nullable="false" />
-          <Property Type="Binary" Name="Password" Nullable="false" />
-          <Property Type="Binary" Name="Salt" Nullable="false" />
           <NavigationProperty Name="Posts" Relationship="ModelFirst.UserPost" FromRole="User" ToRole="Post" />
           <NavigationProperty Name="Profile" Relationship="ModelFirst.UserProfile" FromRole="User" ToRole="Profile" />
           <NavigationProperty Name="SentMessages" Relationship="ModelFirst.MessagesSent" FromRole="User" ToRole="Message" />
@@ -890,6 +892,8 @@
           <NavigationProperty Name="SentFirstBumps" Relationship="ModelFirst.SentFirstBump" FromRole="User" ToRole="FirstBump" />
           <NavigationProperty Name="Notifications" Relationship="ModelFirst.NotificationUser" FromRole="User" ToRole="Notification" />
           <NavigationProperty Name="Comments" Relationship="ModelFirst.CommentUser" FromRole="User" ToRole="Comment" />
+          <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
+          <Property Type="Boolean" Name="IsBanned" Nullable="false" />
         </EntityType>
         <EntityType Name="Photo" BaseType="ModelFirst.Post">
           <Property Type="String" Name="Caption" Nullable="false" />
@@ -908,6 +912,7 @@
           <NavigationProperty Name="Comments" Relationship="ModelFirst.PostComment" FromRole="Post" ToRole="Comment" />
           <NavigationProperty Name="Author" Relationship="ModelFirst.UserPost" FromRole="Post" ToRole="User" />
           <Property Type="Int32" Name="UserId" Nullable="false" />
+          <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
         </EntityType>
         <EntityType Name="Comment">
           <Key>
@@ -922,6 +927,7 @@
           <NavigationProperty Name="CommentNotification" Relationship="ModelFirst.CommentNotificationComment" FromRole="Comment" ToRole="CommentNotification" />
           <NavigationProperty Name="Owner" Relationship="ModelFirst.CommentUser" FromRole="Comment" ToRole="User" />
           <Property Type="Int32" Name="UserId" Nullable="false" />
+          <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
         </EntityType>
         <EntityType Name="BroRequest">
           <Key>
@@ -1267,6 +1273,7 @@
           <ScalarProperty Name="Title" ColumnName="Title" />
           <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
           <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -1276,8 +1283,8 @@
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
           <ScalarProperty Name="Email" ColumnName="Email" />
-          <ScalarProperty Name="Password" ColumnName="Password" />
-          <ScalarProperty Name="Salt" ColumnName="Salt" />
+          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+          <ScalarProperty Name="IsBanned" ColumnName="IsBanned" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -1289,6 +1296,7 @@
           <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
           <ScalarProperty Name="DateUpdated" ColumnName="DateUpdated" />
           <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
         </MappingFragment>
       </EntityTypeMapping>
       <EntityTypeMapping TypeName="IsTypeOf(ModelFirst.Photo)">
@@ -1314,6 +1322,7 @@
           <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
           <ScalarProperty Name="PostId" ColumnName="PostId" />
           <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

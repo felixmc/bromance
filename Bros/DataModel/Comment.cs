@@ -20,6 +20,7 @@ namespace Bros.DataModel
         public System.DateTime DateCreated { get; set; }
         public int PostId { get; set; }
         public int UserId { get; set; }
+        public bool IsDeleted { get; set; }
     
         public virtual Post ParentPost { get; set; }
         public virtual CommentNotification CommentNotification { get; set; }

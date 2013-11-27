@@ -23,6 +23,7 @@ namespace Bros.DataModel
         public string Title { get; set; }
         public System.DateTime DateCreated { get; set; }
         public int UserId { get; set; }
+        public bool IsDeleted { get; set; }
     
         public virtual User Owner { get; set; }
         public virtual ICollection<Photo> Photos { get; set; }

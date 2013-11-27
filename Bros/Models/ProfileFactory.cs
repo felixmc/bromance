@@ -18,8 +18,6 @@ namespace Bros.Models
             get
             {
                 User _User = new User () {
-					Salt = salt,
-					Password = AuthenticationController.GeneratedSaltedHash(RandomWord(), salt),
 					Email = RandomWord() + "@gmail.com",
 					DateCreated = DateTime.Today,
 				};

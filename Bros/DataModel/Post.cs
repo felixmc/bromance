@@ -24,6 +24,7 @@ namespace Bros.DataModel
         public System.DateTime DateCreated { get; set; }
         public System.DateTime DateUpdated { get; set; }
         public int UserId { get; set; }
+        public bool IsDeleted { get; set; }
     
         public virtual ICollection<Comment> Comments { get; set; }
         public virtual User Author { get; set; }

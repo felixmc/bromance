@@ -5,7 +5,7 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="3c95218c3b414532b65f4d288d62be80" Name="Diagram1" ZoomLevel="85" >
-        <EntityTypeShape EntityType="ModelFirst.Album" Width="1.5" PointX="0.625" PointY="8.875" />
+        <EntityTypeShape EntityType="ModelFirst.Album" Width="1.5" PointX="0.625" PointY="8.75" />
         <EntityTypeShape EntityType="ModelFirst.User" Width="1.5" PointX="3.375" PointY="7.25" />
         <EntityTypeShape EntityType="ModelFirst.Photo" Width="1.5" PointX="0.625" PointY="11.5" />
         <EntityTypeShape EntityType="ModelFirst.Post" Width="1.5" PointX="4.375" PointY="13" />

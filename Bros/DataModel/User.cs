@@ -35,8 +35,8 @@ namespace Bros.DataModel
         public int Id { get; set; }
         public System.DateTime DateCreated { get; set; }
         public string Email { get; set; }
-        public byte[] Password { get; set; }
-        public byte[] Salt { get; set; }
+        public bool IsDeleted { get; set; }
+        public bool IsBanned { get; set; }
     
         public virtual ICollection<Circle> JoinedCircles { get; set; }
         public virtual ICollection<User> BlockedBros { get; set; }
@@ -53,41 +53,5 @@ namespace Bros.DataModel
         public virtual ICollection<FirstBump> SentFirstBumps { get; set; }
         public virtual ICollection<Notification> Notifications { get; set; }
         public virtual ICollection<Comment> Comments { get; set; }
-
-        public void SendBroRequest(User bro)
-        {
-            using (ModelFirstContainer context = new ModelFirstContainer())
-            {
-                BroRequest request = new BroRequest();
-                request.SetUsers(this, bro);
-
-                this.SentBroRequests.Add(request);
-                this.Notifications.Add(request.RequestNotification);
-
-                bro.ReceivedBroRequests.Add(request);
-                bro.Notifications.Add(request.RequestNotification);
-
-                context.SaveChanges();
-            }
-        }
-
-		// TODO: FIX THESE METHODS
-
-        public void CreateCircle(string CircleName)
-        {
-//            Circles.Add(new Circle(CircleName, this));
-        }
-
-        public void AddBroToCircle(User Bro, Circle targetCircle)
-        {
-//            targetCircle.AddBro(Bro);
-        }
-
-        public Circle GetCircleByName(string CircleName)
-        {
-//           return Circles.Where(c => c.Name == CircleName).FirstOrDefault();
-			return null;
-        }
-
     }
 }
