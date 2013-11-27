@@ -93,16 +93,6 @@ namespace Bros.DataModel
 			// TODO: FIX THIS METHOD
 			return null;
         }
- 
-         public void CreateCircle(string CircleName)
-         {
-			 Circles.Add(new Circle() { Name = CircleName, Owner = this });
-         }
- 
-         public void AddBroToCircle(User Bro, Circle targetCircle)
-         {
-             targetCircle.Members.Add(Bro);
-         }
 
     }
 }
