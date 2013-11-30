@@ -5,10 +5,10 @@
 }
 
 <div class="ViewBroRequests">
-    @if (Model != null)
+    @if (Model.Count() != 0)
     {
         foreach(Bros.DataModel.BroRequest b in Model){
-         @Html.Render("_BroRequestPartial", b);   
+            Html.RenderPartial("_BroRequestPartial", b);   
         }
     }
     else
