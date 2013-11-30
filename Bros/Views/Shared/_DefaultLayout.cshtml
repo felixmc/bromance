@@ -10,16 +10,29 @@
         <div class="container">
             <header>
                 @RenderSection("LoginRegister", required: false)
-                @RenderSection("Logout", required: false)
                 <nav class="mainNav">
                     <ul>
 @*                        Change to true when pages are created*@
                         @RenderSection("MainNavigation", required: false)
+                     
                     </ul>
-                </nav>             
+                </nav>   
+                
+                <nav class="secondaryNav">
+                    <ul>
+                      @RenderSection("SecondaryNavigation", required:false)
+                    </ul>
+                </nav>
+
+                <nav class="profileLinks">
+                    <ul>
+                        @RenderSection("ProfileLinks", required:false)   
+                    </ul>
+                </nav>       
             </header>
             
             <aside class="leftSidebar">
+
                 @RenderSection("LeftSideBar", required: false)
             </aside>
 
