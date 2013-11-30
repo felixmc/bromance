@@ -134,7 +134,7 @@ namespace Bros.Controllers
                 // Attempt to register the user
                 try
                 {
-                    string data = WebSecurity.CreateUserAndAccount(model.Email, model.Password, new {dateCreated = DateTime.Now,isbanned = false, isdeleted = false});
+                    string data = WebSecurity.CreateUserAndAccount(model.Email, model.Password, new { dateCreated = DateTime.Now, isbanned = false, isdeleted = false });
                     //WebSecurity.Login(model.Email, model.Password);
                 }
                 catch (MembershipCreateUserException e)
@@ -142,6 +142,8 @@ namespace Bros.Controllers
                     ModelState.AddModelError("", ErrorCodeToString(e.StatusCode));
                 }
             }
+            else
+                return View("Register");
 
 			using (var context = new ModelFirstContainer())
 			{
