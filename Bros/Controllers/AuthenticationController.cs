@@ -32,7 +32,7 @@ namespace Bros.Controllers
                         (from u in context.Users
                          where u.Email == model.Email
                          select u).FirstOrDefault<User>();
-                    Session.Add("UserId", user.Id);
+                    Session["UserId"]=user.Id;
                     loginMessage = "Welcome, " + user.Profile.FirstName + "! You are logged in!";
                 }
                 ViewBag.LoginMessage = loginMessage;
