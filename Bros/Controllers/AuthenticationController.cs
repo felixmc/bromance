@@ -22,29 +22,36 @@ namespace Bros.Controllers
         [HttpPost]
         public ActionResult Login(RegisterModel model)
         {
+            string loginMessage = "";
             bool isLoggedIn = WebSecurity.Login(model.Email, model.Password);
-			if (isLoggedIn)
-			{
-				using (ModelFirstContainer context = new ModelFirstContainer())
-				{
-					Bros.DataModel.User user =
-						(from u in context.Users
-						 where u.Email == model.Email
-						 select u).FirstOrDefault<User>();
-					Session.Add("UserId", user.Id);
-				}
+            if (isLoggedIn)
+            {
+                using (ModelFirstContainer context = new ModelFirstContainer())
+                {
+                    Bros.DataModel.User user =
+                        (from u in context.Users
+                         where u.Email == model.Email
+                         select u).FirstOrDefault<User>();
+                    Session.Add("UserId", user.Id);
+                    loginMessage = "Welcome, " + user.Profile.FirstName + "! You are logged in!";
+                }
+                ViewBag.LoginMessage = loginMessage;
 
-				return RedirectToAction("Index", "Home");
-			}
+                return RedirectToAction("Index", "Home");
+            }
+            else
+            {
 
-			ViewBag.Error = "Invalid username or password.";
+                ViewBag.Error = "Invalid username or password.";
 
-            return View();
+                return View();
+            }
         }
 
         [HttpGet]
         public ActionResult Login()
         {
+            ViewBag.LoginMessage = "Enter Name";
             return View();
         }
 

@@ -18,6 +18,17 @@ namespace Bros.Controllers
 
         public ActionResult Index()
         {
+
+            ViewBag.Title = "Home";
+            if ( Session["UserId"] != null && ((int)Session["UserId"]) != 0)
+            {
+                int id = (int)Session["UserId"];
+                User user = new User();
+                using(var context = new ModelFirstContainer()){
+                    user = context.Users.FirstOrDefault(x => x.Id == id);
+                @ViewBag.LoginMessage = "Welcome, " + user.Profile.FirstName + "! You are logged in!";
+                }
+            }
             return View();
         }
 
