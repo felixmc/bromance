@@ -2,6 +2,6 @@
 
 <div class="BroRequestPartial">
     <p class="RequestMessage">@Model.Sender.Profile.FirstName @Model.Sender.Profile.LastName has sent you a Bro Request!</p>
-    @Html.ActionLink("Accept!", "BroAccept", "Profile", Model, null);
-    @Html.ActionLink("Dismiss", "DismissRequest", "Profile", Model, null);
+    @Html.ActionLink("Accept!", "BroAccept", "Profile", new { Model }, null);
+    @Html.ActionLink("Dismiss", "DismissRequest", "Profile", new { Model }, null);
 </div>
