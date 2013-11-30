@@ -46,6 +46,19 @@ namespace Bros.Controllers
 
         #region BroRequest
 
+        public ActionResult ViewBros()
+        {
+            IEnumerable<User> bros;
+
+            using (ModelFirstContainer context = new ModelFirstContainer())
+            {
+                int id = (int)Session["UserID"];
+                bros = context.Users.Where(u => u.Id != id).ToList();
+            }
+
+            return View(bros);
+        }
+
         public ActionResult SendBroRequest(User receiver)
         {
             using (ModelFirstContainer context = new ModelFirstContainer())
@@ -108,7 +121,7 @@ namespace Bros.Controllers
 
                 int id = (int)Session["UserID"];
                 User user = context.Users.FirstOrDefault(u => u.Id == id);
-                ViewBag.Bros = GetCircleByName(user, "MyFriends").Members;
+                ViewBag.Bros = GetCircleByName(user, "MyBros").Members;
                 ViewBag.Request = request;
             }
 
@@ -119,8 +132,8 @@ namespace Bros.Controllers
         {
             using (ModelFirstContainer context = new ModelFirstContainer())
             {
-                AddBroToCircle("MyFriends", request.Sender, request.Receiver);
-                AddBroToCircle("MyFriends", request.Receiver, request.Sender);
+                AddBroToCircle("MyBros", request.Sender, request.Receiver);
+                AddBroToCircle("MyBros", request.Receiver, request.Sender);
 
                 request.RequestNotification.IsRead = true;
             }
@@ -157,7 +170,7 @@ namespace Bros.Controllers
                 int id = (int)Session["UserID"];
                 User user = context.Users.FirstOrDefault(u => u.Id == id);
 
-                unreadBroRequests = user.ReceivedBroRequests.Where(m => m.RequestNotification.IsRead == false);
+                unreadBroRequests = user.ReceivedBroRequests.Where(m => m.RequestNotification.IsRead == false).ToList();
             }
 
             return View(unreadBroRequests);

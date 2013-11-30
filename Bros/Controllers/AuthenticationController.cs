@@ -191,7 +191,7 @@ namespace Bros.Controllers
 
                 Circle defaultFriendCircle = new Circle()
                 {
-                    Name ="MyFriends",
+                    Name ="MyBros",
                     Owner = newUser,
                 };
 
