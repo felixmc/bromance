@@ -37,7 +37,7 @@ namespace Bros.Controllers
                 }
                 ViewBag.LoginMessage = loginMessage;
 
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("ProfileIndex", "Profile");
             }
             else
             {
