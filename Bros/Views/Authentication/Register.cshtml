@@ -1,21 +1,19 @@
 ﻿@using Bros.Models
 @model RegisterModel
 @{
-    Layout = null;
     ViewBag.Title = "Sign-Up Here!";
 }
-
-<!DOCTYPE html>
-
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>@ViewBag.Title</title>
-</head>
-<body>
-    <div>
-
-        @Html.Partial("RegisterPartial", @Model);
-    </div>
-</body>
-</html>
+       <h2>Register</h2>
+        @Html.ValidationSummary()
+    @using (Html.BeginForm("RegisterUser","Authentication", FormMethod.Post))
+    {       
+        <p>Email: @Html.TextBoxFor(x => x.Email)</p>
+        <p>Password: @Html.PasswordFor(x => x.Password)</p>
+        <p>Confirm Password: @Html.PasswordFor(x => x.ConfirmPassword)</p> 
+        <p>First Name: @Html.TextBoxFor(x => x.FirstName)</p>
+        <p>Last Name: @Html.TextBoxFor(x => x.LastName)</p>
+        <p>Birthdate: <input type="date" name ="Birthdate" /></p>
+		<p>Gender: @Html.Partial("_EnumDropDown", new Tuple<Type,string>(typeof(Bros.Enums.Gender), "Gender"))</p>
+        <p>Zipcode: @Html.TextBoxFor(x => x.Zipcode)</p>
+        <input type="submit" value="Sign Up" />
+    }

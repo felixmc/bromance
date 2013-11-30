@@ -31,7 +31,7 @@ namespace Bros.Controllers
 						(from u in context.Users
 						 where u.Email == model.Email
 						 select u).FirstOrDefault<User>();
-					Session.Add("User", user);
+					Session.Add("UserId", user.Id);
 				}
 
 				return RedirectToAction("Index", "Home");

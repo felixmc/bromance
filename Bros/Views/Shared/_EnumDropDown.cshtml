@@ -1,1 +1,17 @@
-﻿@model System.Type
+﻿@model Tuple<Type, string>
+
+@{
+    
+    List<string> values = new List<string>();
+
+    foreach (var x in Enum.GetValues(Model.Item1))
+    {
+        string temp = x.ToString();
+        temp = temp.Replace("_0_", " / ");
+        temp = temp.Replace("_", " ");
+
+        values.Add(temp);
+    }
+    @Html.DropDownList(Model.Item2, new SelectList(values))
+    
+}

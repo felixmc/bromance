@@ -5,20 +5,22 @@
     Layout = null;
     ViewBag.Title = "Sign-Up Here!";
 }
-
-<!DOCTYPE html>
-
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>@ViewBag.Title</title>
-</head>
-<body>
-    <div>
-        @Html.Partial("ProfileAttribute_Partial", @Model)
-    </div>
-</body>
-</html>
+        <h2>Preferences</h2>
+        @Html.ValidationSummary()
+    @using (Html.BeginForm("EditProfileAttribute","Profile", FormMethod.Post))
+    {       
+        <p>Athletic: @Html.Partial("_EnumDropDown", new Tuple<Type,string>(typeof(Bros.Enums.Athleticism), "Athleticism"))</p>
+        <p>Children: @Html.Partial("_EnumDropDown", new Tuple<Type,string>(typeof(Bros.Enums.Children), "Children"))</p>
+        <p>Drinks: @Html.Partial("_EnumDropDown", new Tuple<Type,string>(typeof(Bros.Enums.Drinks), "Drinks"))</p>
+        <p>Drugs:@Html.Partial("_EnumDropDown", new Tuple<Type,string>(typeof(Bros.Enums.Drugs), "Drugs"))</p>
+        <p>Education: @Html.Partial("_EnumDropDown", new Tuple<Type,string>(typeof(Bros.Enums.Education), "Education"))</p>
+        <p>Ethnicity: @Html.Partial("_EnumDropDown", new Tuple<Type,string>(typeof(Bros.Enums.Ethnicity), "Gender"))</p>
+        <p>Job: @Html.Partial("_EnumDropDown", new Tuple<Type,string>(typeof(Bros.Enums.Job), "Job"))</p>
+        <p>Marriage Status: @Html.Partial("_EnumDropDown", new Tuple<Type,string>(typeof(Bros.Enums.MarriageStatus), "Marriage Status"))</p>
+        <p>Pets: @Html.Partial("_EnumDropDown", new Tuple<Type,string>(typeof(Bros.Enums.Pets), "Pets"))</p>
+        <input type="submit" value="Save Changes" />
+        
+    }
 
 
 

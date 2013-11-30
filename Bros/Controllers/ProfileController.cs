@@ -196,14 +196,25 @@ namespace Bros.Controllers
 		}
 
         [HttpGet]
-        public ActionResult ProfileAttribute()
+        public ActionResult EditProfile()
         {
-            User user = (User)Session["User"];
-            return View(user);
+
+            User user = null;
+            int id = 0;
+            using(var context = new ModelFirstContainer()){
+            id = (int)Session["UserId"];
+          
+                user = context.Users.FirstOrDefault(x => x.Id == id); 
+                if (user == null) throw new Exception("Session not set exception");
+            return View("ProfileAttribute", user.Profile);
+            }
+
+            
+            
         }
 
         [HttpPost]
-        public ActionResult SetProfileAttributes(Profile prof)
+        public ActionResult EditProfileAttributes(Profile prof)
         {
 
             if(ModelState.IsValid)
