@@ -156,28 +156,36 @@ namespace Bros.Controllers
                     
                 };
 
-				User newUser = context.Users.Where(u=>u.Email.Equals(model.Email)).FirstOrDefault();
+				User newUser = context.Users.FirstOrDefault(u=>u.Email.Equals(model.Email));
 
-                prof.User = newUser;
+                if (newUser != null)
+                {
 
-                newUser.Profile = prof;
+                    prof.User = newUser;
 
-                context.Profiles.Add(prof);
+                    newUser.Profile = prof;
 
-				try
-				{
-					context.SaveChanges();
-				}
-				catch (DbEntityValidationException e)
-				{
-					foreach (var validationErrors in e.EntityValidationErrors)
-					{
-						foreach (var validationError in validationErrors.ValidationErrors)
-						{
-							Trace.TraceInformation("Property: {0} Error: {1}", validationError.PropertyName, validationError.ErrorMessage);
-						}
-					}
-				}
+                    context.Profiles.Add(prof);
+
+                    try
+                    {
+                        context.SaveChanges();
+                    }
+                    catch (DbEntityValidationException e)
+                    {
+                        foreach (var validationErrors in e.EntityValidationErrors)
+                        {
+                            foreach (var validationError in validationErrors.ValidationErrors)
+                            {
+                                Trace.TraceInformation("Property: {0} Error: {1}", validationError.PropertyName, validationError.ErrorMessage);
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    throw new Exception("User email was not added to db");
+                }
 
 				//context.SaveChanges();
 
