@@ -1,0 +1,18 @@
+﻿@model IEnumerable<Bros.DataModel.BroRequest>
+
+@{
+    Layout = "~/Views/Shared/_DefaultLayout.cshtml";
+}
+
+<div class="ViewBroRequests">
+    @if (Model != null)
+    {
+        foreach(Bros.DataModel.BroRequest b in Model){
+         @Html.Render("_BroRequestPartial", b);   
+        }
+    }
+    else
+    {
+        <div class="NoRequests">Doesn't look like you have any Bro Requests at the moment.</div>
+    }
+</div>

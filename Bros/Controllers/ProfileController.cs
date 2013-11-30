@@ -150,6 +150,19 @@ namespace Bros.Controllers
             return RedirectToAction("ProfileIndex");
         }
 
+        public ActionResult ViewBroRequests()
+        {
+            IEnumerable<BroRequest> unreadBroRequests;
+            using(ModelFirstContainer context = new ModelFirstContainer()){
+                int id = (int)Session["UserID"];
+                User user = context.Users.FirstOrDefault(u => u.Id == id);
+
+                unreadBroRequests = user.ReceivedBroRequests.Where(m => m.RequestNotification.IsRead == false);
+            }
+
+            return View(unreadBroRequests);
+        }
+
         #endregion
 
         public new ActionResult Profile()
