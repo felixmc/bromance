@@ -37,5 +37,11 @@ namespace Bros.Controllers
         {
             return View();
         }
+
+        [AllowAnonymous]
+        public ActionResult TermsOfUse()
+        {
+            return View();
+        }
     }
 }

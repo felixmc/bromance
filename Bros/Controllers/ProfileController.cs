@@ -224,7 +224,7 @@ namespace Bros.Controllers
 
             }
 
-            return View("Index");
+            return View("ProfileIndex");
         }
 
 	}
