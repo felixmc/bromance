@@ -14,7 +14,17 @@ namespace Bros.Controllers
 
 		public ActionResult ProfileIndex()
 		{
-			return View();
+            if (Session["UserId"] != null && ((int)Session["UserId"]) != 0)
+            {
+                int id = (int)Session["UserId"];
+                User user = new User();
+                using (var context = new ModelFirstContainer())
+                {
+                    user = context.Users.FirstOrDefault(x => x.Id == id);
+                    ViewBag.LoginMessage = "Hello, " + user.Profile.FirstName;
+                }
+            }
+            return View();
 		}
 
 		public ActionResult Feed()
