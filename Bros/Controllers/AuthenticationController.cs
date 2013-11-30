@@ -32,7 +32,7 @@ namespace Bros.Controllers
                         (from u in context.Users
                          where u.Email == model.Email
                          select u).FirstOrDefault<User>();
-                    Session["UserId"]=user.Id;
+                    Session.Add("UserId", user.Id);
                     loginMessage = "Welcome, " + user.Profile.FirstName + "! You are logged in!";
                 }
                 ViewBag.LoginMessage = loginMessage;
@@ -150,8 +150,8 @@ namespace Bros.Controllers
                 
                 Profile prof = new Profile()
                 {   
-                    FirstName = formatName(model.FirstName),
-                    LastName = formatName(model.LastName),
+                    FirstName = model.FirstName,
+                    LastName = model.LastName,
                     BirthDate = model.BirthDate,
                     ZipCode = model.Zipcode + "",
                     Gender = Request["Gender"],
@@ -189,22 +189,21 @@ namespace Bros.Controllers
                     throw new Exception("User email was not added to db");
                 }
 
+                Circle defaultFriendCircle = new Circle()
+                {
+                    Name ="MyFriends",
+                    Owner = newUser,
+                };
+
+                context.Circles.Add(defaultFriendCircle);
+                context.SaveChanges();
+
 				//context.SaveChanges();
 
 			}
 
             return RedirectToAction("Index", "Home");
 		}
-
-        private string formatName(string p)
-        {
-            p = p.ToLower();
-            string endOfstring = p.Substring(1);
-            string firstLetter = p.Substring(0, 1);
-            firstLetter = firstLetter.ToUpper();
-            p = firstLetter + endOfstring;
-            return p;
-        }
 
     }
 }
