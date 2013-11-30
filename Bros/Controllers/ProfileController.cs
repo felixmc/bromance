@@ -108,7 +108,7 @@ namespace Bros.Controllers
 
                 int id = (int)Session["UserID"];
                 User user = context.Users.FirstOrDefault(u => u.Id == id);
-                ViewBag.Bros = GetCircleByName(user, "Bros").Members;
+                ViewBag.Bros = GetCircleByName(user, "MyFriends").Members;
                 ViewBag.Request = request;
             }
 
@@ -119,8 +119,8 @@ namespace Bros.Controllers
         {
             using (ModelFirstContainer context = new ModelFirstContainer())
             {
-                AddBroToCircle("Bros", request.Sender, request.Receiver);
-                AddBroToCircle("Bros", request.Receiver, request.Sender);
+                AddBroToCircle("MyFriends", request.Sender, request.Receiver);
+                AddBroToCircle("MyFriends", request.Receiver, request.Sender);
 
                 request.RequestNotification.IsRead = true;
             }
