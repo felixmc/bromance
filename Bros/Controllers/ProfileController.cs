@@ -7,6 +7,7 @@ using System.Web.Mvc;
 
 namespace Bros.Controllers
 {
+	[Authorize]
 	public class ProfileController : Controller
 	{
 		//
@@ -23,8 +24,9 @@ namespace Bros.Controllers
 
 			using (ModelFirstContainer context = new ModelFirstContainer())
 			{
-				User user = (User)Session["User"];
-				ICollection<Post> broPosts = user.Circles.Select(c => c.Members).SelectMany(u => u)
+				int userId = (int)Session["UserId"];
+				User user = context.Users.Where(u => u.Id == userId).FirstOrDefault();
+				ICollection<Post> broPosts = user.Circles.Select(c => c.Members).SelectMany(u => u).Union(context.Users.Where(u => u.Id == userId))
 												.Select(u => u.Posts).SelectMany(p => p)
 													.OrderByDescending(p => p.DateCreated)
 														.Take(30).ToList();
@@ -154,9 +156,10 @@ namespace Bros.Controllers
 		{
 			using (ModelFirstContainer context = new ModelFirstContainer())
 			{
-				User user = (User)Session["User"];
+				int userId = (int)Session["UserId"];
+				User user = context.Users.Where(u => u.Id == userId).FirstOrDefault();
 
-				TextPost update = new TextPost() { Author = user, Content = Request["status"], DateCreated = new DateTime() };
+				TextPost update = new TextPost() { Author = user, Content = Request["status"], DateCreated = DateTime.Now, DateUpdated = DateTime.Now };
 				user.Posts.Add(update);
 
 				context.SaveChanges();
@@ -179,7 +182,8 @@ namespace Bros.Controllers
 
 				if (post != null)
 				{
-					User user = (User)Session["User"];
+					int userId = (int)Session["UserId"];
+					User user = context.Users.Where(u => u.Id == userId).FirstOrDefault();
 					Comment comment = new Comment() { Content = Request["comment"], Owner = user, ParentPost = post, DateCreated = new DateTime() };
 
 					user.Comments.Add(comment);
@@ -208,9 +212,6 @@ namespace Bros.Controllers
                 if (user == null) throw new Exception("Session not set exception");
             return View("ProfileAttribute", user.Profile);
             }
-
-            
-            
         }
 
         [HttpPost]

@@ -1,5 +1,19 @@
-﻿@{
-    
-}
+﻿@model Bros.DataModel.Post
 
-<h2>News Feed</h2>
+<article>
+@if (@Model is Bros.DataModel.TextPost)
+{
+	var post = Model as Bros.DataModel.TextPost;
+	<p>@post.Content</p>
+}
+else if (@Model is Bros.DataModel.Photo)
+{
+	var post = Model as Bros.DataModel.Photo;
+	<p>Some photo goes here</p>
+}
+else
+{
+	<p>something weird?</p>
+}
+</article>
+Html.Partial("_CommentFeed", Model)

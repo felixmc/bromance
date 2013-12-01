@@ -1,6 +1,10 @@
-﻿@{
-    Layout = null;
-}
+﻿@model List<Bros.DataModel.Post>
 
 
 @Html.Partial("_StatusUpdateForm")
+
+@foreach(Bros.DataModel.Post post in Model)
+{
+	<p>@Model.Count</p>
+	Html.RenderPartial("_NewsFeedPartial", post);
+}
