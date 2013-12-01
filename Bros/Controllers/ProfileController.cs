@@ -15,7 +15,17 @@ namespace Bros.Controllers
 
 		public ActionResult ProfileIndex()
 		{
-			return View();
+            if (Session["UserId"] != null && ((int)Session["UserId"]) != 0)
+            {
+                int id = (int)Session["UserId"];
+                User user = new User();
+                using (var context = new ModelFirstContainer())
+                {
+                    user = context.Users.FirstOrDefault(x => x.Id == id);
+                    ViewBag.LoginMessage = "Hello, " + user.Profile.FirstName;
+                }
+            }
+            return View();
 		}
 
 		public ActionResult Feed()
@@ -38,11 +48,25 @@ namespace Bros.Controllers
 
         #region BroRequest
 
+        public ActionResult ViewBros()
+        {
+            IEnumerable<User> bros;
+
+            using (ModelFirstContainer context = new ModelFirstContainer())
+            {
+                int id = (int)Session["UserID"];
+                bros = context.Users.Where(u => u.Id != id).ToList();
+            }
+
+            return View(bros);
+        }
+
         public ActionResult SendBroRequest(User receiver)
         {
             using (ModelFirstContainer context = new ModelFirstContainer())
             {
-                User user = (User)Session["User"];
+                int id = (int)Session["UserID"];
+                User user = context.Users.FirstOrDefault(u => u.Id == id);
                 BroRequest request = CreateRequest(user, receiver);
 
                 user.SentBroRequests.Add(request);
@@ -63,7 +87,8 @@ namespace Bros.Controllers
         {
             using (ModelFirstContainer context = new ModelFirstContainer())
             {
-                User user = (User)Session["User"];
+                int id = (int)Session["UserID"];
+                User user = context.Users.FirstOrDefault(u => u.Id == id);
                 Circle targetCircle = new Circle();
                 targetCircle.Name = CircleName;
                 targetCircle.Owner = user;
@@ -96,22 +121,32 @@ namespace Bros.Controllers
             {
                 AcceptRequest(request);
 
-
-                User user = (User)Session["User"];
-                ViewBag.Bros = GetCircleByName(user, "Bros").Members;
+                int id = (int)Session["UserID"];
+                User user = context.Users.FirstOrDefault(u => u.Id == id);
+                ViewBag.Bros = GetCircleByName(user, "MyBros").Members;
                 ViewBag.Request = request;
             }
 
             return View();
         }
 
-        public void AddBroToCircle(string CircleName, User bro)
+        public void AcceptRequest(BroRequest request)
         {
-            User user = (User)Session["User"];
-            Circle targetCircle = GetCircleByName(user, CircleName);
-            if (!targetCircle.Members.Contains(bro))
+            using (ModelFirstContainer context = new ModelFirstContainer())
             {
-                targetCircle.Members.Add(bro);
+                AddBroToCircle("MyBros", request.Sender, request.Receiver);
+                AddBroToCircle("MyBros", request.Receiver, request.Sender);
+
+                request.RequestNotification.IsRead = true;
+            }
+        }
+
+        public void AddBroToCircle(string CircleName, User circleOwner, User broAdded)
+        {
+            Circle targetCircle = GetCircleByName(circleOwner, CircleName);
+            if (!targetCircle.Members.Contains(broAdded))
+            {
+                targetCircle.Members.Add(broAdded);
             }
         }
 
@@ -120,22 +155,27 @@ namespace Bros.Controllers
             return user.Circles.FirstOrDefault(m => m.Name == CircleName);
         }
 
-        public void AcceptRequest(BroRequest request)
+        public ActionResult DismissRequest(BroRequest request)
         {
             using (ModelFirstContainer context = new ModelFirstContainer())
             {
-                GetCircleByName(request.Sender, "Bros").Members.Add(request.Receiver); 
-                GetCircleByName(request.Receiver, "Bros").Members.Add(request.Sender);
                 request.RequestNotification.IsRead = true;
             }
+
+            return RedirectToAction("ProfileIndex");
         }
 
-        public void DismissRequest(BroRequest request)
+        public ActionResult ViewBroRequests()
         {
-            using (ModelFirstContainer context = new ModelFirstContainer())
-            {
-                request.RequestNotification.IsRead = true;
+            IEnumerable<BroRequest> unreadBroRequests;
+            using(ModelFirstContainer context = new ModelFirstContainer()){
+                int id = (int)Session["UserID"];
+                User user = context.Users.FirstOrDefault(u => u.Id == id);
+
+                unreadBroRequests = user.ReceivedBroRequests.Where(m => m.RequestNotification.IsRead == false).ToList();
             }
+
+            return View(unreadBroRequests);
         }
 
         #endregion
@@ -225,7 +265,7 @@ namespace Bros.Controllers
 
             }
 
-            return View("Index");
+            return View("ProfileIndex");
         }
 
 	}

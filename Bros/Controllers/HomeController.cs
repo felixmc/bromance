@@ -26,7 +26,7 @@ namespace Bros.Controllers
                 User user = new User();
                 using(var context = new ModelFirstContainer()){
                     user = context.Users.FirstOrDefault(x => x.Id == id);
-                @ViewBag.LoginMessage = "Welcome, " + user.Profile.FirstName + "! You are logged in!";
+                ViewBag.LoginMessage = "Welcome, " + user.Profile.FirstName + "! You are logged in!";
                 }
             }
             return View();
@@ -34,6 +34,12 @@ namespace Bros.Controllers
 
         [AllowAnonymous]
         public ActionResult AboutUs()
+        {
+            return View();
+        }
+
+        [AllowAnonymous]
+        public ActionResult TermsOfUse()
         {
             return View();
         }

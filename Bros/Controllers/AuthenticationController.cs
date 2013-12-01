@@ -32,12 +32,12 @@ namespace Bros.Controllers
                         (from u in context.Users
                          where u.Email == model.Email
                          select u).FirstOrDefault<User>();
-                    Session["UserId"]=user.Id;
+                    Session.Add("UserId", user.Id);
                     loginMessage = "Welcome, " + user.Profile.FirstName + "! You are logged in!";
                 }
                 ViewBag.LoginMessage = loginMessage;
 
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("ProfileIndex", "Profile");
             }
             else
             {
@@ -188,6 +188,15 @@ namespace Bros.Controllers
                 {
                     throw new Exception("User email was not added to db");
                 }
+
+                Circle defaultFriendCircle = new Circle()
+                {
+                    Name ="MyBros",
+                    Owner = newUser,
+                };
+
+                context.Circles.Add(defaultFriendCircle);
+                context.SaveChanges();
 
 				//context.SaveChanges();
 
