@@ -1,6 +1,7 @@
 ﻿@model Bros.DataModel.Post
 
 <article>
+	<p><strong>@Model.Author.Profile.FirstName @Model.Author.Profile.LastName</strong></p>
 @if (@Model is Bros.DataModel.TextPost)
 {
 	var post = Model as Bros.DataModel.TextPost;
@@ -16,4 +17,4 @@ else
 	<p>something weird?</p>
 }
 </article>
-Html.Partial("_CommentFeed", Model)
+@Html.Partial("_CommentFeed", Model)

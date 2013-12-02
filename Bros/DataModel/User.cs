@@ -11,7 +11,6 @@ namespace Bros.DataModel
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
     
     public partial class User
     {
@@ -54,6 +53,5 @@ namespace Bros.DataModel
         public virtual ICollection<FirstBump> SentFirstBumps { get; set; }
         public virtual ICollection<Notification> Notifications { get; set; }
         public virtual ICollection<Comment> Comments { get; set; }
-
     }
 }

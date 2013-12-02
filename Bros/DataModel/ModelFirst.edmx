@@ -924,7 +924,7 @@
           <Property Type="DateTime" Name="DateCreated" Nullable="false" />
           <NavigationProperty Name="ParentPost" Relationship="ModelFirst.PostComment" FromRole="Comment" ToRole="Post" />
           <Property Type="Int32" Name="PostId" Nullable="false" />
-          <NavigationProperty Name="CommentNotification" Relationship="ModelFirst.CommentNotificationComment" FromRole="Comment" ToRole="CommentNotification" />
+          <NavigationProperty Name="CommentNotifications" Relationship="ModelFirst.CommentNotificationComment" FromRole="Comment" ToRole="CommentNotification" />
           <NavigationProperty Name="Owner" Relationship="ModelFirst.CommentUser" FromRole="Comment" ToRole="User" />
           <Property Type="Int32" Name="UserId" Nullable="false" />
           <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
@@ -1229,7 +1229,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="CommentNotificationComment">
-          <End Type="ModelFirst.CommentNotification" Role="CommentNotification" Multiplicity="1" />
+          <End Type="ModelFirst.CommentNotification" Role="CommentNotification" Multiplicity="*" />
           <End Type="ModelFirst.Comment" Role="Comment" Multiplicity="1" />
         </Association>
         <Association Name="NotificationUser">

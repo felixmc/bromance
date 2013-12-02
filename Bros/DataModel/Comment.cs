@@ -14,6 +14,11 @@ namespace Bros.DataModel
     
     public partial class Comment
     {
+        public Comment()
+        {
+            this.CommentNotifications = new HashSet<CommentNotification>();
+        }
+    
         public int Id { get; set; }
         public string Content { get; set; }
         public bool IsFlagged { get; set; }
@@ -23,7 +28,7 @@ namespace Bros.DataModel
         public bool IsDeleted { get; set; }
     
         public virtual Post ParentPost { get; set; }
-        public virtual CommentNotification CommentNotification { get; set; }
+        public virtual ICollection<CommentNotification> CommentNotifications { get; set; }
         public virtual User Owner { get; set; }
     }
 }

@@ -35,11 +35,15 @@ namespace Bros.Controllers
 			using (ModelFirstContainer context = new ModelFirstContainer())
 			{
 				int userId = (int)Session["UserId"];
+
 				User user = context.Users.Where(u => u.Id == userId).FirstOrDefault();
-				ICollection<Post> broPosts = user.Circles.Select(c => c.Members).SelectMany(u => u).Union(context.Users.Where(u => u.Id == userId))
-												.Select(u => u.Posts).SelectMany(p => p)
+				
+				IEnumerable<User> feedMembers = user.Circles.Select(c => c.Members).SelectMany(u => u).Union(context.Users.Where(u => u.Id == userId));
+				List<Post> broPosts = context.Posts.Include("Comments").Include("Author.Profile")
+										//	.Where(p => p.Author in )
 													.OrderByDescending(p => p.DateCreated)
-														.Take(30).ToList();
+															.Take(30).ToList();
+
 				feedPosts = broPosts.ToList();
 			}
 
@@ -218,7 +222,7 @@ namespace Bros.Controllers
 			{
 				int postId = Int32.Parse(Request["post"]);
 
-				Post post = context.Posts.Where(p => p.Id == postId).FirstOrDefault(null);
+				Post post = context.Posts.Where(p => p.Id == postId).FirstOrDefault();
 
 				if (post != null)
 				{
