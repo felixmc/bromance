@@ -16,10 +16,13 @@
         <p>Drinks: @Html.Partial("_EnumDropDown", new Tuple<Type,string>(typeof(Bros.Enums.Drinks), "Drinks"))</p>
         <p>Drugs:@Html.Partial("_EnumDropDown", new Tuple<Type,string>(typeof(Bros.Enums.Drugs), "Drugs"))</p>
         <p>Education: @Html.Partial("_EnumDropDown", new Tuple<Type,string>(typeof(Bros.Enums.Education), "Education"))</p>
-        <p>Ethnicity: @Html.Partial("_EnumDropDown", new Tuple<Type,string>(typeof(Bros.Enums.Ethnicity), "Gender"))</p>
+        <p>Ethnicity: @Html.Partial("_EnumDropDown", new Tuple<Type,string>(typeof(Bros.Enums.Ethnicity), "Ethnicity"))</p>
         <p>Job: @Html.Partial("_EnumDropDown", new Tuple<Type,string>(typeof(Bros.Enums.Job), "Job"))</p>
-        <p>Marriage Status: @Html.Partial("_EnumDropDown", new Tuple<Type,string>(typeof(Bros.Enums.MarriageStatus), "Marriage Status"))</p>
+        <p>Marriage Status: @Html.Partial("_EnumDropDown", new Tuple<Type,string>(typeof(Bros.Enums.MarriageStatus), "MarriageStatus"))</p>
         <p>Pets: @Html.Partial("_EnumDropDown", new Tuple<Type,string>(typeof(Bros.Enums.Pets), "Pets"))</p>
+        <p>Religion: @Html.Partial("_EnumDropDown", new Tuple<Type,string>(typeof(Bros.Enums.Religion), "Religion"))</p>
+        <p>Sexual Orientation: @Html.Partial("_EnumDropDown", new Tuple<Type,string>(typeof(Bros.Enums.SexualOrientation), "SexualOrientation"))</p>
+        <p>Smokes: @Html.Partial("_EnumDropDown", new Tuple<Type,string>(typeof(Bros.Enums.Smokes), "Smokes"))</p>
         <input type="submit" value="Save Changes" />
         
     }
