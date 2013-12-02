@@ -1,0 +1,19 @@
+﻿@model int
+
+<div class="TempUserPartialView">
+    @{List<Bros.DataModel.Profile> profiles = ViewBag.Profiles;
+      Bros.DataModel.Profile profile = profiles.ElementAt(Model); }
+
+    @if (profile != null)
+    {
+            <div class="UserName">@profile.FirstName @profile.LastName</div>
+            <div class="UserGender">@profile.Gender</div>
+            <div class="SendBroRequest">@Html.ActionLink("Send Bro Request", "SendBroRequest", "Profile", new { receiverIndex = Model }, null);</div>
+            @Model
+    }
+    else
+    {
+        <p>There seems to be a problem with this bro's profile.</p>
+    }
+    
+</div>

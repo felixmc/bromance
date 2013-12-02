@@ -5,5 +5,6 @@
 
 @if (ViewBag.Request != null)
 {
-    @Html.Render("_BroRequestPartial", ViewBag.Request);
+    Bros.DataModel.BroRequest request = ViewBag.Request;
+    Html.RenderPartial("_BroRequestPartial", request);
 }
