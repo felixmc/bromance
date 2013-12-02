@@ -258,14 +258,37 @@ namespace Bros.Controllers
         public ActionResult EditProfileAttributes(Profile prof)
         {
 
-            if(ModelState.IsValid)
-            using (ModelFirstContainer context = new ModelFirstContainer())
+            if (Session["UserId"] != null)
             {
+                int id = (int)Session["UserId"];
                 
-
+                if (ModelState.IsValid)
+                    using (ModelFirstContainer context = new ModelFirstContainer())
+                    {
+                        User user = context.Users.FirstOrDefault(x => x.Id == id);
+                        user.Profile.Athleticism = prof.Athleticism;
+                        user.Profile.Children = prof.Children;
+                        user.Profile.Drinks = prof.Drinks;
+                        user.Profile.Drugs = prof.Drugs;
+                        user.Profile.Education = prof.Education;
+                        user.Profile.Ethnicity = prof.Ethnicity;
+                        user.Profile.Job = prof.Job;
+                        user.Profile.MarriageStatus = prof.MarriageStatus;
+                        user.Profile.Pets = prof.Pets;
+                        user.Profile.Religion = prof.Religion;
+                        user.Profile.SexualOrientation = prof.SexualOrientation;
+                        
+                        context.SaveChanges();
+                    }
+                
+                return View("ProfileIndex");
             }
+            else
+                throw new Exception("Session is null, or user not logged in.");
 
-            return View("ProfileIndex");
+
+
+            
         }
 
 	}

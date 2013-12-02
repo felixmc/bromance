@@ -1,9 +1,10 @@
-﻿@model List<Bros.DataModel.Message>
+﻿@model Bros.DataModel.Message
+
 
 @{
-    ViewBag.Title = "MessageHome";
+    Bros.DataModel.User mMe = ViewBag.Me;
+    List<Bros.DataModel.User> mUsers = ViewBag.Users;
 }
-
 @section MainNavigation
 {
     <li>@Html.ActionLink("Store", "StoreIndex", "Store")</li> 
@@ -20,25 +21,23 @@
     <!-- This is where Messages, Photos, Albums, Friends list will go-->
 
 }
-<h1>Profile Page</h1>
+<h1>@ViewBag.Title</h1>
 @section SecondaryNavigation{
-<li>@Html.ActionLink("Create New Message", "CreateMessage", "Messaging")</li>
+<li>@Html.ActionLink("Messages", "MessageHome", "Messaging")</li>
     
-    
-
 }
 
-@*@foreach (Bros.DataModel.Message u in Model)
-{
-    @Html.Partial("_MessageInbox", u);
-}*@
-
-@foreach (Bros.DataModel.User u in ViewBag.UserConversations)
-{
-        @Html.Partial("_UserMessageList", u);
-}
 <!--Body -->
+       @Html.ValidationSummary()
+    @using (Html.BeginForm("PostCreateMessage","Messaging", FormMethod.Post))
+    {
 
+        @Html.Hidden("Sender", mMe);
+        <p>To: @Html.DropDownList("Receiver", new SelectList(mUsers))</p>
+        <p>@Html.TextBoxFor(x=>x.Content ))</p>
+        <input type="submit" value="Send Message" />
+        
+    }
 
 @section Footer
 {
@@ -50,4 +49,8 @@
         </ul>
     </div>   
 }
+
+
+
+
 

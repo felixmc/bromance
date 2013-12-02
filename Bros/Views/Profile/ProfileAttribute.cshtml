@@ -9,6 +9,8 @@
         @Html.ValidationSummary()
     @using (Html.BeginForm("EditProfileAttributes","Profile", FormMethod.Post))
     {       
+        
+
         <p>Athletic: @Html.Partial("_EnumDropDown", new Tuple<Type,string>(typeof(Bros.Enums.Athleticism), "Athleticism"))</p>
         <p>Children: @Html.Partial("_EnumDropDown", new Tuple<Type,string>(typeof(Bros.Enums.Children), "Children"))</p>
         <p>Drinks: @Html.Partial("_EnumDropDown", new Tuple<Type,string>(typeof(Bros.Enums.Drinks), "Drinks"))</p>
@@ -24,3 +26,9 @@
 
 
 
+@*@Html.HiddenFor(x => x.Id);
+        @Html.HiddenFor(x => x.FirstName);
+        @Html.HiddenFor(x => x.LastName);     
+        @Html.HiddenFor(x => x.ProfilePhoto);
+        @Html.HiddenFor(x => x.ZipCode)
+        @Html.HiddenFor(x => x.BirthDate)*@
