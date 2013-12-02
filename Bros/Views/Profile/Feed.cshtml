@@ -5,6 +5,5 @@
 
 @foreach(Bros.DataModel.Post post in Model)
 {
-	<p>@Model.Count</p>
 	Html.RenderPartial("_NewsFeedPartial", post);
 }

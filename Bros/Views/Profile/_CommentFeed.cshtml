@@ -2,6 +2,6 @@
 
 @foreach (Bros.DataModel.Comment comment in @Model.Comments)
 {
-	Html.Partial("_SingleComment", comment);
+	Html.RenderPartial("_SingleComment", comment);
 }
-@Html.Partial("_CommentForm", @Model);
+@Html.Partial("_CommentForm", @Model)

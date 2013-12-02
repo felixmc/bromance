@@ -37,10 +37,10 @@ namespace Bros.Controllers
 				int userId = (int)Session["UserId"];
 
 				User user = context.Users.Where(u => u.Id == userId).FirstOrDefault();
-				
-				IEnumerable<User> feedMembers = user.Circles.Select(c => c.Members).SelectMany(u => u).Union(context.Users.Where(u => u.Id == userId));
-				List<Post> broPosts = context.Posts.Include("Comments").Include("Author.Profile")
-										//	.Where(p => p.Author in )
+
+				IEnumerable<int> feedMembers = user.Circles.Select(c => c.Members).SelectMany(u => u).Union(context.Users.Where(u => u.Id == userId)).Select(u => u.Id);
+				List<Post> broPosts = context.Posts.Include("Comments.Owner.Profile").Include("Author.Profile")
+											.Where(p => feedMembers.Contains(p.Author.Id))
 													.OrderByDescending(p => p.DateCreated)
 															.Take(30).ToList();
 
@@ -228,9 +228,10 @@ namespace Bros.Controllers
 				{
 					int userId = (int)Session["UserId"];
 					User user = context.Users.Where(u => u.Id == userId).FirstOrDefault();
-					Comment comment = new Comment() { Content = Request["comment"], Owner = user, ParentPost = post, DateCreated = new DateTime() };
+					Comment comment = new Comment() { Content = Request["comment"], Owner = user, ParentPost = post, DateCreated = DateTime.Now };
 
 					user.Comments.Add(comment);
+					post.Comments.Add(comment);
 
 					context.SaveChanges();
 				}
