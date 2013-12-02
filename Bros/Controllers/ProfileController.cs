@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using WebMatrix.WebData;
 
 namespace Bros.Controllers
 {
@@ -303,6 +304,8 @@ namespace Bros.Controllers
                         user.Profile.Pets = prof.Pets;
                         user.Profile.Religion = prof.Religion;
                         user.Profile.SexualOrientation = prof.SexualOrientation;
+                        user.Profile.Smokes = prof.Smokes;
+
                         
                         context.SaveChanges();
                     }

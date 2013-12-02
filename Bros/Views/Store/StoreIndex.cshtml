@@ -1,17 +1,29 @@
-﻿@section Logout
-{
+﻿@*@section Logout*@
+@*{*@
 @*    <div class="logout">*@
 @*        <ul>*@
 @*            <li>@Html.ActionLink("Logout", "Logout", "Authentication")</li>*@
 @*        </ul>    *@
 @*    </div>          *@
-}
+@*}*@
 
-@section MainNavigation
+@if (Session["UserId"] == null)
 {
-    <li>@Html.ActionLink("Home", "Index", "Home")</li>       
+    @section MainNavigation
+    {
+        <li>@Html.ActionLink("Home", "Index", "Home")</li>       
+    }
 }
-
+else
+{
+    @section ProfileLinks{
+    <li>@Html.ActionLink("Preferences", "EditProfile", "Profile")</li>
+    <li>@Html.ActionLink("Feed", "Feed", "Profile")</li>
+    <li>@Html.ActionLink("View My Profile", "ProfileIndex", "Profile")</li>
+    
+    <!-- This is where Messages, Photos, Albums, Friends list will go-->
+    }
+}
 <!--Body -->
 <h1>Store</h1>
 <h3>Pound it!</h3>
