@@ -11,6 +11,10 @@
          
 }
 
+@section SecondaryNavigation
+{
+    <li>@Html.ActionLink("Create New Message", "CreateMessage", "Messaging")</li>
+}
 
 @section ProfileLinks{
     <li>@Html.ActionLink("Preferences", "EditProfile", "Profile")</li>
@@ -20,13 +24,7 @@
     <!-- This is where Messages, Photos, Albums, Friends list will go-->
 
 }
-<h1>Profile Page</h1>
-@section SecondaryNavigation{
-<li>@Html.ActionLink("Create New Message", "CreateMessage", "Messaging")</li>
-    
-    
 
-}
 
 @*@foreach (Bros.DataModel.Message u in Model)
 {
