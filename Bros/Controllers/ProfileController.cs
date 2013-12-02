@@ -283,6 +283,8 @@ namespace Bros.Controllers
                         user.Profile.Pets = prof.Pets;
                         user.Profile.Religion = prof.Religion;
                         user.Profile.SexualOrientation = prof.SexualOrientation;
+                        user.Profile.Smokes = prof.Smokes;
+
                         
                         context.SaveChanges();
                     }
