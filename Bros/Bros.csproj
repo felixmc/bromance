@@ -260,10 +260,10 @@
     <Content Include="Views\Profile\_NewsFeedPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\_MessagePartialView.cshtml" />
+    <Content Include="Views\Messaging\_MessagePartialView.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Mail.cshtml" />
+    <Content Include="Views\Messaging\Mail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Search.cshtml" />
@@ -335,8 +335,8 @@
     <Content Include="Views\Messaging\MessageHome.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\_MessageInbox.cshtml" />
-    <Content Include="Views\_SendMessagePartialView.cshtml" />
+    <Content Include="Views\Messaging\_UserMessageList.cshtml" />
+    <Content Include="Views\Messaging\_SendMessagePartialView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Profile\ProfileAttribute.cshtml" />
@@ -347,9 +347,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Profile\ViewBroRequests.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Profile\ViewBros.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

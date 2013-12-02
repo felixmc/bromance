@@ -1,14 +1,9 @@
 ﻿@section MainNavigation
 {
-    <li>@Html.ActionLink("Feed", "Feed", "Profile")</li>
-    <li>@Html.ActionLink("View My Profile", "ProfileIndex", "Profile")</li>
-    <li>@Html.ActionLink("Store", "StoreIndex", "Store")</li>      
+    <li>@Html.ActionLink("Store", "StoreIndex", "Store")</li> 
+         
 }
-@section SecondaryNavigation{
 
-    <li>@Html.ActionLink("Logout", "Logout", "Authentication")</li>
-
-}
 
 @section ProfileLinks{
     <li>@Html.ActionLink("Preferences", "EditProfile", "Profile")</li>
@@ -16,6 +11,14 @@
 
 }
 <h1>Profile Page</h1>
+@section SecondaryNavigation{
+
+    <li>@Html.ActionLink("Feed", "Feed", "Profile")</li>
+    <li>@Html.ActionLink("View My Profile", "ProfileIndex", "Profile")</li>
+    <li>@Html.ActionLink("Messages", "MessageHome", "Messaging")</li>
+    <li>@Html.ActionLink("Logout", "Logout", "Authentication")</li>
+
+}
 @ViewBag.LoginMessage
 <!--Body -->
 
