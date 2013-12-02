@@ -1,1 +1,5 @@
-﻿
+﻿@model Bros.DataModel.Comment
+
+<article class="comment">
+	<p><strong>@Model.Owner.Profile.FirstName @Model.Owner.Profile.LastName:</strong> @Model.Content</p>
+</article>
