@@ -5,6 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity.Validation;
 using System.Diagnostics;
+using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
@@ -196,6 +198,18 @@ namespace Bros.Controllers
                 };
                 context.Circles.Add(defaultFriendCircle);
 
+                Image img = Image.FromFile("~/Content/Images/defaultPic.jpg");
+                byte[] arr;
+                using (MemoryStream ms = new MemoryStream())
+                {
+                    img.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
+                    arr = ms.ToArray();
+
+                }
+                Photo defaultPhoto = new Photo()
+                {
+                    
+                };
 
                 ICollection<Photo> photoAlbum = new List<Photo>();
                 Album album = new Album()
