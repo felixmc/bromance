@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, and Azure
 -- --------------------------------------------------
--- Date Created: 12/03/2013 14:54:52
+-- Date Created: 12/03/2013 15:53:33
 -- Generated from EDMX file: C:\Users\Felix\Documents\GitHub\bromance\Bros\DataModel\ModelFirst.edmx
 -- --------------------------------------------------
 
@@ -95,6 +95,24 @@ GO
 IF OBJECT_ID(N'[dbo].[FK_ProfilePhoto]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[Posts_Photo] DROP CONSTRAINT [FK_ProfilePhoto];
 GO
+IF OBJECT_ID(N'[dbo].[FK_OrderUser]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Orders] DROP CONSTRAINT [FK_OrderUser];
+GO
+IF OBJECT_ID(N'[dbo].[FK_OrderProducts_Order]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[OrderProducts] DROP CONSTRAINT [FK_OrderProducts_Order];
+GO
+IF OBJECT_ID(N'[dbo].[FK_OrderProducts_Product]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[OrderProducts] DROP CONSTRAINT [FK_OrderProducts_Product];
+GO
+IF OBJECT_ID(N'[dbo].[FK_ShoppingCartUser]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[ShoppingCarts] DROP CONSTRAINT [FK_ShoppingCartUser];
+GO
+IF OBJECT_ID(N'[dbo].[FK_ShoppingCartProducts_ShoppingCart]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[ShoppingCartProducts] DROP CONSTRAINT [FK_ShoppingCartProducts_ShoppingCart];
+GO
+IF OBJECT_ID(N'[dbo].[FK_ShoppingCartProducts_Product]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[ShoppingCartProducts] DROP CONSTRAINT [FK_ShoppingCartProducts_Product];
+GO
 IF OBJECT_ID(N'[dbo].[FK_RequestNotification_inherits_Notification]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[Notifications_RequestNotification] DROP CONSTRAINT [FK_RequestNotification_inherits_Notification];
 GO
@@ -157,6 +175,12 @@ GO
 IF OBJECT_ID(N'[dbo].[Profiles]', 'U') IS NOT NULL
     DROP TABLE [dbo].[Profiles];
 GO
+IF OBJECT_ID(N'[dbo].[Orders]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Orders];
+GO
+IF OBJECT_ID(N'[dbo].[ShoppingCarts]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[ShoppingCarts];
+GO
 IF OBJECT_ID(N'[dbo].[Notifications_RequestNotification]', 'U') IS NOT NULL
     DROP TABLE [dbo].[Notifications_RequestNotification];
 GO
@@ -183,6 +207,12 @@ IF OBJECT_ID(N'[dbo].[InterestProfile]', 'U') IS NOT NULL
 GO
 IF OBJECT_ID(N'[dbo].[ProductTags]', 'U') IS NOT NULL
     DROP TABLE [dbo].[ProductTags];
+GO
+IF OBJECT_ID(N'[dbo].[OrderProducts]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[OrderProducts];
+GO
+IF OBJECT_ID(N'[dbo].[ShoppingCartProducts]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[ShoppingCartProducts];
 GO
 
 -- --------------------------------------------------
@@ -291,7 +321,7 @@ CREATE TABLE [dbo].[Products] (
     [Id] int IDENTITY(1,1) NOT NULL,
     [Name] nvarchar(max)  NOT NULL,
     [Price] decimal(18,0)  NOT NULL,
-    [Image] varbinary(max)  NULL,
+    [Image] varbinary(max)  NOT NULL,
     [CategoryId] int  NOT NULL,
     [IsDeleted] bit  NOT NULL,
     [DateCreated] datetime  NOT NULL

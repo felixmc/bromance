@@ -171,6 +171,9 @@
     <Compile Include="DataModel\Notification.cs">
       <DependentUpon>ModelFirst.tt</DependentUpon>
     </Compile>
+    <Compile Include="DataModel\Order.cs">
+      <DependentUpon>ModelFirst.tt</DependentUpon>
+    </Compile>
     <Compile Include="DataModel\Photo.cs">
       <DependentUpon>ModelFirst.tt</DependentUpon>
     </Compile>
@@ -187,6 +190,9 @@
       <DependentUpon>ModelFirst.tt</DependentUpon>
     </Compile>
     <Compile Include="DataModel\RequestNotification.cs">
+      <DependentUpon>ModelFirst.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\ShoppingCart.cs">
       <DependentUpon>ModelFirst.tt</DependentUpon>
     </Compile>
     <Compile Include="DataModel\Tag.cs">

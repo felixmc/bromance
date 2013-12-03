@@ -20,6 +20,8 @@
     <EntitySet Name="Tags" EntityType="ModelFirst.Store.Tags" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Categories" EntityType="ModelFirst.Store.Categories" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Profiles" EntityType="ModelFirst.Store.Profiles" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Orders" EntityType="ModelFirst.Store.Orders" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ShoppingCarts" EntityType="ModelFirst.Store.ShoppingCarts" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Notifications_RequestNotification" EntityType="ModelFirst.Store.Notifications_RequestNotification" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Posts_Photo" EntityType="ModelFirst.Store.Posts_Photo" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Notifications_FirstBump" EntityType="ModelFirst.Store.Notifications_FirstBump" store:Type="Tables" Schema="dbo" />
@@ -29,6 +31,8 @@
     <EntitySet Name="UserUser" EntityType="ModelFirst.Store.UserUser" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="InterestProfile" EntityType="ModelFirst.Store.InterestProfile" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ProductTags" EntityType="ModelFirst.Store.ProductTag" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="OrderProducts" EntityType="ModelFirst.Store.OrderProducts" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ShoppingCartProducts" EntityType="ModelFirst.Store.ShoppingCartProducts" store:Type="Tables" Schema="dbo" />
     <AssociationSet Name="FK_CircleUser_Circle" Association="ModelFirst.Store.FK_CircleUser_Circle">
       <End Role="Circle" EntitySet="Circles" />
       <End Role="CircleUser" EntitySet="CircleUser" />
@@ -132,6 +136,30 @@
     <AssociationSet Name="ProfilePhoto" Association="ModelFirst.Store.ProfilePhoto">
       <End Role="Profile" EntitySet="Profiles" />
       <End Role="Photo" EntitySet="Posts_Photo" />
+    </AssociationSet>
+    <AssociationSet Name="OrderUser" Association="ModelFirst.Store.OrderUser">
+      <End Role="Order" EntitySet="Orders" />
+      <End Role="User" EntitySet="Users" />
+    </AssociationSet>
+    <AssociationSet Name="FK_OrderProducts_Order" Association="ModelFirst.Store.FK_OrderProducts_Order">
+      <End Role="Order" EntitySet="Orders" />
+      <End Role="OrderProducts" EntitySet="OrderProducts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_OrderProducts_Product" Association="ModelFirst.Store.FK_OrderProducts_Product">
+      <End Role="Product" EntitySet="Products" />
+      <End Role="OrderProducts" EntitySet="OrderProducts" />
+    </AssociationSet>
+    <AssociationSet Name="ShoppingCartUser" Association="ModelFirst.Store.ShoppingCartUser">
+      <End Role="ShoppingCart" EntitySet="ShoppingCarts" />
+      <End Role="User" EntitySet="Users" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ShoppingCartProducts_ShoppingCart" Association="ModelFirst.Store.FK_ShoppingCartProducts_ShoppingCart">
+      <End Role="ShoppingCart" EntitySet="ShoppingCarts" />
+      <End Role="ShoppingCartProducts" EntitySet="ShoppingCartProducts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ShoppingCartProducts_Product" Association="ModelFirst.Store.FK_ShoppingCartProducts_Product">
+      <End Role="Product" EntitySet="Products" />
+      <End Role="ShoppingCartProducts" EntitySet="ShoppingCartProducts" />
     </AssociationSet>
     <AssociationSet Name="FK_RequestNotification_inherits_Notification" Association="ModelFirst.Store.FK_RequestNotification_inherits_Notification">
       <End Role="Notification" EntitySet="Notifications" />
@@ -258,8 +286,10 @@
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
     <Property Name="Price" Type="decimal" Nullable="false" />
-    <Property Name="Image" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="Image" Type="varbinary(max)" Nullable="false" />
     <Property Name="CategoryId" Type="int" Nullable="false" />
+    <Property Name="IsDeleted" Type="bit" Nullable="false" />
+    <Property Name="DateCreated" Type="datetime" Nullable="false" />
   </EntityType>
   <EntityType Name="Tags">
     <Key>
@@ -299,6 +329,21 @@
     <Property Name="Drugs" Type="nvarchar(max)" Nullable="true" />
     <Property Name="User_Id" Type="int" Nullable="false" />
   </EntityType>
+  <EntityType Name="Orders">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserId" Type="int" Nullable="false" />
+    <Property Name="DateCreated" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ShoppingCarts">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="User_Id" Type="int" Nullable="false" />
+  </EntityType>
   <EntityType Name="Notifications_RequestNotification">
     <Key>
       <PropertyRef Name="Id" />
@@ -312,6 +357,7 @@
     </Key>
     <Property Name="Caption" Type="nvarchar(max)" Nullable="false" />
     <Property Name="AlbumId" Type="int" Nullable="false" />
+    <Property Name="ImageData" Type="varbinary(max)" Nullable="false" />
     <Property Name="Id" Type="int" Nullable="false" />
     <Property Name="ProfilePhotoOf_Id" Type="int" Nullable="true" />
   </EntityType>
@@ -367,6 +413,22 @@
     </Key>
     <Property Name="Products_Id" Type="int" Nullable="false" />
     <Property Name="Tags_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="OrderProducts">
+    <Key>
+      <PropertyRef Name="Orders_Id" />
+      <PropertyRef Name="Products_Id" />
+    </Key>
+    <Property Name="Orders_Id" Type="int" Nullable="false" />
+    <Property Name="Products_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ShoppingCartProducts">
+    <Key>
+      <PropertyRef Name="ShoppingCarts_Id" />
+      <PropertyRef Name="Products_Id" />
+    </Key>
+    <Property Name="ShoppingCarts_Id" Type="int" Nullable="false" />
+    <Property Name="Products_Id" Type="int" Nullable="false" />
   </EntityType>
   <Association Name="RequestNotificationBroRequest">
     <End Role="RequestNotification" Type="ModelFirst.Store.Notifications_RequestNotification" Multiplicity="*" />
@@ -584,6 +646,30 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="OrderUser">
+    <End Role="Order" Type="ModelFirst.Store.Orders" Multiplicity="*" />
+    <End Role="User" Type="ModelFirst.Store.Users" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Order">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="ShoppingCartUser">
+    <End Role="ShoppingCart" Type="ModelFirst.Store.ShoppingCarts" Multiplicity="*" />
+    <End Role="User" Type="ModelFirst.Store.Users" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ShoppingCart">
+        <PropertyRef Name="User_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_CircleUser_Circle">
     <End Role="Circle" Type="ModelFirst.Store.Circles" Multiplicity="1" />
     <End Role="CircleUser" Type="ModelFirst.Store.CircleUser" Multiplicity="*" />
@@ -677,6 +763,54 @@
       </Principal>
       <Dependent Role="ProductTag">
         <PropertyRef Name="Tags_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_OrderProducts_Order">
+    <End Role="Order" Type="ModelFirst.Store.Orders" Multiplicity="1" />
+    <End Role="OrderProducts" Type="ModelFirst.Store.OrderProducts" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Order">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="OrderProducts">
+        <PropertyRef Name="Orders_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_OrderProducts_Product">
+    <End Role="OrderProducts" Type="ModelFirst.Store.OrderProducts" Multiplicity="*" />
+    <End Role="Product" Type="ModelFirst.Store.Products" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Product">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="OrderProducts">
+        <PropertyRef Name="Products_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ShoppingCartProducts_ShoppingCart">
+    <End Role="ShoppingCart" Type="ModelFirst.Store.ShoppingCarts" Multiplicity="1" />
+    <End Role="ShoppingCartProducts" Type="ModelFirst.Store.ShoppingCartProducts" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ShoppingCart">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ShoppingCartProducts">
+        <PropertyRef Name="ShoppingCarts_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ShoppingCartProducts_Product">
+    <End Role="ShoppingCartProducts" Type="ModelFirst.Store.ShoppingCartProducts" Multiplicity="*" />
+    <End Role="Product" Type="ModelFirst.Store.Products" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Product">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ShoppingCartProducts">
+        <PropertyRef Name="Products_Id" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -1025,7 +1159,7 @@
           <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Type="String" Name="Name" Nullable="false" />
           <Property Type="Decimal" Name="Price" Nullable="false" />
-          <Property Type="Binary" Name="Image" Nullable="true" />
+          <Property Type="Binary" Name="Image" Nullable="false" />
           <NavigationProperty Name="Category" Relationship="ModelFirst.ProductCategory" FromRole="Product" ToRole="Category" />
           <Property Type="Int32" Name="CategoryId" Nullable="false" />
           <NavigationProperty Name="Tags" Relationship="ModelFirst.ProductTag" FromRole="Product" ToRole="Tag" />
@@ -1371,6 +1505,7 @@
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="Caption" ColumnName="Caption" />
           <ScalarProperty Name="AlbumId" ColumnName="AlbumId" />
+          <ScalarProperty Name="ImageData" ColumnName="ImageData" />
         </MappingFragment>
       </EntityTypeMapping>
       <EntityTypeMapping TypeName="IsTypeOf(ModelFirst.TextPost)">
@@ -1477,6 +1612,8 @@
           <ScalarProperty Name="Price" ColumnName="Price" />
           <ScalarProperty Name="Image" ColumnName="Image" />
           <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
+          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+          <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -1517,6 +1654,22 @@
           <ScalarProperty Name="Smokes" ColumnName="Smokes" />
           <ScalarProperty Name="Drinks" ColumnName="Drinks" />
           <ScalarProperty Name="Drugs" ColumnName="Drugs" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Orders">
+      <EntityTypeMapping TypeName="IsTypeOf(ModelFirst.Order)">
+        <MappingFragment StoreEntitySet="Orders">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ShoppingCarts">
+      <EntityTypeMapping TypeName="IsTypeOf(ModelFirst.ShoppingCart)">
+        <MappingFragment StoreEntitySet="ShoppingCarts">
+          <ScalarProperty Name="Id" ColumnName="Id" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -1584,6 +1737,30 @@
         <ScalarProperty Name="Id" ColumnName="Id" />
       </EndProperty>
       <Condition ColumnName="ProfilePhotoOf_Id" IsNull="false" />
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="OrderProducts" TypeName="ModelFirst.OrderProducts" StoreEntitySet="OrderProducts">
+      <EndProperty Name="Order">
+        <ScalarProperty Name="Id" ColumnName="Orders_Id" />
+      </EndProperty>
+      <EndProperty Name="Product">
+        <ScalarProperty Name="Id" ColumnName="Products_Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="ShoppingCartUser" TypeName="ModelFirst.ShoppingCartUser" StoreEntitySet="ShoppingCarts">
+      <EndProperty Name="User">
+        <ScalarProperty Name="Id" ColumnName="User_Id" />
+      </EndProperty>
+      <EndProperty Name="ShoppingCart">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="ShoppingCartProducts" TypeName="ModelFirst.ShoppingCartProducts" StoreEntitySet="ShoppingCartProducts">
+      <EndProperty Name="ShoppingCart">
+        <ScalarProperty Name="Id" ColumnName="ShoppingCarts_Id" />
+      </EndProperty>
+      <EndProperty Name="Product">
+        <ScalarProperty Name="Id" ColumnName="Products_Id" />
+      </EndProperty>
     </AssociationSetMapping>
   </EntityContainerMapping>
 </Mapping></edmx:Mappings>
