@@ -15,6 +15,26 @@ namespace Bros.Controllers
         {
             return View();
         }
-
+        public ActionResult AddCategory()
+        {
+            return View();
+        }
+        public ActionResult RemoveCatagory()
+        {
+            return View();
+        }
+        public ActionResult EditCategory()
+        {
+            return View();
+        }
+        public ActionResult ViewProductsInCategory()
+        {
+            return View();
+        }
+        public ActionResult AddProductToCategory()
+        {
+            return View();
+        }
+      
     }
 }
