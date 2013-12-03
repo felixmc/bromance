@@ -4,9 +4,11 @@
 }
 
 <div class="BroAccepted">
-    @Html.Render("_BroRequestAcceptedPartial", (Bros.DataModel.BroRequest)ViewBag.Request);
+    @{ Html.RenderPartial("_BroRequestAcceptedPartial", (Bros.DataModel.BroRequest)ViewBag.Request); }
 
-    @foreach(Bros.DataModel.Bro bro in ViewBag.Bros){
-           @Html.Render("_UserPartialView", bro);
+    <h3>My Bros</h3>
+
+    @foreach(Bros.DataModel.User bro in ViewBag.Bros){
+           Html.RenderPartial("_UserPartialView", bro);
     }
 </div>
