@@ -12,13 +12,16 @@ namespace Bros.DataModel
     using System;
     using System.Collections.Generic;
     
-    public partial class Photo : Post
+    public partial class ShoppingCart
     {
-        public string Caption { get; set; }
-        public int AlbumId { get; set; }
-        public byte[] ImageData { get; set; }
+        public ShoppingCart()
+        {
+            this.Products = new HashSet<Product>();
+        }
     
-        public virtual Album Album { get; set; }
-        public virtual Profile ProfilePhotoOf { get; set; }
+        public int Id { get; set; }
+    
+        public virtual User User { get; set; }
+        public virtual ICollection<Product> Products { get; set; }
     }
 }

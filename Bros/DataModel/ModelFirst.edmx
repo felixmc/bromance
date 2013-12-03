@@ -857,6 +857,24 @@
             <End Role="Profile" EntitySet="Profiles" />
             <End Role="Photo" EntitySet="Posts" />
           </AssociationSet>
+          <EntitySet Name="Orders" EntityType="ModelFirst.Order" />
+          <AssociationSet Name="OrderUser" Association="ModelFirst.OrderUser">
+            <End Role="Order" EntitySet="Orders" />
+            <End Role="User" EntitySet="Users" />
+          </AssociationSet>
+          <AssociationSet Name="OrderProducts" Association="ModelFirst.OrderProducts">
+            <End Role="Order" EntitySet="Orders" />
+            <End Role="Product" EntitySet="Products" />
+          </AssociationSet>
+          <EntitySet Name="ShoppingCarts" EntityType="ModelFirst.ShoppingCart" />
+          <AssociationSet Name="ShoppingCartUser" Association="ModelFirst.ShoppingCartUser">
+            <End Role="ShoppingCart" EntitySet="ShoppingCarts" />
+            <End Role="User" EntitySet="Users" />
+          </AssociationSet>
+          <AssociationSet Name="ShoppingCartProducts" Association="ModelFirst.ShoppingCartProducts">
+            <End Role="ShoppingCart" EntitySet="ShoppingCarts" />
+            <End Role="Product" EntitySet="Products" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Album">
           <Key>
@@ -894,12 +912,15 @@
           <NavigationProperty Name="Comments" Relationship="ModelFirst.CommentUser" FromRole="User" ToRole="Comment" />
           <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
           <Property Type="Boolean" Name="IsBanned" Nullable="false" />
+          <NavigationProperty Name="Orders" Relationship="ModelFirst.OrderUser" FromRole="User" ToRole="Order" />
+          <NavigationProperty Name="ShoppingCart" Relationship="ModelFirst.ShoppingCartUser" FromRole="User" ToRole="ShoppingCart" />
         </EntityType>
         <EntityType Name="Photo" BaseType="ModelFirst.Post">
           <Property Type="String" Name="Caption" Nullable="false" />
           <NavigationProperty Name="Album" Relationship="ModelFirst.AlbumPhoto" FromRole="Photo" ToRole="Album" />
           <Property Type="Int32" Name="AlbumId" Nullable="false" />
           <NavigationProperty Name="ProfilePhotoOf" Relationship="ModelFirst.ProfilePhoto" FromRole="Photo" ToRole="Profile" />
+          <Property Type="Binary" Name="ImageData" Nullable="false" />
         </EntityType>
         <EntityType Name="Post">
           <Key>
@@ -1004,10 +1025,14 @@
           <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Type="String" Name="Name" Nullable="false" />
           <Property Type="Decimal" Name="Price" Nullable="false" />
-          <Property Type="String" Name="Image" Nullable="true" />
+          <Property Type="Binary" Name="Image" Nullable="true" />
           <NavigationProperty Name="Category" Relationship="ModelFirst.ProductCategory" FromRole="Product" ToRole="Category" />
           <Property Type="Int32" Name="CategoryId" Nullable="false" />
           <NavigationProperty Name="Tags" Relationship="ModelFirst.ProductTag" FromRole="Product" ToRole="Tag" />
+          <NavigationProperty Name="Orders" Relationship="ModelFirst.OrderProducts" FromRole="Product" ToRole="Order" />
+          <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
+          <Property Type="DateTime" Name="DateCreated" Nullable="false" />
+          <NavigationProperty Name="ShoppingCarts" Relationship="ModelFirst.ShoppingCartProducts" FromRole="Product" ToRole="ShoppingCart" />
         </EntityType>
         <EntityType Name="Tag">
           <Key>
@@ -1259,6 +1284,48 @@
         <Association Name="ProfilePhoto">
           <End Type="ModelFirst.Profile" Role="Profile" Multiplicity="0..1" />
           <End Type="ModelFirst.Photo" Role="Photo" Multiplicity="0..1" />
+        </Association>
+        <EntityType Name="Order">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="User" Relationship="ModelFirst.OrderUser" FromRole="Order" ToRole="User" />
+          <Property Type="Int32" Name="UserId" Nullable="false" />
+          <NavigationProperty Name="Products" Relationship="ModelFirst.OrderProducts" FromRole="Order" ToRole="Product" />
+          <Property Type="DateTime" Name="DateCreated" Nullable="false" />
+        </EntityType>
+        <Association Name="OrderUser">
+          <End Type="ModelFirst.Order" Role="Order" Multiplicity="*" />
+          <End Type="ModelFirst.User" Role="User" Multiplicity="1" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="OrderProducts">
+          <End Type="ModelFirst.Order" Role="Order" Multiplicity="*" />
+          <End Type="ModelFirst.Product" Role="Product" Multiplicity="*" />
+        </Association>
+        <EntityType Name="ShoppingCart">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="User" Relationship="ModelFirst.ShoppingCartUser" FromRole="ShoppingCart" ToRole="User" />
+          <NavigationProperty Name="Products" Relationship="ModelFirst.ShoppingCartProducts" FromRole="ShoppingCart" ToRole="Product" />
+        </EntityType>
+        <Association Name="ShoppingCartUser">
+          <End Type="ModelFirst.ShoppingCart" Role="ShoppingCart" Multiplicity="1" />
+          <End Type="ModelFirst.User" Role="User" Multiplicity="1" />
+        </Association>
+        <Association Name="ShoppingCartProducts">
+          <End Type="ModelFirst.ShoppingCart" Role="ShoppingCart" Multiplicity="*" />
+          <End Type="ModelFirst.Product" Role="Product" Multiplicity="*" />
         </Association>
       </Schema>
     </edmx:ConceptualModels>
