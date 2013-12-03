@@ -194,8 +194,18 @@ namespace Bros.Controllers
                     Name ="MyBros",
                     Owner = newUser,
                 };
-
                 context.Circles.Add(defaultFriendCircle);
+
+
+                ICollection<Photo> photoAlbum = new List<Photo>();
+                Album album = new Album()
+                {
+                    Owner = newUser,
+                    Title = "Profile Pictures",
+                    DateCreated = DateTime.Today,
+                    Photos = photoAlbum
+                };
+                context.Albums.Add(album);
                 context.SaveChanges();
 
 				//context.SaveChanges();
