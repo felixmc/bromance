@@ -22,7 +22,7 @@
         <EntityTypeShape EntityType="ModelFirst.Tag" Width="1.5" PointX="13.125" PointY="5.875" />
         <EntityTypeShape EntityType="ModelFirst.Category" Width="1.5" PointX="13.125" PointY="8.125" />
         <EntityTypeShape EntityType="ModelFirst.Profile" Width="1.5" PointX="6.375" PointY="6.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="ModelFirst.TextPost" Width="1.5" PointX="1.875" PointY="13.375" />
+        <EntityTypeShape EntityType="ModelFirst.TextPost" Width="1.5" PointX="1.5" PointY="14.25" />
         <InheritanceConnector EntityType="ModelFirst.TextPost" />
         <AssociationConnector Association="ModelFirst.UserUser" />
         <AssociationConnector Association="ModelFirst.InterestProfile" />
@@ -51,6 +51,12 @@
         <AssociationConnector Association="ModelFirst.NotificationUser" />
         <AssociationConnector Association="ModelFirst.CommentUser" />
         <AssociationConnector Association="ModelFirst.ProfilePhoto" />
+        <EntityTypeShape EntityType="ModelFirst.Order" Width="1.5" PointX="15.75" PointY="7" />
+        <AssociationConnector Association="ModelFirst.OrderUser" />
+        <AssociationConnector Association="ModelFirst.OrderProducts" />
+        <EntityTypeShape EntityType="ModelFirst.ShoppingCart" Width="1.5" PointX="15.75" PointY="9.625" />
+        <AssociationConnector Association="ModelFirst.ShoppingCartUser" />
+        <AssociationConnector Association="ModelFirst.ShoppingCartProducts" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

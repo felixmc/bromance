@@ -39,5 +39,7 @@ namespace Bros.DataModel
         public DbSet<Tag> Tags { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Profile> Profiles { get; set; }
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<ShoppingCart> ShoppingCarts { get; set; }
     }
 }

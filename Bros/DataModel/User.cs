@@ -30,6 +30,7 @@ namespace Bros.DataModel
             this.SentFirstBumps = new HashSet<FirstBump>();
             this.Notifications = new HashSet<Notification>();
             this.Comments = new HashSet<Comment>();
+            this.Orders = new HashSet<Order>();
         }
     
         public int Id { get; set; }
@@ -53,5 +54,7 @@ namespace Bros.DataModel
         public virtual ICollection<FirstBump> SentFirstBumps { get; set; }
         public virtual ICollection<Notification> Notifications { get; set; }
         public virtual ICollection<Comment> Comments { get; set; }
+        public virtual ICollection<Order> Orders { get; set; }
+        public virtual ShoppingCart ShoppingCart { get; set; }
     }
 }
