@@ -1,0 +1,16 @@
+﻿@model Bros.DataModel.Product
+
+@{
+    ViewBag.Title = "CreateProduct";
+    Layout = "~/Views/Shared/_DefaultLayout.cshtml";
+}
+
+<div class="CreateProduct">
+    @using (Html.BeginForm())
+    {
+        @Html.ValidationSummary()
+        <span class="ProductName">Product Name: @Html.TextBoxFor(x => x.Name)</span>
+        <span class="ProductImage">Product Image: </span>
+        <span class="ProductPrice">Price: @Html.TextBoxFor(x => x.Price)</span>
+    }
+</div>

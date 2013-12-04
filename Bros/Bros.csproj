@@ -367,8 +367,14 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Store\AddCategory.cshtml" />
+    <Content Include="Views\Store\_AddCategory.cshtml" />
     <Content Include="Views\Store\ViewProduct.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Store\_EditCategory.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Store\CreateProduct.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
