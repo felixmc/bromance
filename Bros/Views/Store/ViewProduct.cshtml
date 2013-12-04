@@ -1,0 +1,13 @@
+﻿@model Bros.DataModel.Product
+
+@{
+    ViewBag.Title = "ViewProduct";
+    Layout = "~/Views/Shared/_DefaultLayout.cshtml";
+}
+
+<div class="ProductView">
+    <!-- Product Image? -->
+    <div class="ProductName">@Model.Name</div>
+    <div class="ProductPrice">@Model.Price</div>
+    <div class="ProductCategory">@Model.Category.Name</div>
+</div>

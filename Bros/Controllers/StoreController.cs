@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Bros.DataModel;
 
 namespace Bros.Controllers
 {
@@ -41,9 +42,33 @@ namespace Bros.Controllers
             return View();
         }
 
+        [HttpGet]
         public ActionResult CreateProduct()
         {
             return View();
+        }
+
+        [HttpPost]
+        public ActionResult CreateProduct(Product product)
+        {
+            if (ModelState.IsValid)
+            {
+
+            }
+
+            return View();
+        }
+
+        public ActionResult ViewProduct(int productID)
+        {
+            Product targetProduct;
+
+            using (ModelFirstContainer context = new ModelFirstContainer())
+            {
+                targetProduct = context.Products.Include("Category").FirstOrDefault(p => p.Id == productID);
+            }
+
+            return View(targetProduct);
         }
 
         public ActionResult EditProduct()
