@@ -198,20 +198,17 @@ namespace Bros.Controllers
                 };
                 context.Circles.Add(defaultFriendCircle);
 
-                //Image img = Image.FromFile("~/Content/Images/defaultPic.jpg");
-                //byte[] arr;
-                //using (MemoryStream ms = new MemoryStream())
-                //{
-                //    img.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
-                //    arr = ms.ToArray();
 
-                //}
-                //Photo defaultPhoto = new Photo()
-                //{
-                    
-                //};
+                var imagePath = Server.MapPath("~/Content/Images/defaultPic.jpg");
+                Image img = Image.FromFile(imagePath);
+                byte[] arr;
+                using (MemoryStream ms = new MemoryStream())
+                {
+                    img.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
+                    arr = ms.ToArray();
 
-                ICollection<Photo> photoAlbum = new List<Photo>();
+                } 
+                 ICollection<Photo> photoAlbum = new List<Photo>();
                 Album album = new Album()
                 {
                     Owner = newUser,
@@ -222,7 +219,21 @@ namespace Bros.Controllers
                 context.Albums.Add(album);
                 context.SaveChanges();
 
-				//context.SaveChanges();
+                Photo defaultPhoto = new Photo()
+                {
+                    ImageData = arr,
+                    DateCreated = DateTime.Today,
+                    DateUpdated = DateTime.Today,
+                    Caption = "Default",
+                    IsDeleted = true,
+                    Author = newUser,
+                    ProfilePhotoOf = prof,
+                    Album = album
+                    
+                };
+                context.Posts.Add(defaultPhoto);
+                context.SaveChanges();
+
 
 			}
 

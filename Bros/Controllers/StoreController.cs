@@ -21,7 +21,7 @@ namespace Bros.Controllers
         {
             using (var context = new ModelFirstContainer())
             {
-                Category cat = new Category{Name =(string)ViewData["Name"] };
+                Category cat = new Category{Name =(string)Request["Name"]};
                 context.Categories.Add(cat);
                 context.SaveChanges();
             }
@@ -29,13 +29,16 @@ namespace Bros.Controllers
         }
        
         public ActionResult EditCategory(Category c)
-        { 
-            using(var context = new ModelFirstContainer())
+        {
+            if (c != null)
             {
-                int id = Int32.Parse(Request["id"]);
-                Category cat = context.Categories.FirstOrDefault(x => x.Id == id);
-                cat.Name = c.Name;
-                context.SaveChanges();
+                using (var context = new ModelFirstContainer())
+                {
+                    int id = Int32.Parse(Request["id"]);
+                    Category cat = context.Categories.FirstOrDefault(x => x.Id == id);
+                    cat.Name = c.Name;
+                    context.SaveChanges();
+                }
             }
             return View();
 
@@ -44,14 +47,16 @@ namespace Bros.Controllers
         {
             return View();
         }
-        public ActionResult AddProductToCategory()
-        {
-            return View();
-        }
+       
 
         [HttpGet]
         public ActionResult CreateProduct()
         {
+            using (ModelFirstContainer context = new ModelFirstContainer())
+            {
+                ViewBag.Categories = context.Categories.Select(c => new { Id = c.Id, Name = c.Name }).ToList();
+            }
+
             return View();
         }
 
@@ -61,12 +66,20 @@ namespace Bros.Controllers
             ActionResult result;
             if (ModelState.IsValid)
             {
+                int productId;
+
                 using (ModelFirstContainer context = new ModelFirstContainer())
                 {
+                    product.DateCreated = DateTime.Now;
+
                     context.Products.Add(product);
+                    context.Categories.FirstOrDefault(x => x.Id == product.Category.Id).Products.Add(product);
+
                     context.SaveChanges();
+
+                    productId = product.Id;
                 }
-                result = RedirectToAction("ViewProduct", product);
+                result = RedirectToAction("ViewProduct", productId);
             }
             else
             {
@@ -88,7 +101,14 @@ namespace Bros.Controllers
             return View(targetProduct);
         }
 
-        public ActionResult EditProduct()
+        [HttpGet]
+        public ActionResult EditProduct(int productID)
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult EditProduct(Product product)
         {
             return View();
         }
