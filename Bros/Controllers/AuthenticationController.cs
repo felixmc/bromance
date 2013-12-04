@@ -206,7 +206,6 @@ namespace Bros.Controllers
                 {
                     img.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
                     arr = ms.ToArray();
-
                 } 
                  ICollection<Photo> photoAlbum = new List<Photo>();
                 Album album = new Album()
