@@ -29,9 +29,17 @@ namespace Bros.Controllers
             return View();
         }
        
-        public ActionResult EditCategory()
-        {
+        public ActionResult EditCategory(Category c)
+        { 
+            using(var context = new ModelFirstContainer())
+            {
+                int id = Int32.Parse(Request["id"]);
+                Category cat = context.Categories.FirstOrDefault(x => x.Id == id);
+                cat.Name = c.Name;
+                context.SaveChanges();
+            }
             return View();
+
         }
         public ActionResult ViewProductsInCategory()
         {
