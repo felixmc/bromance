@@ -198,18 +198,18 @@ namespace Bros.Controllers
                 };
                 context.Circles.Add(defaultFriendCircle);
 
-                Image img = Image.FromFile("~/Content/Images/defaultPic.jpg");
-                byte[] arr;
-                using (MemoryStream ms = new MemoryStream())
-                {
-                    img.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
-                    arr = ms.ToArray();
+                //Image img = Image.FromFile("~/Content/Images/defaultPic.jpg");
+                //byte[] arr;
+                //using (MemoryStream ms = new MemoryStream())
+                //{
+                //    img.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
+                //    arr = ms.ToArray();
 
-                }
-                Photo defaultPhoto = new Photo()
-                {
+                //}
+                //Photo defaultPhoto = new Photo()
+                //{
                     
-                };
+                //};
 
                 ICollection<Photo> photoAlbum = new List<Photo>();
                 Album album = new Album()

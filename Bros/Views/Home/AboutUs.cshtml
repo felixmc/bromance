@@ -17,12 +17,5 @@
 <!--Body -->
 <h2>About Us</h2>
 
-@section Footer
-{
-    <div class="footerNav">
-        <ul>
-            <li>&copy; Bromance, 2013</li>
-            <li>@Html.ActionLink("Legal", "TermsOfUse", "Home")</li>          
-        </ul>
-    </div>   
-}
+@RenderSection("Footer", required: false)
+
