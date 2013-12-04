@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using Bros.DataModel;
 
 namespace Bros.Controllers
 {
@@ -59,12 +58,22 @@ namespace Bros.Controllers
         [HttpPost]
         public ActionResult CreateProduct(Product product)
         {
+            ActionResult result;
             if (ModelState.IsValid)
             {
-
+                using (ModelFirstContainer context = new ModelFirstContainer())
+                {
+                    context.Products.Add(product);
+                    context.SaveChanges();
+                }
+                result = RedirectToAction("ViewProduct", product);
+            }
+            else
+            {
+                result = View();
             }
 
-            return View();
+            return result;
         }
 
         public ActionResult ViewProduct(int productID)
