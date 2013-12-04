@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Bros.DataModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -15,14 +16,18 @@ namespace Bros.Controllers
         {
             return View();
         }
+        [HttpPost]
         public ActionResult AddCategory()
         {
+            using (var context = new ModelFirstContainer())
+            {
+                Category cat = new Category{Name =(string)ViewData["Name"] };
+                context.Categories.Add(cat);
+                context.SaveChanges();
+            }
             return View();
         }
-        public ActionResult RemoveCatagory()
-        {
-            return View();
-        }
+       
         public ActionResult EditCategory()
         {
             return View();
