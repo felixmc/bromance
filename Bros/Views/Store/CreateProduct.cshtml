@@ -10,7 +10,7 @@
     {
         @Html.ValidationSummary()
         <span class="ProductName">Product Name: @Html.TextBoxFor(x => x.Name)</span>
-        <span class="ProductImage">Product Image: </span>
         <span class="ProductPrice">Price: @Html.TextBoxFor(x => x.Price)</span>
+        <span class="ProductCategory">Category: @Html.DropDownListFor(x => x.Category, new SelectList(ViewBag.Categories, "Id", "Name"))</span>
     }
 </div>
