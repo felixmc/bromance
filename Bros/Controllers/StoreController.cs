@@ -21,7 +21,7 @@ namespace Bros.Controllers
         {
             using (var context = new ModelFirstContainer())
             {
-                Category cat = new Category{Name =(string)ViewData["Name"] };
+                Category cat = new Category{Name =(string)Request["Name"]};
                 context.Categories.Add(cat);
                 context.SaveChanges();
             }
@@ -29,13 +29,16 @@ namespace Bros.Controllers
         }
        
         public ActionResult EditCategory(Category c)
-        { 
-            using(var context = new ModelFirstContainer())
+        {
+            if (c != null)
             {
-                int id = Int32.Parse(Request["id"]);
-                Category cat = context.Categories.FirstOrDefault(x => x.Id == id);
-                cat.Name = c.Name;
-                context.SaveChanges();
+                using (var context = new ModelFirstContainer())
+                {
+                    int id = Int32.Parse(Request["id"]);
+                    Category cat = context.Categories.FirstOrDefault(x => x.Id == id);
+                    cat.Name = c.Name;
+                    context.SaveChanges();
+                }
             }
             return View();
 
@@ -44,10 +47,7 @@ namespace Bros.Controllers
         {
             return View();
         }
-        public ActionResult AddProductToCategory()
-        {
-            return View();
-        }
+       
 
         [HttpGet]
         public ActionResult CreateProduct()

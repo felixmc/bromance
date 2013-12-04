@@ -16,6 +16,7 @@ namespace Bros.Controllers
         //
         // GET: /Home/
 
+        
         public ActionResult Index()
         {
 
@@ -29,7 +30,7 @@ namespace Bros.Controllers
                 ViewBag.LoginMessage = "Welcome, " + user.Profile.FirstName + "! You are logged in!";
                 }
             }
-            return View();
+            return View("GarbageView");
         }
 
         [AllowAnonymous]
