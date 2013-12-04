@@ -1,0 +1,8 @@
+﻿@model Bros.DataModel.Category
+
+@using (Html.BeginForm("Store", "EditCategory", FormMethod.Post))
+{
+    <input type="hidden" name="id" value="@Model.Id" />
+    <textarea name="Category">@Model.Name</textarea>
+    
+}
