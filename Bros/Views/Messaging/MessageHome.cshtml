@@ -4,48 +4,9 @@
     ViewBag.Title = "MessageHome";
 }
 
-@section MainNavigation
-{
-    <li>@Html.ActionLink("Store", "StoreIndex", "Store")</li> 
-    <li>@Html.ActionLink("Logout", "Logout", "Authentication")</li>
-         
-}
-
-@section SecondaryNavigation
-{
-    <li>@Html.ActionLink("Create New Message", "CreateMessage", "Messaging")</li>
-}
-
-@section ProfileLinks{
-    <li>@Html.ActionLink("Preferences", "EditProfile", "Profile")</li>
-    <li>@Html.ActionLink("Feed", "Feed", "Profile")</li>
-    <li>@Html.ActionLink("View My Profile", "ProfileIndex", "Profile")</li>
-    
-    <!-- This is where Messages, Photos, Albums, Friends list will go-->
-
-}
-
-
-@*@foreach (Bros.DataModel.Message u in Model)
-{
-    @Html.Partial("_MessageInbox", u);
-}*@
-
 @foreach (Bros.DataModel.User u in ViewBag.UserConversations)
 {
         Html.RenderPartial("_UserMessageList", u);
 }
-<!--Body -->
 
-
-@section Footer
-{
-    <div class="footerNav">
-        <ul>
-            <li>&copy; Bromance, 2013</li>
-            <li>@Html.ActionLink("About", "AboutUs", "Home")</li>
-            <li>@Html.ActionLink("Legal", "TermsOfUse", "Home")</li>       
-        </ul>
-    </div>   
-}
-
+<!--This is where you would put a comment expressing the location of the body tag or div -->

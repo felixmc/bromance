@@ -39,7 +39,7 @@ namespace Bros.Controllers
                 }
                 ViewBag.LoginMessage = loginMessage;
 
-                return RedirectToAction("ProfileIndex", "Profile");
+                return RedirectToAction("Feed", "Profile");
             }
             else
             {
