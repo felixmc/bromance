@@ -174,7 +174,6 @@
     <Compile Include="DataModel\Order.cs">
       <DependentUpon>ModelFirst.tt</DependentUpon>
     </Compile>
-    <Compile Include="DataModel\Order.cs" />
     <Compile Include="DataModel\Photo.cs">
       <DependentUpon>ModelFirst.tt</DependentUpon>
     </Compile>
@@ -196,7 +195,6 @@
     <Compile Include="DataModel\ShoppingCart.cs">
       <DependentUpon>ModelFirst.tt</DependentUpon>
     </Compile>
-    <Compile Include="DataModel\ShoppingCart.cs" />
     <Compile Include="DataModel\Tag.cs">
       <DependentUpon>ModelFirst.tt</DependentUpon>
     </Compile>
