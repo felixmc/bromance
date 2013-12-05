@@ -1,5 +1,11 @@
-﻿@{
+﻿@using System.Collections.Specialized
+@{
     ViewBag.Title = "_AdminLayout";
 }
 
-<h2>_AdminLayout</h2>
+
+@section SecondaryNavigation{
+    <li>@Html.ActionLink("Ban User", "Index","Admin")</li>
+}
+
+@RenderBody()
