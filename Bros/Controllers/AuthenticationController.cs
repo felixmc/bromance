@@ -35,6 +35,7 @@ namespace Bros.Controllers
                          where u.Email == model.Email
                          select u).FirstOrDefault<User>();
                     Session.Add("UserId", user.Id);
+
                     loginMessage = "Welcome, " + user.Profile.FirstName + "! You are logged in!";
                 }
                 ViewBag.LoginMessage = loginMessage;
@@ -211,7 +212,7 @@ namespace Bros.Controllers
                 Album album = new Album()
                 {
                     Owner = newUser,
-                    Title = "Profile Pictures",
+                    Title = "Default Picture",
                     DateCreated = DateTime.Today,
                     Photos = photoAlbum
                 };
