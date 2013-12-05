@@ -35,7 +35,6 @@ namespace Bros.Controllers
                          where u.Email == model.Email
                          select u).FirstOrDefault<User>();
                     Session.Add("UserId", user.Id);
-                    if()
                     loginMessage = "Welcome, " + user.Profile.FirstName + "! You are logged in!";
                 }
                 ViewBag.LoginMessage = loginMessage;
