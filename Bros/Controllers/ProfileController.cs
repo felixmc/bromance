@@ -16,6 +16,7 @@ namespace Bros.Controllers
         //
         // GET: /Profile/
 
+        [Authorize]
         public ActionResult ProfileIndex()
         {
             if (Session["UserId"] != null && ((int)Session["UserId"]) != 0)
@@ -31,6 +32,7 @@ namespace Bros.Controllers
             return View();
         }
 
+        [Authorize]
         public ActionResult Feed()
         {
             List<Post> feedPosts = new List<Post>();
@@ -209,17 +211,20 @@ namespace Bros.Controllers
 
         #endregion
 
+        [Authorize]
         public new ActionResult Profile()
         {
             return View();
         }
 
+        [Authorize]
         [HttpPost]
         public ActionResult UpdateProfile(Profile profile)
         {
             return null;
         }
 
+        [Authorize]
         [HttpPost]
         public ActionResult PostStatus()
         {
@@ -240,6 +245,7 @@ namespace Bros.Controllers
                 return Redirect(Request.UrlReferrer.AbsolutePath);
         }
 
+        [Authorize]
         [HttpPost]
         public ActionResult PostComment()
         {
@@ -269,6 +275,7 @@ namespace Bros.Controllers
                 return Redirect(Request.UrlReferrer.AbsolutePath);
         }
 
+        [Authorize]
         [HttpGet]
         public ActionResult EditProfile()
         {
@@ -285,6 +292,7 @@ namespace Bros.Controllers
             }
         }
 
+        [Authorize]
         [HttpPost]
         public ActionResult EditProfileAttributes(Profile prof)
         {
@@ -321,6 +329,7 @@ namespace Bros.Controllers
 
         }
 
+        [AllowAnonymous]
         public ActionResult MyProfile()
         {
             User user = new User();
@@ -375,6 +384,22 @@ namespace Bros.Controllers
                 }
             }
             return View(user);
+        }
+
+        [Authorize]
+        [HttpGet]
+        public ActionResult ChangeProfilePhoto()
+        {
+
+            return View();
+        }
+
+        [Authorize]
+        [HttpPost]
+        public ActionResult ChangeProfilePhoto(User user)
+        {
+
+            return View();
         }
 
     }
