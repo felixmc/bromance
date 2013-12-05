@@ -212,7 +212,7 @@ namespace Bros.Controllers
                 Album album = new Album()
                 {
                     Owner = newUser,
-                    Title = "Profile Pictures",
+                    Title = "Default Picture",
                     DateCreated = DateTime.Today,
                     Photos = photoAlbum
                 };

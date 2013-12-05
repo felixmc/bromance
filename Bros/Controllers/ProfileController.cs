@@ -1,6 +1,8 @@
 ﻿using Bros.DataModel;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -8,14 +10,14 @@ using WebMatrix.WebData;
 
 namespace Bros.Controllers
 {
-	[Authorize]
-	public class ProfileController : Controller
-	{
-		//
-		// GET: /Profile/
+    [Authorize]
+    public class ProfileController : Controller
+    {
+        //
+        // GET: /Profile/
 
-		public ActionResult ProfileIndex()
-		{
+        public ActionResult ProfileIndex()
+        {
             if (Session["UserId"] != null && ((int)Session["UserId"]) != 0)
             {
                 int id = (int)Session["UserId"];
@@ -27,29 +29,29 @@ namespace Bros.Controllers
                 }
             }
             return View();
-		}
+        }
 
-		public ActionResult Feed()
-		{
-			List<Post> feedPosts = new List<Post>();
+        public ActionResult Feed()
+        {
+            List<Post> feedPosts = new List<Post>();
 
-			using (ModelFirstContainer context = new ModelFirstContainer())
-			{
-				int userId = (int)Session["UserId"];
+            using (ModelFirstContainer context = new ModelFirstContainer())
+            {
+                int userId = (int)Session["UserId"];
 
-				User user = context.Users.Where(u => u.Id == userId).FirstOrDefault();
+                User user = context.Users.Where(u => u.Id == userId).FirstOrDefault();
 
-				IEnumerable<int> feedMembers = user.Circles.Select(c => c.Members).SelectMany(u => u).Union(context.Users.Where(u => u.Id == userId)).Select(u => u.Id);
-				List<Post> broPosts = context.Posts.Include("Comments.Owner.Profile").Include("Author.Profile")
-											.Where(p => feedMembers.Contains(p.Author.Id))
-													.OrderByDescending(p => p.DateCreated)
-															.Take(30).ToList();
+                IEnumerable<int> feedMembers = user.Circles.Select(c => c.Members).SelectMany(u => u).Union(context.Users.Where(u => u.Id == userId)).Select(u => u.Id);
+                List<Post> broPosts = context.Posts.Include("Comments.Owner.Profile").Include("Author.Profile")
+                                            .Where(p => feedMembers.Contains(p.Author.Id))
+                                                    .OrderByDescending(p => p.DateCreated)
+                                                            .Take(30).ToList();
 
-				feedPosts = broPosts.ToList();
-			}
+                feedPosts = broPosts.ToList();
+            }
 
-			return View(feedPosts);
-		}
+            return View(feedPosts);
+        }
 
         #region BroRequest
 
@@ -194,7 +196,8 @@ namespace Bros.Controllers
         public ActionResult ViewBroRequests()
         {
             IEnumerable<BroRequest> unreadBroRequests;
-            using(ModelFirstContainer context = new ModelFirstContainer()){
+            using (ModelFirstContainer context = new ModelFirstContainer())
+            {
                 int id = (int)Session["UserID"];
                 User user = context.Users.Include("ReceivedBroRequests.Sender.Profile").Include("ReceivedBroRequests.Receiver.Profile").FirstOrDefault(u => u.Id == id);
 
@@ -207,64 +210,64 @@ namespace Bros.Controllers
         #endregion
 
         public new ActionResult Profile()
-		{
-			return View();
-		}
+        {
+            return View();
+        }
 
-		[HttpPost]
-		public ActionResult UpdateProfile(Profile profile)
-		{
-			return null;
-		}
+        [HttpPost]
+        public ActionResult UpdateProfile(Profile profile)
+        {
+            return null;
+        }
 
-		[HttpPost]
-		public ActionResult PostStatus()
-		{
-			using (ModelFirstContainer context = new ModelFirstContainer())
-			{
-				int userId = (int)Session["UserId"];
-				User user = context.Users.Where(u => u.Id == userId).FirstOrDefault();
+        [HttpPost]
+        public ActionResult PostStatus()
+        {
+            using (ModelFirstContainer context = new ModelFirstContainer())
+            {
+                int userId = (int)Session["UserId"];
+                User user = context.Users.Where(u => u.Id == userId).FirstOrDefault();
 
-				TextPost update = new TextPost() { Author = user, Content = Request["status"], DateCreated = DateTime.Now, DateUpdated = DateTime.Now };
-				user.Posts.Add(update);
+                TextPost update = new TextPost() { Author = user, Content = Request["status"], DateCreated = DateTime.Now, DateUpdated = DateTime.Now };
+                user.Posts.Add(update);
 
-				context.SaveChanges();
-			}
+                context.SaveChanges();
+            }
 
-			if (Request.IsAjaxRequest())
-				return null;
-			else
-				return Redirect(Request.UrlReferrer.AbsolutePath);
-		}
+            if (Request.IsAjaxRequest())
+                return null;
+            else
+                return Redirect(Request.UrlReferrer.AbsolutePath);
+        }
 
-		[HttpPost]
-		public ActionResult PostComment()
-		{
-			using (ModelFirstContainer context = new ModelFirstContainer())
-			{
-				int postId = Int32.Parse(Request["post"]);
+        [HttpPost]
+        public ActionResult PostComment()
+        {
+            using (ModelFirstContainer context = new ModelFirstContainer())
+            {
+                int postId = Int32.Parse(Request["post"]);
 
-				Post post = context.Posts.Where(p => p.Id == postId).FirstOrDefault();
+                Post post = context.Posts.Where(p => p.Id == postId).FirstOrDefault();
 
-				if (post != null)
-				{
-					int userId = (int)Session["UserId"];
-					User user = context.Users.Where(u => u.Id == userId).FirstOrDefault();
-					Comment comment = new Comment() { Content = Request["comment"], Owner = user, ParentPost = post, DateCreated = DateTime.Now };
+                if (post != null)
+                {
+                    int userId = (int)Session["UserId"];
+                    User user = context.Users.Where(u => u.Id == userId).FirstOrDefault();
+                    Comment comment = new Comment() { Content = Request["comment"], Owner = user, ParentPost = post, DateCreated = DateTime.Now };
 
-					user.Comments.Add(comment);
-					post.Comments.Add(comment);
+                    user.Comments.Add(comment);
+                    post.Comments.Add(comment);
 
-					context.SaveChanges();
-				}
+                    context.SaveChanges();
+                }
 
-			}
+            }
 
-			if (Request.IsAjaxRequest())
-				return null;
-			else
-				return Redirect(Request.UrlReferrer.AbsolutePath);
-		}
+            if (Request.IsAjaxRequest())
+                return null;
+            else
+                return Redirect(Request.UrlReferrer.AbsolutePath);
+        }
 
         [HttpGet]
         public ActionResult EditProfile()
@@ -272,12 +275,13 @@ namespace Bros.Controllers
 
             User user = null;
             int id = 0;
-            using(var context = new ModelFirstContainer()){
-            id = (int)Session["UserId"];
-          
-                user = context.Users.FirstOrDefault(x => x.Id == id); 
+            using (var context = new ModelFirstContainer())
+            {
+                id = (int)Session["UserId"];
+
+                user = context.Users.FirstOrDefault(x => x.Id == id);
                 if (user == null) throw new Exception("Session not set exception");
-            return View("ProfileAttribute", user.Profile);
+                return View("ProfileAttribute", user.Profile);
             }
         }
 
@@ -288,7 +292,7 @@ namespace Bros.Controllers
             if (Session["UserId"] != null)
             {
                 int id = (int)Session["UserId"];
-                
+
                 if (ModelState.IsValid)
                     using (ModelFirstContainer context = new ModelFirstContainer())
                     {
@@ -306,19 +310,72 @@ namespace Bros.Controllers
                         user.Profile.SexualOrientation = prof.SexualOrientation;
                         user.Profile.Smokes = prof.Smokes;
 
-                        
+
                         context.SaveChanges();
                     }
-                
+
                 return View("ProfileIndex");
             }
             else
                 throw new Exception("Session is null, or user not logged in.");
 
-
-
-            
         }
 
-	}
+        public ActionResult MyProfile()
+        {
+            User user = new User();
+            int profileId = 0;
+            if (Session["UserId"] != null)
+            {
+                profileId = ((int)Session["UserId"]);
+                using (var context = new ModelFirstContainer())
+                {
+                    user = context.Users.Include("Albums").FirstOrDefault(u => u.Id == profileId);
+
+                    Bros.DataModel.Photo profilePic = (Photo)user.Posts.FirstOrDefault(p => p.IsDeleted == true);
+                    Bros.DataModel.Photo post = profilePic;
+                    if (post == null)
+                    {
+                        var imagePath = Server.MapPath("~/Content/Images/defaultPic.jpg");
+                        Image img = Image.FromFile(imagePath);
+                        byte[] arr;
+                        using (MemoryStream ms = new MemoryStream())
+                        {
+                            img.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
+                            arr = ms.ToArray();
+
+                        }
+
+                        ICollection<Photo> photoAlbum = new List<Photo>();
+                        Album album = new Album()
+                        {
+                            Owner = user,
+                            Title = "Default Picture",
+                            DateCreated = DateTime.Today,
+                            Photos = photoAlbum
+                        };
+                        context.Albums.Add(album);
+                        context.SaveChanges();
+
+                        Photo defaultPhoto = new Photo()
+                        {
+                            ImageData = arr,
+                            DateCreated = DateTime.Today,
+                            DateUpdated = DateTime.Today,
+                            Caption = "Default",
+                            IsDeleted = true,
+                            Author = user,
+                            ProfilePhotoOf = user.Profile,
+                            Album = album
+
+                        };
+                        context.Posts.Add(defaultPhoto);
+                        context.SaveChanges();
+                    }
+                }
+            }
+            return View(user);
+        }
+
+    }
 }
