@@ -1,10 +1,11 @@
 ﻿
 @model Bros.DataModel.User
 @{
+    Layout = "~/Views/Layouts/_ProfileLayout.cshtml";
     var base64 = "";
     using(var context = new Bros.DataModel.ModelFirstContainer()){
 
-    Bros.DataModel.Photo profilePic = (Bros.DataModel.Photo)context.Posts.FirstOrDefault(x => x.IsDeleted == true);
+        Bros.DataModel.Photo profilePic = (Bros.DataModel.Photo)Model.Profile.ProfilePhoto;
     Bros.DataModel.Photo post = profilePic;
     base64 = Convert.ToBase64String(post.ImageData);
     }
@@ -13,7 +14,7 @@
 }
 <h1>Set Profile Picture here: (Only jpgs)</h1>
 
-<article>Here is your profile picture: <span><img src=@imgSrc</span></article>
+<article>Here is your profile picture: <p><span><img src=@imgSrc /></span></p></article>
 
 <article>
     @Html.ValidationSummary()

@@ -257,8 +257,7 @@ namespace Bros.Controllers
 
                 if (post != null)
                 {
-                    int userId = (int)Session["UserId"];
-                    User user = context.Users.Where(u => u.Id == userId).FirstOrDefault();
+                    User user = GetSessionUser();
                     Comment comment = new Comment() { Content = Request["comment"], Owner = user, ParentPost = post, DateCreated = DateTime.Now };
 
                     user.Comments.Add(comment);
@@ -279,17 +278,9 @@ namespace Bros.Controllers
         [HttpGet]
         public ActionResult EditProfile()
         {
-
-            User user = null;
-            int id = 0;
-            using (var context = new ModelFirstContainer())
-            {
-                id = (int)Session["UserId"];
-
-                user = context.Users.FirstOrDefault(x => x.Id == id);
-                if (user == null) throw new Exception("Session not set exception");
+                User user = GetSessionUser();
                 return View("ProfileAttribute", user.Profile);
-            }
+            
         }
 
         [Authorize]
@@ -304,7 +295,7 @@ namespace Bros.Controllers
                 if (ModelState.IsValid)
                     using (ModelFirstContainer context = new ModelFirstContainer())
                     {
-                        User user = context.Users.FirstOrDefault(x => x.Id == id);
+                        User user = GetSessionUser();
                         user.Profile.Athleticism = prof.Athleticism;
                         user.Profile.Children = prof.Children;
                         user.Profile.Drinks = prof.Drinks;
@@ -329,26 +320,88 @@ namespace Bros.Controllers
 
         }
 
-        [AllowAnonymous]
-        public ActionResult MyProfile()
+        [Authorize]
+        public ActionResult MyProfile(int id)
         {
             User user = new User();
-            int profileId = 0;
-            if (Session["UserId"] != null)
-            {
-                profileId = ((int)Session["UserId"]);
                 using (var context = new ModelFirstContainer())
                 {
-                    user = context.Users.Include("Albums").FirstOrDefault(u => u.Id == profileId);
-
-                    Bros.DataModel.Photo profilePic = (Photo)user.Posts.FirstOrDefault(p => p.IsDeleted == true);
+                    user = context.Users.FirstOrDefault(u => u.Id == id);
+                    Bros.DataModel.Photo profilePic = (Photo)user.Profile.ProfilePhoto;
                     Bros.DataModel.Photo post = profilePic;
                     if (post == null)
                     {
-                        var imagePath = Server.MapPath("~/Content/Images/defaultPic.jpg");
+                        CreateDefaultAlbum_And_DefaultProfilePhoto(user, context);
+                    }
+                }
+            return View(user);
+        }
+
+        [Authorize]
+        [HttpGet]
+        public ActionResult ChangeProfilePhoto()
+        {
+            User thisUser = new User();
+            using (var context = new ModelFirstContainer())
+            {
+                int id = GetSessionInt();
+                thisUser = context.Users.Include("Profile.ProfilePhoto").FirstOrDefault(u => u.Id == id);
+            }
+
+            if (thisUser.Profile.ProfilePhoto == null)
+            {
+                CreateDefaultAlbum_And_DefaultProfilePhoto(thisUser, new ModelFirstContainer());
+            }
+            return View(thisUser);
+        }
+
+        [Authorize]
+        [HttpPost]
+        public ActionResult ChangeProfilePhoto(User user)
+        {
+
+            return View();
+        }
+
+        public int GetSessionInt()
+        {
+            int id = 0;
+            if (Session["UserId"] != null)
+            {
+                id = ((int)Session["UserId"]);
+
+            }
+            else
+            {
+                throw new Exception("Session is null, not logged in.");
+            }
+            return id;
+        }
+
+        public User GetSessionUser()
+        {
+            User thisUser = new User();
+            using (var context = new ModelFirstContainer())
+            {
+                int userId = 0;
+                if (Session["UserId"] != null)
+                {
+                    userId = ((int)Session["UserId"]);
+                    thisUser = context.Users.FirstOrDefault(u => u.Id == userId);
+                   
+                } 
+                
+            }
+            return thisUser;
+        }
+
+        public void CreateDefaultAlbum_And_DefaultProfilePhoto(User user, ModelFirstContainer context)
+        {
+
+            var imagePath = Server.MapPath("~/Content/Images/defaultPic.jpg");
                         Image img = Image.FromFile(imagePath);
                         byte[] arr;
-                        using (MemoryStream ms = new MemoryStream())
+              using (MemoryStream ms = new MemoryStream())
                         {
                             img.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
                             arr = ms.ToArray();
@@ -380,27 +433,10 @@ namespace Bros.Controllers
                         };
                         context.Posts.Add(defaultPhoto);
                         context.SaveChanges();
-                    }
-                }
-            }
-            return View(user);
-        }
 
-        [Authorize]
-        [HttpGet]
-        public ActionResult ChangeProfilePhoto()
-        {
-
-            return View();
-        }
-
-        [Authorize]
-        [HttpPost]
-        public ActionResult ChangeProfilePhoto(User user)
-        {
-
-            return View();
-        }
+                        context.Dispose();
+              }
+        
 
     }
 }

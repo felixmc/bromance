@@ -1,52 +1,11 @@
 ﻿
 @model Bros.DataModel.User
+
 @{
-    var base64 = "";
-    using(var context = new Bros.DataModel.ModelFirstContainer()){
-
-    Bros.DataModel.Photo profilePic = (Bros.DataModel.Photo)context.Posts.FirstOrDefault(x => x.IsDeleted == true);
-    Bros.DataModel.Photo post = profilePic;
-    base64 = Convert.ToBase64String(post.ImageData);
-    }
-     
-    var imgSrc = String.Format("data:image/jpg;base64,{0}", base64);
+    
+    Layout = "~/Views/Layouts/_ProfileLayout.cshtml";
 }
-
 
 <h1>Welcome to my profile!</h1>
 
-
-@section MainNavigation
-{
-    <li>@Html.ActionLink("Store", "StoreIndex", "Store")</li> 
-         
-}
-
-
-@section ProfileLinks{
-    <li>@Html.ActionLink("Preferences", "EditProfile", "Profile")</li>
-        <li>@Html.ActionLink("View Profile", "MyProfile", "Profile")</li>
-
-}
-<h1>My Profile</h1>
-@section SecondaryNavigation{
-
-    <li>@Html.ActionLink("Feed", "Feed", "Profile")</li>
-    <li>@Html.ActionLink("Messages", "MessageHome", "Messaging")</li>
-    <li>@Html.ActionLink("Logout", "Logout", "Authentication")</li>
-
-}
-<img src=@imgSrc />
-<!--Body -->
-
-
-@section Footer
-                {
-                    <div class="footerNav">
-                        <ul>
-                            <li>&copy; Bromance, 2013</li>
-                            <li>@Html.ActionLink("About", "AboutUs", "Home")</li>
-                            <li>@Html.ActionLink("Legal", "TermsOfUse", "Home")</li>       
-                        </ul>
-                    </div>   
-                }
+@Html.Partial("~/Views/Shared/_ProfilePhoto.cshtml");
