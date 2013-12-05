@@ -1,0 +1,23 @@
+﻿@model Bros.DataModel.Album
+@{
+    Bros.DataModel.Photo photo = Model.Photos.ElementAt(0);
+    var base64 = "";
+        base64 = Convert.ToBase64String(photo.ImageData);    
+        var imgSrc = String.Format("data:image/jpg;base64,{0}", base64);
+    }
+
+
+
+}
+
+<style>
+
+    .Album {
+    border: 5px solid black;
+    }
+</style>
+
+
+
+
+    <img class="Album" src=@imgSrc />

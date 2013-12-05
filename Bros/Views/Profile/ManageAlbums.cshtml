@@ -1,0 +1,14 @@
+﻿@{
+    Layout = "~/Views/Layouts/_ProfileLayout.cshtml";
+    ViewBag.Title = "ManageAlbums";
+}
+
+<h2>Manage Albums</h2>
+
+<div class="album-gallery">
+
+    @foreach(Bros.DataModel.Album single in ViewBag.Albums){
+        Html.Partial("~/Views/Profile/_AlbumSingle.cshtml", single);
+    }
+
+</div>

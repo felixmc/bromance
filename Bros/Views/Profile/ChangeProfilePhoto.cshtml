@@ -5,9 +5,8 @@
     var base64 = "";
     using(var context = new Bros.DataModel.ModelFirstContainer()){
 
-        Bros.DataModel.Photo profilePic = (Bros.DataModel.Photo)Model.Profile.ProfilePhoto;
-    Bros.DataModel.Photo post = profilePic;
-    base64 = Convert.ToBase64String(post.ImageData);
+    Bros.DataModel.Photo profilePic = context.Posts.Where(p => p is Bros.DataModel.Photo).Select(p => p as Bros.DataModel.Photo).FirstOrDefault(p => p.ProfilePhotoOf.Id == Model.Id);
+    base64 = Convert.ToBase64String(profilePic.ImageData);
     }
      
     var imgSrc = String.Format("data:image/jpg;base64,{0}", base64);
@@ -22,7 +21,6 @@
     {
         
         <p>@Html.TextBox("img", null,new { type = "file", accept="image/jpg"})</p>
-
         <input type="submit" value="Submit Product" class="my-button" />
     }
 

@@ -4,7 +4,7 @@
     var base64 = "";
     using(var context = new Bros.DataModel.ModelFirstContainer()){
 
-    Bros.DataModel.Photo profilePic = (Bros.DataModel.Photo)context.Posts.FirstOrDefault(x => x.IsDeleted == true);
+        Bros.DataModel.Photo profilePic = context.Posts.Where(x => x is Bros.DataModel.Photo).Select(p => p as Bros.DataModel.Photo).FirstOrDefault(u => u.ProfilePhotoOf.Id == Model.Id);
     Bros.DataModel.Photo post = profilePic;
     base64 = Convert.ToBase64String(post.ImageData);
     }
@@ -12,5 +12,4 @@
     var imgSrc = String.Format("data:image/jpg;base64,{0}", base64);
 }
 
-
-<img src=@imgSrc />
+<header><img src=@imgSrc /><span>@Model.Profile.FirstName @Model.Profile.LastName</span></header>

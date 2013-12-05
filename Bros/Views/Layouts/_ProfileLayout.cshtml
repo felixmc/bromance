@@ -2,24 +2,17 @@
     Layout = "~/Views/Shared/_DefaultLayout.cshtml";
     
     int userId = 0;
-    Bros.DataModel.User thisUser = null;
     if(Session["UserId"] != null){
         
         userId = ((int)Session["UserId"]);
-    using(var context = new Bros.DataModel.ModelFirstContainer()){
-        thisUser = context.Users.FirstOrDefault(u => u.Id == userId);
-    }
     }
 }
 
 
-<h2>_ProfileLayout</h2>
-
-    <li>@Html.ActionLink("View My Profile", "MyProfile", "Profile" )</li>
-    <li>@Html.ActionLink("Photos", "ProfileIndex", "Profile")</li>
+<h2>Profile Layout</h2>
     <li>@Html.ActionLink("Change Profile Picture", "ChangeProfilePhoto", "Profile")</li>
-    <li>@Html.ActionLink("Browse Bros", "ProfileIndex", "Profile")</li>
-    <li>@Html.ActionLink("Preferences", "EditProfile", "Profile")</li>
+    <li>@Html.ActionLink("Edit Preferences", "EditProfile", "Profile")</li>
+    <li>@Html.ActionLink("Manage Albums", "ManageAlbums", "Profile")</li>
 
 
 @RenderBody()
