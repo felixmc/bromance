@@ -16,6 +16,7 @@ namespace Bros.Controllers
         //
         // GET: /Home/
 
+        
         public ActionResult Index()
         {
 
@@ -30,6 +31,12 @@ namespace Bros.Controllers
                 }
             }
             return View();
+        }
+
+        [AllowAnonymous]
+        public ActionResult BroCode()
+        {
+            return View("BroCode");
         }
 
         [AllowAnonymous]

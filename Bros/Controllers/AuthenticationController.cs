@@ -35,11 +35,12 @@ namespace Bros.Controllers
                          where u.Email == model.Email
                          select u).FirstOrDefault<User>();
                     Session.Add("UserId", user.Id);
+                    
                     loginMessage = "Welcome, " + user.Profile.FirstName + "! You are logged in!";
                 }
                 ViewBag.LoginMessage = loginMessage;
 
-                return RedirectToAction("ProfileIndex", "Profile");
+                return RedirectToAction("Feed", "Profile");
             }
             else
             {
@@ -206,7 +207,6 @@ namespace Bros.Controllers
                 {
                     img.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
                     arr = ms.ToArray();
-
                 } 
                  ICollection<Photo> photoAlbum = new List<Photo>();
                 Album album = new Album()

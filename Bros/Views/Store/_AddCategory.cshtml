@@ -1,6 +1,7 @@
-﻿@using (Html.BeginForm("Store", "AddCategory",FormMethod.Post))
+﻿@using (Html.BeginForm("AddCategory", "Store", FormMethod.Post))
 {
-    @: Name: <textarea name="Name">Put Name Here</textarea>
+    @Html.TextArea("Name", "Enter Name Here");
+    <input type="submit"/>
 }
 
 

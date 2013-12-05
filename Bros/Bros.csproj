@@ -375,6 +375,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Store\CreateProduct.cshtml" />
+    <Content Include="Views\Home\GarbageView.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

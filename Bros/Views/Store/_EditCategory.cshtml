@@ -3,6 +3,6 @@
 @using (Html.BeginForm("Store", "EditCategory", FormMethod.Post))
 {
     <input type="hidden" name="id" value="@Model.Id" />
-    <textarea name="Category">@Model.Name</textarea>
-    
+    @Html.TextArea("Name",@Model.Name)
+    <input type="submit" value="Submit Changes" />
 }
