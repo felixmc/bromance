@@ -237,6 +237,78 @@ namespace Bros.Controllers
 				return Redirect(Request.UrlReferrer.AbsolutePath);
 		}
 
+		public ActionResult Post(int id)
+		{
+
+			return View();
+		}
+
+		public ActionResult Notifications()
+		{
+			List<Notification> notifications = new List<Notification>();
+			using (ModelFirstContainer context = new ModelFirstContainer())
+			{
+				int userId = (int)Session["UserId"];
+				notifications = context.Notifications.Include("Receiver.Profile")
+											.Where(n => n.Receiver.Id == userId && n.IsRead == false)
+													.OrderByDescending(n => n.DateCreated).ToList();
+			}
+
+			return View(notifications);
+		}
+
+		[HttpPost]
+		public ActionResult ReadNotification(int id)
+		{
+			using (ModelFirstContainer context = new ModelFirstContainer())
+			{
+				Notification not = context.Notifications.Where(n => n.Id == id).FirstOrDefault();
+
+				if (not != null)
+				{
+					not.IsRead = true;
+					context.SaveChanges();
+				}
+			}
+
+			if (Request.IsAjaxRequest())
+				return null;
+			else
+				return Redirect(Request.UrlReferrer.AbsolutePath);
+		}
+
+		[HttpPost]
+		public ActionResult Bump(int id)
+		{
+			using (ModelFirstContainer context = new ModelFirstContainer())
+			{
+				int userId = (int)Session["UserId"];
+
+				// get last bump between the current user and the specified user
+				FirstBump lastBump = context.Notifications.Where(n => (n.Receiver.Id == id || n.Receiver.Id == userId) && n is FirstBump)
+																.Select(n => n as FirstBump)
+																	.Where(b => b.Sender.Id == userId || b.Sender.Id == id)
+																		.OrderByDescending(b => b.DateCreated).FirstOrDefault();
+
+				// if the last bump was sent by the user that I'm bumping or there has been no last bump
+				if (lastBump == null && lastBump.Sender.Id == id)
+				{
+					User bumper = context.Users.Where(u => u.Id == userId).FirstOrDefault();
+					User bumpee = context.Users.Where(u => u.Id == id).FirstOrDefault();
+
+					FirstBump fistBump = new FirstBump() { DateCreated = DateTime.Now, Receiver = bumpee, Sender = bumper };
+
+					context.SaveChanges();				
+				}
+
+			}
+
+			if (Request.IsAjaxRequest())
+				return null;
+			else
+				return Redirect(Request.UrlReferrer.AbsolutePath);
+		}
+
 		[HttpPost]
 		public ActionResult PostComment()
 		{
@@ -306,7 +378,6 @@ namespace Bros.Controllers
                         user.Profile.SexualOrientation = prof.SexualOrientation;
                         user.Profile.Smokes = prof.Smokes;
 
-                        
                         context.SaveChanges();
                     }
                 
@@ -314,10 +385,6 @@ namespace Bros.Controllers
             }
             else
                 throw new Exception("Session is null, or user not logged in.");
-
-
-
-            
         }
 
 	}
