@@ -35,11 +35,12 @@ namespace Bros.Controllers
                          where u.Email == model.Email
                          select u).FirstOrDefault<User>();
                     Session.Add("UserId", user.Id);
+                    if()
                     loginMessage = "Welcome, " + user.Profile.FirstName + "! You are logged in!";
                 }
                 ViewBag.LoginMessage = loginMessage;
 
-                return RedirectToAction("ProfileIndex", "Profile");
+                return RedirectToAction("Feed", "Profile");
             }
             else
             {
@@ -198,20 +199,16 @@ namespace Bros.Controllers
                 };
                 context.Circles.Add(defaultFriendCircle);
 
-                Image img = Image.FromFile("~/Content/Images/defaultPic.jpg");
+
+                var imagePath = Server.MapPath("~/Content/Images/defaultPic.jpg");
+                Image img = Image.FromFile(imagePath);
                 byte[] arr;
                 using (MemoryStream ms = new MemoryStream())
                 {
                     img.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
                     arr = ms.ToArray();
-
-                }
-                Photo defaultPhoto = new Photo()
-                {
-                    
-                };
-
-                ICollection<Photo> photoAlbum = new List<Photo>();
+                } 
+                 ICollection<Photo> photoAlbum = new List<Photo>();
                 Album album = new Album()
                 {
                     Owner = newUser,
@@ -222,7 +219,21 @@ namespace Bros.Controllers
                 context.Albums.Add(album);
                 context.SaveChanges();
 
-				//context.SaveChanges();
+                Photo defaultPhoto = new Photo()
+                {
+                    ImageData = arr,
+                    DateCreated = DateTime.Today,
+                    DateUpdated = DateTime.Today,
+                    Caption = "Default",
+                    IsDeleted = true,
+                    Author = newUser,
+                    ProfilePhotoOf = prof,
+                    Album = album
+                    
+                };
+                context.Posts.Add(defaultPhoto);
+                context.SaveChanges();
+
 
 			}
 

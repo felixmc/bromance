@@ -1,0 +1,12 @@
+﻿@{
+    Layout = "Views/Shared/_DefaultLayout.cshtml";
+}
+
+<h2>_ProfileLayout</h2>
+@section SecondaryNavigation{
+
+    <li>@Html.ActionLink("Photos", "ProfileIndex", "Profile")</li>
+    <li>@Html.ActionLink("Browse Bros", "ProfileIndex", "Profile")</li>
+    <li>@Html.ActionLink("Preferences", "EditProfile", "Profile")</li>
+
+}
