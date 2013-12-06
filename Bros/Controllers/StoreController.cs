@@ -147,7 +147,10 @@ namespace Bros.Controllers
             {
                 context.Products.FirstOrDefault(x => x.Id == productId).IsDeleted = true;
                 context.SaveChanges();
+
+                ViewBag.Products = context.Products.Include("Tags").Include("Category").Where(x => !x.IsDeleted).ToList();
             }
+
 
             return View("StoreIndex");
         }
@@ -157,7 +160,7 @@ namespace Bros.Controllers
 
             using (ModelFirstContainer context = new ModelFirstContainer())
             {
-                ViewBag.Products = context.Products.Include("Tags").Include("Orders").Include("ShoppingCarts").Include("Category").Where(x => !x.IsDeleted).ToList(); 
+                ViewBag.Products = context.Products.Include("Tags").Include("Category").Where(x => !x.IsDeleted).ToList(); 
             }
 
             return View();
@@ -185,15 +188,21 @@ namespace Bros.Controllers
             Product product;
             using (ModelFirstContainer context = new ModelFirstContainer())
             {
-                product = context.Products.Include("Tags").Include("Category").Include("Orders").Include("ShoppingCarts").FirstOrDefault(x => x.Id == productID);
+                product = context.Products.Include("Tags").Include("Category").FirstOrDefault(x => x.Id == productID);
             }
             return View("ViewProduct", product);
         }
 
-        [HttpGet]
         public ActionResult EditProduct(int productID)
         {
-            return View();
+            Product targetProduct;
+
+            using (ModelFirstContainer context = new ModelFirstContainer())
+            {
+                targetProduct = context.Products.Include("Category").Include("Tags").FirstOrDefault(x => x.Id == productID);
+            }
+
+            return View(targetProduct);
         }
 
         [HttpPost]
