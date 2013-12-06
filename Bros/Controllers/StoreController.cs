@@ -141,12 +141,23 @@ namespace Bros.Controllers
             return result;
         }
 
+        public ActionResult DeleteProductById(int productId)
+        {
+            using (ModelFirstContainer context = new ModelFirstContainer())
+            {
+                context.Products.FirstOrDefault(x => x.Id == productId).IsDeleted = true;
+                context.SaveChanges();
+            }
+
+            return View("StoreIndex");
+        }
+
         public ActionResult ViewAllProducts()
         {
 
             using (ModelFirstContainer context = new ModelFirstContainer())
             {
-                ViewBag.Products = context.Products.Include("Tags").Include("Orders").Include("ShoppingCarts").Include("Category").ToList();
+                ViewBag.Products = context.Products.Include("Tags").Include("Orders").Include("ShoppingCarts").Include("Category").Where(x => !x.IsDeleted).ToList(); 
             }
 
             return View();

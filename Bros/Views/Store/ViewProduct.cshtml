@@ -21,5 +21,6 @@
     <div class="ProductName">@Model.Name</div>
     <div class="ProductPrice">@Model.Price</div>
     <div class="ProductCategory">@Model.Category.Name</div>
+    @Html.ActionLink("Delete this Product", "DeleteProductById", Model.Id);
 >>>>>>> 73323088bc180a51813913a21a1d6e753085fdc5
 </div>
