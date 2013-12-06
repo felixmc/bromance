@@ -373,6 +373,7 @@
     <Content Include="Views\Home\GarbageView.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Views\Store\ViewAllProducts.cshtml" />
     <Content Include="Views\Layouts\_AdminLayout.cshtml" />
     <Content Include="Views\Layouts\_ProfileLayout.cshtml">
       <SubType>Code</SubType>

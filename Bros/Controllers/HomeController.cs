@@ -15,11 +15,9 @@ namespace Bros.Controllers
     {
         //
         // GET: /Home/
-
         
         public ActionResult Index()
         {
-
             ViewBag.Title = "Home";
             if ( Session["UserId"] != null && ((int)Session["UserId"]) != 0)
             {
