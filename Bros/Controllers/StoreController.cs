@@ -16,6 +16,7 @@ namespace Bros.Controllers
         {
             return View();
         }
+        
         [HttpPost]
         public ActionResult AddCategory()
         {
@@ -28,15 +29,42 @@ namespace Bros.Controllers
             return View();
         }
        
-        public ActionResult EditCategory(Category c)
+        public ActionResult EditCategory()
         {
-            if (c != null)
-            {
+           
                 using (var context = new ModelFirstContainer())
                 {
                     int id = Int32.Parse(Request["id"]);
                     Category cat = context.Categories.FirstOrDefault(x => x.Id == id);
-                    cat.Name = c.Name;
+                    cat.Name = Request["name"];
+                    context.SaveChanges();
+                }
+            
+            return View();
+
+        }
+
+        [HttpPost]
+        public ActionResult AddTag()
+        {
+            using (var context = new ModelFirstContainer())
+            {
+                Tag tag = new Tag { Name = (string)Request["Name"] };
+                context.Tags.Add(tag);
+                context.SaveChanges();
+            }
+            return View();
+        }
+
+        public ActionResult EditTag(Tag t)
+        {
+            if (t != null)
+            {
+                using (var context = new ModelFirstContainer())
+                {
+                    int id = Int32.Parse(Request["id"]);
+                    Tag tag = context.Tags.FirstOrDefault(x => x.Id == id);
+                    tag.Name = t.Name;
                     context.SaveChanges();
                 }
             }
