@@ -117,7 +117,7 @@ namespace Bros.Controllers
                     Session["AdminError"] = "User with " + id + " id does not exist.";
                 else
                 {
-                    User user = userEnumerable.First();
+                    User user = userEnumberable.First();
                     if (user.IsBanned)
                     {
                         user.IsBanned = false;
