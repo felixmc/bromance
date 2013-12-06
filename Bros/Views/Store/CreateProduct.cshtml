@@ -6,11 +6,13 @@
 }
 
 <div class="CreateProduct">
-    @using (Html.BeginForm())
+    @using (Html.BeginForm("CreateProduct", "Store", FormMethod.Post, new { enctype = "multipart/form-data"}))
     {
         @Html.ValidationSummary()
         <span class="ProductName">Product Name: @Html.TextBoxFor(x => x.Name)</span>
         <span class="ProductPrice">Price: @Html.TextBoxFor(x => x.Price)</span>
+        <span class="ProductImage">Product Image: <input name="ImageFile" type="file" accept="image/*"/></span>
         <span class="ProductCategory">Category: @Html.DropDownListFor(x => x.Category, new SelectList(ViewBag.Categories, "Id", "Name"))</span>
+        <input type="submit" value="Create Product" />
     }
 </div>
