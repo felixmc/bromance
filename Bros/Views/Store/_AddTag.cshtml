@@ -4,14 +4,13 @@
 <script src="~/Scripts/jquery.validate.min.js"></script>
 <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
 
-@using (Html.BeginForm()) {
+@using (Html.BeginForm("AddTag", "Store", FormMethod.Post))
+{
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true)
 
     <fieldset>
         <legend>Tag</legend>
-
-        @Html.HiddenFor(model => model.Id)
 
         <div class="editor-label">
             @Html.LabelFor(model => model.Name)
@@ -22,7 +21,7 @@
         </div>
 
         <p>
-            <input type="submit" value="Save" />
+            <input type="submit" value="Create" />
         </p>
     </fieldset>
 }
