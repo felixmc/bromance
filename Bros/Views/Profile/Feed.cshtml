@@ -1,9 +1,15 @@
 ﻿@model List<Bros.DataModel.Post>
-
+@{
+    
+    Layout = "~/Views/Layouts/_ProfileLayout.cshtml";
+}
 
 @Html.Partial("_StatusUpdateForm")
 
-@foreach(Bros.DataModel.Post post in Model)
+@if (Model != null)
 {
-	Html.RenderPartial("_NewsFeedPartial", post);
+    foreach (Bros.DataModel.Post post in Model)
+    {
+        Html.RenderPartial("_NewsFeedPartial", post);
+    }
 }

@@ -1,0 +1,11 @@
+﻿
+@model Bros.DataModel.User
+
+@{
+    
+    Layout = "~/Views/Layouts/_ProfileLayout.cshtml";
+}
+
+<h1>Welcome to my profile!</h1>
+
+@Html.Partial("~/Views/Shared/_ProfilePhoto.cshtml", Model);

@@ -9,11 +9,23 @@
     <body>
         <div class="container">
             <header>
-                @RenderSection("LoginRegister", required: false)
                 <nav class="mainNav">
                     <ul>
-@*                        Change to true when pages are created*@
-                        @RenderSection("MainNavigation", required: false)
+                        @if (Session["UserId"] != null)
+                        {
+                            int userId = ((int)Session["UserId"]);
+                            <li>@Html.ActionLink("Home", "Feed","Profile")</li>
+                            <li>@Html.ActionLink("Messages","MessageHome","Messaging")</li>
+                            <li>@Html.ActionLink("Store", "StoreIndex", "Store")</li>
+                            <li>@Html.ActionLink("Browse Bros", "ViewBros", "Profile")</li>
+                            <li>@Html.ActionLink("View My Profile", "MyProfile", "Profile", new {id = userId}, false)</li>
+                            <li>@Html.ActionLink("Photos", "ProfileIndex", "Profile")</li>
+                            <li>@Html.ActionLink("Logout", "Logout", "Authentication")</li>
+                        }
+                        else
+                        {
+                            <li>@Html.ActionLink("Login","Login","Authentication")</li>
+                        }
                      
                     </ul>
                 </nav>   
@@ -48,8 +60,14 @@
             </aside>
             
             <footer>
-@*                Change to true when pages are created*@
-                @RenderSection("Footer", required: false)
+                <div class="footerNav">
+                        <ul>
+                            <li>&copy; Bromance, 2013</li>
+                            <li>@Html.ActionLink("About", "AboutUs", "Home")</li>
+                            <li>@Html.ActionLink("Legal", "TermsOfUse", "Home")</li>   
+                            <li>@Html.ActionLink("BroCode", "BroCode", "Home")</li>    
+                        </ul>
+                    </div>   
             </footer>
                 
         </div>       

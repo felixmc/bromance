@@ -32,6 +32,12 @@ namespace Bros.Controllers
         }
 
         [AllowAnonymous]
+        public ActionResult BroCode()
+        {
+            return View("BroCode");
+        }
+
+        [AllowAnonymous]
         public ActionResult AboutUs()
         {
             return View();

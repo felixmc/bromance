@@ -1,0 +1,24 @@
+﻿<p>
+    @using (Html.BeginForm("BanUser", "Admin"))
+    {
+        <span>Ban user</span>@Html.TextBox("ban")<br /> 
+        <span>by id </span>@Html.RadioButton("id", "1", true)<br />
+        <span>by username</span>@Html.RadioButton("id", "2")<br />
+        <input type="submit" />
+    }
+</p>
+<p>
+    @using (Html.BeginForm("UnbanUser", "Admin"))
+    {
+        <span>Unban user</span>@Html.TextBox("unban")<br />
+        <span>by id </span>@Html.RadioButton("id", "1", true)<br />
+        <span>by username</span>@Html.RadioButton("id", "2")<br />
+        <input type="submit" />
+    }
+</p>
+@if (Session["AdminError"] != null)
+{
+    <p>
+        @Session["AdminError"]
+    </p>
+}

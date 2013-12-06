@@ -6,6 +6,7 @@
 }
 
 <div class="ProductView">
+<<<<<<< HEAD
     @{
         var base64 = Convert.ToBase64String(Model.Image);
         var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
@@ -15,4 +16,10 @@
     <div class="ProductName">Product Name: @Model.Name</div>
     <div class="ProductPrice">Product Price: $@Model.Price</div>
     <div class="ProductCategory">Product Category: @Model.Category.Name</div>
+=======
+    <!-- Product Image? Maybe? -->
+    <div class="ProductName">@Model.Name</div>
+    <div class="ProductPrice">@Model.Price</div>
+    <div class="ProductCategory">@Model.Category.Name</div>
+>>>>>>> 73323088bc180a51813913a21a1d6e753085fdc5
 </div>

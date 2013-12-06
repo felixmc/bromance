@@ -1,0 +1,27 @@
+﻿
+@model Bros.DataModel.User
+@{
+    Layout = "~/Views/Layouts/_ProfileLayout.cshtml";
+    var base64 = "";
+    using(var context = new Bros.DataModel.ModelFirstContainer()){
+
+    Bros.DataModel.Photo profilePic = context.Posts.Where(p => p is Bros.DataModel.Photo).Select(p => p as Bros.DataModel.Photo).FirstOrDefault(p => p.ProfilePhotoOf.Id == Model.Id);
+    base64 = Convert.ToBase64String(profilePic.ImageData);
+    }
+     
+    var imgSrc = String.Format("data:image/jpg;base64,{0}", base64);
+}
+<h1>Set Profile Picture here: (Only jpgs)</h1>
+
+<article>Here is your profile picture: <p><span><img src=@imgSrc /></span></p></article>
+
+<article>
+    @Html.ValidationSummary()
+    @using (Html.BeginForm("ChangeProfilePhoto", "Profile", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        
+        <p>@Html.TextBox("img", null,new { type = "file", accept="image/jpg"})</p>
+        <input type="submit" value="Submit Product" class="my-button" />
+    }
+
+    </article>

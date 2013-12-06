@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ﻿@section MainNavigation
 {
     <li>@Html.ActionLink("Store", "StoreIndex", "Store")</li> 
@@ -7,6 +8,7 @@
 
 @section ProfileLinks{
     <li>@Html.ActionLink("Preferences", "EditProfile", "Profile")</li>
+        <li>@Html.ActionLink("View Profile", "MyProfile", "Profile")</li>
     <!-- This is where Messages, Photos, Albums, Friends list will go-->
 
 }
@@ -18,17 +20,9 @@
     <li>@Html.ActionLink("Logout", "Logout", "Authentication")</li>
 
 }
+=======
+﻿<h1>Profile Page</h1>
+>>>>>>> 7ad018cbb3daa716df9ecde4ed5fca5b4ddb5089
 @ViewBag.LoginMessage
 <!--Body -->
 
-
-@section Footer
-                {
-                    <div class="footerNav">
-                        <ul>
-                            <li>&copy; Bromance, 2013</li>
-                            <li>@Html.ActionLink("About", "AboutUs", "Home")</li>
-                            <li>@Html.ActionLink("Legal", "TermsOfUse", "Home")</li>       
-                        </ul>
-                    </div>   
-                }
