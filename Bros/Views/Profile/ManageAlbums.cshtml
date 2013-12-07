@@ -8,7 +8,9 @@
 <div class="album-gallery">
 
     @foreach(Bros.DataModel.Album single in ViewBag.Albums){
-        Html.Partial("~/Views/Profile/_AlbumSingle.cshtml", single);
+
+        Html.ActionLink("" + single.Title, "ManageAlbums", "Profile");
+        //Html.Partial("~/Views/Profile/_AlbumSingle.cshtml", single);
     }
 
 </div>

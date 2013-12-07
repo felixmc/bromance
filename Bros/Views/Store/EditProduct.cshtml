@@ -39,6 +39,21 @@
             @Html.EditorFor(model => model.CategoryId)
             @Html.ValidationMessageFor(model => model.CategoryId)
         </div>
+        
+        @{
+            var base64 = Convert.ToBase64String(Model.Image);
+            var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+        }
+
+        <div class="ProductImage">
+            <div class="CurrentImageLabel">
+                <span>Current Image: </span><br />
+                <img class="ProductImage" src="@imgSrc" />
+                <span class="ProductImage">Product Image: <input name="ImageFile" type="file" accept="image/*"/></span>
+            </div>
+        </div>
+
+        <div class="ProductCategory">Category: @Html.DropDownListFor(x => x.Category, new SelectList(ViewBag.Categories, "Id", "Name"))</div>
 
         <div class="editor-label">
             @Html.LabelFor(model => model.IsDeleted)
