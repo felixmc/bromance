@@ -31,6 +31,12 @@ namespace Bros.Controllers
             return View();
         }
 
+        //This code is just for testing purposes.
+        public ActionResult GarbageView()
+        {
+            return View();
+        }
+
         [AllowAnonymous]
         public ActionResult BroCode()
         {
