@@ -1,6 +1,7 @@
 ﻿using Bros.DataModel;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -16,6 +17,7 @@ namespace Bros.Controllers
         {
             return View();
         }
+        
         [HttpPost]
         public ActionResult AddCategory()
         {
@@ -28,15 +30,42 @@ namespace Bros.Controllers
             return View();
         }
        
-        public ActionResult EditCategory(Category c)
+        public ActionResult EditCategory()
         {
-            if (c != null)
-            {
+           
                 using (var context = new ModelFirstContainer())
                 {
                     int id = Int32.Parse(Request["id"]);
                     Category cat = context.Categories.FirstOrDefault(x => x.Id == id);
-                    cat.Name = c.Name;
+                    cat.Name = Request["name"];
+                    context.SaveChanges();
+                }
+            
+            return View();
+
+        }
+
+        [HttpPost]
+        public ActionResult AddTag()
+        {
+            using (var context = new ModelFirstContainer())
+            {
+                Tag tag = new Tag { Name = (string)Request["Name"] };
+                context.Tags.Add(tag);
+                context.SaveChanges();
+            }
+            return View();
+        }
+
+        public ActionResult EditTag(Tag t)
+        {
+            if (t != null)
+            {
+                using (var context = new ModelFirstContainer())
+                {
+                    int id = Int32.Parse(Request["id"]);
+                    Tag tag = context.Tags.FirstOrDefault(x => x.Id == id);
+                    tag.Name = t.Name;
                     context.SaveChanges();
                 }
             }
@@ -48,63 +77,132 @@ namespace Bros.Controllers
             return View();
         }
        
-
-        [HttpGet]
-        public ActionResult CreateProduct()
+        public ActionResult LoadProductCreation()
         {
             using (ModelFirstContainer context = new ModelFirstContainer())
             {
                 ViewBag.Categories = context.Categories.Select(c => new { Id = c.Id, Name = c.Name }).ToList();
             }
 
-            return View();
+            return View("CreateProduct");
         }
 
         [HttpPost]
-        public ActionResult CreateProduct(Product product)
+        public ActionResult CreateProduct(Product product, HttpPostedFileBase ImageFile)
         {
+            using (var ms = new MemoryStream())
+            {
+                ImageFile.InputStream.CopyTo(ms);
+                product.Image = ms.ToArray();
+            }
+
+            int categoryId = Int32.Parse(Request["Category"]);
+            Category tempCat;
+            using (ModelFirstContainer context = new ModelFirstContainer())
+            {
+                tempCat = context.Categories.FirstOrDefault(x => x.Id == categoryId);
+                
+            }
+
             ActionResult result;
-            if (ModelState.IsValid)
+            if (product.Name != null && product.Price > 0 && tempCat != null)
             {
                 int productId;
 
                 using (ModelFirstContainer context = new ModelFirstContainer())
                 {
-                    product.DateCreated = DateTime.Now;
-
-                    context.Products.Add(product);
-                    context.Categories.FirstOrDefault(x => x.Id == product.Category.Id).Products.Add(product);
+                    Product p = new Product()
+                    {
+                        DateCreated = DateTime.Now,
+                        Category = tempCat,
+                        Name = product.Name,
+                        Price = product.Price,
+                        Image = product.Image
+                    };
+                    
+                    context.Products.Add(p);
+                    tempCat.Products.Add(p);
 
                     context.SaveChanges();
 
-                    productId = product.Id;
+                    productId = p.Id;
+                    result = View("ViewProduct", p);
                 }
-                result = RedirectToAction("ViewProduct", productId);
             }
             else
             {
-                result = View();
+                using (ModelFirstContainer context = new ModelFirstContainer())
+                {
+                    ViewBag.Categories = context.Categories.Select(c => new { Id = c.Id, Name = c.Name }).ToList();
+                    result = View();
+                }
             }
 
             return result;
         }
 
-        public ActionResult ViewProduct(int productID)
+        public ActionResult DeleteProductById(int productId)
+        {
+            using (ModelFirstContainer context = new ModelFirstContainer())
+            {
+                context.Products.FirstOrDefault(x => x.Id == productId).IsDeleted = true;
+                context.SaveChanges();
+
+                ViewBag.Products = context.Products.Include("Tags").Include("Category").Where(x => !x.IsDeleted).ToList();
+            }
+
+
+            return View("StoreIndex");
+        }
+
+        public ActionResult ViewAllProducts()
+        {
+
+            using (ModelFirstContainer context = new ModelFirstContainer())
+            {
+                ViewBag.Products = context.Products.Include("Tags").Include("Category").Where(x => !x.IsDeleted).ToList(); 
+            }
+
+            return View();
+        }
+
+        //public ActionResult ViewProduct(int productID)
+        //{
+        //    Product targetProduct;
+
+        //    using (ModelFirstContainer context = new ModelFirstContainer())
+        //    {
+        //        targetProduct = context.Products.Include("Category").FirstOrDefault(p => p.Id == productID);
+        //    }
+
+        //    return View(targetProduct);
+        //}
+
+        public ActionResult ViewProduct(Product product)
+        {
+            return View(product);
+        }
+
+        public ActionResult ViewProductById(int productID)
+        {
+            Product product;
+            using (ModelFirstContainer context = new ModelFirstContainer())
+            {
+                product = context.Products.Include("Tags").Include("Category").FirstOrDefault(x => x.Id == productID);
+            }
+            return View("ViewProduct", product);
+        }
+
+        public ActionResult EditProduct(int productID)
         {
             Product targetProduct;
 
             using (ModelFirstContainer context = new ModelFirstContainer())
             {
-                targetProduct = context.Products.Include("Category").FirstOrDefault(p => p.Id == productID);
+                targetProduct = context.Products.Include("Category").Include("Tags").FirstOrDefault(x => x.Id == productID);
             }
 
             return View(targetProduct);
-        }
-
-        [HttpGet]
-        public ActionResult EditProduct(int productID)
-        {
-            return View();
         }
 
         [HttpPost]

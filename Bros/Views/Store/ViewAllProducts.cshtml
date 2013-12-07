@@ -1,0 +1,9 @@
+﻿@{
+    ViewBag.Title = "ViewAllProducts";
+    Layout = "~/Views/Shared/_DefaultLayout.cshtml";
+}
+
+@foreach (Bros.DataModel.Product p in ViewBag.Products)
+{
+    Html.RenderPartial("_ProductPartial", p);
+}

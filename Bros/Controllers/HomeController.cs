@@ -15,11 +15,9 @@ namespace Bros.Controllers
     {
         //
         // GET: /Home/
-
         
         public ActionResult Index()
         {
-
             ViewBag.Title = "Home";
             if ( Session["UserId"] != null && ((int)Session["UserId"]) != 0)
             {
@@ -30,7 +28,7 @@ namespace Bros.Controllers
                 ViewBag.LoginMessage = "Welcome, " + user.Profile.FirstName + "! You are logged in!";
                 }
             }
-            return View();
+            return View("GarbageView");
         }
 
         [AllowAnonymous]

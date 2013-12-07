@@ -1,4 +1,4 @@
-﻿@model Bros.Models.Product
+﻿@model Bros.DataModel.Product
 @{
     ViewBag.Title = "ProductView";
 }
@@ -8,7 +8,7 @@
 <!-- Product Image? -->
 <div class="ProductName">@Model.Name</div>
 <div class="ProductPrice">@Model.Price</div>
-<div class="ProductCategory">@Model.Catagory</div>
+<div class="ProductCategory">@Model.Category</div>
 <div class="ProductDescription">@Model.Description</div>
 <ul class="ProductTags">
     @foreach (String s in Model.Tags)

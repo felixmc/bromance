@@ -1,11 +1,16 @@
-﻿@model Bros.Models.Product
+﻿@model Bros.DataModel.Product
 @{
     
 }
 
 <h2>Product Partial View</h2>
-<!-- Image Thumbnail? -->
-<div class="ProductName">@Model.Name</div>
-<div class="ProductPrice">@Model.Price</div>
-<div class="ProductCategory">@Model.Catagory</div>
+<div class="ProductName">@Html.ActionLink(@Model.Name, "ViewProductById", new { productID = Model.Id })</div>
+<div class="ProductCategory">Category: @Model.Category.Name</div>
+@{
+    var base64 = Convert.ToBase64String(Model.Image);
+    var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+}
+<!-- TODO: Remove the inline styling here! Currently, it is here for the sake of testing. Letting it remain after real css is added would be a bad idea! -->
+<img class="ProductImage" src="@imgSrc" style="width:100px;" />
+<div class="ProductPrice">Product Price: $@Model.Price</div>
 
