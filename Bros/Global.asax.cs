@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Routing;
+using System.Web.Security;
 using WebMatrix.WebData;
 
 namespace Bros
@@ -14,14 +15,28 @@ namespace Bros
 	// visit http://go.microsoft.com/?LinkId=9394801
 	public class MvcApplication : System.Web.HttpApplication
 	{
-		protected void Application_Start()
-		{
-			WebSecurity.InitializeDatabaseConnection("WebSecurityConectionString", "Users", "Id", "Email", true);
-			AreaRegistration.RegisterAllAreas();
+        protected void Application_Start()
+        {
+            WebSecurity.InitializeDatabaseConnection("WebSecurityConectionString", "Users", "Id", "Email", true);
+            AreaRegistration.RegisterAllAreas();
 
-			WebApiConfig.Register(GlobalConfiguration.Configuration);
-			FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
-			RouteConfig.RegisterRoutes(RouteTable.Routes);
-		}
+            string[] roles = {
+                "Admin",
+                "StoreAdmin"
+                             };
+
+            var roleProvider = (SimpleRoleProvider)Roles.Provider;
+            foreach (string role in roles)
+            {
+                if (!roleProvider.RoleExists(role))
+                {
+                    roleProvider.CreateRole(role);
+                }
+            }
+
+            WebApiConfig.Register(GlobalConfiguration.Configuration);
+            FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
+            RouteConfig.RegisterRoutes(RouteTable.Routes);
+        }
 	}
 }
