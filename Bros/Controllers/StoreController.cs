@@ -97,33 +97,31 @@ namespace Bros.Controllers
             }
 
             int categoryId = Int32.Parse(Request["Category"]);
-            Category tempCat;
-            using (ModelFirstContainer context = new ModelFirstContainer())
-            {
-                tempCat = context.Categories.FirstOrDefault(x => x.Id == categoryId);
-                
-            }
+            
+          
 
             ActionResult result;
-            if (product.Name != null && product.Price > 0 && tempCat != null)
+            if (product.Name != null && product.Price > 0 && Request["Category"] != null)
             {
                 int productId;
-
+                //Category tempCat = null;
                 using (ModelFirstContainer context = new ModelFirstContainer())
                 {
                     Product p = new Product()
                     {
+                        Category = context.Categories.Single(x => x.Id == categoryId),
                         DateCreated = DateTime.Now,
-                        Category = tempCat,
+                        //Category = tempCat,
                         Name = product.Name,
                         Price = product.Price,
                         Image = product.Image
                     };
                     
                     context.Products.Add(p);
-                    tempCat.Products.Add(p);
-
                     context.SaveChanges();
+                    //tempCat.Products.Add(p);
+
+                   // context.SaveChanges();
 
                     productId = p.Id;
                     result = View("ViewProduct", p);
