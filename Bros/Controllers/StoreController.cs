@@ -199,6 +199,7 @@ namespace Bros.Controllers
 
             using (ModelFirstContainer context = new ModelFirstContainer())
             {
+                ViewBag.Categories = context.Categories.Select(c => new { Id = c.Id, Name = c.Name }).ToList();
                 targetProduct = context.Products.Include("Category").Include("Tags").FirstOrDefault(x => x.Id == productID);
             }
 
