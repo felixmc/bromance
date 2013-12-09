@@ -1,0 +1,19 @@
+﻿@using Bros.DataModel;
+@{
+    ViewBag.Title = "HandleCategory";
+}
+
+
+@if (ViewBag.cat != null)
+{
+
+   @:  @{Html.RenderPartial((string)ViewBag.partialView, (Category)ViewBag.cat);}
+
+}
+else
+{
+    @: @{Html.RenderPartial((string)ViewBag.partialView);
+}
+}  
+
+<h2>HandleCategory</h2>

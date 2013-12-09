@@ -1,0 +1,12 @@
+﻿@using Bros.DataModel;
+@{
+    ViewBag.Title = "LoadCategorys";
+}
+
+@foreach (Category c in ViewBag.Category)
+{
+    Html.RenderPartial("_EditCatagory", c);
+}
+
+}
+

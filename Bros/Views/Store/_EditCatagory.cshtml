@@ -1,15 +1,16 @@
-﻿@model Bros.DataModel.Tag
+﻿@model Bros.DataModel.Category
 
 <script src="~/Scripts/jquery-1.8.2.min.js"></script>
 <script src="~/Scripts/jquery.validate.min.js"></script>
 <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
 
-@using (Html.BeginForm()) {
+@using (Html.BeginForm("EditCategory", "Store", FormMethod.Post))
+{
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true)
 
     <fieldset>
-        <legend>Tag</legend>
+        <legend>Category</legend>
 
         @Html.HiddenFor(model => model.Id)
 

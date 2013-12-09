@@ -27,9 +27,42 @@ namespace Bros.Controllers
                 context.Categories.Add(cat);
                 context.SaveChanges();
             }
+            return RedirectToAction("LoadProductCreation");
+        }
+
+        public ActionResult LoadCategorys()
+        {
+            using (var context = new ModelFirstContainer())
+            {
+                List<Category> cats = context.Categories.ToList();
+                ViewBag.Category = cats;
+            }
             return View();
         }
-       
+
+        public ActionResult HandleCategory(string catId)
+        {
+            if (catId == null)
+            {
+                ViewBag.partialView = "_AddCategory";
+                return View();
+            }
+
+            else
+            {
+                using (var context = new ModelFirstContainer())
+                {
+                    int categoryId = Int32.Parse(catId);
+                    Category cat = context.Categories.Single(x => x.Id == categoryId);
+                    ViewBag.partialView = "_EditCategory";
+
+                    ViewBag.cat = cat;
+                    return View();
+                }
+            }
+
+        }
+       [HttpPost]
         public ActionResult EditCategory()
         {
            
@@ -40,10 +73,33 @@ namespace Bros.Controllers
                     cat.Name = Request["name"];
                     context.SaveChanges();
                 }
-            
-            return View();
+
+                return RedirectToAction("LoadCategorys");
 
         }
+
+       public ActionResult HandleTag(string tagId)
+       {
+           if (tagId == null)
+           {
+               ViewBag.partialView = "_AddTag";
+               return View();
+           }
+
+           else
+           {
+               using (var context = new ModelFirstContainer())
+               {
+                   int tId = Int32.Parse(tagId);
+                   Category tag = context.Categories.Single(x => x.Id == tId);
+                   ViewBag.partialView = "_EditTag";
+
+                   ViewBag.tag = tag;
+                   return View();
+               }
+           }
+
+       }
 
         [HttpPost]
         public ActionResult AddTag()
