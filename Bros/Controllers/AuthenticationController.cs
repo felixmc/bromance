@@ -162,7 +162,7 @@ namespace Bros.Controllers
                 };
 
 
-                ShoppingCart cart = new ShoppingCart();
+                //ShoppingCart cart = new ShoppingCart();
 
 
 				User newUser = context.Users.FirstOrDefault(u=>u.Email.Equals(model.Email));
@@ -170,8 +170,8 @@ namespace Bros.Controllers
                 if (newUser != null)
                 {
 
-                    cart.User = newUser;
-                    newUser.ShoppingCart = cart;
+                    //cart.User = newUser;
+                    //newUser.ShoppingCart = cart;
                     //context.ShoppingCarts.Add(cart);
                     prof.User = newUser;
 
@@ -220,26 +220,13 @@ namespace Bros.Controllers
                 Album album = new Album()
                 {
                     Owner = newUser,
-                    Title = "Default Picture",
+                    Title = "Profile Pictures",
                     DateCreated = DateTime.Today,
                     Photos = photoAlbum
                 };
                 context.Albums.Add(album);
                 context.SaveChanges();
 
-                Photo defaultPhoto = new Photo()
-                {
-                    ImageData = arr,
-                    DateCreated = DateTime.Today,
-                    DateUpdated = DateTime.Today,
-                    Caption = "Default",
-                    IsDeleted = true,
-                    Author = newUser,
-                    ProfilePhotoOf = prof,
-                    Album = album
-                    
-                };
-                context.Posts.Add(defaultPhoto);
                 context.SaveChanges();
 
 
