@@ -14,7 +14,6 @@
         <span class="ProductImage">Product Image: <input name="ImageFile" type="file" accept="image/*"/></span>
         if(ViewBag.Categories != null){
             <span class="ProductCategory">Category: @Html.DropDownListFor(x => x.Category, new SelectList(ViewBag.Categories, "Id", "Name"))</span>
-                    
         }
         @Html.ActionLink("Add Category", "HandleCategory", "Store")
         @Html.ActionLink("Edit Category", "LoadCategorys", "Store")
