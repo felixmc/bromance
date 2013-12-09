@@ -30,6 +30,11 @@
                         }
                      
                     </ul>
+                    @using (Html.BeginForm("ByUserName", "Search"))
+                    {
+                        @Html.TextBox("searchParam");
+                        <input type="submit"/>
+                    }
                 </nav>   
                 
                 <nav class="secondaryNav">
