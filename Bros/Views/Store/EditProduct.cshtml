@@ -7,7 +7,8 @@
 
 <h2>EditProduct</h2>
 
-@using (Html.BeginForm()) {
+@using (Html.BeginForm("EditProduct", "Store", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true)
 
@@ -32,17 +33,11 @@
             @Html.ValidationMessageFor(model => model.Price)
         </div>
 
-        <div class="editor-label">
-            @Html.LabelFor(model => model.CategoryId)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.CategoryId)
-            @Html.ValidationMessageFor(model => model.CategoryId)
-        </div>
+        @Html.HiddenFor(model => model.CategoryId)
         
         @{
-            var base64 = Convert.ToBase64String(Model.Image);
-            var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+    var base64 = Convert.ToBase64String(Model.Image);
+    var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
         }
 
         <div class="ProductImage">
@@ -63,13 +58,7 @@
             @Html.ValidationMessageFor(model => model.IsDeleted)
         </div>
 
-        <div class="editor-label">
-            @Html.LabelFor(model => model.DateCreated)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.DateCreated)
-            @Html.ValidationMessageFor(model => model.DateCreated)
-        </div>
+        @Html.HiddenFor(model => model.DateCreated)
 
         <p>
             <input type="submit" value="Save" />

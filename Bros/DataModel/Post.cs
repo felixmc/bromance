@@ -22,7 +22,7 @@ namespace Bros.DataModel
         public int Id { get; set; }
         public bool IsFlagged { get; set; }
         public System.DateTime DateCreated { get; set; }
-        public System.DateTime DateUpdated { get; set; }
+        public Nullable<System.DateTime> DateUpdated { get; set; }
         public int UserId { get; set; }
         public bool IsDeleted { get; set; }
     

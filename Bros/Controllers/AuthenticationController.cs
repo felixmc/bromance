@@ -138,7 +138,8 @@ namespace Bros.Controllers
                 try
                 {
                     string data = WebSecurity.CreateUserAndAccount(model.Email, model.Password, new { dateCreated = DateTime.Now, isbanned = false, isdeleted = false });
-                    //WebSecurity.Login(model.Email, model.Password);
+					Roles.AddUserToRole(model.Email, "User");
+					//WebSecurity.Login(model.Email, model.Password);
                 }
                 catch (MembershipCreateUserException e)
                 {
@@ -162,19 +163,17 @@ namespace Bros.Controllers
                 };
 
 
-                //ShoppingCart cart = new ShoppingCart();
-
+                ShoppingCart cart = new ShoppingCart();
 
 				User newUser = context.Users.FirstOrDefault(u=>u.Email.Equals(model.Email));
 
                 if (newUser != null)
                 {
-
-                    //cart.User = newUser;
-                    //newUser.ShoppingCart = cart;
-                    //context.ShoppingCarts.Add(cart);
-                    prof.User = newUser;
-
+					newUser.ShoppingCart = cart;
+					cart.User = newUser;
+					context.ShoppingCarts.Add(cart);
+                    
+					prof.User = newUser;
                     newUser.Profile = prof;
                     //newUser.ShoppingCart = cart;
 

@@ -15,8 +15,10 @@
                         {
                             int userId = WebSecurity.CurrentUserId;
                             <li>@Html.ActionLink("Home", "Feed","Profile")</li>
+                            <li>@Html.ActionLink("Notifications","Notifications","Profile")</li>
                             <li>@Html.ActionLink("Messages","MessageHome","Messaging")</li>
                             <li>@Html.ActionLink("Settings", "Settings", "Profile", new {id = userId}, false)</li>
+                            <li>@Html.ActionLink("Chat","Chat","Messaging")</li>
                             <li>@Html.ActionLink("Store", "StoreIndex", "Store")</li>
                             <li>@Html.ActionLink("Browse Bros", "ViewBros", "Profile")</li>
                             <li>@Html.ActionLink("View My Profile", "MyProfile", "Profile", new {id = userId}, false)</li>
@@ -29,6 +31,15 @@
                         }
                      
                     </ul>
+                    @if (WebSecurity.IsAuthenticated)
+                    {
+                        using (Html.BeginForm("ByUserName", "Search"))
+                         {
+                             @Html.TextBox("searchParam")
+                             ;
+                             <input type="submit" value="Search for Bros"/>
+                         }
+                    }
                 </nav>   
                 
                 <nav class="secondaryNav">

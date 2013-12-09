@@ -9,7 +9,6 @@
 
 namespace Bros.DataModel
 {
-    using Bros.Models;
     using System;
     using System.Collections.Generic;
     
