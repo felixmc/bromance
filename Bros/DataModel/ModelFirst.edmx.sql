@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, and Azure
 -- --------------------------------------------------
--- Date Created: 12/03/2013 15:53:33
+-- Date Created: 12/06/2013 16:02:18
 -- Generated from EDMX file: C:\Users\Felix\Documents\GitHub\bromance\Bros\DataModel\ModelFirst.edmx
 -- --------------------------------------------------
 
@@ -320,7 +320,7 @@ GO
 CREATE TABLE [dbo].[Products] (
     [Id] int IDENTITY(1,1) NOT NULL,
     [Name] nvarchar(max)  NOT NULL,
-    [Price] decimal(18,0)  NOT NULL,
+    [Price] float  NOT NULL,
     [Image] varbinary(max)  NOT NULL,
     [CategoryId] int  NOT NULL,
     [IsDeleted] bit  NOT NULL,
