@@ -165,17 +165,15 @@ namespace Bros.Controllers
 
                 ShoppingCart cart = new ShoppingCart();
 
-
 				User newUser = context.Users.FirstOrDefault(u=>u.Email.Equals(model.Email));
 
                 if (newUser != null)
                 {
-
-                    cart.User = newUser;
-                    newUser.ShoppingCart = cart;
-                    //context.ShoppingCarts.Add(cart);
-                    prof.User = newUser;
-
+					newUser.ShoppingCart = cart;
+					cart.User = newUser;
+					context.ShoppingCarts.Add(cart);
+                    
+					prof.User = newUser;
                     newUser.Profile = prof;
                     //newUser.ShoppingCart = cart;
 
