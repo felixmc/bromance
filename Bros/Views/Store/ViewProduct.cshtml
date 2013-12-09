@@ -19,4 +19,6 @@
         Html.ActionLink("Delete this Product", "DeleteProductById", new { productId = Model.Id });
         Html.ActionLink("Edit this Product", "EditProduct", new { productId = Model.Id });
     }
+    @Html.ActionLink("Add to Cart", "AddProductToCart", new { productId = Model.Id });
+
 </div>
