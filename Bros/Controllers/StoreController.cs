@@ -87,7 +87,7 @@ namespace Bros.Controllers
            using (var context = new ModelFirstContainer())
            {
                List<Tag> tags = context.Tags.ToList();
-               ViewBag.Category = tags;
+               ViewBag.Tags = tags;
            }
            return View();
        }
@@ -125,7 +125,7 @@ namespace Bros.Controllers
                 context.Tags.Add(tag);
                 context.SaveChanges();
             }
-            return View();
+            return RedirectToAction("LoadTags");
         }
 
         //[Authorize(Roles = "Admin, StoreAdmin")]
@@ -149,7 +149,7 @@ namespace Bros.Controllers
             return View();
         }
 
-        [Authorize(Roles = "Admin, StoreAdmin")]
+      //  [Authorize(Roles = "Admin, StoreAdmin")]
         public ActionResult LoadProductCreation()
         {
             using (ModelFirstContainer context = new ModelFirstContainer())

@@ -3,9 +3,12 @@
     ViewBag.Title = "LoadTags";
 }
 
-@foreach (Tag t in ViewBag.Tags)
+@if(ViewBag.Tags != null)
+{
+    foreach (Tag t in ViewBag.Tags)
 {
     Html.RenderPartial("_EditTag", t);
 }
+
 
 }
