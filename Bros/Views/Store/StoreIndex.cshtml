@@ -2,8 +2,14 @@
 <h1>Store</h1>
 <h3>Pound it!</h3>
 
-@{Html.RenderPartial("_StoreLayout");}
-@foreach(Product p in ViewBag.Products)
-{
-    Html.RenderPartial("_ProductPartial", p);
+@Html.Partial("~/Views/Layouts/_StoreLayout.cshtml")
+
+@{
+    if (ViewBag.Products != null)
+    {
+        foreach (Product p in ViewBag.Products)
+        {
+            Html.RenderPartial("_ProductPartial", p);
+        }
+    }    
 }
