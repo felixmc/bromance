@@ -1,8 +1,7 @@
-﻿@{
-    Layout = null;
-}
-
-<style>
+﻿<style>
+	body {
+		background: #E3F7FF;
+	}
 
 	#friend-list {
 		position: fixed;
@@ -39,7 +38,8 @@
 		width: 400px;
 		border: 1px solid #666;
 		margin-top: 2em;
-		position: relative;
+		background: #fff;
+		position: absolute;
 	}
 
 	.msgWrap {
@@ -78,6 +78,7 @@
 		margin: 0;
 		padding: 10px;
 		font-family: sans-serif;
+		cursor: move;
 	}
 
 	.close {
@@ -126,6 +127,7 @@
 
 	
     <script src="/Content/Scripts/jquery-1.6.4.min.js"" ></script>
+    <script src="/Content/Scripts/jquery-ui-1.10.3.custom.min.js"" ></script>
     <script src="/Content/Scripts/jquery.signalR-2.0.0.min.js"></script>
     <script src="/signalr/hubs"></script>
     <script type="text/javascript">
@@ -162,17 +164,27 @@
     		};
 
 			// Declare UI actions
-    		var createChatWindow = function (userId) {
-    			$window = $(".chat-window[data-user-id=" + userId + "]");
-    			if ($window.length == 0) {
-    				var $form = $("#templateForm").clone();
+    		var createChatWindow = function (userId, focus) {
+    			var $form = $(".chat-window[data-user-id=" + userId + "]");
+    			if ($form.length == 0) {
+    				$form = $("#templateForm").clone();
     				$form.attr("data-user-id", userId);
     				$(".receiverName", $form).text($("#friend-list li[data-user-id=" + userId + "]").text());
     				$("body").append($form);
-    				$form.show();
-    			} else {
-    				$window.show();
+    				$form.css("top", (90 * ($(".chat-window").length - 1)) + "px");
+    				$form.css("left", (50 * ($(".chat-window").length - 1)) + "px");
+    				draggable();
     			}
+
+    			$form.fadeIn(500);
+
+    			if (focus === true) {
+    				$(".messageBox", $form).focus();
+    			}
+    		};
+
+    		var draggable = function () {
+    			$(".chat-window").draggable({ handle: ".header", stack: ".chat-window", opacity: .9, distance: 0 });
     		};
 
     		$(".chat-window").live("submit", function () {
@@ -183,11 +195,16 @@
     		});
 
     		$(".chat-window .close").live("click", function () {
-    			$(this).parent().hide();
+    			$(this).parent().fadeOut(500);
+    		});
+
+    		$(".chat-window").live("click", function () {
+    			$(".chat-window").css("z-index", 1);
+    			$(this).css("z-index", 3);
     		});
 
     		$("#friend-list li").click(function () {
-    			createChatWindow($(this).attr("data-user-id"));
+    			createChatWindow($(this).attr("data-user-id"), true);
     		});
 
 
