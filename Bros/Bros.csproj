@@ -148,6 +148,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MessagingController.cs" />
     <Compile Include="Controllers\ProfileController.cs" />
+    <Compile Include="Controllers\SearchController.cs" />
     <Compile Include="Controllers\StoreController.cs" />
     <Compile Include="DataModel\Album.cs">
       <DependentUpon>ModelFirst.tt</DependentUpon>
@@ -269,6 +270,7 @@
     <Content Include="Views\Messaging\_ConvoPartialView.cshtml" />
     <Content Include="Views\Messaging\_SendMessageTo.cshtml" />
     <Content Include="Views\Messaging\_SingleMessagePartialView.cshtml" />
+    <Content Include="Views\Search\SearchResults.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
