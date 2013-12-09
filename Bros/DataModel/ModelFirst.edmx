@@ -209,7 +209,7 @@
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="IsFlagged" Type="bit" Nullable="false" />
     <Property Name="DateCreated" Type="datetime" Nullable="false" />
-    <Property Name="DateUpdated" Type="datetime" Nullable="false" />
+    <Property Name="DateUpdated" Type="datetime" Nullable="true" />
     <Property Name="UserId" Type="int" Nullable="false" />
     <Property Name="IsDeleted" Type="bit" Nullable="false" />
   </EntityType>
@@ -257,7 +257,7 @@
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Content" Type="nvarchar(max)" Nullable="false" />
     <Property Name="DateSent" Type="datetime" Nullable="false" />
-    <Property Name="DateRead" Type="datetime" Nullable="false" />
+    <Property Name="DateRead" Type="datetime" Nullable="true" />
     <Property Name="UserId" Type="int" Nullable="false" />
     <Property Name="UserId1" Type="int" Nullable="false" />
   </EntityType>
@@ -285,7 +285,7 @@
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="Price" Type="decimal" Nullable="false" />
+    <Property Name="Price" Type="float" Nullable="false" />
     <Property Name="Image" Type="varbinary(max)" Nullable="false" />
     <Property Name="CategoryId" Type="int" Nullable="false" />
     <Property Name="IsDeleted" Type="bit" Nullable="false" />
@@ -1063,7 +1063,7 @@
           <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Type="Boolean" Name="IsFlagged" Nullable="false" />
           <Property Type="DateTime" Name="DateCreated" Nullable="false" />
-          <Property Type="DateTime" Name="DateUpdated" Nullable="false" />
+          <Property Type="DateTime" Name="DateUpdated" Nullable="true" />
           <NavigationProperty Name="Comments" Relationship="ModelFirst.PostComment" FromRole="Post" ToRole="Comment" />
           <NavigationProperty Name="Author" Relationship="ModelFirst.UserPost" FromRole="Post" ToRole="User" />
           <Property Type="Int32" Name="UserId" Nullable="false" />
@@ -1126,7 +1126,7 @@
           <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Type="String" Name="Content" Nullable="false" />
           <Property Type="DateTime" Name="DateSent" Nullable="false" />
-          <Property Type="DateTime" Name="DateRead" Nullable="false" />
+          <Property Type="DateTime" Name="DateRead" Nullable="true" />
           <NavigationProperty Name="Sender" Relationship="ModelFirst.MessagesSent" FromRole="Message" ToRole="User" />
           <Property Type="Int32" Name="UserId" Nullable="false" />
           <NavigationProperty Name="Receiver" Relationship="ModelFirst.MessageUser" FromRole="Message" ToRole="User" />
@@ -1158,7 +1158,7 @@
           </Key>
           <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Type="String" Name="Name" Nullable="false" />
-          <Property Type="Decimal" Name="Price" Nullable="false" />
+          <Property Type="Double" Name="Price" Nullable="false" />
           <Property Type="Binary" Name="Image" Nullable="false" />
           <NavigationProperty Name="Category" Relationship="ModelFirst.ProductCategory" FromRole="Product" ToRole="Category" />
           <Property Type="Int32" Name="CategoryId" Nullable="false" />
@@ -1454,7 +1454,7 @@
           <NavigationProperty Name="Products" Relationship="ModelFirst.ShoppingCartProducts" FromRole="ShoppingCart" ToRole="Product" />
         </EntityType>
         <Association Name="ShoppingCartUser">
-          <End Type="ModelFirst.ShoppingCart" Role="ShoppingCart" Multiplicity="1" />
+          <End Type="ModelFirst.ShoppingCart" Role="ShoppingCart" Multiplicity="0..1" />
           <End Type="ModelFirst.User" Role="User" Multiplicity="1" />
         </Association>
         <Association Name="ShoppingCartProducts">

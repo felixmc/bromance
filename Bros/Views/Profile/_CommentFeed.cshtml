@@ -1,6 +1,10 @@
 ﻿@model Bros.DataModel.Post
 
-@foreach (Bros.DataModel.Comment comment in @Model.Comments)
+@{
+   List<Bros.DataModel.Comment> commentList =  (List<Bros.DataModel.Comment>)Model.Comments.ToList();
+}
+
+@foreach (Bros.DataModel.Comment comment in commentList)
 {
 	Html.RenderPartial("_SingleComment", comment);
 }

@@ -5,9 +5,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using WebMatrix.WebData;
 
 namespace Bros.Controllers
 {
+	[Authorize(Roles="User")]
     public class MessagingController : Controller
     {
         //
@@ -118,6 +120,22 @@ namespace Bros.Controllers
 
             return View("MessageHome");
         }
+
+		public ActionResult Chat()
+		{
+			using (var context = new ModelFirstContainer())
+			{
+				IEnumerable<int> friends = context.Users.FirstOrDefault(u => u.Id == WebSecurity.CurrentUserId)
+													.Circles.Select(c => c.Members).SelectMany(u => u).Select(u => u.Id);
+
+				ViewBag.Friends = context.Users.Include("Profile").Where(u => friends.Contains(u.Id)).ToList();
+				ViewBag.Name = context.Users.Where(u => u.Id == WebSecurity.CurrentUserId).Select(u => u.Profile.FirstName + " " + u.Profile.LastName).FirstOrDefault();
+			}
+
+			ViewBag.UserId = WebSecurity.CurrentUserId;
+
+			return View();
+		}
 
     }
 }

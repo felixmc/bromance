@@ -8,6 +8,7 @@ using System.Web.Mvc;
 
 namespace Bros.Controllers
 {
+    //[Authorize(Roles = "Admin, User, StoreAdmin")]
     public class StoreController : Controller
     {
         //
@@ -19,6 +20,7 @@ namespace Bros.Controllers
         }
         
         [HttpPost]
+        //[Authorize(Roles="Admin, StoreAdmin")]
         public ActionResult AddCategory()
         {
             using (var context = new ModelFirstContainer())
@@ -40,6 +42,7 @@ namespace Bros.Controllers
             return View();
         }
 
+<<<<<<< HEAD
         public ActionResult HandleCategory(string catId)
         {
             if (catId == null)
@@ -63,6 +66,9 @@ namespace Bros.Controllers
 
         }
        [HttpPost]
+=======
+        //[Authorize(Roles = "Admin, StoreAdmin")]
+>>>>>>> 464884bcd760a9001a6466ff446cbfcc6edb42b5
         public ActionResult EditCategory()
         {
            
@@ -93,7 +99,7 @@ namespace Bros.Controllers
                    int tId = Int32.Parse(tagId);
                    Category tag = context.Categories.Single(x => x.Id == tId);
                    ViewBag.partialView = "_EditTag";
-
+                   //
                    ViewBag.tag = tag;
                    return View();
                }
@@ -102,6 +108,7 @@ namespace Bros.Controllers
        }
 
         [HttpPost]
+        //[Authorize(Roles = "Admin, StoreAdmin")]
         public ActionResult AddTag()
         {
             using (var context = new ModelFirstContainer())
@@ -113,6 +120,7 @@ namespace Bros.Controllers
             return View();
         }
 
+        //[Authorize(Roles = "Admin, StoreAdmin")]
         public ActionResult EditTag(Tag t)
         {
             if (t != null)
@@ -132,7 +140,8 @@ namespace Bros.Controllers
         {
             return View();
         }
-       
+
+        [Authorize(Roles = "Admin, StoreAdmin")]
         public ActionResult LoadProductCreation()
         {
             using (ModelFirstContainer context = new ModelFirstContainer())
@@ -144,6 +153,7 @@ namespace Bros.Controllers
         }
 
         [HttpPost]
+        //[Authorize(Roles = "Admin, StoreAdmin")]
         public ActionResult CreateProduct(Product product, HttpPostedFileBase ImageFile)
         {
             using (var ms = new MemoryStream())
@@ -195,6 +205,7 @@ namespace Bros.Controllers
             return result;
         }
 
+        //[Authorize(Roles = "Admin, StoreAdmin")]
         public ActionResult DeleteProductById(int productId)
         {
             using (ModelFirstContainer context = new ModelFirstContainer())
@@ -247,6 +258,7 @@ namespace Bros.Controllers
             return View("ViewProduct", product);
         }
 
+        //[Authorize(Roles = "Admin, StoreAdmin")]
         public ActionResult EditProduct(int productID)
         {
             Product targetProduct;
@@ -261,9 +273,55 @@ namespace Bros.Controllers
         }
 
         [HttpPost]
-        public ActionResult EditProduct(Product product)
+        //[Authorize(Roles = "Admin, StoreAdmin")]
+        public ActionResult EditProduct(Product product, HttpPostedFileBase ImageFile)
         {
-            return View();
+            ActionResult result;
+
+            if (ImageFile != null)
+            {
+                using (var ms = new MemoryStream())
+                {
+                    ImageFile.InputStream.CopyTo(ms);
+                    product.Image = ms.ToArray();
+                }
+            }
+
+            int categoryId = Int32.Parse(Request["Category"]);
+
+            if (product.Name != null && product.Price > 0 && Request["Category"] != null)
+            {
+                int productId;
+                //Category tempCat = null;
+                using (ModelFirstContainer context = new ModelFirstContainer())
+                {
+
+                    Product target = context.Products.SingleOrDefault(x => x.Id == product.Id);
+
+                    if (target != null)
+                    {
+                        context.Entry(target).CurrentValues.SetValues(product);
+                        target.Category = context.Categories.Single(x => x.Id == categoryId);
+                    }
+
+                    context.SaveChanges();
+                    //tempCat.Products.Add(p);
+
+                    // context.SaveChanges();
+
+                    result = View("ViewProduct", target);
+                }
+            }
+            else
+            {
+                using (ModelFirstContainer context = new ModelFirstContainer())
+                {
+                    ViewBag.Categories = context.Categories.Select(c => new { Id = c.Id, Name = c.Name }).ToList();
+                    result = View();
+                }
+            }
+
+            return result;
         }
 
         public ActionResult AddProductToCart(int productID)

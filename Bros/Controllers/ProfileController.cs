@@ -1,11 +1,14 @@
 ﻿using Bros.DataModel;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity.Validation;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
 using WebMatrix.WebData;
 
 namespace Bros.Controllers
@@ -329,7 +332,8 @@ namespace Bros.Controllers
 
                 if (post != null)
                 {
-                    User user = GetSessionUser();
+                    int userId = GetSessionInt();
+                    User user = context.Users.FirstOrDefault(u => u.Id == userId);
                     Comment comment = new Comment() { Content = Request["comment"], Owner = user, ParentPost = post, DateCreated = DateTime.Now };
 
                     user.Comments.Add(comment);
@@ -350,8 +354,15 @@ namespace Bros.Controllers
         [HttpGet]
         public ActionResult EditProfile()
         {
-                User user = GetSessionUser();
-                return View("ProfileAttribute", user.Profile);
+            User thisUser = new User();
+            using (var context = new ModelFirstContainer())
+            {
+                int userId = WebSecurity.CurrentUserId;
+                    thisUser = context.Users.Include("Profile").FirstOrDefault(u => u.Id == userId);
+
+
+            }
+                return View("ProfileAttribute", thisUser.Profile);
             
         }
 
@@ -367,7 +378,7 @@ namespace Bros.Controllers
                 if (ModelState.IsValid)
                     using (ModelFirstContainer context = new ModelFirstContainer())
                     {
-                        User user = GetSessionUser();
+                        User user = context.Users.FirstOrDefault(u => u.Id == GetSessionInt());
                         user.Profile.Athleticism = prof.Athleticism;
                         user.Profile.Children = prof.Children;
                         user.Profile.Drinks = prof.Drinks;
@@ -460,15 +471,173 @@ namespace Bros.Controllers
         [Authorize]
         public ActionResult ManageAlbums()
         {
-            ICollection<Album> albumList = new List<Album>();
+            List<Album> albumList = new List<Album>();
             using(var context = new ModelFirstContainer()){
                 int id = GetSessionInt();
                 User user = context.Users.Include("Albums.Photos").FirstOrDefault(u => u.Id == id);
-                albumList = user.Albums;
+                albumList = user.Albums.ToList();
+            }
+            return View(albumList);
+        }
+
+        [Authorize]
+        public ActionResult PhotoGallery(int id)
+        {
+            Album album = new Album();
+            using(var context  = new ModelFirstContainer()){
+                album = context.Albums.Include("Photos.Comments").FirstOrDefault(a => a.Id == id);
+                ViewBag.AlbumId = album.Id;
+            }
+            return View(album.Photos.ToList());
+        }
+
+        [Authorize]
+        [HttpGet]
+        public ActionResult AddPhoto(int albumId)
+        {
+            ViewBag.AlbumId = albumId;
+            using(var context = new ModelFirstContainer()){
+                Album album = context.Albums.Include("Owner").FirstOrDefault(u =>u.Id == albumId);
+                int id = album.Owner.Id;
+                ViewBag.UserId = id;
+            }
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult AddPhoto([Bind(Exclude = "ImageData")]Photo photo, HttpPostedFileBase img, int id, int AlbumId)
+        {
+
+            
+             byte[] data = null;
+            if (img != null && img.ContentLength > 0)
+            {
+                MemoryStream target = new MemoryStream();
+                img.InputStream.CopyTo(target);
+                data = target.ToArray();
+            }
+            else
+            {
+                throw new Exception("derpp");
             }
 
-            ViewBag.Albums = albumList;
+            using(var context = new ModelFirstContainer()){
+
+                User user = context.Users.FirstOrDefault(u=> u.Id == id);
+                Photo photo2 = new Photo()
+                {
+                    Caption = photo.Caption,
+                    DateCreated = DateTime.Now,
+                    DateUpdated = DateTime.Now,
+                    ImageData = data,
+                    AlbumId = AlbumId,
+                    Author = user,
+                    IsDeleted = false,
+                    IsFlagged = false
+ 
+                };
+
+                context.Posts.Add(photo2);
+                context.SaveChanges();
+            }
+            return RedirectToAction("PhotoGallery", "Profile", new { id = photo.AlbumId});
+        }
+
+        public ActionResult RemovePhoto(int id, int albumId)
+        {
+            using(var context = new ModelFirstContainer()){
+                //Album album = context.Albums.FirstOrDefault(a =>a.Id == albumId);
+                Photo photo = context.Posts.Include("Comments").Where(x => x is Bros.DataModel.Photo).Select(p => p as Bros.DataModel.Photo).FirstOrDefault(u => u.Id == id);
+
+                if(photo.Comments.Count != 0){
+                    //I need to cascade delete with photo & comments Get Felix's code for this
+                }
+                    
+                context.Posts.Remove(photo);
+                context.SaveChanges();
+            }
+
+            return RedirectToAction("PhotoGallery", "Profile", albumId);
+        }
+
+        public ActionResult SinglePhotoComment(int id)
+        {
+            Photo photo = new Photo();
+            using(var context = new ModelFirstContainer()){
+                photo = context.Posts.Include("Comments.Owner.Profile").Where(x => x is Bros.DataModel.Photo).Select(p => p as Bros.DataModel.Photo).FirstOrDefault(u => u.Id == id);
+            }
+
+            return View("PhotoComments", photo);
+        }
+
+        [Authorize]
+        [HttpGet]
+        public ActionResult CreateAlbum()
+        {
+
             return View();
+        }
+
+        [Authorize]
+        [HttpPost]
+        public ActionResult CreateAlbum(Album album)
+        {
+
+            int userId = GetSessionInt();
+            using(var context = new ModelFirstContainer()){
+                            
+                User own = context.Users.FirstOrDefault(u => u.Id == userId);
+                Album al = new Album()
+                {
+                    Title = album.Title,
+                    UserId = GetSessionInt(),
+                    DateCreated = DateTime.Now,
+                    IsDeleted = false,
+                    Owner = own
+                    
+                };
+
+                context.Albums.Add(al);
+                try
+                {
+                    if (album.Title.ToLower().Equals("default picture")) throw new DbEntityValidationException();
+                    context.SaveChanges();
+                }
+                catch (DbEntityValidationException e)
+                {
+                    ViewBag.ErrorMessage = "Cannot be named 'Default Picture'.";
+                    return View();
+                }
+            }
+            return RedirectToAction("ManageAlbums", "Profile");
+        }
+
+        public ActionResult DeleteAlbum(int id)
+        {
+            using(var context = new ModelFirstContainer()){
+                int userId = GetSessionInt();
+                User owner = context.Users.FirstOrDefault(u => u.Id == userId);
+                Album album = context.Albums.Include("Photos").FirstOrDefault(a => a.Id == id);
+                
+                album.Owner = owner;
+                if (album.Photos.Count != 0){
+                    foreach(Photo x in album.Photos.ToList()){
+                        Photo photo = context.Posts.Include("Comments").Where(p => p is Bros.DataModel.Photo).Select(p => p as Bros.DataModel.Photo).FirstOrDefault(u => u.Id == x.Id);
+
+                        if (photo.Comments.Count != 0)
+                        {
+                            foreach(Comment y in x.Comments.ToList()){
+                                context.Comments.Remove(y);
+                            }
+                        }
+                        context.Posts.Remove(photo);
+                    }
+                }
+
+                context.Albums.Remove(album); 
+                context.SaveChanges();
+            }
+            return RedirectToAction("ManageAlbums", "Profile");
         }
 
         public int GetSessionInt()
@@ -486,64 +655,51 @@ namespace Bros.Controllers
             return id;
         }
 
-        public User GetSessionUser()
-        {
-            User thisUser = new User();
-            using (var context = new ModelFirstContainer())
-            {
-                int userId = 0;
-                if (Session["UserId"] != null)
-                {
-                    userId = ((int)Session["UserId"]);
-                    thisUser = context.Users.FirstOrDefault(u => u.Id == userId);
-                   
-                } 
-                
-            }
-            return thisUser;
-        }
-
         public void CreateDefaultAlbum_And_DefaultProfilePhoto(User user, ModelFirstContainer context)
         {
 
-            var imagePath = Server.MapPath("~/Content/Images/defaultPic.jpg");
-                        Image img = Image.FromFile(imagePath);
-                        byte[] arr;
-              using (MemoryStream ms = new MemoryStream())
-                        {
-                            img.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
-                            arr = ms.ToArray();
+            Album defaultAlbum = context.Albums.FirstOrDefault(a => a.Title == "Default Picture");
+            if (defaultAlbum == null)
+            {
+                var imagePath = Server.MapPath("~/Content/Images/defaultPic.jpg");
+                Image img = Image.FromFile(imagePath);
+                byte[] arr;
+                using (MemoryStream ms = new MemoryStream())
+                {
+                    img.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
+                    arr = ms.ToArray();
 
-                        }
+                }
 
-                        ICollection<Photo> photoAlbum = new List<Photo>();
-                        Album album = new Album()
-                        {
-                            Owner = user,
-                            Title = "Default Picture",
-                            DateCreated = DateTime.Today,
-                            Photos = photoAlbum
-                        };
-                        context.Albums.Add(album);
-                        context.SaveChanges();
+                ICollection<Photo> photoAlbum = new List<Photo>();
+                Album album = new Album()
+                {
+                    Owner = user,
+                    Title = "Default Picture",
+                    DateCreated = DateTime.Today,
+                    Photos = photoAlbum
+                };
+                context.Albums.Add(album);
+                context.SaveChanges();
 
-                        Photo defaultPhoto = new Photo()
-                        {
-                            ImageData = arr,
-                            DateCreated = DateTime.Today,
-                            DateUpdated = DateTime.Today,
-                            Caption = "Default",
-                            IsDeleted = true,
-                            Author = user,
-                            ProfilePhotoOf = user.Profile,
-                            Album = album
+                Photo defaultPhoto = new Photo()
+                {
+                    ImageData = arr,
+                    DateCreated = DateTime.Today,
+                    DateUpdated = DateTime.Today,
+                    Caption = "Default",
+                    IsDeleted = true,
+                    Author = user,
+                    ProfilePhotoOf = user.Profile,
+                    Album = album
 
-                        };
-                        context.Posts.Add(defaultPhoto);
-                        context.SaveChanges();
+                };
+                context.Posts.Add(defaultPhoto);
+                context.SaveChanges();
 
-                        context.Dispose();
-              }
+                context.Dispose();
+            }
+        }
         
 
     }
