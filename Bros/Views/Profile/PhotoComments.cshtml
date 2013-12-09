@@ -1,0 +1,22 @@
+﻿@model Bros.DataModel.Photo
+
+@{
+    Bros.DataModel.Post post = new Bros.DataModel.Post();
+using(var context = new Bros.DataModel.ModelFirstContainer()){
+    post = context.Posts.Include("Comments.Owner.Profile").Include("Author.Profile").FirstOrDefault(p => p.Id == Model.Id);
+}
+}
+
+@{
+    var base64 = "";
+
+    base64 = Convert.ToBase64String(Model.ImageData);
+
+     
+    var imgSrc = String.Format("data:image/jpg;base64,{0}", base64);
+}
+
+<img src=@imgSrc />
+
+
+@Html.Partial("_CommentFeed", post)

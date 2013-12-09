@@ -1,15 +1,21 @@
-﻿@{
+﻿@model List<Bros.DataModel.Album>
+@{
     Layout = "~/Views/Layouts/_ProfileLayout.cshtml";
     ViewBag.Title = "ManageAlbums";
 }
 
-<h2>Manage Albums</h2>
-
 <div class="album-gallery">
 
-    @foreach(Bros.DataModel.Album single in ViewBag.Albums){
 
-        Html.ActionLink("" + single.Title, "ManageAlbums", "Profile");
+    @Html.ActionLink("Create New Album", "CreateAlbum", "Profile");
+    @Model.Count
+
+
+    @foreach(Bros.DataModel.Album single in Model){
+        
+        @Html.ActionLink(single.Title, "PhotoGallery", "Profile", new { id = single.Id }, false)
+        @Html.ActionLink("Remove album", "DeleteAlbum", "Profile", new { id=single.Id}, false)
+        <p></p>
         //Html.Partial("~/Views/Profile/_AlbumSingle.cshtml", single);
     }
 
