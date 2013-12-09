@@ -138,7 +138,8 @@ namespace Bros.Controllers
                 try
                 {
                     string data = WebSecurity.CreateUserAndAccount(model.Email, model.Password, new { dateCreated = DateTime.Now, isbanned = false, isdeleted = false });
-                    //WebSecurity.Login(model.Email, model.Password);
+					Roles.AddUserToRole(model.Email, "User");
+					//WebSecurity.Login(model.Email, model.Password);
                 }
                 catch (MembershipCreateUserException e)
                 {

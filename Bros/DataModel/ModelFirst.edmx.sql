@@ -2,13 +2,13 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, and Azure
 -- --------------------------------------------------
--- Date Created: 12/06/2013 16:02:18
+-- Date Created: 12/08/2013 01:55:36
 -- Generated from EDMX file: C:\Users\Felix\Documents\GitHub\bromance\Bros\DataModel\ModelFirst.edmx
 -- --------------------------------------------------
 
 SET QUOTED_IDENTIFIER OFF;
 GO
-USE [bromance_DB];
+USE [bromance];
 GO
 IF SCHEMA_ID(N'dbo') IS NULL EXECUTE(N'CREATE SCHEMA [dbo]');
 GO
@@ -244,7 +244,7 @@ CREATE TABLE [dbo].[Posts] (
     [Id] int IDENTITY(1,1) NOT NULL,
     [IsFlagged] bit  NOT NULL,
     [DateCreated] datetime  NOT NULL,
-    [DateUpdated] datetime  NOT NULL,
+    [DateUpdated] datetime  NULL,
     [UserId] int  NOT NULL,
     [IsDeleted] bit  NOT NULL
 );
@@ -292,7 +292,7 @@ CREATE TABLE [dbo].[Messages] (
     [Id] int IDENTITY(1,1) NOT NULL,
     [Content] nvarchar(max)  NOT NULL,
     [DateSent] datetime  NOT NULL,
-    [DateRead] datetime  NOT NULL,
+    [DateRead] datetime  NULL,
     [UserId] int  NOT NULL,
     [UserId1] int  NOT NULL
 );

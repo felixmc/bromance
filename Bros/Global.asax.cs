@@ -21,9 +21,10 @@ namespace Bros
             AreaRegistration.RegisterAllAreas();
 
             string[] roles = {
+				"User",
                 "Admin",
                 "StoreAdmin"
-                             };
+			};
 
             var roleProvider = (SimpleRoleProvider)Roles.Provider;
             foreach (string role in roles)
