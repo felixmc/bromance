@@ -1,0 +1,11 @@
+﻿@using Bros.DataModel;
+@{
+    ViewBag.Title = "LoadTags";
+}
+
+@foreach (Tag t in ViewBag.Tags)
+{
+    Html.RenderPartial("_EditTag", t);
+}
+
+}

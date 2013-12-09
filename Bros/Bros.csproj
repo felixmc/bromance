@@ -272,6 +272,8 @@
     <Content Include="Views\Messaging\_SendMessageTo.cshtml" />
     <Content Include="Views\Messaging\_SingleMessagePartialView.cshtml" />
     <Content Include="Views\Search\SearchResults.cshtml" />
+    <Content Include="Views\Store\LoadTags.cshtml" />
+    <Content Include="Views\Store\_EditTag.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -427,10 +429,19 @@
     <Content Include="Views\Store\_AddTag.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Store\_EditCategory.cshtml" />
+    <Content Include="Views\Store\EditProduct.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Store\EditProduct.cshtml" />
+    <Content Include="Views\Store\_EditCatagory.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Store\HandleCategory.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Store\LoadCategorys.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Store\HandleTag.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

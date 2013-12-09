@@ -29,10 +29,45 @@ namespace Bros.Controllers
                 context.Categories.Add(cat);
                 context.SaveChanges();
             }
+            return RedirectToAction("LoadProductCreation");
+        }
+
+        public ActionResult LoadCategorys()
+        {
+            using (var context = new ModelFirstContainer())
+            {
+                List<Category> cats = context.Categories.ToList();
+                ViewBag.Category = cats;
+            }
             return View();
         }
 
-        //[Authorize(Roles = "Admin, StoreAdmin")]
+
+        public ActionResult HandleCategory(string catId)
+        {
+            if (catId == null)
+            {
+                ViewBag.partialView = "_AddCategory";
+                return View();
+            }
+
+            else
+            {
+                using (var context = new ModelFirstContainer())
+                {
+                    int categoryId = Int32.Parse(catId);
+                    Category cat = context.Categories.Single(x => x.Id == categoryId);
+                    ViewBag.partialView = "_EditCategory";
+
+                    ViewBag.cat = cat;
+                    return View();
+                }
+            }
+
+        }
+       [HttpPost]
+         //[Authorize(Roles = "Admin, StoreAdmin")]
+
         public ActionResult EditCategory()
         {
            
@@ -43,10 +78,42 @@ namespace Bros.Controllers
                     cat.Name = Request["name"];
                     context.SaveChanges();
                 }
-            
-            return View();
+
+                return RedirectToAction("LoadCategorys");
 
         }
+       public ActionResult LoadTags()
+       {
+           using (var context = new ModelFirstContainer())
+           {
+               List<Tag> tags = context.Tags.ToList();
+               ViewBag.Category = tags;
+           }
+           return View();
+       }
+
+       public ActionResult HandleTag(string tagId)
+       {
+           if (tagId == null)
+           {
+               ViewBag.partialView = "_AddTag";
+               return View();
+           }
+
+           else
+           {
+               using (var context = new ModelFirstContainer())
+               {
+                   int tId = Int32.Parse(tagId);
+                   Category tag = context.Categories.Single(x => x.Id == tId);
+                   ViewBag.partialView = "_EditTag";
+                   //
+                   ViewBag.tag = tag;
+                   return View();
+               }
+           }
+
+       }
 
         [HttpPost]
         //[Authorize(Roles = "Admin, StoreAdmin")]
@@ -74,7 +141,7 @@ namespace Bros.Controllers
                     context.SaveChanges();
                 }
             }
-            return View();
+            return RedirectToAction("LoadTags");
 
         }
         public ActionResult ViewProductsInCategory()
