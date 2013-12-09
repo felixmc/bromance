@@ -42,8 +42,7 @@ namespace Bros.Controllers
             return View();
         }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
+
         public ActionResult HandleCategory(string catId)
         {
             if (catId == null)
@@ -67,12 +66,8 @@ namespace Bros.Controllers
 
         }
        [HttpPost]
-=======
-        //[Authorize(Roles = "Admin, StoreAdmin")]
->>>>>>> 464884bcd760a9001a6466ff446cbfcc6edb42b5
-=======
-        //[Authorize(Roles = "Admin, StoreAdmin")]
->>>>>>> 464884bcd760a9001a6466ff446cbfcc6edb42b5
+         //[Authorize(Roles = "Admin, StoreAdmin")]
+
         public ActionResult EditCategory()
         {
            
@@ -87,6 +82,15 @@ namespace Bros.Controllers
                 return RedirectToAction("LoadCategorys");
 
         }
+       public ActionResult LoadTags()
+       {
+           using (var context = new ModelFirstContainer())
+           {
+               List<Tag> tags = context.Tags.ToList();
+               ViewBag.Category = tags;
+           }
+           return View();
+       }
 
        public ActionResult HandleTag(string tagId)
        {
@@ -137,7 +141,7 @@ namespace Bros.Controllers
                     context.SaveChanges();
                 }
             }
-            return View();
+            return RedirectToAction("LoadTags");
 
         }
         public ActionResult ViewProductsInCategory()
