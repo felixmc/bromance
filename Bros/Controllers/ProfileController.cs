@@ -209,6 +209,20 @@ namespace Bros.Controllers
             return View();
         }
 
+        public void RemoveBro(int targetBroId)
+        {
+            using (ModelFirstContainer context = new ModelFirstContainer())
+            {
+                int userId = WebSecurity.CurrentUserId;
+                User user = context.Users.SingleOrDefault(x => x.Id == userId);
+
+                User targetUser = context.Users.SingleOrDefault(x => x.Id == targetBroId);
+
+                RemoveBroFromCircle("MyBros", user, targetUser);
+                RemoveBroFromCircle("MyBros", targetUser, user);
+            }
+        }
+
         public void AcceptRequest(BroRequest request)
         {
             using (ModelFirstContainer context = new ModelFirstContainer())
@@ -226,6 +240,15 @@ namespace Bros.Controllers
             if (!targetCircle.Members.Contains(broAdded))
             {
                 targetCircle.Members.Add(broAdded);
+            }
+        }
+
+        public void RemoveBroFromCircle(string circleName, User circleOwner, User broRemoved)
+        {
+            Circle targetCircle = GetCircleByName(circleOwner, circleName);
+            if (targetCircle.Members.Contains(broRemoved))
+            {
+                targetCircle.Members.Remove(broRemoved);
             }
         }
 
