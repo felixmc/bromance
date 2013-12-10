@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using WebMatrix.WebData;
 
 namespace Bros.Controllers
 {
@@ -67,8 +68,6 @@ namespace Bros.Controllers
 
         //[Authorize(Roles = "Admin, StoreAdmin")]
        [HttpPost]
-         //[Authorize(Roles = "Admin, StoreAdmin")]
-
         public ActionResult EditCategory()
         {
            
@@ -156,6 +155,7 @@ namespace Bros.Controllers
             using (ModelFirstContainer context = new ModelFirstContainer())
             {
                 ViewBag.Categories = context.Categories.Select(c => new { Id = c.Id, Name = c.Name }).ToList();
+                //ViewBag.Tags = context.Categories.Select(c => new { Id = c.Id, Name = c.Name }).ToList();
             }
 
             return View("CreateProduct");
@@ -207,6 +207,7 @@ namespace Bros.Controllers
                 using (ModelFirstContainer context = new ModelFirstContainer())
                 {
                     ViewBag.Categories = context.Categories.Select(c => new { Id = c.Id, Name = c.Name }).ToList();
+                    //ViewBag.Tags = context.Categories.Select(c => new { Id = c.Id, Name = c.Name }).ToList();
                     result = View();
                 }
             }
@@ -220,11 +221,11 @@ namespace Bros.Controllers
             using (ModelFirstContainer context = new ModelFirstContainer())
             {
                 context.Products.FirstOrDefault(x => x.Id == productId).IsDeleted = true;
+
                 context.SaveChanges();
 
                 ViewBag.Products = context.Products.Include("Tags").Include("Category").Where(x => !x.IsDeleted).ToList();
             }
-
 
             return View("StoreIndex");
         }
@@ -337,7 +338,7 @@ namespace Bros.Controllers
         {
             using (ModelFirstContainer context = new ModelFirstContainer()){
 
-                int userId = (int)Session["UserId"];
+                int userId = WebSecurity.CurrentUserId;
 
                 User user = context.Users.SingleOrDefault(x => x.Id == userId);
 
@@ -353,7 +354,20 @@ namespace Bros.Controllers
 
         public ActionResult RemoveProductFromCart(int productID)
         {
-            return View();
+            using (ModelFirstContainer context = new ModelFirstContainer())
+            {
+                int userId = WebSecurity.CurrentUserId;
+
+                User user = context.Users.SingleOrDefault(x => x.Id == userId);
+
+                Product product = context.Products.SingleOrDefault(x => x.Id == productID);
+
+                user.ShoppingCart.Products.Remove(product);
+
+                context.SaveChanges();
+            }
+
+            return RedirectToAction("StoreIndex");
         }
 
         public ActionResult ViewCart()

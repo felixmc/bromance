@@ -18,9 +18,7 @@ namespace Bros.Controllers
         public ActionResult MessageHome()
         {
 
-            if (Session["UserId"] != null)
-            {
-                int id = (int)Session["UserId"];
+                int id = WebSecurity.CurrentUserId;
                 List<Message> allMessages;
                 using (var context = new ModelFirstContainer())
                 {
@@ -41,12 +39,6 @@ namespace Bros.Controllers
                     ViewBag.UserConversations = userList;
                 }
                 return View("MessageHome", allMessages);
-            }
-            else
-            {
-                throw new Exception("Session not found, or not logged in.");
-                
-            }
         }
 
         public ActionResult LoadMessage(int id)
