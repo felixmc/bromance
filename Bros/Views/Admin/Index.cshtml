@@ -16,6 +16,13 @@
         <input type="submit" />
     }
 </p>
+<p>
+    @using (Html.BeginForm("PromoteUserByUsername", "Admin"))
+    {
+        <span>Promote User</span>@Html.TextBox("promote")<br /> 
+        <input type="submit" />
+    }
+</p>
 @if (Session["AdminError"] != null)
 {
     <p>

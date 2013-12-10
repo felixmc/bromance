@@ -42,10 +42,6 @@ namespace Bros.Controllers
             return View();
         }
 
-<<<<<<< HEAD
-=======
-
->>>>>>> 0311d3aee99e36f49f9671d4d9d226b7b573bb67
         public ActionResult HandleCategory(string catId)
         {
             if (catId == null)
@@ -68,14 +64,11 @@ namespace Bros.Controllers
             }
 
         }
-<<<<<<< HEAD
 
         //[Authorize(Roles = "Admin, StoreAdmin")]
-=======
        [HttpPost]
          //[Authorize(Roles = "Admin, StoreAdmin")]
 
->>>>>>> 0311d3aee99e36f49f9671d4d9d226b7b573bb67
         public ActionResult EditCategory()
         {
            
