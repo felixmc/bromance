@@ -1,2 +1,71 @@
 ﻿body {
+    font-family: Arial;
 }
+
+header {
+    background-color: #65754E;
+    color: #FFFFFF;
+    width: 100%;
+    padding: 10px;
+    border: 4px solid #65754E;
+    border-radius:0 0 20px 20px;
+}
+
+.mainNav {
+    padding-right: 50px;
+    text-align: right;    
+}
+
+ul {
+    list-style-type: none;
+}
+
+a {
+    text-decoration: none;
+    font-size: 2em;     
+}
+
+li a:hover {
+    color: #A4B799
+}
+
+a:visited {
+    color: #ffffff;
+}
+
+.registerNow a {
+    color: #4B5554;
+}
+
+.registerNow a:hover {
+    color: #65754E;
+}
+
+.content {
+    padding-left: 50px;  
+}
+
+footer {
+    background-color: #65754E;
+    position:fixed;
+    left:0;
+    bottom:0;
+    height:auto;
+    width:100%;
+    border: 4px solid #65754E;
+    border-radius: 20px 20px 0 0;
+}
+
+footer li:last-of-type {
+    padding-right: 47px;
+    text-align: right;
+    color: #FFF;
+}
+
+/*
+    #4B5554 //Grayish
+    #A4B799 //Mintish
+    #65754E //Greenish
+    #FFFFFF //Whiteish
+    #000000 //Blackish
+*/

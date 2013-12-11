@@ -61,7 +61,6 @@
             </aside>
 
             <div class="content">
-                <h2>@ViewBag.Title</h2>               
                 <div class="content-main">
                     @RenderBody()
                 </div>
@@ -74,10 +73,10 @@
             <footer>
                 <div class="footerNav">
                         <ul>
-                            <li>&copy; Bromance, 2013</li>
                             <li>@Html.ActionLink("About", "AboutUs", "Home")</li>
                             <li>@Html.ActionLink("Legal", "TermsOfUse", "Home")</li>   
-                            <li>@Html.ActionLink("BroCode", "BroCode", "Home")</li>    
+                            <li>@Html.ActionLink("BroCode", "BroCode", "Home")</li>
+                            <li>&copy; Bromance, 2013</li>    
                         </ul>
                     </div>   
             </footer>
