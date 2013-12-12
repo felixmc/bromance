@@ -4,6 +4,10 @@
 
 @Html.Partial("~/Views/Layouts/_StoreLayout.cshtml")
 
+@section css{
+    <link href="~/Content/Styles/default.css" rel="stylesheet"/>
+}
+
 @{
     if (ViewBag.Products != null)
     {
