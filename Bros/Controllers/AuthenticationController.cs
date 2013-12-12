@@ -219,26 +219,13 @@ namespace Bros.Controllers
                 Album album = new Album()
                 {
                     Owner = newUser,
-                    Title = "Default Picture",
+                    Title = "Profile Pictures",
                     DateCreated = DateTime.Today,
                     Photos = photoAlbum
                 };
                 context.Albums.Add(album);
                 context.SaveChanges();
 
-                Photo defaultPhoto = new Photo()
-                {
-                    ImageData = arr,
-                    DateCreated = DateTime.Today,
-                    DateUpdated = DateTime.Today,
-                    Caption = "Default",
-                    IsDeleted = true,
-                    Author = newUser,
-                    ProfilePhotoOf = prof,
-                    Album = album
-                    
-                };
-                context.Posts.Add(defaultPhoto);
                 context.SaveChanges();
 
 

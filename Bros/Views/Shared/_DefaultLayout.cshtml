@@ -4,7 +4,7 @@
     <head>
         <meta name="viewport" content="width=device-width" />
         <title>@ViewBag.Title</title>
-@*        <link href="~/Content/default.css" rel="stylesheet" type="text/css"/>*@
+        @RenderSection("css", required: false)
     </head>
     <body>
         <div class="container">
@@ -13,11 +13,12 @@
                     <ul>
                         @if (Session["UserId"] != null)
                         {
-                            int userId = ((int)Session["UserId"]);
+                            int userId = WebSecurity.CurrentUserId;
                             <li>@Html.ActionLink("Home", "Feed","Profile")</li>
-							<li>@Html.ActionLink("Notifications","Notifications","Profile")</li>
+                            <li>@Html.ActionLink("Notifications","Notifications","Profile")</li>
                             <li>@Html.ActionLink("Messages","MessageHome","Messaging")</li>
-							<li>@Html.ActionLink("Chat","Chat","Messaging")</li>
+                            <li>@Html.ActionLink("Settings", "Settings", "Profile", new {id = userId}, false)</li>
+                            <li>@Html.ActionLink("Chat","Chat","Messaging")</li>
                             <li>@Html.ActionLink("Store", "StoreIndex", "Store")</li>
                             <li>@Html.ActionLink("Browse Bros", "ViewBros", "Profile")</li>
                             <li>@Html.ActionLink("View My Profile", "MyProfile", "Profile", new {id = userId}, false)</li>
@@ -30,10 +31,14 @@
                         }
                      
                     </ul>
-                    @using (Html.BeginForm("ByUserName", "Search"))
+                    @if (WebSecurity.IsAuthenticated)
                     {
-                        @Html.TextBox("searchParam");
-                        <input type="submit"/>
+                        using (Html.BeginForm("ByUserName", "Search"))
+                         {
+                             @Html.TextBox("searchParam")
+                             ;
+                             <input type="submit" value="Search for Bros"/>
+                         }
                     }
                 </nav>   
                 
@@ -56,7 +61,6 @@
             </aside>
 
             <div class="content">
-                <h2>@ViewBag.Title</h2>               
                 <div class="content-main">
                     @RenderBody()
                 </div>
@@ -69,10 +73,10 @@
             <footer>
                 <div class="footerNav">
                         <ul>
-                            <li>&copy; Bromance, 2013</li>
                             <li>@Html.ActionLink("About", "AboutUs", "Home")</li>
                             <li>@Html.ActionLink("Legal", "TermsOfUse", "Home")</li>   
-                            <li>@Html.ActionLink("BroCode", "BroCode", "Home")</li>    
+                            <li>@Html.ActionLink("BroCode", "BroCode", "Home")</li>
+                            <li>&copy; Bromance, 2013</li>    
                         </ul>
                     </div>   
             </footer>

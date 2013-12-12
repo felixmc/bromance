@@ -15,8 +15,14 @@
         if(ViewBag.Categories != null){
             <span class="ProductCategory">Category: @Html.DropDownListFor(x => x.Category, new SelectList(ViewBag.Categories, "Id", "Name"))</span>
         }
-        @Html.ActionLink("Add a Category", "GarbageView", "Home")
-        @Html.ActionLink("Edit a Category", "GarbageView", "Home")
+        @Html.ActionLink("Add Category", "HandleCategory", "Store")
+        @Html.ActionLink("Edit Category", "LoadCategorys", "Store")
+        @Html.ActionLink("Edit Tags", "LoadTags", "Store")
+        @Html.ActionLink("Add Tags", "HandleTag", "Store")
+    @Html.ActionLink("Cart", "ViewCart", "Store")
+
+
         <input type="submit" value="Create Product" />
     }
+
 </div>

@@ -5,10 +5,11 @@
 
 @section SecondaryNavigation{
     @Html.ActionLink("Browse", "StoreIndex", "Store")
-    @Html.ActionLink("Cart", "StoreIndex", "Store")
+    @Html.ActionLink("Cart", "ViewCart", "Store")
     @using(Html.BeginForm()){
     @Html.TextBox("SearchParameter")
     
     }
+    
     
 }

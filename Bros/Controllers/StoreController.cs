@@ -5,9 +5,11 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using WebMatrix.WebData;
 
 namespace Bros.Controllers
 {
+    //[Authorize(Roles = "Admin, User, StoreAdmin")]
     public class StoreController : Controller
     {
         //
@@ -19,6 +21,7 @@ namespace Bros.Controllers
         }
         
         [HttpPost]
+        //[Authorize(Roles="Admin, StoreAdmin")]
         public ActionResult AddCategory()
         {
             using (var context = new ModelFirstContainer())
@@ -27,9 +30,50 @@ namespace Bros.Controllers
                 context.Categories.Add(cat);
                 context.SaveChanges();
             }
+            return RedirectToAction("LoadProductCreation");
+        }
+
+        public ActionResult LoadCategorys()
+        {
+            using (var context = new ModelFirstContainer())
+            {
+                List<Category> cats = context.Categories.ToList();
+                ViewBag.Category = cats;
+            }
             return View();
         }
-       
+
+
+        public ActionResult HandleCategory(string catId)
+        {
+            if (catId == null)
+            {
+                ViewBag.partialView = "_AddCategory";
+                return View();
+            }
+
+            else
+            {
+                using (var context = new ModelFirstContainer())
+                {
+                    int categoryId = Int32.Parse(catId);
+                    Category cat = context.Categories.Single(x => x.Id == categoryId);
+                    ViewBag.partialView = "_EditCategory";
+
+                    ViewBag.cat = cat;
+                    return View();
+                }
+            }
+
+        }
+
+     
+
+
+
+        //[Authorize(Roles = "Admin, StoreAdmin")]
+  
+       [HttpPost]
         public ActionResult EditCategory()
         {
            
@@ -40,12 +84,45 @@ namespace Bros.Controllers
                     cat.Name = Request["name"];
                     context.SaveChanges();
                 }
-            
-            return View();
+
+                return RedirectToAction("LoadCategorys");
 
         }
+       public ActionResult LoadTags()
+       {
+           using (var context = new ModelFirstContainer())
+           {
+               List<Tag> tags = context.Tags.ToList();
+               ViewBag.Tags = tags;
+           }
+           return View();
+       }
+
+       public ActionResult HandleTag(string tagId)
+       {
+           if (tagId == null)
+           {
+               ViewBag.partialView = "_AddTag";
+               return View();
+           }
+
+           else
+           {
+               using (var context = new ModelFirstContainer())
+               {
+                   int tId = Int32.Parse(tagId);
+                   Category tag = context.Categories.Single(x => x.Id == tId);
+                   ViewBag.partialView = "_EditTag";
+                   //
+                   ViewBag.tag = tag;
+                   return View();
+               }
+           }
+
+       }
 
         [HttpPost]
+        //[Authorize(Roles = "Admin, StoreAdmin")]
         public ActionResult AddTag()
         {
             using (var context = new ModelFirstContainer())
@@ -54,9 +131,10 @@ namespace Bros.Controllers
                 context.Tags.Add(tag);
                 context.SaveChanges();
             }
-            return View();
+            return RedirectToAction("LoadTags");
         }
 
+        //[Authorize(Roles = "Admin, StoreAdmin")]
         public ActionResult EditTag(Tag t)
         {
             if (t != null)
@@ -69,25 +147,28 @@ namespace Bros.Controllers
                     context.SaveChanges();
                 }
             }
-            return View();
+            return RedirectToAction("LoadTags");
 
         }
         public ActionResult ViewProductsInCategory()
         {
             return View();
         }
-       
+
+      //  [Authorize(Roles = "Admin, StoreAdmin")]
         public ActionResult LoadProductCreation()
         {
             using (ModelFirstContainer context = new ModelFirstContainer())
             {
                 ViewBag.Categories = context.Categories.Select(c => new { Id = c.Id, Name = c.Name }).ToList();
+                //ViewBag.Tags = context.Categories.Select(c => new { Id = c.Id, Name = c.Name }).ToList();
             }
 
             return View("CreateProduct");
         }
 
         [HttpPost]
+        //[Authorize(Roles = "Admin, StoreAdmin")]
         public ActionResult CreateProduct(Product product, HttpPostedFileBase ImageFile)
         {
             using (var ms = new MemoryStream())
@@ -132,6 +213,7 @@ namespace Bros.Controllers
                 using (ModelFirstContainer context = new ModelFirstContainer())
                 {
                     ViewBag.Categories = context.Categories.Select(c => new { Id = c.Id, Name = c.Name }).ToList();
+                    //ViewBag.Tags = context.Categories.Select(c => new { Id = c.Id, Name = c.Name }).ToList();
                     result = View();
                 }
             }
@@ -139,16 +221,17 @@ namespace Bros.Controllers
             return result;
         }
 
+        //[Authorize(Roles = "Admin, StoreAdmin")]
         public ActionResult DeleteProductById(int productId)
         {
             using (ModelFirstContainer context = new ModelFirstContainer())
             {
                 context.Products.FirstOrDefault(x => x.Id == productId).IsDeleted = true;
+
                 context.SaveChanges();
 
                 ViewBag.Products = context.Products.Include("Tags").Include("Category").Where(x => !x.IsDeleted).ToList();
             }
-
 
             return View("StoreIndex");
         }
@@ -191,6 +274,7 @@ namespace Bros.Controllers
             return View("ViewProduct", product);
         }
 
+        //[Authorize(Roles = "Admin, StoreAdmin")]
         public ActionResult EditProduct(int productID)
         {
             Product targetProduct;
@@ -205,23 +289,104 @@ namespace Bros.Controllers
         }
 
         [HttpPost]
-        public ActionResult EditProduct(Product product)
+        //[Authorize(Roles = "Admin, StoreAdmin")]
+        public ActionResult EditProduct(Product product, HttpPostedFileBase ImageFile)
         {
-            return View();
+            ActionResult result;
+
+            if (ImageFile != null)
+            {
+                using (var ms = new MemoryStream())
+                {
+                    ImageFile.InputStream.CopyTo(ms);
+                    product.Image = ms.ToArray();
+                }
+            }
+
+            int categoryId = Int32.Parse(Request["Category"]);
+
+            if (product.Name != null && product.Price > 0 && Request["Category"] != null)
+            {
+                int productId;
+                //Category tempCat = null;
+                using (ModelFirstContainer context = new ModelFirstContainer())
+                {
+
+                    Product target = context.Products.SingleOrDefault(x => x.Id == product.Id);
+
+                    if (target != null)
+                    {
+                        context.Entry(target).CurrentValues.SetValues(product);
+                        target.Category = context.Categories.Single(x => x.Id == categoryId);
+                    }
+
+                    context.SaveChanges();
+                    //tempCat.Products.Add(p);
+
+                    // context.SaveChanges();
+
+                    result = View("ViewProduct", target);
+                }
+            }
+            else
+            {
+                using (ModelFirstContainer context = new ModelFirstContainer())
+                {
+                    ViewBag.Categories = context.Categories.Select(c => new { Id = c.Id, Name = c.Name }).ToList();
+                    result = View();
+                }
+            }
+
+            return result;
         }
 
         public ActionResult AddProductToCart(int productID)
         {
-            return View();
+            using (ModelFirstContainer context = new ModelFirstContainer()){
+
+                int userId = WebSecurity.CurrentUserId;
+
+                User user = context.Users.SingleOrDefault(x => x.Id == userId);
+
+                Product product = context.Products.SingleOrDefault(x => x.Id == productID);
+
+                user.ShoppingCart.Products.Add(product);
+
+                context.SaveChanges();
+            }
+
+            return RedirectToAction("StoreIndex");
         }
 
         public ActionResult RemoveProductFromCart(int productID)
         {
-            return View();
+            using (ModelFirstContainer context = new ModelFirstContainer())
+            {
+                int userId = WebSecurity.CurrentUserId;
+
+                User user = context.Users.SingleOrDefault(x => x.Id == userId);
+
+                Product product = context.Products.SingleOrDefault(x => x.Id == productID);
+
+                user.ShoppingCart.Products.Remove(product);
+
+                context.SaveChanges();
+            }
+
+            return RedirectToAction("StoreIndex");
         }
 
         public ActionResult ViewCart()
         {
+            int sessionId = (int)Session["UserId"];
+            List<Product> products;
+            using(var context = new ModelFirstContainer())
+            {
+                ShoppingCart cart = context.ShoppingCarts.Single(x => x.User.Id == sessionId);
+                products = cart.Products.ToList();
+            }
+
+            ViewBag.products = products;
             return View();
         }
       
