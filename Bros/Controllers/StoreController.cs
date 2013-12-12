@@ -45,7 +45,10 @@ namespace Bros.Controllers
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 
+=======
+>>>>>>> 9820cc85237bb2a85b7e158b162f09e0ad36737a
 =======
 >>>>>>> 9820cc85237bb2a85b7e158b162f09e0ad36737a
 =======
@@ -72,18 +75,25 @@ namespace Bros.Controllers
             }
 
         }
+<<<<<<< HEAD
 
 <<<<<<< HEAD
 <<<<<<< HEAD
        [HttpPost]
          //[Authorize(Roles = "Admin, StoreAdmin")]
+=======
+>>>>>>> 9820cc85237bb2a85b7e158b162f09e0ad36737a
 
+=======
+        //[Authorize(Roles = "Admin, StoreAdmin")]
+<<<<<<< HEAD
+       [HttpPost]
+>>>>>>> 9820cc85237bb2a85b7e158b162f09e0ad36737a
 =======
         //[Authorize(Roles = "Admin, StoreAdmin")]
        [HttpPost]
 >>>>>>> 9820cc85237bb2a85b7e158b162f09e0ad36737a
 =======
-        //[Authorize(Roles = "Admin, StoreAdmin")]
        [HttpPost]
 >>>>>>> 9820cc85237bb2a85b7e158b162f09e0ad36737a
         public ActionResult EditCategory()
