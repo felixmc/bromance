@@ -230,7 +230,7 @@ namespace Bros.Controllers
                 AddBroToCircle("MyBros", request.Sender, request.Receiver);
                 AddBroToCircle("MyBros", request.Receiver, request.Sender);
 
-                //request.RequestNotification.IsRead = true;
+                request.RequestNotification.IsRead = true;
             }
         }
 
@@ -261,7 +261,9 @@ namespace Bros.Controllers
         {
             using (ModelFirstContainer context = new ModelFirstContainer())
             {
-                //request.RequestNotification.IsRead = true;
+                context.BroRequests.SingleOrDefault(x => x.Id == requestID).RequestNotification.IsRead = true;
+
+                context.SaveChanges();
             }
 
             return RedirectToAction("ProfileIndex");
