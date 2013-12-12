@@ -1,0 +1,18 @@
+﻿@model Bros.DataModel.ShoppingCart
+@using Bros.DataModel;
+@{
+    ViewBag.Title = "ViewCart";
+}
+
+
+@if (ViewBag.products != null)
+{
+
+foreach (Product p in ViewBag.products)
+{
+    @: @p.Name
+<br />
+    @: @p.Price 
+    <br />  
+}
+}
