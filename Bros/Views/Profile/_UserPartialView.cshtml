@@ -1,8 +1,8 @@
 ﻿@model Bros.DataModel.User
 
 <div class="UserPartialView">
-    <h2>_UserPartialView</h2>
     <!-- User Profile Image? -->
+</br>
     <div class="UserName">@Model.Profile.FirstName @Model.Profile.LastName</div>
     <div class="UserGender">@Model.Profile.Gender</div>
     <div class="SendBroRequest">@Html.ActionLink("Send Bro Request", "SendBroRequest", "Profile", new { recieverID = Model.Id }, null)</div>
