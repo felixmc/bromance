@@ -232,9 +232,22 @@ namespace Bros.Controllers
 			using (ModelFirstContainer context = new ModelFirstContainer())
 			{
 				int userId = (int)Session["UserId"];
-				notifications = context.Notifications.Include("Receiver.Profile")
-											.Where(n => n.Receiver.Id == userId && n.IsRead == false)
-													.OrderByDescending(n => n.DateCreated).ToList();
+
+				foreach (Notification not in context.Notifications.Where(n => n.Receiver.Id == userId && n.IsRead == false))
+				{
+					if (not is CommentNotification)
+					{
+						CommentNotification cn = not as CommentNotification;
+						context.Entry(cn.Comment.Owner).Reference(u => u.Profile).Load();
+						notifications.Add(cn);
+					}
+					else if (not is Bros.DataModel.RequestNotification)
+					{
+						Bros.DataModel.RequestNotification cn = not as Bros.DataModel.RequestNotification;
+						context.Entry(cn.BroRequest.Sender).Reference(u => u.Profile).Load();
+						notifications.Add(cn);
+					}
+				}
 			}
 
 			return View(notifications);
@@ -336,6 +349,9 @@ namespace Bros.Controllers
                     User user = context.Users.FirstOrDefault(u => u.Id == userId);
                     Comment comment = new Comment() { Content = Request["comment"], Owner = user, ParentPost = post, DateCreated = DateTime.Now };
 
+					CommentNotification not = new CommentNotification() { Comment = comment, DateCreated = DateTime.Now, IsRead = false, Receiver = post.Author };
+
+					comment.CommentNotifications.Add(not);
                     user.Comments.Add(comment);
                     post.Comments.Add(comment);
 
