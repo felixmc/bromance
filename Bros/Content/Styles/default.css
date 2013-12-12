@@ -17,8 +17,8 @@ header {
 }
 
 .mainNav li {
-    float: right;
-    padding: 0 20px 0 0;
+    float: left;
+    padding: 0 10px 0 0;
 }
 
 ul {
@@ -26,16 +26,17 @@ ul {
 }
 
 a {
+    color: #A4B799;
     text-decoration: none;
-    font-size: 1.1em;     
+    font-size: 0.8em;     
 }
 
 li a:hover {
-    color: #A4B799
+    color:  #4B5554;
 }
 
 a:visited {
-    color: #ffffff;
+    color: #A4B799;
 }
 
 .registerNow a {
@@ -52,6 +53,10 @@ a:visited {
 
 .content-main {
     padding-bottom: 150px;
+}
+
+.profilePic {
+    max-width: 300px;
 }
 
 footer {
