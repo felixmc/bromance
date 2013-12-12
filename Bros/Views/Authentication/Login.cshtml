@@ -1,6 +1,9 @@
-﻿   
+﻿@section css
+{
+    <link href="~/Content/Styles/default.css" rel="stylesheet"/>
+}   
 
- <p class="error">@ViewBag.Error</p>
+<p class="error">@ViewBag.Error</p>
     @using (Html.BeginForm("Login", "Authentication", FormMethod.Post))
 	{
 		<input type="email" placeholder="email" name="email" />
