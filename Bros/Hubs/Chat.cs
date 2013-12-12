@@ -19,37 +19,27 @@ namespace Bros.Hubs
 		{
 			ChatUser receiver = onlineUsers.FirstOrDefault(u => u.UserId == receiverId);
 			ChatUser sender = onlineUsers.FirstOrDefault(u => u.UserId == WebSecurity.CurrentUserId);
+			int senderId = WebSecurity.CurrentUserId;
 
-			//using (var context = new ModelFirstContainer())
-			//{
-			//	int id = (int)Session["UserId"];
-			//	int receiverId = Int32.Parse(Request["Receiver"]);
-			//	using (var context = new ModelFirstContainer())
-			//	{
-			//		User thisUser = context.Users.FirstOrDefault(x => x.Id == id);
-			//		Message ms = new Message()
-			//		{
-			//			Content = message.Content,
-			//			DateSent = DateTime.Now,
-			//			DateRead = DateTime.Now,
-			//			Sender = thisUser,
-			//			Receiver = context.Users.Where(u => u.Id == receiverId).FirstOrDefault()
-			//		};
-			//		context.Messages.Add(ms);
-			//		context.SaveChanges();
-
-			//		IEnumerable<int> messages = thisUser.SentMessages.Union(thisUser.ReceivedMessages).Select(m => m.Id);
-			//		List<User> userList = context.Users.Include("Profile").Where(u => u.SentMessages.Union(u.ReceivedMessages).Select(m => m.Id).Intersect(messages).Count() != 0).ToList();
-
-			//		ViewBag.UserConversations = userList;
-			//	}
-			//}
+			using (var context = new ModelFirstContainer())
+			{
+				User thisUser = context.Users.FirstOrDefault(x => x.Id == senderId);
+				Message ms = new Message()
+				{
+					Content = message,
+					DateSent = DateTime.Now,
+					Sender = thisUser,
+					Receiver = context.Users.Where(u => u.Id == receiverId).FirstOrDefault()
+				};
+				context.Messages.Add(ms);
+				context.SaveChanges();
+			}
 
 			if (receiver != null)
 			{
-				Clients.Clients(receiver.ConnectionIds).receive(WebSecurity.CurrentUserId, receiverId, message);
+				Clients.Clients(receiver.ConnectionIds).receive(senderId, receiverId, message);
 			}
-			Clients.Clients(sender.ConnectionIds).receive(WebSecurity.CurrentUserId, receiverId, message);
+			Clients.Clients(sender.ConnectionIds).receive(senderId, receiverId, message);
 		}
 
 		public void Authenticate()

@@ -246,6 +246,9 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Content Include="Content\Images\defaultPic.jpg" />
     <Content Include="Content\Scripts\jquery-ui-1.10.3.custom.min.js" />
+    <Content Include="Content\Styles\default.css" />
+    <Content Include="Content\Styles\profile.css" />
+    <Content Include="Content\Styles\store.css" />
     <Content Include="DataModel\ModelFirst.edmx.sql" />
     <Content Include="Global.asax" />
     <None Include="Content\Scripts\jquery-1.6.4-vsdoc.js" />
@@ -253,7 +256,6 @@
     <Content Include="Content\Scripts\jquery-1.6.4.min.js" />
     <Content Include="Content\Scripts\jquery.signalR-2.0.0.js" />
     <Content Include="Content\Scripts\jquery.signalR-2.0.0.min.js" />
-    <Content Include="SignalTest.html" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -291,6 +293,7 @@
     </Content>
     <Content Include="Views\Store\LoadTags.cshtml" />
     <Content Include="Views\Store\_EditTag.cshtml" />
+    <Content Include="Views\Profile\Settings.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

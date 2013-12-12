@@ -6,7 +6,7 @@ header {
     background-color: #65754E;
     color: #FFFFFF;
     width: 100%;
-    padding: 10px;
+    padding: 20px;
     border: 4px solid #65754E;
     border-radius:0 0 20px 20px;
 }
@@ -16,21 +16,27 @@ header {
     text-align: right;    
 }
 
+.mainNav li {
+    float: left;
+    padding: 0 10px 0 0;
+}
+
 ul {
     list-style-type: none;
 }
 
 a {
+    color: #A4B799;
     text-decoration: none;
-    font-size: 2em;     
+    font-size: 0.8em;     
 }
 
 li a:hover {
-    color: #A4B799
+    color:  #4B5554;
 }
 
 a:visited {
-    color: #ffffff;
+    color: #A4B799;
 }
 
 .registerNow a {
@@ -43,6 +49,14 @@ a:visited {
 
 .content {
     padding-left: 50px;  
+}
+
+.content-main {
+    padding-bottom: 150px;
+}
+
+.profilePic {
+    max-width: 300px;
 }
 
 footer {
