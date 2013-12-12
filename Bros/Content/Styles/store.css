@@ -8,14 +8,15 @@
 }
 
 .ProductView {
-    background-color: #A4B799;
     border-bottom-left-radius: 10px 10px;
     border-bottom-right-radius: 10px 10px;
     padding: 10px;
 }
 
-.ProductLink {
-    font-size: 10px;
+.ProductLink > a {
+    font-size: 14px;
+    color: #4b5554;
+    padding-right: 30px;
 }
 
 .ProductName {

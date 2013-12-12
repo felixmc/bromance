@@ -17,8 +17,8 @@
     <div class="ProductPrice">Product Price: $@Model.Price</div>
     <div class="ProductCategory">Product Category: @Model.Category.Name</div>
     @*@if (ViewContext.HttpContext.User.IsInRole("StoreAdmin")){ *@
-        <span class="ProductLink">@Html.ActionLink("Delete this Product", "DeleteProductById", new { productId = Model.Id })</span>
-        <span class="ProductLink">@Html.ActionLink("Edit this Product", "EditProduct", new { productId = Model.Id })</span>
+        <span class="ProductLink">@Html.ActionLink("Delete", "DeleteProductById", new { productId = Model.Id })</span>
+        <span class="ProductLink">@Html.ActionLink("Edit", "EditProduct", new { productId = Model.Id })</span>
     @*}*@
     <span class="ProductLink">@Html.ActionLink("Add to Cart", "AddProductToCart", new { productId = Model.Id })</span>
     <span class="ProductLink">@Html.ActionLink("Remove from Cart", "RemoveProductFromCart", new { productId = Model.Id })</span>
