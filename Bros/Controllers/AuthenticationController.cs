@@ -159,7 +159,18 @@ namespace Bros.Controllers
                     BirthDate = model.BirthDate,
                     ZipCode = model.Zipcode + "",
                     Gender = Request["Gender"],
-                    
+                    Athleticism = Enums.Athleticism.Casually_Athletic.ToString(),
+                    Children = Enums.Children.Has_No_Children.ToString(),
+                    Drinks = Enums.Drinks.Never.ToString(),
+                    Drugs = Enums.Drugs.Never.ToString(),
+                    Education = Enums.Education.Doctorate.ToString(),
+                    Ethnicity = Enums.Ethnicity.Native_American.ToString(),
+                    Job = Enums.Job.Other.ToString(),
+                    MarriageStatus = Enums.MarriageStatus.Taken.ToString(),
+                    Smokes = Enums.Smokes.Never.ToString(),
+                    SexualOrientation = Enums.SexualOrientation.Asexual.ToString(),
+                    Religion = Enums.Religion.Muslim.ToString(),
+                    Pets = Enums.Pets.Dog_Person.ToString()
                 };
 
 

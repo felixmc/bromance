@@ -124,11 +124,26 @@ namespace Bros.Controllers
                         }
                     }
                 }
-
-
+                Session["Compatability"] = DetermineCompatability(thisUser, browseList);
             }
 
             return View(browseList);
+        }
+
+        private Dictionary<User, int> DetermineCompatability(User currentUser, List<User> browseList)
+        {
+            int totalPreference = currentUser.Preferences.Count;
+            int compatablePreference = 0;
+
+            Dictionary<User, int> compatability = new Dictionary<User, int>();
+
+            foreach (var user in browseList)
+            {
+                foreach (var preference in user.Preferences)
+                {
+                    
+                }
+            }
         }
 
         public ActionResult SendBroRequest(int recieverID)
