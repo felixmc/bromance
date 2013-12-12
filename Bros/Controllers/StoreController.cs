@@ -43,6 +43,7 @@ namespace Bros.Controllers
             return View();
         }
 
+
         public ActionResult HandleCategory(string catId)
         {
             if (catId == null)
@@ -66,7 +67,12 @@ namespace Bros.Controllers
 
         }
 
+     
+
+
+
         //[Authorize(Roles = "Admin, StoreAdmin")]
+  
        [HttpPost]
         public ActionResult EditCategory()
         {
@@ -372,6 +378,15 @@ namespace Bros.Controllers
 
         public ActionResult ViewCart()
         {
+            int sessionId = (int)Session["UserId"];
+            List<Product> products;
+            using(var context = new ModelFirstContainer())
+            {
+                ShoppingCart cart = context.ShoppingCarts.Single(x => x.User.Id == sessionId);
+                products = cart.Products.ToList();
+            }
+
+            ViewBag.products = products;
             return View();
         }
       

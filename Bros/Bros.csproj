@@ -272,6 +272,23 @@
     <Content Include="Views\Messaging\_SendMessageTo.cshtml" />
     <Content Include="Views\Messaging\_SingleMessagePartialView.cshtml" />
     <Content Include="Views\Search\SearchResults.cshtml" />
+    <Content Include="Views\Profile\Notifications.cshtml" />
+    <Content Include="Views\Profile\MyProfile.cshtml" />
+    <Content Include="Views\Profile\ManageAlbums.cshtml" />
+    <Content Include="Views\Profile\PhotoComments.cshtml" />
+    <Content Include="Views\Profile\PhotoGallery.cshtml" />
+    <Content Include="Views\Profile\AddPhoto.cshtml" />
+    <Content Include="Views\Profile\ChangeProfilePhoto.cshtml" />
+    <Content Include="Views\Profile\CreateAlbum.cshtml" />
+    <Content Include="Views\Profile\_AlbumSingle.cshtml">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="Views\Shared\_ProfilePhoto.cshtml">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="Views\Shared\_SinglePhoto.cshtml">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="Views\Store\LoadTags.cshtml" />
     <Content Include="Views\Store\_EditTag.cshtml" />
   </ItemGroup>
