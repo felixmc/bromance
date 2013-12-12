@@ -31,7 +31,7 @@
                         }
                      
                     </ul>
-                    @if (WebSecurity.IsAuthenticated)
+                    @if (Session["UserId"]!= null)
                     {
                         using (Html.BeginForm("ByUserName", "Search"))
                          {
