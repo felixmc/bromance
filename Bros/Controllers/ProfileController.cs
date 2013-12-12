@@ -136,16 +136,45 @@ namespace Bros.Controllers
 
             foreach (var user in browseList)
             {
-                CompareProfiles(currentUser, user);
+                compatability.Add(user,CompareProfiles(currentUser, user));
             }
+            return compatability;
         }
 
-        private void CompareProfiles(User currentUser, User user)
+        private int CompareProfiles(User currentUser, User user)
         {
-            int totalPreference = 0;
+            const int totalPreference = 12;
             int compatablePreference = 0;
 
-
+            Profile userProfile = user.Profile;
+            Profile currentUserProfile = currentUser.Profile;
+            
+            if (currentUserProfile.Athleticism.Equals(userProfile.Athleticism))
+                compatablePreference++;
+            if (currentUserProfile.Children.Equals(userProfile.Children))
+                compatablePreference++;
+            if (currentUserProfile.Drinks.Equals(userProfile.Drinks))
+                compatablePreference++;
+            if (currentUserProfile.Drugs.Equals(userProfile.Drugs))
+                compatablePreference++;
+            if (currentUserProfile.Education.Equals(userProfile.Education))
+                compatablePreference++;
+            if (currentUserProfile.Ethnicity.Equals(userProfile.Ethnicity))
+                compatablePreference++;
+            if (currentUserProfile.Job.Equals(userProfile.Job))
+                compatablePreference++;
+            if (currentUserProfile.MarriageStatus.Equals(userProfile.MarriageStatus))
+                compatablePreference++;
+            if (currentUserProfile.Pets.Equals(userProfile.Pets))
+                compatablePreference++;
+            if (currentUserProfile.Religion.Equals(userProfile.SexualOrientation))
+                compatablePreference++;
+            if (currentUserProfile.Religion.Equals(userProfile.Religion))
+                compatablePreference++;
+            if (currentUserProfile.Smokes.Equals(userProfile.Smokes))
+                compatablePreference++;
+            double compatability = compatablePreference/totalPreference;
+            return (int) (compatability*100);
         }
 
         public ActionResult SendBroRequest(int recieverID)
