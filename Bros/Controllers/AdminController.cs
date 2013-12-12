@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Runtime.Remoting.Contexts;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
 using Bros.DataModel;
 
 namespace Bros.Controllers
@@ -131,6 +133,38 @@ namespace Bros.Controllers
             }
             else
                 Session["AdminError"] = Request["ban"] + " is not a valid id.";
+        }
+
+        public ActionResult PromoteUserByUsername()
+        {
+            Session["AdminError"] = null;
+            string userName = Request["promote"].ToString();
+            ModelFirstContainer context = new ModelFirstContainer();
+            var userEnumerable = context.Users.Single(x => userName == x.Email);
+            if (UserIsInRole(userEnumerable))
+            {
+                Session["AdminError"] = userEnumerable.Email.ToString() + " is already an Admin.";
+            }
+            else
+            {
+                Roles.AddUserToRole(userEnumerable.Email, "Admin");
+            }
+            return View("Index");
+        }
+
+        private bool UserIsInRole(User userEnumerable)
+        {
+            string[] users = Roles.GetUsersInRole("Admin");
+            bool isInRole = false;
+            foreach (var user in users)
+            {
+                if (user.Equals(userEnumerable.Email))
+                {
+                    isInRole = true;
+                }
+            }
+
+            return isInRole;
         }
     }
 }

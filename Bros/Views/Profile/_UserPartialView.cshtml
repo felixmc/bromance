@@ -5,5 +5,9 @@
     <!-- User Profile Image? -->
     <div class="UserName">@Model.Profile.FirstName @Model.Profile.LastName</div>
     <div class="UserGender">@Model.Profile.Gender</div>
-    <div class="SendBroRequest">@Html.ActionLink("Send Bro Request", "SendBroRequest", "Profile", new { recieverID = Model.Id }, null);</div>
+    <div class="SendBroRequest">@Html.ActionLink("Send Bro Request", "SendBroRequest", "Profile", new { recieverID = Model.Id }, null)</div>
+
+    @Html.ActionLink("Block Bro", "BlockBro", "Profile", new { id = Model.Id}, false)
+
+
 </div>
