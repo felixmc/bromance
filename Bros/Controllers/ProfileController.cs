@@ -132,18 +132,20 @@ namespace Bros.Controllers
 
         private Dictionary<User, int> DetermineCompatability(User currentUser, List<User> browseList)
         {
-            int totalPreference = currentUser.Preferences.Count;
-            int compatablePreference = 0;
-
             Dictionary<User, int> compatability = new Dictionary<User, int>();
 
             foreach (var user in browseList)
             {
-                foreach (var preference in user.Preferences)
-                {
-                    
-                }
+                CompareProfiles(currentUser, user);
             }
+        }
+
+        private void CompareProfiles(User currentUser, User user)
+        {
+            int totalPreference = 0;
+            int compatablePreference = 0;
+
+
         }
 
         public ActionResult SendBroRequest(int recieverID)
