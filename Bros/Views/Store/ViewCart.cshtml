@@ -5,14 +5,11 @@
 }
 
 
-@if (ViewBag.products != null)
+@if (ViewBag.ItemsInShoppingCart != null)
 {
 
-foreach (Product p in ViewBag.products)
+    foreach (Product p in ViewBag.ItemsInShoppingCart)
 {
-    @: @p.Name
-<br />
-    @: @p.Price 
-    <br />  
+    Html.RenderPartial("_JustForCartPartialViewProduct", p);
 }
 }

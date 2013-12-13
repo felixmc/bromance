@@ -358,7 +358,7 @@ namespace Bros.Controllers
             return RedirectToAction("StoreIndex");
         }
 
-        public ActionResult RemoveProductFromCart(int productID)
+        public ActionResult RemoveProductFromCart(int productID = -10)
         {
             using (ModelFirstContainer context = new ModelFirstContainer())
             {
@@ -373,7 +373,7 @@ namespace Bros.Controllers
                 context.SaveChanges();
             }
 
-            return RedirectToAction("StoreIndex");
+            return RedirectToAction("ViewCart");
         }
 
         public ActionResult ViewCart()
@@ -383,12 +383,41 @@ namespace Bros.Controllers
             using(var context = new ModelFirstContainer())
             {
                 ShoppingCart cart = context.ShoppingCarts.Single(x => x.User.Id == sessionId);
-                products = cart.Products.ToList();
+                ViewBag.ItemsInShoppingCart = cart.Products;
             }
 
-            ViewBag.products = products;
+           
             return View();
         }
-      
+
+        public ActionResult ViewCheckout()
+        {
+            using(var context = new ModelFirstContainer())
+            {
+                ShoppingCart cart = context.ShoppingCarts.Single(x => x.User.Id == WebSecurity.CurrentUserId);
+                ViewBag.ItemsInShoppingCart = cart.Products;
+            }
+            return View();
+
+        }
+           
+        public ActionResult Checkout()
+        {
+            int id = WebSecurity.CurrentUserId;
+            using(var context = new ModelFirstContainer())
+            {
+                User user = context.Users.Single(x => x.Id == id);
+                ShoppingCart cart = context.ShoppingCarts.Single(x => x.User.Id == id);
+                foreach (Product p in cart.Products)
+                {
+                    user.ShoppingCart.Products.Remove(p);
+                }
+
+                context.SaveChanges();
+
+            }
+
+            return View();
+        }
     }
 }
