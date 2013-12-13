@@ -1,4 +1,5 @@
-﻿@model Bros.DataModel.Profile
+﻿@using System.Globalization
+@model Bros.DataModel.Profile
 
 @{
     var base64 = "";
@@ -25,4 +26,12 @@
  var imgSrc = String.Format("data:image/jpg;base64,{0}", base64);
 }
 
-<img class="profilePic" src=@imgSrc /><br /><span>@Model.FirstName @Model.LastName</span>
+@{
+    string first = @Model.FirstName;
+    string last = @Model.LastName;
+
+    string firstToUpper = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(first);
+    string lastToUpper = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(last);   
+}
+
+<img class="profilePic" src=@imgSrc /><br /><span>@firstToUpper @lastToUpper</span>

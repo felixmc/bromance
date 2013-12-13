@@ -1,13 +1,15 @@
 ﻿body {
     font-family: Arial;
+    background-color: #171717;
+    color: #FFF;
 }
 
 header {
-    background-color: #65754E;
+    background-color: #597533;
     color: #FFFFFF;
     width: 100%;
     padding: 20px 20px 20px 5px;
-    border: 4px solid #65754E;
+    border: 4px solid #597533;
     border-radius:0 0 20px 20px;
 }
 
@@ -26,25 +28,25 @@ ul, li {
 }
 
 a {
-    color: #A4B799;
+    color: #BCDBCE;
     text-decoration: none;
     font-size: 0.8em;     
 }
 
 li a:hover {
-    color:  #4B5554;
+    color:  #3D5755;
 }
 
 a:visited {
-    color: #A4B799;
+    color: #BCDBCE;
 }
 
 .registerNow a {
-    color: #4B5554;
+    color: #BCDBCE;
 }
 
 .registerNow a:hover {
-    color: #65754E;
+    color: #3D5755;
 }
 
 .content {
@@ -60,13 +62,13 @@ a:visited {
 }
 
 footer {
-    background-color: #65754E;
+    background-color: #597533;
     position:fixed;
     left:0;
     bottom:0;
     height:auto;
     width:100%;
-    border: 4px solid #65754E;
+    border: 4px solid #597533;
     border-radius: 20px 20px 0 0;
 }
 
