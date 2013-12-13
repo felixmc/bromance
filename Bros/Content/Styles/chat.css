@@ -1,0 +1,101 @@
+﻿     body {
+         background: #E3F7FF;
+     }
+
+     #friend-list {
+         position: fixed;
+         right: 30px;
+         top: 150px;
+         width: 200px;
+         min-height: 400px;
+         background: #eee;
+         border: 1px solid #999;
+         padding-left: 0;
+         cursor: pointer;
+         margin: 0;
+     }
+
+     #friend-list li {
+         list-style-type: none;
+         padding: 5px 10px;
+         border-bottom: 1px solid #777;
+     }
+
+     .offline {
+         background: #ccc;
+     }
+
+     .online {
+         background: #b6ff00;
+     }
+
+     #templateForm {
+         display: none;
+     }
+
+     .chat-window {
+         width: 400px;
+         border: 1px solid #666;
+         margin-top: 2em;
+         background: #fff;
+         position: absolute;
+     }
+
+     .msgWrap {
+         overflow-y: scroll;
+         overflow-x: hidden;
+         height: 150px;
+     }
+
+     .messages {
+         padding-left: 10px;
+         font-family: sans-serif;
+         margin: 0;
+     }
+
+     .messages p {
+         margin: 10px 0;
+         font-size: 14px;
+     }
+
+     .messageBoxWrapper {
+         padding: 10px;
+         border-top: 1px solid #aaa;
+     }
+
+     .messageBox {
+         width: 100%;
+         margin: 0;
+         border: none;
+         outline: 0;
+     }
+
+     .header {
+         background: #666;
+         color: #fff;
+         font-weight: bold;
+         margin: 0;
+         padding: 10px;
+         font-family: sans-serif;
+         cursor: move;
+     }
+
+     .close {
+         color: #fff;
+         width: 20px;
+         height: 20px;
+         position: absolute;
+         top: 0px;
+         right: 0px;
+         font-size: 20px;
+         font-family: cursive;
+         cursor: pointer;
+     }
+
+     .close:after {
+         content: "x";
+     }
+
+     .them {
+         color: blue;
+     }
