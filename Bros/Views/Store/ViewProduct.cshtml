@@ -5,21 +5,21 @@
     Layout = "~/Views/Shared/_DefaultLayout.cshtml";
 }
 
+    <link rel="stylesheet" type="text/css" href="~/Content/Styles/store.css" />
+
 <div class="ProductView">
     @{
         var base64 = Convert.ToBase64String(Model.Image);
         var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
     }
-    <!-- TODO: Remove the inline styling here! Currently, it is here for the sake of testing. Letting it remain after real css is added would be a bad idea! -->
     <div class="ProductName">Product Name: @Model.Name</div>
-    <img class="ProductImage" src="@imgSrc" style="width:100px;" />
+    <img class="ProductImage" src="@imgSrc" />
     <div class="ProductPrice">Product Price: $@Model.Price</div>
     <div class="ProductCategory">Product Category: @Model.Category.Name</div>
     @*@if (ViewContext.HttpContext.User.IsInRole("StoreAdmin")){ *@
-        @Html.ActionLink("Delete this Product", "DeleteProductById", new { productId = Model.Id });
-        @Html.ActionLink("Edit this Product", "EditProduct", new { productId = Model.Id });
+        <span class="ProductLink">@Html.ActionLink("Delete", "DeleteProductById", new { productId = Model.Id })</span>
+        <span class="ProductLink">@Html.ActionLink("Edit", "EditProduct", new { productId = Model.Id })</span>
     @*}*@
-    @Html.ActionLink("Add to Cart", "AddProductToCart", new { productId = Model.Id });
-    @Html.ActionLink("Remove from Cart", "RemoveProductFromCart", new { productId = Model.Id });
-
+    <span class="ProductLink">@Html.ActionLink("Add to Cart", "AddProductToCart", new { productId = Model.Id })</span>
+    <span class="ProductLink">@Html.ActionLink("Remove from Cart", "RemoveProductFromCart", new { productId = Model.Id })</span>
 </div>

@@ -1,2 +1,24 @@
 ﻿body {
 }
+
+.ProductImage {
+    position: relative;
+    max-width: 300px;
+    border: 1px solid #4B5554;
+}
+
+.ProductView {
+    border-bottom-left-radius: 10px 10px;
+    border-bottom-right-radius: 10px 10px;
+    padding: 10px;
+}
+
+.ProductLink > a {
+    font-size: 14px;
+    color: #4b5554;
+    padding-right: 30px;
+}
+
+.ProductName {
+    Font-Size: 30px;
+}

@@ -1,7 +1,12 @@
 ﻿@model Bros.DataModel.BroRequest
 
 <div class="BroRequestPartial">
-    <p class="RequestMessage">@Model.Sender.Profile.FirstName @Model.Sender.Profile.LastName has sent you a Bro Request!</p>
-    @Html.ActionLink("Accept!", "BroAccept", "Profile", new { requestID = Model.Id }, null);
-    @Html.ActionLink("Dismiss", "DismissRequest", "Profile", new { requestID = Model.Id }, null);
+    @if ((int)Session["UserId"] == Model.Sender.Id)
+    {
+        <p class="RequestMessage">Request send to @Model.Receiver.Profile.FirstName @Model.Receiver.Profile.LastName</p>
+    }else{
+        <p class="RequestMessage">@Model.Sender.Profile.FirstName @Model.Sender.Profile.LastName has sent you a Bro Request!</p>
+        @Html.ActionLink("Accept!", "BroAccept", "Profile", new { requestID = Model.Id }, null)
+    }
+    @Html.ActionLink("Dismiss", "DismissRequest", "Profile", new { requestID = Model.Id }, null)
 </div>

@@ -124,11 +124,57 @@ namespace Bros.Controllers
                         }
                     }
                 }
-
-
+                Session["Compatability"] = DetermineCompatability(thisUser, browseList);
             }
 
             return View(browseList);
+        }
+
+        private Dictionary<User, int> DetermineCompatability(User currentUser, List<User> browseList)
+        {
+            Dictionary<User, int> compatability = new Dictionary<User, int>();
+
+            foreach (var user in browseList)
+            {
+                compatability.Add(user,CompareProfiles(currentUser, user));
+            }
+            return compatability;
+        }
+
+        private int CompareProfiles(User currentUser, User user)
+        {
+            const int totalPreference = 12;
+            int compatablePreference = 0;
+
+            Profile userProfile = user.Profile;
+            Profile currentUserProfile = currentUser.Profile;
+            
+            if (currentUserProfile.Athleticism.Equals(userProfile.Athleticism))
+                compatablePreference++;
+            if (currentUserProfile.Children.Equals(userProfile.Children))
+                compatablePreference++;
+            if (currentUserProfile.Drinks.Equals(userProfile.Drinks))
+                compatablePreference++;
+            if (currentUserProfile.Drugs.Equals(userProfile.Drugs))
+                compatablePreference++;
+            if (currentUserProfile.Education.Equals(userProfile.Education))
+                compatablePreference++;
+            if (currentUserProfile.Ethnicity.Equals(userProfile.Ethnicity))
+                compatablePreference++;
+            if (currentUserProfile.Job.Equals(userProfile.Job))
+                compatablePreference++;
+            if (currentUserProfile.MarriageStatus.Equals(userProfile.MarriageStatus))
+                compatablePreference++;
+            if (currentUserProfile.Pets.Equals(userProfile.Pets))
+                compatablePreference++;
+            if (currentUserProfile.Religion.Equals(userProfile.SexualOrientation))
+                compatablePreference++;
+            if (currentUserProfile.Religion.Equals(userProfile.Religion))
+                compatablePreference++;
+            if (currentUserProfile.Smokes.Equals(userProfile.Smokes))
+                compatablePreference++;
+            double compatability = compatablePreference/totalPreference;
+            return (int) (compatability*100);
         }
 
         public ActionResult SendBroRequest(int recieverID)
@@ -230,7 +276,7 @@ namespace Bros.Controllers
                 AddBroToCircle("MyBros", request.Sender, request.Receiver);
                 AddBroToCircle("MyBros", request.Receiver, request.Sender);
 
-                //request.RequestNotification.IsRead = true;
+                request.RequestNotification.IsRead = true;
             }
         }
 
@@ -261,7 +307,9 @@ namespace Bros.Controllers
         {
             using (ModelFirstContainer context = new ModelFirstContainer())
             {
-                //request.RequestNotification.IsRead = true;
+                context.BroRequests.SingleOrDefault(x => x.Id == requestID).RequestNotification.IsRead = true;
+
+                context.SaveChanges();
             }
 
             return RedirectToAction("ProfileIndex");
@@ -301,9 +349,22 @@ namespace Bros.Controllers
 			using (ModelFirstContainer context = new ModelFirstContainer())
 			{
 				int userId = (int)Session["UserId"];
-				notifications = context.Notifications.Include("Receiver.Profile")
-											.Where(n => n.Receiver.Id == userId && n.IsRead == false)
-													.OrderByDescending(n => n.DateCreated).ToList();
+
+				foreach (Notification not in context.Notifications.Where(n => n.Receiver.Id == userId && n.IsRead == false))
+				{
+					if (not is CommentNotification)
+					{
+						CommentNotification cn = not as CommentNotification;
+						context.Entry(cn.Comment.Owner).Reference(u => u.Profile).Load();
+						notifications.Add(cn);
+					}
+					else if (not is Bros.DataModel.RequestNotification)
+					{
+						Bros.DataModel.RequestNotification cn = not as Bros.DataModel.RequestNotification;
+						context.Entry(cn.BroRequest.Sender).Reference(u => u.Profile).Load();
+						notifications.Add(cn);
+					}
+				}
 			}
 
 			return View(notifications);
@@ -405,6 +466,9 @@ namespace Bros.Controllers
                     User user = context.Users.FirstOrDefault(u => u.Id == userId);
                     Comment comment = new Comment() { Content = Request["comment"], Owner = user, ParentPost = post, DateCreated = DateTime.Now };
 
+					CommentNotification not = new CommentNotification() { Comment = comment, DateCreated = DateTime.Now, IsRead = false, Receiver = post.Author };
+
+					comment.CommentNotifications.Add(not);
                     user.Comments.Add(comment);
                     post.Comments.Add(comment);
 

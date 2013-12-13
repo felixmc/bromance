@@ -1,4 +1,5 @@
 ﻿
+@using System.Globalization
 @model Bros.DataModel.User
 
 @{
@@ -6,7 +7,14 @@
     Layout = "~/Views/Layouts/_ProfileLayout.cshtml";
 }
 
-<h1>Welcome to my profile!</h1>
+@{
+    string first = @Model.Profile.FirstName;
 
-@Html.Partial("~/Views/Shared/_ProfilePhoto.cshtml", Model.Profile);
+    string firstToUpper = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(first);
+}
+
+<br/>
+<h1>Welcome, @firstToUpper!</h1>
+
+@Html.Partial("~/Views/Shared/_ProfilePhoto.cshtml", Model.Profile)
 

@@ -4,7 +4,7 @@
     <head>
         <meta name="viewport" content="width=device-width" />
         <title>@ViewBag.Title</title>
-        @RenderSection("css", required: false)
+        <link href="~/Content/Styles/default.css" rel="stylesheet"/>
     </head>
     <body>
         <div class="container">
@@ -21,8 +21,7 @@
                             <li>@Html.ActionLink("Chat","Chat","Messaging")</li>
                             <li>@Html.ActionLink("Store", "StoreIndex", "Store")</li>
                             <li>@Html.ActionLink("Browse Bros", "ViewBros", "Profile")</li>
-                            <li>@Html.ActionLink("View My Profile", "MyProfile", "Profile", new {id = userId}, false)</li>
-                            <li>@Html.ActionLink("Photos", "ProfileIndex", "Profile")</li>
+                            <li>@Html.ActionLink("My Profile", "MyProfile", "Profile", new {id = userId}, false)</li>
                             <li>@Html.ActionLink("Logout", "Logout", "Authentication")</li>
                         }
                         else
@@ -31,7 +30,7 @@
                         }
                      
                     </ul>
-                    @if (WebSecurity.IsAuthenticated)
+                    @if (Session["UserId"]!= null)
                     {
                         using (Html.BeginForm("ByUserName", "Search"))
                          {
