@@ -68,8 +68,6 @@ namespace Bros.Controllers
             return View(user);
         }
 
-        #region BroRequest
-
         public ActionResult BlockBro(int id)
         {
             
@@ -253,6 +251,18 @@ namespace Bros.Controllers
             return View();
         }
 
+        public void Circles()
+        {
+            IEnumerable<Circle> circles;
+            using (ModelFirstContainer context = new ModelFirstContainer())
+            {
+                int id = WebSecurity.CurrentUserId;
+                User user = context.Users.SingleOrDefault(u => u.Id == id);
+
+                circles = user.Circles.ToList();
+            }
+        }
+
         public void CreateCircle(string CircleName)
         {
             using (ModelFirstContainer context = new ModelFirstContainer())
@@ -379,8 +389,6 @@ namespace Bros.Controllers
 
             return View(unreadBroRequests);
         }
-
-        #endregion
 
         [Authorize]
         public new ActionResult Profile()

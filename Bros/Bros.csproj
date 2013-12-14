@@ -295,6 +295,7 @@
     <Content Include="Views\Store\LoadTags.cshtml" />
     <Content Include="Views\Store\_EditTag.cshtml" />
     <Content Include="Views\Profile\Settings.cshtml" />
+    <Content Include="Views\Profile\Circles.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
