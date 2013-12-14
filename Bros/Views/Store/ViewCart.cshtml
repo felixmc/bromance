@@ -10,6 +10,10 @@
 
     foreach (Product p in ViewBag.ItemsInShoppingCart)
 {
-    Html.RenderPartial("_JustForCartPartialViewProduct", p);
+        
+    Html.RenderPartial("ViewProduct", p);
+        
+        
 }
+@Html.ActionLink("Checkout","ViewCheckout")
 }
