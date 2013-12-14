@@ -359,7 +359,7 @@ namespace Bros.Controllers
                 context.SaveChanges();
             }
 
-            return RedirectToAction("StoreIndex");
+            return RedirectToAction("ViewAllProducts");
         }
 
         public ActionResult RemoveProductFromCart(int productID = -10)
