@@ -349,12 +349,25 @@ namespace Bros.Controllers
             using (ModelFirstContainer context = new ModelFirstContainer()){
 
                 int userId = WebSecurity.CurrentUserId;
-
                 User user = context.Users.SingleOrDefault(x => x.Id == userId);
-
+                ShoppingCart cart = context.ShoppingCarts.Single(x => x.User.Id == user.Id);
+                if(cart == null)
+                {
+                    cart = new ShoppingCart{ User = user};
+                }
                 Product product = context.Products.SingleOrDefault(x => x.Id == productID);
+                ProductQuantity quantity = cart.ProductQuantities.Single(x => x.ProductId == productID);
+                if(quantity == null)
+                {
+                    quantity = new ProductQuantity{ ProductId = productID, Product = product,Quantity = 1};
+                    user.ShoppingCart.ProductQuantities.Add(quantity);
 
-                user.ShoppingCart.Products.Add(product);
+                }
+                else
+                {
+                    quantity.Quantity += 1;
+                }
+
 
                 context.SaveChanges();
             }
@@ -368,12 +381,16 @@ namespace Bros.Controllers
             using (ModelFirstContainer context = new ModelFirstContainer())
             {
                 int userId = WebSecurity.CurrentUserId;
-
                 User user = context.Users.SingleOrDefault(x => x.Id == userId);
-
+                ShoppingCart cart = context.ShoppingCarts.Single(x => x.User.Id == user.Id);
                 Product product = context.Products.SingleOrDefault(x => x.Id == productID);
-
-                user.ShoppingCart.Products.Remove(product);
+                ProductQuantity quantity = cart.ProductQuantities.Single(x => x.ProductId == productID);
+                quantity.Quantity -= 1;
+                if (quantity.Quantity == 0)
+                {
+                    cart.ProductQuantities.Remove(quantity);
+                }
+                //user.ShoppingCart.Products.Remove(product);
 
                 context.SaveChanges();
             }
@@ -388,8 +405,10 @@ namespace Bros.Controllers
             ViewBag.RemoveFromCart = true;
             using(var context = new ModelFirstContainer())
             {
+                User user = context.Users.Single(x => x.Id == WebSecurity.CurrentUserId);
+                
                 ShoppingCart cart = context.ShoppingCarts.Single(x => x.User.Id == sessionId);
-                ViewBag.ItemsInShoppingCart = cart.Products;
+                ViewBag.ItemsInShoppingCart = cart.ProductQuantities;
             }
 
            
@@ -402,7 +421,7 @@ namespace Bros.Controllers
             using(var context = new ModelFirstContainer())
             {
                 ShoppingCart cart = context.ShoppingCarts.Single(x => x.User.Id == WebSecurity.CurrentUserId);
-                ViewBag.ItemsInShoppingCart = cart.Products;
+                ViewBag.ItemsInShoppingCart = cart.ProductQuantities;
             }
             return View();
 
@@ -415,9 +434,9 @@ namespace Bros.Controllers
             {
                 User user = context.Users.Single(x => x.Id == id);
                 ShoppingCart cart = context.ShoppingCarts.Single(x => x.User.Id == id);
-                foreach (Product p in cart.Products)
+                foreach (ProductQuantity p in cart.ProductQuantities)
                 {
-                    user.ShoppingCart.Products.Remove(p);
+                    user.ShoppingCart.ProductQuantities.Remove(p);
                 }
 
                 context.SaveChanges();
