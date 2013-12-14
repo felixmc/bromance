@@ -17,6 +17,7 @@ namespace Bros.Controllers
 
         public ActionResult StoreIndex()
         {
+
             return View();
         }
         
@@ -238,7 +239,7 @@ namespace Bros.Controllers
 
         public ActionResult ViewAllProducts()
         {
-
+            ViewBag.AddToCart = true;
             using (ModelFirstContainer context = new ModelFirstContainer())
             {
                 ViewBag.Products = context.Products.Include("Tags").Include("Category").Where(x => !x.IsDeleted).ToList(); 
@@ -261,11 +262,13 @@ namespace Bros.Controllers
 
         public ActionResult ViewProduct(Product product)
         {
+            ViewBag.AddToCart = true;
             return View(product);
         }
 
         public ActionResult ViewProductById(int productID)
         {
+            ViewBag.AddToCart = true;
             Product product;
             using (ModelFirstContainer context = new ModelFirstContainer())
             {
@@ -342,6 +345,7 @@ namespace Bros.Controllers
 
         public ActionResult AddProductToCart(int productID)
         {
+            ViewBag.AddToCart = true;
             using (ModelFirstContainer context = new ModelFirstContainer()){
 
                 int userId = WebSecurity.CurrentUserId;
@@ -360,6 +364,7 @@ namespace Bros.Controllers
 
         public ActionResult RemoveProductFromCart(int productID = -10)
         {
+            ViewBag.RemoveFromCart = true;
             using (ModelFirstContainer context = new ModelFirstContainer())
             {
                 int userId = WebSecurity.CurrentUserId;
@@ -380,6 +385,7 @@ namespace Bros.Controllers
         {
             int sessionId = (int)Session["UserId"];
             List<Product> products;
+            ViewBag.RemoveFromCart = true;
             using(var context = new ModelFirstContainer())
             {
                 ShoppingCart cart = context.ShoppingCarts.Single(x => x.User.Id == sessionId);
@@ -392,6 +398,7 @@ namespace Bros.Controllers
 
         public ActionResult ViewCheckout()
         {
+
             using(var context = new ModelFirstContainer())
             {
                 ShoppingCart cart = context.ShoppingCarts.Single(x => x.User.Id == WebSecurity.CurrentUserId);
