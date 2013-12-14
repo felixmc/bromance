@@ -299,6 +299,16 @@
     <Content Include="Views\Store\_EditTag.cshtml" />
     <Content Include="Views\Profile\Settings.cshtml" />
     <Content Include="Views\Profile\Circles.cshtml" />
+    <Content Include="Views\Store\ProductView.cshtml">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="Views\Store\ViewCart.cshtml">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="Views\Store\ViewCheckout.cshtml">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="Views\Home\BroCode.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
