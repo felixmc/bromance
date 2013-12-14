@@ -80,6 +80,14 @@
          cursor: move;
      }
 
+     .me {
+         color: green;
+     }
+
+    .messages > p {
+        color: black;
+    }
+
      .close {
          color: #fff;
          width: 20px;
