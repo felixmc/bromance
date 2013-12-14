@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, and Azure
 -- --------------------------------------------------
--- Date Created: 12/09/2013 10:36:27
+-- Date Created: 12/14/2013 11:46:41
 -- Generated from EDMX file: C:\Users\Felix\Documents\GitHub\bromance\Bros\DataModel\ModelFirst.edmx
 -- --------------------------------------------------
 
@@ -235,7 +235,8 @@ CREATE TABLE [dbo].[Users] (
     [DateCreated] datetime  NOT NULL,
     [Email] nvarchar(max)  NOT NULL,
     [IsDeleted] bit  NOT NULL,
-    [IsBanned] bit  NOT NULL
+    [IsBanned] bit  NOT NULL,
+    [IsMuted] bit  NOT NULL
 );
 GO
 
@@ -324,7 +325,8 @@ CREATE TABLE [dbo].[Products] (
     [Image] varbinary(max)  NOT NULL,
     [CategoryId] int  NOT NULL,
     [IsDeleted] bit  NOT NULL,
-    [DateCreated] datetime  NOT NULL
+    [DateCreated] datetime  NOT NULL,
+    [Description] nvarchar(max)  NOT NULL
 );
 GO
 
@@ -378,6 +380,13 @@ GO
 CREATE TABLE [dbo].[ShoppingCarts] (
     [Id] int IDENTITY(1,1) NOT NULL,
     [User_Id] int  NOT NULL
+);
+GO
+
+-- Creating table 'ProductQuantities'
+CREATE TABLE [dbo].[ProductQuantities] (
+    [Id] int IDENTITY(1,1) NOT NULL,
+    [ProductId] int  NOT NULL
 );
 GO
 
@@ -450,14 +459,28 @@ GO
 -- Creating table 'OrderProducts'
 CREATE TABLE [dbo].[OrderProducts] (
     [Orders_Id] int  NOT NULL,
-    [Products_Id] int  NOT NULL
+    [OrderProducts_Order_Id] int  NOT NULL
 );
 GO
 
 -- Creating table 'ShoppingCartProducts'
 CREATE TABLE [dbo].[ShoppingCartProducts] (
+    [ShoppingCartProducts_Product_Id] int  NOT NULL,
+    [ShoppingCartProducts_ShoppingCart_Id] int  NOT NULL
+);
+GO
+
+-- Creating table 'ShoppingCartProductQuantity'
+CREATE TABLE [dbo].[ShoppingCartProductQuantity] (
     [ShoppingCarts_Id] int  NOT NULL,
-    [Products_Id] int  NOT NULL
+    [ProductQuantities_Id] int  NOT NULL
+);
+GO
+
+-- Creating table 'OrderProductQuantity'
+CREATE TABLE [dbo].[OrderProductQuantity] (
+    [Orders_Id] int  NOT NULL,
+    [ProductQuantities_Id] int  NOT NULL
 );
 GO
 
@@ -561,6 +584,12 @@ ADD CONSTRAINT [PK_ShoppingCarts]
     PRIMARY KEY CLUSTERED ([Id] ASC);
 GO
 
+-- Creating primary key on [Id] in table 'ProductQuantities'
+ALTER TABLE [dbo].[ProductQuantities]
+ADD CONSTRAINT [PK_ProductQuantities]
+    PRIMARY KEY CLUSTERED ([Id] ASC);
+GO
+
 -- Creating primary key on [Id] in table 'Notifications_RequestNotification'
 ALTER TABLE [dbo].[Notifications_RequestNotification]
 ADD CONSTRAINT [PK_Notifications_RequestNotification]
@@ -615,16 +644,28 @@ ADD CONSTRAINT [PK_ProductTags]
     PRIMARY KEY NONCLUSTERED ([Products_Id], [Tags_Id] ASC);
 GO
 
--- Creating primary key on [Orders_Id], [Products_Id] in table 'OrderProducts'
+-- Creating primary key on [Orders_Id], [OrderProducts_Order_Id] in table 'OrderProducts'
 ALTER TABLE [dbo].[OrderProducts]
 ADD CONSTRAINT [PK_OrderProducts]
-    PRIMARY KEY NONCLUSTERED ([Orders_Id], [Products_Id] ASC);
+    PRIMARY KEY NONCLUSTERED ([Orders_Id], [OrderProducts_Order_Id] ASC);
 GO
 
--- Creating primary key on [ShoppingCarts_Id], [Products_Id] in table 'ShoppingCartProducts'
+-- Creating primary key on [ShoppingCartProducts_Product_Id], [ShoppingCartProducts_ShoppingCart_Id] in table 'ShoppingCartProducts'
 ALTER TABLE [dbo].[ShoppingCartProducts]
 ADD CONSTRAINT [PK_ShoppingCartProducts]
-    PRIMARY KEY NONCLUSTERED ([ShoppingCarts_Id], [Products_Id] ASC);
+    PRIMARY KEY NONCLUSTERED ([ShoppingCartProducts_Product_Id], [ShoppingCartProducts_ShoppingCart_Id] ASC);
+GO
+
+-- Creating primary key on [ShoppingCarts_Id], [ProductQuantities_Id] in table 'ShoppingCartProductQuantity'
+ALTER TABLE [dbo].[ShoppingCartProductQuantity]
+ADD CONSTRAINT [PK_ShoppingCartProductQuantity]
+    PRIMARY KEY NONCLUSTERED ([ShoppingCarts_Id], [ProductQuantities_Id] ASC);
+GO
+
+-- Creating primary key on [Orders_Id], [ProductQuantities_Id] in table 'OrderProductQuantity'
+ALTER TABLE [dbo].[OrderProductQuantity]
+ADD CONSTRAINT [PK_OrderProductQuantity]
+    PRIMARY KEY NONCLUSTERED ([Orders_Id], [ProductQuantities_Id] ASC);
 GO
 
 -- --------------------------------------------------
@@ -998,10 +1039,10 @@ ADD CONSTRAINT [FK_OrderProducts_Order]
     ON DELETE NO ACTION ON UPDATE NO ACTION;
 GO
 
--- Creating foreign key on [Products_Id] in table 'OrderProducts'
+-- Creating foreign key on [OrderProducts_Order_Id] in table 'OrderProducts'
 ALTER TABLE [dbo].[OrderProducts]
 ADD CONSTRAINT [FK_OrderProducts_Product]
-    FOREIGN KEY ([Products_Id])
+    FOREIGN KEY ([OrderProducts_Order_Id])
     REFERENCES [dbo].[Products]
         ([Id])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
@@ -1009,7 +1050,7 @@ ADD CONSTRAINT [FK_OrderProducts_Product]
 -- Creating non-clustered index for FOREIGN KEY 'FK_OrderProducts_Product'
 CREATE INDEX [IX_FK_OrderProducts_Product]
 ON [dbo].[OrderProducts]
-    ([Products_Id]);
+    ([OrderProducts_Order_Id]);
 GO
 
 -- Creating foreign key on [User_Id] in table 'ShoppingCarts'
@@ -1026,19 +1067,19 @@ ON [dbo].[ShoppingCarts]
     ([User_Id]);
 GO
 
--- Creating foreign key on [ShoppingCarts_Id] in table 'ShoppingCartProducts'
+-- Creating foreign key on [ShoppingCartProducts_Product_Id] in table 'ShoppingCartProducts'
 ALTER TABLE [dbo].[ShoppingCartProducts]
 ADD CONSTRAINT [FK_ShoppingCartProducts_ShoppingCart]
-    FOREIGN KEY ([ShoppingCarts_Id])
+    FOREIGN KEY ([ShoppingCartProducts_Product_Id])
     REFERENCES [dbo].[ShoppingCarts]
         ([Id])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
 GO
 
--- Creating foreign key on [Products_Id] in table 'ShoppingCartProducts'
+-- Creating foreign key on [ShoppingCartProducts_ShoppingCart_Id] in table 'ShoppingCartProducts'
 ALTER TABLE [dbo].[ShoppingCartProducts]
 ADD CONSTRAINT [FK_ShoppingCartProducts_Product]
-    FOREIGN KEY ([Products_Id])
+    FOREIGN KEY ([ShoppingCartProducts_ShoppingCart_Id])
     REFERENCES [dbo].[Products]
         ([Id])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
@@ -1046,7 +1087,67 @@ ADD CONSTRAINT [FK_ShoppingCartProducts_Product]
 -- Creating non-clustered index for FOREIGN KEY 'FK_ShoppingCartProducts_Product'
 CREATE INDEX [IX_FK_ShoppingCartProducts_Product]
 ON [dbo].[ShoppingCartProducts]
-    ([Products_Id]);
+    ([ShoppingCartProducts_ShoppingCart_Id]);
+GO
+
+-- Creating foreign key on [ProductId] in table 'ProductQuantities'
+ALTER TABLE [dbo].[ProductQuantities]
+ADD CONSTRAINT [FK_ProductQuantityProduct]
+    FOREIGN KEY ([ProductId])
+    REFERENCES [dbo].[Products]
+        ([Id])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_ProductQuantityProduct'
+CREATE INDEX [IX_FK_ProductQuantityProduct]
+ON [dbo].[ProductQuantities]
+    ([ProductId]);
+GO
+
+-- Creating foreign key on [ShoppingCarts_Id] in table 'ShoppingCartProductQuantity'
+ALTER TABLE [dbo].[ShoppingCartProductQuantity]
+ADD CONSTRAINT [FK_ShoppingCartProductQuantity_ShoppingCart]
+    FOREIGN KEY ([ShoppingCarts_Id])
+    REFERENCES [dbo].[ShoppingCarts]
+        ([Id])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
+
+-- Creating foreign key on [ProductQuantities_Id] in table 'ShoppingCartProductQuantity'
+ALTER TABLE [dbo].[ShoppingCartProductQuantity]
+ADD CONSTRAINT [FK_ShoppingCartProductQuantity_ProductQuantity]
+    FOREIGN KEY ([ProductQuantities_Id])
+    REFERENCES [dbo].[ProductQuantities]
+        ([Id])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_ShoppingCartProductQuantity_ProductQuantity'
+CREATE INDEX [IX_FK_ShoppingCartProductQuantity_ProductQuantity]
+ON [dbo].[ShoppingCartProductQuantity]
+    ([ProductQuantities_Id]);
+GO
+
+-- Creating foreign key on [Orders_Id] in table 'OrderProductQuantity'
+ALTER TABLE [dbo].[OrderProductQuantity]
+ADD CONSTRAINT [FK_OrderProductQuantity_Order]
+    FOREIGN KEY ([Orders_Id])
+    REFERENCES [dbo].[Orders]
+        ([Id])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
+
+-- Creating foreign key on [ProductQuantities_Id] in table 'OrderProductQuantity'
+ALTER TABLE [dbo].[OrderProductQuantity]
+ADD CONSTRAINT [FK_OrderProductQuantity_ProductQuantity]
+    FOREIGN KEY ([ProductQuantities_Id])
+    REFERENCES [dbo].[ProductQuantities]
+        ([Id])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_OrderProductQuantity_ProductQuantity'
+CREATE INDEX [IX_FK_OrderProductQuantity_ProductQuantity]
+ON [dbo].[OrderProductQuantity]
+    ([ProductQuantities_Id]);
 GO
 
 -- Creating foreign key on [Id] in table 'Notifications_RequestNotification'

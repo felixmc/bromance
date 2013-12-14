@@ -210,6 +210,9 @@
     <Compile Include="DataModel\Product.cs">
       <DependentUpon>ModelFirst.tt</DependentUpon>
     </Compile>
+    <Compile Include="DataModel\ProductQuantity.cs">
+      <DependentUpon>ModelFirst.tt</DependentUpon>
+    </Compile>
     <Compile Include="DataModel\Profile.cs">
       <DependentUpon>ModelFirst.tt</DependentUpon>
     </Compile>
