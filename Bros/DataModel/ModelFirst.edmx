@@ -22,6 +22,7 @@
     <EntitySet Name="Profiles" EntityType="ModelFirst.Store.Profiles" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Orders" EntityType="ModelFirst.Store.Orders" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ShoppingCarts" EntityType="ModelFirst.Store.ShoppingCarts" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ProductQuantities" EntityType="ModelFirst.Store.ProductQuantities" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Notifications_RequestNotification" EntityType="ModelFirst.Store.Notifications_RequestNotification" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Posts_Photo" EntityType="ModelFirst.Store.Posts_Photo" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Notifications_FirstBump" EntityType="ModelFirst.Store.Notifications_FirstBump" store:Type="Tables" Schema="dbo" />
@@ -33,6 +34,8 @@
     <EntitySet Name="ProductTags" EntityType="ModelFirst.Store.ProductTag" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="OrderProducts" EntityType="ModelFirst.Store.OrderProducts" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ShoppingCartProducts" EntityType="ModelFirst.Store.ShoppingCartProducts" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ShoppingCartProductQuantity" EntityType="ModelFirst.Store.ShoppingCartProductQuantity" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="OrderProductQuantity" EntityType="ModelFirst.Store.OrderProductQuantity" store:Type="Tables" Schema="dbo" />
     <AssociationSet Name="FK_CircleUser_Circle" Association="ModelFirst.Store.FK_CircleUser_Circle">
       <End Role="Circle" EntitySet="Circles" />
       <End Role="CircleUser" EntitySet="CircleUser" />
@@ -161,6 +164,26 @@
       <End Role="Product" EntitySet="Products" />
       <End Role="ShoppingCartProducts" EntitySet="ShoppingCartProducts" />
     </AssociationSet>
+    <AssociationSet Name="ProductQuantityProduct" Association="ModelFirst.Store.ProductQuantityProduct">
+      <End Role="ProductQuantity" EntitySet="ProductQuantities" />
+      <End Role="Product" EntitySet="Products" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ShoppingCartProductQuantity_ShoppingCart" Association="ModelFirst.Store.FK_ShoppingCartProductQuantity_ShoppingCart">
+      <End Role="ShoppingCart" EntitySet="ShoppingCarts" />
+      <End Role="ShoppingCartProductQuantity" EntitySet="ShoppingCartProductQuantity" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ShoppingCartProductQuantity_ProductQuantity" Association="ModelFirst.Store.FK_ShoppingCartProductQuantity_ProductQuantity">
+      <End Role="ProductQuantity" EntitySet="ProductQuantities" />
+      <End Role="ShoppingCartProductQuantity" EntitySet="ShoppingCartProductQuantity" />
+    </AssociationSet>
+    <AssociationSet Name="FK_OrderProductQuantity_Order" Association="ModelFirst.Store.FK_OrderProductQuantity_Order">
+      <End Role="Order" EntitySet="Orders" />
+      <End Role="OrderProductQuantity" EntitySet="OrderProductQuantity" />
+    </AssociationSet>
+    <AssociationSet Name="FK_OrderProductQuantity_ProductQuantity" Association="ModelFirst.Store.FK_OrderProductQuantity_ProductQuantity">
+      <End Role="ProductQuantity" EntitySet="ProductQuantities" />
+      <End Role="OrderProductQuantity" EntitySet="OrderProductQuantity" />
+    </AssociationSet>
     <AssociationSet Name="FK_RequestNotification_inherits_Notification" Association="ModelFirst.Store.FK_RequestNotification_inherits_Notification">
       <End Role="Notification" EntitySet="Notifications" />
       <End Role="RequestNotification" EntitySet="Notifications_RequestNotification" />
@@ -201,6 +224,7 @@
     <Property Name="Email" Type="nvarchar(max)" Nullable="false" />
     <Property Name="IsDeleted" Type="bit" Nullable="false" />
     <Property Name="IsBanned" Type="bit" Nullable="false" />
+    <Property Name="IsMuted" Type="bit" Nullable="false" />
   </EntityType>
   <EntityType Name="Posts">
     <Key>
@@ -290,6 +314,7 @@
     <Property Name="CategoryId" Type="int" Nullable="false" />
     <Property Name="IsDeleted" Type="bit" Nullable="false" />
     <Property Name="DateCreated" Type="datetime" Nullable="false" />
+    <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
   </EntityType>
   <EntityType Name="Tags">
     <Key>
@@ -343,6 +368,13 @@
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="User_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ProductQuantities">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ProductId" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="Notifications_RequestNotification">
     <Key>
@@ -417,18 +449,34 @@
   <EntityType Name="OrderProducts">
     <Key>
       <PropertyRef Name="Orders_Id" />
-      <PropertyRef Name="Products_Id" />
+      <PropertyRef Name="OrderProducts_Order_Id" />
     </Key>
     <Property Name="Orders_Id" Type="int" Nullable="false" />
-    <Property Name="Products_Id" Type="int" Nullable="false" />
+    <Property Name="OrderProducts_Order_Id" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="ShoppingCartProducts">
     <Key>
+      <PropertyRef Name="ShoppingCartProducts_Product_Id" />
+      <PropertyRef Name="ShoppingCartProducts_ShoppingCart_Id" />
+    </Key>
+    <Property Name="ShoppingCartProducts_Product_Id" Type="int" Nullable="false" />
+    <Property Name="ShoppingCartProducts_ShoppingCart_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ShoppingCartProductQuantity">
+    <Key>
       <PropertyRef Name="ShoppingCarts_Id" />
-      <PropertyRef Name="Products_Id" />
+      <PropertyRef Name="ProductQuantities_Id" />
     </Key>
     <Property Name="ShoppingCarts_Id" Type="int" Nullable="false" />
-    <Property Name="Products_Id" Type="int" Nullable="false" />
+    <Property Name="ProductQuantities_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="OrderProductQuantity">
+    <Key>
+      <PropertyRef Name="Orders_Id" />
+      <PropertyRef Name="ProductQuantities_Id" />
+    </Key>
+    <Property Name="Orders_Id" Type="int" Nullable="false" />
+    <Property Name="ProductQuantities_Id" Type="int" Nullable="false" />
   </EntityType>
   <Association Name="RequestNotificationBroRequest">
     <End Role="RequestNotification" Type="ModelFirst.Store.Notifications_RequestNotification" Multiplicity="*" />
@@ -670,6 +718,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="ProductQuantityProduct">
+    <End Role="ProductQuantity" Type="ModelFirst.Store.ProductQuantities" Multiplicity="*" />
+    <End Role="Product" Type="ModelFirst.Store.Products" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Product">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ProductQuantity">
+        <PropertyRef Name="ProductId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_CircleUser_Circle">
     <End Role="Circle" Type="ModelFirst.Store.Circles" Multiplicity="1" />
     <End Role="CircleUser" Type="ModelFirst.Store.CircleUser" Multiplicity="*" />
@@ -786,7 +846,7 @@
         <PropertyRef Name="Id" />
       </Principal>
       <Dependent Role="OrderProducts">
-        <PropertyRef Name="Products_Id" />
+        <PropertyRef Name="OrderProducts_Order_Id" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -798,7 +858,7 @@
         <PropertyRef Name="Id" />
       </Principal>
       <Dependent Role="ShoppingCartProducts">
-        <PropertyRef Name="ShoppingCarts_Id" />
+        <PropertyRef Name="ShoppingCartProducts_Product_Id" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -810,7 +870,55 @@
         <PropertyRef Name="Id" />
       </Principal>
       <Dependent Role="ShoppingCartProducts">
-        <PropertyRef Name="Products_Id" />
+        <PropertyRef Name="ShoppingCartProducts_ShoppingCart_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ShoppingCartProductQuantity_ShoppingCart">
+    <End Role="ShoppingCart" Type="ModelFirst.Store.ShoppingCarts" Multiplicity="1" />
+    <End Role="ShoppingCartProductQuantity" Type="ModelFirst.Store.ShoppingCartProductQuantity" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ShoppingCart">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ShoppingCartProductQuantity">
+        <PropertyRef Name="ShoppingCarts_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ShoppingCartProductQuantity_ProductQuantity">
+    <End Role="ShoppingCartProductQuantity" Type="ModelFirst.Store.ShoppingCartProductQuantity" Multiplicity="*" />
+    <End Role="ProductQuantity" Type="ModelFirst.Store.ProductQuantities" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="ProductQuantity">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ShoppingCartProductQuantity">
+        <PropertyRef Name="ProductQuantities_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_OrderProductQuantity_Order">
+    <End Role="Order" Type="ModelFirst.Store.Orders" Multiplicity="1" />
+    <End Role="OrderProductQuantity" Type="ModelFirst.Store.OrderProductQuantity" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Order">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="OrderProductQuantity">
+        <PropertyRef Name="Orders_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_OrderProductQuantity_ProductQuantity">
+    <End Role="OrderProductQuantity" Type="ModelFirst.Store.OrderProductQuantity" Multiplicity="*" />
+    <End Role="ProductQuantity" Type="ModelFirst.Store.ProductQuantities" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="ProductQuantity">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="OrderProductQuantity">
+        <PropertyRef Name="ProductQuantities_Id" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -1009,6 +1117,19 @@
             <End Role="ShoppingCart" EntitySet="ShoppingCarts" />
             <End Role="Product" EntitySet="Products" />
           </AssociationSet>
+          <EntitySet Name="ProductQuantities" EntityType="ModelFirst.ProductQuantity" />
+          <AssociationSet Name="ProductQuantityProduct" Association="ModelFirst.ProductQuantityProduct">
+            <End Role="ProductQuantity" EntitySet="ProductQuantities" />
+            <End Role="Product" EntitySet="Products" />
+          </AssociationSet>
+          <AssociationSet Name="ShoppingCartProductQuantity" Association="ModelFirst.ShoppingCartProductQuantity">
+            <End Role="ShoppingCart" EntitySet="ShoppingCarts" />
+            <End Role="ProductQuantity" EntitySet="ProductQuantities" />
+          </AssociationSet>
+          <AssociationSet Name="OrderProductQuantity" Association="ModelFirst.OrderProductQuantity">
+            <End Role="Order" EntitySet="Orders" />
+            <End Role="ProductQuantity" EntitySet="ProductQuantities" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Album">
           <Key>
@@ -1048,6 +1169,7 @@
           <Property Type="Boolean" Name="IsBanned" Nullable="false" />
           <NavigationProperty Name="Orders" Relationship="ModelFirst.OrderUser" FromRole="User" ToRole="Order" />
           <NavigationProperty Name="ShoppingCart" Relationship="ModelFirst.ShoppingCartUser" FromRole="User" ToRole="ShoppingCart" />
+          <Property Type="Boolean" Name="IsMuted" Nullable="false" />
         </EntityType>
         <EntityType Name="Photo" BaseType="ModelFirst.Post">
           <Property Type="String" Name="Caption" Nullable="false" />
@@ -1166,7 +1288,7 @@
           <NavigationProperty Name="Orders" Relationship="ModelFirst.OrderProducts" FromRole="Product" ToRole="Order" />
           <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
           <Property Type="DateTime" Name="DateCreated" Nullable="false" />
-          <NavigationProperty Name="ShoppingCarts" Relationship="ModelFirst.ShoppingCartProducts" FromRole="Product" ToRole="ShoppingCart" />
+          <Property Type="String" Name="Description" Nullable="false" />
         </EntityType>
         <EntityType Name="Tag">
           <Key>
@@ -1426,8 +1548,8 @@
           <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <NavigationProperty Name="User" Relationship="ModelFirst.OrderUser" FromRole="Order" ToRole="User" />
           <Property Type="Int32" Name="UserId" Nullable="false" />
-          <NavigationProperty Name="Products" Relationship="ModelFirst.OrderProducts" FromRole="Order" ToRole="Product" />
           <Property Type="DateTime" Name="DateCreated" Nullable="false" />
+          <NavigationProperty Name="ProductQuantities" Relationship="ModelFirst.OrderProductQuantity" FromRole="Order" ToRole="ProductQuantity" />
         </EntityType>
         <Association Name="OrderUser">
           <End Type="ModelFirst.Order" Role="Order" Multiplicity="*" />
@@ -1451,7 +1573,7 @@
           </Key>
           <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <NavigationProperty Name="User" Relationship="ModelFirst.ShoppingCartUser" FromRole="ShoppingCart" ToRole="User" />
-          <NavigationProperty Name="Products" Relationship="ModelFirst.ShoppingCartProducts" FromRole="ShoppingCart" ToRole="Product" />
+          <NavigationProperty Name="ProductQuantities" Relationship="ModelFirst.ShoppingCartProductQuantity" FromRole="ShoppingCart" ToRole="ProductQuantity" />
         </EntityType>
         <Association Name="ShoppingCartUser">
           <End Type="ModelFirst.ShoppingCart" Role="ShoppingCart" Multiplicity="0..1" />
@@ -1460,6 +1582,37 @@
         <Association Name="ShoppingCartProducts">
           <End Type="ModelFirst.ShoppingCart" Role="ShoppingCart" Multiplicity="*" />
           <End Type="ModelFirst.Product" Role="Product" Multiplicity="*" />
+        </Association>
+        <EntityType Name="ProductQuantity">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Product" Relationship="ModelFirst.ProductQuantityProduct" FromRole="ProductQuantity" ToRole="Product" />
+          <Property Type="Int32" Name="ProductId" Nullable="false" />
+          <NavigationProperty Name="ShoppingCarts" Relationship="ModelFirst.ShoppingCartProductQuantity" FromRole="ProductQuantity" ToRole="ShoppingCart" />
+          <NavigationProperty Name="Orders" Relationship="ModelFirst.OrderProductQuantity" FromRole="ProductQuantity" ToRole="Order" />
+          <Property Type="Int32" Name="Quantity" Nullable="false" />
+        </EntityType>
+        <Association Name="ProductQuantityProduct">
+          <End Type="ModelFirst.ProductQuantity" Role="ProductQuantity" Multiplicity="*" />
+          <End Type="ModelFirst.Product" Role="Product" Multiplicity="1" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ProductQuantity">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ShoppingCartProductQuantity">
+          <End Type="ModelFirst.ShoppingCart" Role="ShoppingCart" Multiplicity="*" />
+          <End Type="ModelFirst.ProductQuantity" Role="ProductQuantity" Multiplicity="*" />
+        </Association>
+        <Association Name="OrderProductQuantity">
+          <End Type="ModelFirst.Order" Role="Order" Multiplicity="*" />
+          <End Type="ModelFirst.ProductQuantity" Role="ProductQuantity" Multiplicity="*" />
         </Association>
       </Schema>
     </edmx:ConceptualModels>
@@ -1486,6 +1639,7 @@
           <ScalarProperty Name="Email" ColumnName="Email" />
           <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
           <ScalarProperty Name="IsBanned" ColumnName="IsBanned" />
+          <ScalarProperty Name="IsMuted" ColumnName="IsMuted" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -1614,6 +1768,7 @@
           <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
           <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
           <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -1670,6 +1825,14 @@
       <EntityTypeMapping TypeName="IsTypeOf(ModelFirst.ShoppingCart)">
         <MappingFragment StoreEntitySet="ShoppingCarts">
           <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ProductQuantities">
+      <EntityTypeMapping TypeName="IsTypeOf(ModelFirst.ProductQuantity)">
+        <MappingFragment StoreEntitySet="ProductQuantities">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="ProductId" ColumnName="ProductId" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -1743,7 +1906,7 @@
         <ScalarProperty Name="Id" ColumnName="Orders_Id" />
       </EndProperty>
       <EndProperty Name="Product">
-        <ScalarProperty Name="Id" ColumnName="Products_Id" />
+        <ScalarProperty Name="Id" ColumnName="OrderProducts_Order_Id" />
       </EndProperty>
     </AssociationSetMapping>
     <AssociationSetMapping Name="ShoppingCartUser" TypeName="ModelFirst.ShoppingCartUser" StoreEntitySet="ShoppingCarts">
@@ -1756,10 +1919,26 @@
     </AssociationSetMapping>
     <AssociationSetMapping Name="ShoppingCartProducts" TypeName="ModelFirst.ShoppingCartProducts" StoreEntitySet="ShoppingCartProducts">
       <EndProperty Name="ShoppingCart">
-        <ScalarProperty Name="Id" ColumnName="ShoppingCarts_Id" />
+        <ScalarProperty Name="Id" ColumnName="ShoppingCartProducts_Product_Id" />
       </EndProperty>
       <EndProperty Name="Product">
-        <ScalarProperty Name="Id" ColumnName="Products_Id" />
+        <ScalarProperty Name="Id" ColumnName="ShoppingCartProducts_ShoppingCart_Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="ShoppingCartProductQuantity" TypeName="ModelFirst.ShoppingCartProductQuantity" StoreEntitySet="ShoppingCartProductQuantity">
+      <EndProperty Name="ShoppingCart">
+        <ScalarProperty Name="Id" ColumnName="ShoppingCarts_Id" />
+      </EndProperty>
+      <EndProperty Name="ProductQuantity">
+        <ScalarProperty Name="Id" ColumnName="ProductQuantities_Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="OrderProductQuantity" TypeName="ModelFirst.OrderProductQuantity" StoreEntitySet="OrderProductQuantity">
+      <EndProperty Name="Order">
+        <ScalarProperty Name="Id" ColumnName="Orders_Id" />
+      </EndProperty>
+      <EndProperty Name="ProductQuantity">
+        <ScalarProperty Name="Id" ColumnName="ProductQuantities_Id" />
       </EndProperty>
     </AssociationSetMapping>
   </EntityContainerMapping>

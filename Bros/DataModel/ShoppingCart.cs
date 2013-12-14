@@ -16,12 +16,12 @@ namespace Bros.DataModel
     {
         public ShoppingCart()
         {
-            this.Products = new HashSet<Product>();
+            this.ProductQuantities = new HashSet<ProductQuantity>();
         }
     
         public int Id { get; set; }
     
         public virtual User User { get; set; }
-        public virtual ICollection<Product> Products { get; set; }
+        public virtual ICollection<ProductQuantity> ProductQuantities { get; set; }
     }
 }

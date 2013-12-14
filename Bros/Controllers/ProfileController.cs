@@ -9,6 +9,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
+using Bros.Models;
 using WebMatrix.WebData;
 
 namespace Bros.Controllers
@@ -105,6 +106,7 @@ namespace Bros.Controllers
         {
             List<User> bros;
             List<User> browseList = new List<User>();
+            List<Compatibility> sortedCompatibilities;
             using (ModelFirstContainer context = new ModelFirstContainer())
             {
                 int id = (int)Session["UserID"];
@@ -122,21 +124,70 @@ namespace Bros.Controllers
                         }
                     }
                 }
-                Session["Compatability"] = DetermineCompatability(thisUser, browseList);
+                sortedCompatibilities = DetermineCompatability(thisUser, browseList);
+                Session["Compatibilities"] = sortedCompatibilities;
             }
 
-            return View(browseList);
+            return View(sortedCompatibilities);
         }
 
-        private Dictionary<User, int> DetermineCompatability(User currentUser, List<User> browseList)
+        private List<Compatibility> DetermineCompatability(User currentUser, List<User> browseList)
         {
-            Dictionary<User, int> compatability = new Dictionary<User, int>();
+            List<Compatibility> compatabilityList = new List<Compatibility>();
 
             foreach (var user in browseList)
             {
-                compatability.Add(user,CompareProfiles(currentUser, user));
+                int compatible = CompareProfiles(currentUser, user);
+                compatabilityList.Add(new Compatibility(){CompatibilityOfUser = compatible, User = user});
             }
-            return compatability;
+            return sortCompatabilityList(compatabilityList);
+        }
+
+        private List<Compatibility> sortCompatabilityList(List<Compatibility> compatabilityList)
+        {
+            return MergeSort(compatabilityList, 0, compatabilityList.Count-1);
+        }
+
+        private List<Compatibility> MergeSort(List<Compatibility> compatibility, int left, int right)
+        {
+            int mid;
+            if (right > left)
+            {
+                mid = (right + left)/2;
+                MergeSort(compatibility, left, mid);
+                MergeSort(compatibility, mid + 1, right);
+
+                Merge(compatibility, left, (mid + 1), right);
+            }
+            return compatibility;
+        }
+
+        private void Merge(List<Compatibility> compatibility, int left, int mid, int right)
+        {
+            List<Compatibility> temp = new List<Compatibility>();
+            int left_end, num_elements, tmp_pos;
+            left_end = (mid - 1);
+            tmp_pos = left;
+            num_elements = (right - left + 1);
+            
+            while ((left <= left_end) && (mid <= right))
+            {
+                if (compatibility[left].CompatibilityOfUser <= compatibility[mid].CompatibilityOfUser)
+                    temp[tmp_pos++] = compatibility[left++];
+                else
+                    temp[tmp_pos++] = compatibility[mid++];
+            }
+
+            while (left <= left_end)
+                temp[tmp_pos++] = compatibility[left++];
+            while (mid <= right)
+                temp[tmp_pos++] = compatibility[mid++];
+
+            for (int i = 0; i < num_elements; i++)
+            {
+                compatibility[right] = temp[right];
+                right--;
+            }
         }
 
         private int CompareProfiles(User currentUser, User user)

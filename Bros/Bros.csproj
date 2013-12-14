@@ -210,6 +210,9 @@
     <Compile Include="DataModel\Product.cs">
       <DependentUpon>ModelFirst.tt</DependentUpon>
     </Compile>
+    <Compile Include="DataModel\ProductQuantity.cs">
+      <DependentUpon>ModelFirst.tt</DependentUpon>
+    </Compile>
     <Compile Include="DataModel\Profile.cs">
       <DependentUpon>ModelFirst.tt</DependentUpon>
     </Compile>
@@ -234,6 +237,7 @@
     <Compile Include="Hubs\Chat.cs" />
     <Compile Include="Hubs\ChatUser.cs" />
     <Compile Include="Hubs\Startup.cs" />
+    <Compile Include="Models\Compatibility.cs" />
     <Compile Include="Models\Enums.cs" />
     <Compile Include="Models\ProfileSetting.cs" />
     <Compile Include="Models\ProfileFactory.cs" />

@@ -12,25 +12,20 @@ namespace Bros.DataModel
     using System;
     using System.Collections.Generic;
     
-    public partial class Product
+    public partial class ProductQuantity
     {
-        public Product()
+        public ProductQuantity()
         {
-            this.Tags = new HashSet<Tag>();
+            this.ShoppingCarts = new HashSet<ShoppingCart>();
             this.Orders = new HashSet<Order>();
         }
     
         public int Id { get; set; }
-        public string Name { get; set; }
-        public double Price { get; set; }
-        public byte[] Image { get; set; }
-        public int CategoryId { get; set; }
-        public bool IsDeleted { get; set; }
-        public System.DateTime DateCreated { get; set; }
-        public string Description { get; set; }
+        public int ProductId { get; set; }
+        public int Quantity { get; set; }
     
-        public virtual Category Category { get; set; }
-        public virtual ICollection<Tag> Tags { get; set; }
+        public virtual Product Product { get; set; }
+        public virtual ICollection<ShoppingCart> ShoppingCarts { get; set; }
         public virtual ICollection<Order> Orders { get; set; }
     }
 }

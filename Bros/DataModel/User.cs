@@ -38,6 +38,7 @@ namespace Bros.DataModel
         public string Email { get; set; }
         public bool IsDeleted { get; set; }
         public bool IsBanned { get; set; }
+        public bool IsMuted { get; set; }
     
         public virtual ICollection<Circle> JoinedCircles { get; set; }
         public virtual ICollection<User> BlockedBros { get; set; }
