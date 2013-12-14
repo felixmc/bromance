@@ -1,0 +1,23 @@
+﻿@model Bros.DataModel.Product
+
+<fieldset>
+    <legend>Product</legend>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Name)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Name)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Price)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Price)
+    </div>
+
+</fieldset>
+<p>
+      @Html.ActionLink("Revome Item From List", "RemoveProductFromCart", new { productID = Model.Id },false)
+</p>

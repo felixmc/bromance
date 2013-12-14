@@ -67,8 +67,6 @@ namespace Bros.Controllers
             return View(user);
         }
 
-        #region BroRequest
-
         public ActionResult BlockBro(int id)
         {
             
@@ -124,11 +122,57 @@ namespace Bros.Controllers
                         }
                     }
                 }
-
-
+                Session["Compatability"] = DetermineCompatability(thisUser, browseList);
             }
 
             return View(browseList);
+        }
+
+        private Dictionary<User, int> DetermineCompatability(User currentUser, List<User> browseList)
+        {
+            Dictionary<User, int> compatability = new Dictionary<User, int>();
+
+            foreach (var user in browseList)
+            {
+                compatability.Add(user,CompareProfiles(currentUser, user));
+            }
+            return compatability;
+        }
+
+        private int CompareProfiles(User currentUser, User user)
+        {
+            const int totalPreference = 12;
+            int compatablePreference = 0;
+
+            Profile userProfile = user.Profile;
+            Profile currentUserProfile = currentUser.Profile;
+            
+            if (currentUserProfile.Athleticism.Equals(userProfile.Athleticism))
+                compatablePreference++;
+            if (currentUserProfile.Children.Equals(userProfile.Children))
+                compatablePreference++;
+            if (currentUserProfile.Drinks.Equals(userProfile.Drinks))
+                compatablePreference++;
+            if (currentUserProfile.Drugs.Equals(userProfile.Drugs))
+                compatablePreference++;
+            if (currentUserProfile.Education.Equals(userProfile.Education))
+                compatablePreference++;
+            if (currentUserProfile.Ethnicity.Equals(userProfile.Ethnicity))
+                compatablePreference++;
+            if (currentUserProfile.Job.Equals(userProfile.Job))
+                compatablePreference++;
+            if (currentUserProfile.MarriageStatus.Equals(userProfile.MarriageStatus))
+                compatablePreference++;
+            if (currentUserProfile.Pets.Equals(userProfile.Pets))
+                compatablePreference++;
+            if (currentUserProfile.Religion.Equals(userProfile.SexualOrientation))
+                compatablePreference++;
+            if (currentUserProfile.Religion.Equals(userProfile.Religion))
+                compatablePreference++;
+            if (currentUserProfile.Smokes.Equals(userProfile.Smokes))
+                compatablePreference++;
+            double compatability = compatablePreference/totalPreference;
+            return (int) (compatability*100);
         }
 
         public ActionResult SendBroRequest(int recieverID)
@@ -154,6 +198,18 @@ namespace Bros.Controllers
             }
 
             return View();
+        }
+
+        public void Circles()
+        {
+            IEnumerable<Circle> circles;
+            using (ModelFirstContainer context = new ModelFirstContainer())
+            {
+                int id = WebSecurity.CurrentUserId;
+                User user = context.Users.SingleOrDefault(u => u.Id == id);
+
+                circles = user.Circles.ToList();
+            }
         }
 
         public void CreateCircle(string CircleName)
@@ -230,7 +286,7 @@ namespace Bros.Controllers
                 AddBroToCircle("MyBros", request.Sender, request.Receiver);
                 AddBroToCircle("MyBros", request.Receiver, request.Sender);
 
-                //request.RequestNotification.IsRead = true;
+                request.RequestNotification.IsRead = true;
             }
         }
 
@@ -261,7 +317,9 @@ namespace Bros.Controllers
         {
             using (ModelFirstContainer context = new ModelFirstContainer())
             {
-                //request.RequestNotification.IsRead = true;
+                context.BroRequests.SingleOrDefault(x => x.Id == requestID).RequestNotification.IsRead = true;
+
+                context.SaveChanges();
             }
 
             return RedirectToAction("ProfileIndex");
@@ -280,8 +338,6 @@ namespace Bros.Controllers
 
             return View(unreadBroRequests);
         }
-
-        #endregion
 
         [Authorize]
         public new ActionResult Profile()

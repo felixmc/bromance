@@ -17,6 +17,7 @@ namespace Bros.Controllers
 
         public ActionResult StoreIndex()
         {
+
             return View();
         }
         
@@ -238,7 +239,7 @@ namespace Bros.Controllers
 
         public ActionResult ViewAllProducts()
         {
-
+            ViewBag.AddToCart = true;
             using (ModelFirstContainer context = new ModelFirstContainer())
             {
                 ViewBag.Products = context.Products.Include("Tags").Include("Category").Where(x => !x.IsDeleted).ToList(); 
@@ -261,11 +262,13 @@ namespace Bros.Controllers
 
         public ActionResult ViewProduct(Product product)
         {
+            ViewBag.AddToCart = true;
             return View(product);
         }
 
         public ActionResult ViewProductById(int productID)
         {
+            ViewBag.AddToCart = true;
             Product product;
             using (ModelFirstContainer context = new ModelFirstContainer())
             {
@@ -342,6 +345,7 @@ namespace Bros.Controllers
 
         public ActionResult AddProductToCart(int productID)
         {
+            ViewBag.AddToCart = true;
             using (ModelFirstContainer context = new ModelFirstContainer()){
 
                 int userId = WebSecurity.CurrentUserId;
@@ -358,8 +362,9 @@ namespace Bros.Controllers
             return RedirectToAction("StoreIndex");
         }
 
-        public ActionResult RemoveProductFromCart(int productID)
+        public ActionResult RemoveProductFromCart(int productID = -10)
         {
+            ViewBag.RemoveFromCart = true;
             using (ModelFirstContainer context = new ModelFirstContainer())
             {
                 int userId = WebSecurity.CurrentUserId;
@@ -373,22 +378,53 @@ namespace Bros.Controllers
                 context.SaveChanges();
             }
 
-            return RedirectToAction("StoreIndex");
+            return RedirectToAction("ViewCart");
         }
 
         public ActionResult ViewCart()
         {
             int sessionId = (int)Session["UserId"];
             List<Product> products;
+            ViewBag.RemoveFromCart = true;
             using(var context = new ModelFirstContainer())
             {
                 ShoppingCart cart = context.ShoppingCarts.Single(x => x.User.Id == sessionId);
-                products = cart.Products.ToList();
+                ViewBag.ItemsInShoppingCart = cart.Products;
             }
 
-            ViewBag.products = products;
+           
             return View();
         }
-      
+
+        public ActionResult ViewCheckout()
+        {
+
+            using(var context = new ModelFirstContainer())
+            {
+                ShoppingCart cart = context.ShoppingCarts.Single(x => x.User.Id == WebSecurity.CurrentUserId);
+                ViewBag.ItemsInShoppingCart = cart.Products;
+            }
+            return View();
+
+        }
+           
+        public ActionResult Checkout()
+        {
+            int id = WebSecurity.CurrentUserId;
+            using(var context = new ModelFirstContainer())
+            {
+                User user = context.Users.Single(x => x.Id == id);
+                ShoppingCart cart = context.ShoppingCarts.Single(x => x.User.Id == id);
+                foreach (Product p in cart.Products)
+                {
+                    user.ShoppingCart.Products.Remove(p);
+                }
+
+                context.SaveChanges();
+
+            }
+
+            return View();
+        }
     }
 }

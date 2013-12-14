@@ -3,7 +3,6 @@
     
 }
 
-<h2>Product Partial View</h2>
 <div class="ProductName">@Html.ActionLink(@Model.Name, "ViewProductById", new { productID = Model.Id })</div>
 <div class="ProductCategory">Category: @Model.Category.Name</div>
 @{
