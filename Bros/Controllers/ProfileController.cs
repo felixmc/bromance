@@ -36,6 +36,8 @@ namespace Bros.Controllers
             return View();
         }
 
+        #region Feed
+
         [Authorize]
         public ActionResult Feed()
         {
@@ -59,172 +61,11 @@ namespace Bros.Controllers
             return View(feedPosts);
         }
 
-        public ActionResult Settings(int id)
-        {
-            User user = new User();
-            using(var context = new ModelFirstContainer()){
-                user = context.Users.Include("Profile").Include("BlockedBros.Profile").FirstOrDefault(u => u.Id == id);
-            }
-            return View(user);
-        }
 
-        public ActionResult BlockBro(int id)
-        {
-            
-            using(var context = new ModelFirstContainer()){
-                int userId = WebSecurity.CurrentUserId;
-                User blockedUser = context.Users.FirstOrDefault(u => u.Id == id);
-                User thisUser = context.Users.FirstOrDefault(u => u.Id == userId);
-                thisUser.BlockedBros.Add(blockedUser);
 
-                IEnumerable<Circle> circleList = context.Circles.Where(c => c.Owner.Id == thisUser.Id);
-                foreach(Circle circle in circleList){
-                    circle.Members.Remove(blockedUser);
-                }
-                context.SaveChanges();
-               
-            }
-            return RedirectToAction("ViewBros", "Profile");
-        }
+        #endregion
 
-        public ActionResult UnblockBro(int id)
-        {
-            User blockedUser = new User();
-            User thisUser = new User();
-            using(var context = new ModelFirstContainer()){
-                blockedUser = context.Users.Include("BlockedBros.Profile").FirstOrDefault(u => u.Id == id);
-                thisUser = context.Users.Include("BlockedBros.Profile").FirstOrDefault(u => u.Id == WebSecurity.CurrentUserId);
-                thisUser.BlockedBros.Remove(blockedUser);
-                context.SaveChanges();
-                ViewBag.Success = "You have unblocked " + blockedUser.Profile.FirstName + " " + blockedUser.Profile.LastName;
-            }
-            
-            return View("Settings", thisUser);
-        }
-
-        public ActionResult ViewBros()
-        {
-            List<User> bros;
-            List<User> browseList = new List<User>();
-            List<Compatibility> sortedCompatibilities;
-            using (ModelFirstContainer context = new ModelFirstContainer())
-            {
-                int id = (int)Session["UserID"];
-                User thisUser = context.Users.FirstOrDefault(u => u.Id == id);
-                //bros = context.Users.Where(u => u.Id != id).ToList();
-                bros = context.Users.Include("Profile").Where(u => u.Id != id).ToList();
-                browseList = bros.ToList();
-                foreach (User bro in bros)
-                {
-                    foreach(User blockedBro in thisUser.BlockedBros){
-                        if (bro.Id == blockedBro.Id)
-                        {
-                            browseList.Remove(bro);
-                            break;
-                        }
-                    }
-                }
-                sortedCompatibilities = DetermineCompatability(thisUser, browseList);
-                Session["Compatibilities"] = sortedCompatibilities;
-            }
-
-            return View(sortedCompatibilities);
-        }
-
-        private List<Compatibility> DetermineCompatability(User currentUser, List<User> browseList)
-        {
-            List<Compatibility> compatabilityList = new List<Compatibility>();
-
-            foreach (var user in browseList)
-            {
-                int compatible = CompareProfiles(currentUser, user);
-                compatabilityList.Add(new Compatibility(){CompatibilityOfUser = compatible, User = user});
-            }
-            return sortCompatabilityList(compatabilityList);
-        }
-
-        private List<Compatibility> sortCompatabilityList(List<Compatibility> compatabilityList)
-        {
-            return MergeSort(compatabilityList, 0, compatabilityList.Count-1);
-        }
-
-        private List<Compatibility> MergeSort(List<Compatibility> compatibility, int left, int right)
-        {
-            int mid;
-            if (right > left)
-            {
-                mid = (right + left)/2;
-                MergeSort(compatibility, left, mid);
-                MergeSort(compatibility, mid + 1, right);
-
-                Merge(compatibility, left, (mid + 1), right);
-            }
-            return compatibility;
-        }
-
-        private void Merge(List<Compatibility> compatibility, int left, int mid, int right)
-        {
-            List<Compatibility> temp = new List<Compatibility>();
-            int left_end, num_elements, tmp_pos;
-            left_end = (mid - 1);
-            tmp_pos = left;
-            num_elements = (right - left + 1);
-            
-            while ((left <= left_end) && (mid <= right))
-            {
-                if (compatibility[left].CompatibilityOfUser <= compatibility[mid].CompatibilityOfUser)
-                    temp[tmp_pos++] = compatibility[left++];
-                else
-                    temp[tmp_pos++] = compatibility[mid++];
-            }
-
-            while (left <= left_end)
-                temp[tmp_pos++] = compatibility[left++];
-            while (mid <= right)
-                temp[tmp_pos++] = compatibility[mid++];
-
-            for (int i = 0; i < num_elements; i++)
-            {
-                compatibility[right] = temp[right];
-                right--;
-            }
-        }
-
-        private int CompareProfiles(User currentUser, User user)
-        {
-            const int totalPreference = 12;
-            int compatablePreference = 0;
-
-            Profile userProfile = user.Profile;
-            Profile currentUserProfile = currentUser.Profile;
-            
-            if (currentUserProfile.Athleticism.Equals(userProfile.Athleticism))
-                compatablePreference++;
-            if (currentUserProfile.Children.Equals(userProfile.Children))
-                compatablePreference++;
-            if (currentUserProfile.Drinks.Equals(userProfile.Drinks))
-                compatablePreference++;
-            if (currentUserProfile.Drugs.Equals(userProfile.Drugs))
-                compatablePreference++;
-            if (currentUserProfile.Education.Equals(userProfile.Education))
-                compatablePreference++;
-            if (currentUserProfile.Ethnicity.Equals(userProfile.Ethnicity))
-                compatablePreference++;
-            if (currentUserProfile.Job.Equals(userProfile.Job))
-                compatablePreference++;
-            if (currentUserProfile.MarriageStatus.Equals(userProfile.MarriageStatus))
-                compatablePreference++;
-            if (currentUserProfile.Pets.Equals(userProfile.Pets))
-                compatablePreference++;
-            if (currentUserProfile.Religion.Equals(userProfile.SexualOrientation))
-                compatablePreference++;
-            if (currentUserProfile.Religion.Equals(userProfile.Religion))
-                compatablePreference++;
-            if (currentUserProfile.Smokes.Equals(userProfile.Smokes))
-                compatablePreference++;
-            double compatability = compatablePreference/totalPreference;
-            return (int) (compatability*100);
-        }
+        #region BroRequests
 
         public ActionResult SendBroRequest(int recieverID)
         {
@@ -249,33 +90,6 @@ namespace Bros.Controllers
             }
 
             return View();
-        }
-
-        public void Circles()
-        {
-            IEnumerable<Circle> circles;
-            using (ModelFirstContainer context = new ModelFirstContainer())
-            {
-                int id = WebSecurity.CurrentUserId;
-                User user = context.Users.SingleOrDefault(u => u.Id == id);
-
-                circles = user.Circles.ToList();
-            }
-        }
-
-        public void CreateCircle(string CircleName)
-        {
-            using (ModelFirstContainer context = new ModelFirstContainer())
-            {
-                int id = (int)Session["UserID"];
-                User user = context.Users.FirstOrDefault(u => u.Id == id);
-                Circle targetCircle = new Circle();
-                targetCircle.Name = CircleName;
-                targetCircle.Owner = user;
-                user.Circles.Add(targetCircle);
-
-                context.SaveChanges();
-            }
         }
 
         public BroRequest CreateRequest(User Sender, User Receiver)
@@ -316,20 +130,6 @@ namespace Bros.Controllers
             return View();
         }
 
-        public void RemoveBro(int targetBroId)
-        {
-            using (ModelFirstContainer context = new ModelFirstContainer())
-            {
-                int userId = WebSecurity.CurrentUserId;
-                User user = context.Users.SingleOrDefault(x => x.Id == userId);
-
-                User targetUser = context.Users.SingleOrDefault(x => x.Id == targetBroId);
-
-                RemoveBroFromCircle("MyBros", user, targetUser);
-                RemoveBroFromCircle("MyBros", targetUser, user);
-            }
-        }
-
         public void AcceptRequest(BroRequest request)
         {
             using (ModelFirstContainer context = new ModelFirstContainer())
@@ -339,29 +139,6 @@ namespace Bros.Controllers
 
                 request.RequestNotification.IsRead = true;
             }
-        }
-
-        public void AddBroToCircle(string CircleName, User circleOwner, User broAdded)
-        {
-            Circle targetCircle = GetCircleByName(circleOwner, CircleName);
-            if (!targetCircle.Members.Contains(broAdded))
-            {
-                targetCircle.Members.Add(broAdded);
-            }
-        }
-
-        public void RemoveBroFromCircle(string circleName, User circleOwner, User broRemoved)
-        {
-            Circle targetCircle = GetCircleByName(circleOwner, circleName);
-            if (targetCircle.Members.Contains(broRemoved))
-            {
-                targetCircle.Members.Remove(broRemoved);
-            }
-        }
-
-        public Circle GetCircleByName(User user, string CircleName)
-        {
-            return user.Circles.FirstOrDefault(m => m.Name == CircleName);
         }
 
         public ActionResult DismissRequest(int requestID)
@@ -390,6 +167,623 @@ namespace Bros.Controllers
             return View(unreadBroRequests);
         }
 
+        #endregion
+
+        #region Circles
+
+        public void Circles()
+        {
+            IEnumerable<Circle> circles;
+            using (ModelFirstContainer context = new ModelFirstContainer())
+            {
+                int id = WebSecurity.CurrentUserId;
+                User user = context.Users.SingleOrDefault(u => u.Id == id);
+
+                circles = user.Circles.ToList();
+            }
+        }
+
+        public void CreateCircle(string CircleName)
+        {
+            using (ModelFirstContainer context = new ModelFirstContainer())
+            {
+                int id = (int)Session["UserID"];
+                User user = context.Users.FirstOrDefault(u => u.Id == id);
+                Circle targetCircle = new Circle();
+                targetCircle.Name = CircleName;
+                targetCircle.Owner = user;
+                user.Circles.Add(targetCircle);
+
+                context.SaveChanges();
+            }
+        }
+
+        public void AddBroToCircle(string CircleName, User circleOwner, User broAdded)
+        {
+            Circle targetCircle = GetCircleByName(circleOwner, CircleName);
+            if (!targetCircle.Members.Contains(broAdded))
+            {
+                targetCircle.Members.Add(broAdded);
+            }
+        }
+
+        public void RemoveBroFromCircle(string circleName, User circleOwner, User broRemoved)
+        {
+            Circle targetCircle = GetCircleByName(circleOwner, circleName);
+            if (targetCircle.Members.Contains(broRemoved))
+            {
+                targetCircle.Members.Remove(broRemoved);
+            }
+        }
+
+        public Circle GetCircleByName(User user, string CircleName)
+        {
+            return user.Circles.FirstOrDefault(m => m.Name == CircleName);
+        }
+
+        #endregion
+
+        #region Compatibility
+
+        private List<Compatibility> DetermineCompatability(User currentUser, List<User> browseList)
+        {
+            List<Compatibility> compatabilityList = new List<Compatibility>();
+
+            foreach (var user in browseList)
+            {
+                int compatible = CompareProfiles(currentUser, user);
+                compatabilityList.Add(new Compatibility() { CompatibilityOfUser = compatible, User = user });
+            }
+            return sortCompatabilityList(compatabilityList);
+        }
+
+        private List<Compatibility> sortCompatabilityList(List<Compatibility> compatabilityList)
+        {
+            return MergeSort(compatabilityList, 0, compatabilityList.Count - 1);
+        }
+
+        private List<Compatibility> MergeSort(List<Compatibility> compatibility, int left, int right)
+        {
+            int mid;
+            if (right > left)
+            {
+                mid = (right + left) / 2;
+                MergeSort(compatibility, left, mid);
+                MergeSort(compatibility, mid + 1, right);
+
+                Merge(compatibility, left, (mid + 1), right);
+            }
+            return compatibility;
+        }
+
+        private void Merge(List<Compatibility> compatibility, int left, int mid, int right)
+        {
+            List<Compatibility> temp = new List<Compatibility>();
+            int left_end, num_elements, tmp_pos;
+            left_end = (mid - 1);
+            tmp_pos = left;
+            num_elements = (right - left + 1);
+
+            while ((left <= left_end) && (mid <= right))
+            {
+                if (compatibility[left].CompatibilityOfUser <= compatibility[mid].CompatibilityOfUser)
+                    temp[tmp_pos++] = compatibility[left++];
+                else
+                    temp[tmp_pos++] = compatibility[mid++];
+            }
+
+            while (left <= left_end)
+                temp[tmp_pos++] = compatibility[left++];
+            while (mid <= right)
+                temp[tmp_pos++] = compatibility[mid++];
+
+            for (int i = 0; i < num_elements; i++)
+            {
+                compatibility[right] = temp[right];
+                right--;
+            }
+        }
+
+        private int CompareProfiles(User currentUser, User user)
+        {
+            const int totalPreference = 12;
+            int compatablePreference = 0;
+
+            Profile userProfile = user.Profile;
+            Profile currentUserProfile = currentUser.Profile;
+
+            if (currentUserProfile.Athleticism.Equals(userProfile.Athleticism))
+                compatablePreference++;
+            if (currentUserProfile.Children.Equals(userProfile.Children))
+                compatablePreference++;
+            if (currentUserProfile.Drinks.Equals(userProfile.Drinks))
+                compatablePreference++;
+            if (currentUserProfile.Drugs.Equals(userProfile.Drugs))
+                compatablePreference++;
+            if (currentUserProfile.Education.Equals(userProfile.Education))
+                compatablePreference++;
+            if (currentUserProfile.Ethnicity.Equals(userProfile.Ethnicity))
+                compatablePreference++;
+            if (currentUserProfile.Job.Equals(userProfile.Job))
+                compatablePreference++;
+            if (currentUserProfile.MarriageStatus.Equals(userProfile.MarriageStatus))
+                compatablePreference++;
+            if (currentUserProfile.Pets.Equals(userProfile.Pets))
+                compatablePreference++;
+            if (currentUserProfile.Religion.Equals(userProfile.SexualOrientation))
+                compatablePreference++;
+            if (currentUserProfile.Religion.Equals(userProfile.Religion))
+                compatablePreference++;
+            if (currentUserProfile.Smokes.Equals(userProfile.Smokes))
+                compatablePreference++;
+            double compatability = compatablePreference / totalPreference;
+            return (int)(compatability * 100);
+        }
+
+        #endregion
+
+        #region BroBlocking
+
+        public ActionResult BlockBro(int id)
+        {
+            
+            using(var context = new ModelFirstContainer()){
+                int userId = WebSecurity.CurrentUserId;
+                User blockedUser = context.Users.FirstOrDefault(u => u.Id == id);
+                User thisUser = context.Users.FirstOrDefault(u => u.Id == userId);
+                thisUser.BlockedBros.Add(blockedUser);
+
+                IEnumerable<Circle> circleList = context.Circles.Where(c => c.Owner.Id == thisUser.Id);
+                foreach(Circle circle in circleList){
+                    circle.Members.Remove(blockedUser);
+                }
+                context.SaveChanges();
+               
+            }
+            return RedirectToAction("ViewBros", "Profile");
+        }
+
+        public ActionResult UnblockBro(int id)
+        {
+            User blockedUser = new User();
+            User thisUser = new User();
+            using(var context = new ModelFirstContainer()){
+                blockedUser = context.Users.Include("BlockedBros.Profile").FirstOrDefault(u => u.Id == id);
+                thisUser = context.Users.Include("BlockedBros.Profile").FirstOrDefault(u => u.Id == WebSecurity.CurrentUserId);
+                thisUser.BlockedBros.Remove(blockedUser);
+                context.SaveChanges();
+                ViewBag.Success = "You have unblocked " + blockedUser.Profile.FirstName + " " + blockedUser.Profile.LastName;
+            }
+            
+            return View("Settings", thisUser);
+        }
+
+        #endregion
+
+        #region Profile
+
+        [Authorize]
+        [HttpGet]
+        public ActionResult ChangeProfilePhoto()
+        {
+            User thisUser = new User();
+            using (var context = new ModelFirstContainer())
+            {
+                thisUser = context.Users.Include("Profile.ProfilePhoto").FirstOrDefault(u => u.Id == WebSecurity.CurrentUserId);
+            }
+            return View(thisUser);
+        }
+
+        [Authorize]
+        [HttpPost]
+        public ActionResult UpdateProfile(Profile profile)
+        {
+            return null;
+        }
+
+        [Authorize]
+        [HttpPost]
+        public ActionResult ChangeProfilePhoto(HttpPostedFileBase img)
+        {
+
+            User thisUser = new User();
+            using (var context = new ModelFirstContainer())
+            {
+                thisUser = context.Users.Include("Profile.ProfilePhoto").FirstOrDefault(u => u.Id == WebSecurity.CurrentUserId);
+                Album album = thisUser.Albums.FirstOrDefault(a => a.Title == "Profile Pictures");
+                if (album == null)
+                {
+                    album = new Album()
+                    {
+                        Title = "Profile Pictures",
+                        DateCreated = DateTime.Now,
+                        Owner = thisUser,
+                        IsDeleted = false
+                    };
+                }
+
+                byte[] data = null;
+                if (img != null && img.ContentLength > 0)
+                {
+                    using (MemoryStream target = new MemoryStream())
+                    {
+                        img.InputStream.CopyTo(target);
+                        data = target.ToArray();
+
+                    }
+                }
+                else
+                {
+                    throw new Exception("derpp");
+                }
+
+                Photo photo = new Photo()
+                {
+                    ImageData = data,
+                    DateCreated = DateTime.Now,
+                    IsDeleted = false,
+                    IsFlagged = false,
+                    Album = album,
+                    UserId = thisUser.Id,
+                    Caption = "",
+                    DateUpdated = DateTime.Now
+
+                };
+
+                album.Photos.Add(photo);
+                thisUser.Profile.ProfilePhoto = photo;
+                context.SaveChanges();
+            }
+            return View("Feed");
+        }
+
+        [Authorize]
+        [HttpGet]
+        public ActionResult EditProfile()
+        {
+            User thisUser = new User();
+            using (var context = new ModelFirstContainer())
+            {
+                int userId = WebSecurity.CurrentUserId;
+                thisUser = context.Users.Include("Profile").FirstOrDefault(u => u.Id == userId);
+
+
+            }
+            return View("ProfileAttribute", thisUser.Profile);
+
+        }
+
+        [Authorize]
+        [HttpPost]
+        public ActionResult EditProfileAttributes(Profile prof)
+        {
+
+            if (Session["UserId"] != null)
+            {
+                int id = (int)Session["UserId"];
+
+                if (ModelState.IsValid)
+                    using (ModelFirstContainer context = new ModelFirstContainer())
+                    {
+                        User user = context.Users.FirstOrDefault(u => u.Id == WebSecurity.CurrentUserId);
+                        user.Profile.Athleticism = prof.Athleticism;
+                        user.Profile.Children = prof.Children;
+                        user.Profile.Drinks = prof.Drinks;
+                        user.Profile.Drugs = prof.Drugs;
+                        user.Profile.Education = prof.Education;
+                        user.Profile.Ethnicity = prof.Ethnicity;
+                        user.Profile.Job = prof.Job;
+                        user.Profile.MarriageStatus = prof.MarriageStatus;
+                        user.Profile.Pets = prof.Pets;
+                        user.Profile.Religion = prof.Religion;
+                        user.Profile.SexualOrientation = prof.SexualOrientation;
+                        user.Profile.Smokes = prof.Smokes;
+
+                        context.SaveChanges();
+                    }
+
+                return View("ProfileIndex");
+            }
+            else
+                throw new Exception("Session is null, or user not logged in.");
+
+        }
+
+
+
+        #endregion
+
+        #region Album
+
+        [Authorize]
+        public ActionResult ManageAlbums()
+        {
+            List<Album> albumList = new List<Album>();
+            using (var context = new ModelFirstContainer())
+            {
+                int id = WebSecurity.CurrentUserId;
+                User user = context.Users.Include("Albums.Photos").FirstOrDefault(u => u.Id == id);
+                albumList = user.Albums.ToList();
+            }
+            return View(albumList);
+        }
+
+        [Authorize]
+        public ActionResult PhotoGallery(int id)
+        {
+            Album album = new Album();
+            using (var context = new ModelFirstContainer())
+            {
+                album = context.Albums.Include("Photos.Comments").FirstOrDefault(a => a.Id == id);
+                ViewBag.AlbumId = album.Id;
+            }
+            return View(album.Photos.ToList());
+        }
+
+        [Authorize]
+        [HttpGet]
+        public ActionResult AddPhoto(int albumId)
+        {
+            ViewBag.AlbumId = albumId;
+            using (var context = new ModelFirstContainer())
+            {
+                Album album = context.Albums.Include("Owner").FirstOrDefault(u => u.Id == albumId);
+                int id = album.Owner.Id;
+                ViewBag.UserId = id;
+            }
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult AddPhoto([Bind(Exclude = "ImageData")]Photo photo, HttpPostedFileBase img, int id, int AlbumId)
+        {
+
+
+            byte[] data = null;
+            if (img != null && img.ContentLength > 0)
+            {
+                MemoryStream target = new MemoryStream();
+                img.InputStream.CopyTo(target);
+                data = target.ToArray();
+            }
+            else
+            {
+                throw new Exception("derpp");
+            }
+
+            using (var context = new ModelFirstContainer())
+            {
+
+                User user = context.Users.FirstOrDefault(u => u.Id == id);
+                Photo photo2 = new Photo()
+                {
+                    Caption = photo.Caption,
+                    DateCreated = DateTime.Now,
+                    DateUpdated = DateTime.Now,
+                    ImageData = data,
+                    AlbumId = AlbumId,
+                    Author = user,
+                    IsDeleted = false,
+                    IsFlagged = false
+
+                };
+
+                context.Posts.Add(photo2);
+                context.SaveChanges();
+            }
+            return RedirectToAction("PhotoGallery", "Profile", new { id = photo.AlbumId });
+        }
+
+        public ActionResult RemovePhoto(int id, int albumId)
+        {
+            using (var context = new ModelFirstContainer())
+            {
+                //Album album = context.Albums.FirstOrDefault(a =>a.Id == albumId);
+                Photo photo = context.Posts.Include("Comments").Where(x => x is Bros.DataModel.Photo).Select(p => p as Bros.DataModel.Photo).FirstOrDefault(u => u.Id == id);
+
+                if (photo.Comments.Count != 0)
+                {
+                    //I need to cascade delete with photo & comments Get Felix's code for this
+                }
+
+                context.Posts.Remove(photo);
+                context.SaveChanges();
+            }
+
+            return RedirectToAction("PhotoGallery", "Profile", albumId);
+        }
+
+        public ActionResult SinglePhotoComment(int id)
+        {
+            Photo photo = new Photo();
+            using (var context = new ModelFirstContainer())
+            {
+                photo = context.Posts.Include("Comments.Owner.Profile").Where(x => x is Bros.DataModel.Photo).Select(p => p as Bros.DataModel.Photo).FirstOrDefault(u => u.Id == id);
+            }
+
+            return View("PhotoComments", photo);
+        }
+
+        [Authorize]
+        [HttpGet]
+        public ActionResult CreateAlbum()
+        {
+
+            return View();
+        }
+
+        [Authorize]
+        [HttpPost]
+        public ActionResult CreateAlbum(Album album)
+        {
+
+            int userId = WebSecurity.CurrentUserId;
+            using (var context = new ModelFirstContainer())
+            {
+
+                User own = context.Users.FirstOrDefault(u => u.Id == userId);
+                Album al = new Album()
+                {
+                    Title = album.Title,
+                    UserId = WebSecurity.CurrentUserId,
+                    DateCreated = DateTime.Now,
+                    IsDeleted = false,
+                    Owner = own
+
+                };
+
+                context.Albums.Add(al);
+                try
+                {
+                    if (album.Title.ToLower().Equals("profile pictures")) throw new DbEntityValidationException();
+                    context.SaveChanges();
+                }
+                catch (DbEntityValidationException e)
+                {
+                    ViewBag.ErrorMessage = "Cannot be named 'Profile Pictures'.";
+                    return View();
+                }
+            }
+            return RedirectToAction("ManageAlbums", "Profile");
+        }
+
+        public ActionResult DeleteAlbum(int id)
+        {
+            using (var context = new ModelFirstContainer())
+            {
+                int userId = WebSecurity.CurrentUserId;
+                User owner = context.Users.FirstOrDefault(u => u.Id == userId);
+                Album album = context.Albums.Include("Photos").FirstOrDefault(a => a.Id == id);
+
+                album.Owner = owner;
+                if (album.Photos.Count != 0)
+                {
+                    foreach (Photo x in album.Photos.ToList())
+                    {
+                        Photo photo = context.Posts.Include("Comments").Where(p => p is Bros.DataModel.Photo).Select(p => p as Bros.DataModel.Photo).FirstOrDefault(u => u.Id == x.Id);
+
+                        if (photo.Comments.Count != 0)
+                        {
+                            foreach (Comment y in x.Comments.ToList())
+                            {
+                                context.Comments.Remove(y);
+                            }
+                        }
+                        context.Posts.Remove(photo);
+                    }
+                }
+
+                context.Albums.Remove(album);
+                context.SaveChanges();
+            }
+            return RedirectToAction("ManageAlbums", "Profile");
+        }
+
+        #endregion
+
+        #region Notifications
+
+        public ActionResult Notifications()
+        {
+            List<Notification> notifications = new List<Notification>();
+            using (ModelFirstContainer context = new ModelFirstContainer())
+            {
+                int userId = (int)Session["UserId"];
+
+                foreach (Notification not in context.Notifications.Where(n => n.Receiver.Id == userId && n.IsRead == false))
+                {
+                    if (not is CommentNotification)
+                    {
+                        CommentNotification cn = not as CommentNotification;
+                        context.Entry(cn.Comment.Owner).Reference(u => u.Profile).Load();
+                        notifications.Add(cn);
+                    }
+                    else if (not is Bros.DataModel.RequestNotification)
+                    {
+                        Bros.DataModel.RequestNotification cn = not as Bros.DataModel.RequestNotification;
+                        context.Entry(cn.BroRequest.Sender).Reference(u => u.Profile).Load();
+                        notifications.Add(cn);
+                    }
+                }
+            }
+
+            return View(notifications);
+        }
+
+        [HttpPost]
+        public ActionResult ReadNotification(int id)
+        {
+            using (ModelFirstContainer context = new ModelFirstContainer())
+            {
+                Notification not = context.Notifications.Where(n => n.Id == id).FirstOrDefault();
+
+                if (not != null)
+                {
+                    not.IsRead = true;
+                    context.SaveChanges();
+                }
+            }
+
+            if (Request.IsAjaxRequest())
+                return null;
+            else
+                return Redirect(Request.UrlReferrer.AbsolutePath);
+        }
+
+        #endregion
+
+        public ActionResult Settings(int id)
+        {
+            User user = new User();
+            using(var context = new ModelFirstContainer()){
+                user = context.Users.Include("Profile").Include("BlockedBros.Profile").FirstOrDefault(u => u.Id == id);
+            }
+            return View(user);
+        }
+
+        public ActionResult ViewBros()
+        {
+            List<User> bros;
+            List<User> browseList = new List<User>();
+            List<Compatibility> sortedCompatibilities;
+            using (ModelFirstContainer context = new ModelFirstContainer())
+            {
+                int id = (int)Session["UserID"];
+                User thisUser = context.Users.FirstOrDefault(u => u.Id == id);
+                //bros = context.Users.Where(u => u.Id != id).ToList();
+                bros = context.Users.Include("Profile").Where(u => u.Id != id).ToList();
+                browseList = bros.ToList();
+                foreach (User bro in bros)
+                {
+                    foreach(User blockedBro in thisUser.BlockedBros){
+                        if (bro.Id == blockedBro.Id)
+                        {
+                            browseList.Remove(bro);
+                            break;
+                        }
+                    }
+                }
+                sortedCompatibilities = DetermineCompatability(thisUser, browseList);
+                Session["Compatibilities"] = sortedCompatibilities;
+            }
+
+            return View(sortedCompatibilities);
+        }
+
+        public void RemoveBro(int targetBroId)
+        {
+            using (ModelFirstContainer context = new ModelFirstContainer())
+            {
+                int userId = WebSecurity.CurrentUserId;
+                User user = context.Users.SingleOrDefault(x => x.Id == userId);
+
+                User targetUser = context.Users.SingleOrDefault(x => x.Id == targetBroId);
+
+                RemoveBroFromCircle("MyBros", user, targetUser);
+                RemoveBroFromCircle("MyBros", targetUser, user);
+            }
+        }
+
         [Authorize]
         public new ActionResult Profile()
         {
@@ -398,55 +792,7 @@ namespace Bros.Controllers
 
 		public ActionResult Post(int id)
 		{
-
 			return View();
-		}
-
-		public ActionResult Notifications()
-		{
-			List<Notification> notifications = new List<Notification>();
-			using (ModelFirstContainer context = new ModelFirstContainer())
-			{
-				int userId = (int)Session["UserId"];
-
-				foreach (Notification not in context.Notifications.Where(n => n.Receiver.Id == userId && n.IsRead == false))
-				{
-					if (not is CommentNotification)
-					{
-						CommentNotification cn = not as CommentNotification;
-						context.Entry(cn.Comment.Owner).Reference(u => u.Profile).Load();
-						notifications.Add(cn);
-					}
-					else if (not is Bros.DataModel.RequestNotification)
-					{
-						Bros.DataModel.RequestNotification cn = not as Bros.DataModel.RequestNotification;
-						context.Entry(cn.BroRequest.Sender).Reference(u => u.Profile).Load();
-						notifications.Add(cn);
-					}
-				}
-			}
-
-			return View(notifications);
-		}
-
-		[HttpPost]
-		public ActionResult ReadNotification(int id)
-		{
-			using (ModelFirstContainer context = new ModelFirstContainer())
-			{
-				Notification not = context.Notifications.Where(n => n.Id == id).FirstOrDefault();
-
-				if (not != null)
-				{
-					not.IsRead = true;
-					context.SaveChanges();
-				}
-			}
-
-			if (Request.IsAjaxRequest())
-				return null;
-			else
-				return Redirect(Request.UrlReferrer.AbsolutePath);
 		}
 
 		[HttpPost]
@@ -480,13 +826,6 @@ namespace Bros.Controllers
 			else
 				return Redirect(Request.UrlReferrer.AbsolutePath);
 		}
-
-        [Authorize]
-        [HttpPost]
-        public ActionResult UpdateProfile(Profile profile)
-        {
-            return null;
-        }
 
         [Authorize]
         [HttpPost]
@@ -543,58 +882,6 @@ namespace Bros.Controllers
         }
 
         [Authorize]
-        [HttpGet]
-        public ActionResult EditProfile()
-        {
-            User thisUser = new User();
-            using (var context = new ModelFirstContainer())
-            {
-                int userId = WebSecurity.CurrentUserId;
-                    thisUser = context.Users.Include("Profile").FirstOrDefault(u => u.Id == userId);
-
-
-            }
-                return View("ProfileAttribute", thisUser.Profile);
-            
-        }
-
-        [Authorize]
-        [HttpPost]
-        public ActionResult EditProfileAttributes(Profile prof)
-        {
-
-            if (Session["UserId"] != null)
-            {
-                int id = (int)Session["UserId"];
-
-                if (ModelState.IsValid)
-                    using (ModelFirstContainer context = new ModelFirstContainer())
-                    {
-                        User user = context.Users.FirstOrDefault(u => u.Id == WebSecurity.CurrentUserId);
-                        user.Profile.Athleticism = prof.Athleticism;
-                        user.Profile.Children = prof.Children;
-                        user.Profile.Drinks = prof.Drinks;
-                        user.Profile.Drugs = prof.Drugs;
-                        user.Profile.Education = prof.Education;
-                        user.Profile.Ethnicity = prof.Ethnicity;
-                        user.Profile.Job = prof.Job;
-                        user.Profile.MarriageStatus = prof.MarriageStatus;
-                        user.Profile.Pets = prof.Pets;
-                        user.Profile.Religion = prof.Religion;
-                        user.Profile.SexualOrientation = prof.SexualOrientation;
-                        user.Profile.Smokes = prof.Smokes;
-
-                        context.SaveChanges();
-                    }
-
-                return View("ProfileIndex");
-            }
-            else
-                throw new Exception("Session is null, or user not logged in.");
-
-        }
-
-        [Authorize]
         public ActionResult MyProfile(int id)
         {
             User user = new User();
@@ -604,247 +891,5 @@ namespace Bros.Controllers
                 }
             return View(user);
         }
-
-        [Authorize]
-        [HttpGet]
-        public ActionResult ChangeProfilePhoto()
-        {
-            User thisUser = new User();
-            using (var context = new ModelFirstContainer())
-            {
-                thisUser = context.Users.Include("Profile.ProfilePhoto").FirstOrDefault(u => u.Id == WebSecurity.CurrentUserId);
-            }
-            return View(thisUser);
-        }
-
-        [Authorize]
-        [HttpPost]
-        public ActionResult ChangeProfilePhoto(HttpPostedFileBase img)
-        {
-
-            User thisUser = new User();
-            using (var context = new ModelFirstContainer())
-            {
-                thisUser = context.Users.Include("Profile.ProfilePhoto").FirstOrDefault(u => u.Id == WebSecurity.CurrentUserId);
-                Album album = thisUser.Albums.FirstOrDefault(a => a.Title == "Profile Pictures");
-                if (album == null)
-                {
-                    album = new Album()
-                    {
-                        Title = "Profile Pictures",
-                        DateCreated = DateTime.Now,
-                        Owner = thisUser,
-                        IsDeleted = false
-                    };
-                }
-
-                byte[] data = null;
-                if (img != null && img.ContentLength > 0)
-                {
-                    using (MemoryStream target = new MemoryStream())
-                    {                   
-                        img.InputStream.CopyTo(target);
-                        data = target.ToArray();
-                              
-                    }       
-                }
-                else
-                {
-                    throw new Exception("derpp");
-                }    
-                
-                Photo photo = new Photo()
-                        {
-                            ImageData = data,
-                            DateCreated = DateTime.Now,
-                            IsDeleted = false,
-                            IsFlagged = false,
-                            Album = album,
-                            UserId = thisUser.Id,
-                            Caption = "",
-                            DateUpdated = DateTime.Now
-                            
-                        };
-
-                    album.Photos.Add(photo);
-                    thisUser.Profile.ProfilePhoto = photo;  
-                context.SaveChanges();
-            }
-            return View("Feed");
-        }
-
-        [Authorize]
-        public ActionResult ManageAlbums()
-        {
-            List<Album> albumList = new List<Album>();
-            using(var context = new ModelFirstContainer()){
-                int id = WebSecurity.CurrentUserId;
-                User user = context.Users.Include("Albums.Photos").FirstOrDefault(u => u.Id == id);
-                albumList = user.Albums.ToList();
-            }
-            return View(albumList);
-        }
-
-        [Authorize]
-        public ActionResult PhotoGallery(int id)
-        {
-            Album album = new Album();
-            using(var context  = new ModelFirstContainer()){
-                album = context.Albums.Include("Photos.Comments").FirstOrDefault(a => a.Id == id);
-                ViewBag.AlbumId = album.Id;
-            }
-            return View(album.Photos.ToList());
-        }
-
-        [Authorize]
-        [HttpGet]
-        public ActionResult AddPhoto(int albumId)
-        {
-            ViewBag.AlbumId = albumId;
-            using(var context = new ModelFirstContainer()){
-                Album album = context.Albums.Include("Owner").FirstOrDefault(u =>u.Id == albumId);
-                int id = album.Owner.Id;
-                ViewBag.UserId = id;
-            }
-            return View();
-        }
-
-        [HttpPost]
-        public ActionResult AddPhoto([Bind(Exclude = "ImageData")]Photo photo, HttpPostedFileBase img, int id, int AlbumId)
-        {
-
-            
-             byte[] data = null;
-            if (img != null && img.ContentLength > 0)
-            {
-                MemoryStream target = new MemoryStream();
-                img.InputStream.CopyTo(target);
-                data = target.ToArray();
-            }
-            else
-            {
-                throw new Exception("derpp");
-            }
-
-            using(var context = new ModelFirstContainer()){
-
-                User user = context.Users.FirstOrDefault(u=> u.Id == id);
-                Photo photo2 = new Photo()
-                {
-                    Caption = photo.Caption,
-                    DateCreated = DateTime.Now,
-                    DateUpdated = DateTime.Now,
-                    ImageData = data,
-                    AlbumId = AlbumId,
-                    Author = user,
-                    IsDeleted = false,
-                    IsFlagged = false
- 
-                };
-
-                context.Posts.Add(photo2);
-                context.SaveChanges();
-            }
-            return RedirectToAction("PhotoGallery", "Profile", new { id = photo.AlbumId});
-        }
-
-        public ActionResult RemovePhoto(int id, int albumId)
-        {
-            using(var context = new ModelFirstContainer()){
-                //Album album = context.Albums.FirstOrDefault(a =>a.Id == albumId);
-                Photo photo = context.Posts.Include("Comments").Where(x => x is Bros.DataModel.Photo).Select(p => p as Bros.DataModel.Photo).FirstOrDefault(u => u.Id == id);
-
-                if(photo.Comments.Count != 0){
-                    //I need to cascade delete with photo & comments Get Felix's code for this
-                }
-                    
-                context.Posts.Remove(photo);
-                context.SaveChanges();
-            }
-
-            return RedirectToAction("PhotoGallery", "Profile", albumId);
-        }
-
-        public ActionResult SinglePhotoComment(int id)
-        {
-            Photo photo = new Photo();
-            using(var context = new ModelFirstContainer()){
-                photo = context.Posts.Include("Comments.Owner.Profile").Where(x => x is Bros.DataModel.Photo).Select(p => p as Bros.DataModel.Photo).FirstOrDefault(u => u.Id == id);
-            }
-
-            return View("PhotoComments", photo);
-        }
-
-        [Authorize]
-        [HttpGet]
-        public ActionResult CreateAlbum()
-        {
-
-            return View();
-        }
-
-        [Authorize]
-        [HttpPost]
-        public ActionResult CreateAlbum(Album album)
-        {
-
-            int userId = WebSecurity.CurrentUserId;
-            using(var context = new ModelFirstContainer()){
-                            
-                User own = context.Users.FirstOrDefault(u => u.Id == userId);
-                Album al = new Album()
-                {
-                    Title = album.Title,
-                    UserId = WebSecurity.CurrentUserId,
-                    DateCreated = DateTime.Now,
-                    IsDeleted = false,
-                    Owner = own
-                    
-                };
-
-                context.Albums.Add(al);
-                try
-                {
-                    if (album.Title.ToLower().Equals("profile pictures")) throw new DbEntityValidationException();
-                    context.SaveChanges();
-                }
-                catch (DbEntityValidationException e)
-                {
-                    ViewBag.ErrorMessage = "Cannot be named 'Profile Pictures'.";
-                    return View();
-                }
-            }
-            return RedirectToAction("ManageAlbums", "Profile");
-        }
-
-        public ActionResult DeleteAlbum(int id)
-        {
-            using(var context = new ModelFirstContainer()){
-                int userId = WebSecurity.CurrentUserId;
-                User owner = context.Users.FirstOrDefault(u => u.Id == userId);
-                Album album = context.Albums.Include("Photos").FirstOrDefault(a => a.Id == id);
-                
-                album.Owner = owner;
-                if (album.Photos.Count != 0){
-                    foreach(Photo x in album.Photos.ToList()){
-                        Photo photo = context.Posts.Include("Comments").Where(p => p is Bros.DataModel.Photo).Select(p => p as Bros.DataModel.Photo).FirstOrDefault(u => u.Id == x.Id);
-
-                        if (photo.Comments.Count != 0)
-                        {
-                            foreach(Comment y in x.Comments.ToList()){
-                                context.Comments.Remove(y);
-                            }
-                        }
-                        context.Posts.Remove(photo);
-                    }
-                }
-
-                context.Albums.Remove(album); 
-                context.SaveChanges();
-            }
-            return RedirectToAction("ManageAlbums", "Profile");
-        }
-        
-
     }
 }
