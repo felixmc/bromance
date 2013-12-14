@@ -1009,6 +1009,19 @@
             <End Role="ShoppingCart" EntitySet="ShoppingCarts" />
             <End Role="Product" EntitySet="Products" />
           </AssociationSet>
+          <EntitySet Name="ProductQuantities" EntityType="ModelFirst.ProductQuantity" />
+          <AssociationSet Name="ProductQuantityProduct" Association="ModelFirst.ProductQuantityProduct">
+            <End Role="ProductQuantity" EntitySet="ProductQuantities" />
+            <End Role="Product" EntitySet="Products" />
+          </AssociationSet>
+          <AssociationSet Name="ShoppingCartProductQuantity" Association="ModelFirst.ShoppingCartProductQuantity">
+            <End Role="ShoppingCart" EntitySet="ShoppingCarts" />
+            <End Role="ProductQuantity" EntitySet="ProductQuantities" />
+          </AssociationSet>
+          <AssociationSet Name="OrderProductQuantity" Association="ModelFirst.OrderProductQuantity">
+            <End Role="Order" EntitySet="Orders" />
+            <End Role="ProductQuantity" EntitySet="ProductQuantities" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Album">
           <Key>
@@ -1048,6 +1061,7 @@
           <Property Type="Boolean" Name="IsBanned" Nullable="false" />
           <NavigationProperty Name="Orders" Relationship="ModelFirst.OrderUser" FromRole="User" ToRole="Order" />
           <NavigationProperty Name="ShoppingCart" Relationship="ModelFirst.ShoppingCartUser" FromRole="User" ToRole="ShoppingCart" />
+          <Property Type="Boolean" Name="IsMuted" Nullable="false" />
         </EntityType>
         <EntityType Name="Photo" BaseType="ModelFirst.Post">
           <Property Type="String" Name="Caption" Nullable="false" />
@@ -1166,7 +1180,7 @@
           <NavigationProperty Name="Orders" Relationship="ModelFirst.OrderProducts" FromRole="Product" ToRole="Order" />
           <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
           <Property Type="DateTime" Name="DateCreated" Nullable="false" />
-          <NavigationProperty Name="ShoppingCarts" Relationship="ModelFirst.ShoppingCartProducts" FromRole="Product" ToRole="ShoppingCart" />
+          <Property Type="String" Name="Description" Nullable="false" />
         </EntityType>
         <EntityType Name="Tag">
           <Key>
@@ -1426,8 +1440,8 @@
           <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <NavigationProperty Name="User" Relationship="ModelFirst.OrderUser" FromRole="Order" ToRole="User" />
           <Property Type="Int32" Name="UserId" Nullable="false" />
-          <NavigationProperty Name="Products" Relationship="ModelFirst.OrderProducts" FromRole="Order" ToRole="Product" />
           <Property Type="DateTime" Name="DateCreated" Nullable="false" />
+          <NavigationProperty Name="ProductQuantities" Relationship="ModelFirst.OrderProductQuantity" FromRole="Order" ToRole="ProductQuantity" />
         </EntityType>
         <Association Name="OrderUser">
           <End Type="ModelFirst.Order" Role="Order" Multiplicity="*" />
@@ -1451,7 +1465,7 @@
           </Key>
           <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <NavigationProperty Name="User" Relationship="ModelFirst.ShoppingCartUser" FromRole="ShoppingCart" ToRole="User" />
-          <NavigationProperty Name="Products" Relationship="ModelFirst.ShoppingCartProducts" FromRole="ShoppingCart" ToRole="Product" />
+          <NavigationProperty Name="ProductQuantities" Relationship="ModelFirst.ShoppingCartProductQuantity" FromRole="ShoppingCart" ToRole="ProductQuantity" />
         </EntityType>
         <Association Name="ShoppingCartUser">
           <End Type="ModelFirst.ShoppingCart" Role="ShoppingCart" Multiplicity="0..1" />
@@ -1460,6 +1474,36 @@
         <Association Name="ShoppingCartProducts">
           <End Type="ModelFirst.ShoppingCart" Role="ShoppingCart" Multiplicity="*" />
           <End Type="ModelFirst.Product" Role="Product" Multiplicity="*" />
+        </Association>
+        <EntityType Name="ProductQuantity">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Product" Relationship="ModelFirst.ProductQuantityProduct" FromRole="ProductQuantity" ToRole="Product" />
+          <Property Type="Int32" Name="ProductId" Nullable="false" />
+          <NavigationProperty Name="ShoppingCarts" Relationship="ModelFirst.ShoppingCartProductQuantity" FromRole="ProductQuantity" ToRole="ShoppingCart" />
+          <NavigationProperty Name="Orders" Relationship="ModelFirst.OrderProductQuantity" FromRole="ProductQuantity" ToRole="Order" />
+        </EntityType>
+        <Association Name="ProductQuantityProduct">
+          <End Type="ModelFirst.ProductQuantity" Role="ProductQuantity" Multiplicity="*" />
+          <End Type="ModelFirst.Product" Role="Product" Multiplicity="1" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ProductQuantity">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ShoppingCartProductQuantity">
+          <End Type="ModelFirst.ShoppingCart" Role="ShoppingCart" Multiplicity="*" />
+          <End Type="ModelFirst.ProductQuantity" Role="ProductQuantity" Multiplicity="*" />
+        </Association>
+        <Association Name="OrderProductQuantity">
+          <End Type="ModelFirst.Order" Role="Order" Multiplicity="*" />
+          <End Type="ModelFirst.ProductQuantity" Role="ProductQuantity" Multiplicity="*" />
         </Association>
       </Schema>
     </edmx:ConceptualModels>

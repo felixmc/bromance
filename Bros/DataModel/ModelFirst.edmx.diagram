@@ -18,7 +18,7 @@
         <EntityTypeShape EntityType="ModelFirst.Message" Width="1.5" PointX="3.25" PointY="4.125" IsExpanded="true" />
         <EntityTypeShape EntityType="ModelFirst.Notification" Width="1.5" PointX="7.625" PointY="4.125" />
         <EntityTypeShape EntityType="ModelFirst.Preference" Width="1.5" PointX="8.75" PointY="10.5" />
-        <EntityTypeShape EntityType="ModelFirst.Product" Width="1.5" PointX="9.625" PointY="6.875" />
+        <EntityTypeShape EntityType="ModelFirst.Product" Width="1.5" PointX="9.5" PointY="6.75" />
         <EntityTypeShape EntityType="ModelFirst.Tag" Width="1.5" PointX="13.125" PointY="5.875" />
         <EntityTypeShape EntityType="ModelFirst.Category" Width="1.5" PointX="13.125" PointY="8.125" />
         <EntityTypeShape EntityType="ModelFirst.Profile" Width="1.5" PointX="6.375" PointY="6.875" IsExpanded="true" />
@@ -57,6 +57,10 @@
         <EntityTypeShape EntityType="ModelFirst.ShoppingCart" Width="1.5" PointX="15.75" PointY="9.625" />
         <AssociationConnector Association="ModelFirst.ShoppingCartUser" />
         <AssociationConnector Association="ModelFirst.ShoppingCartProducts" />
+        <EntityTypeShape EntityType="ModelFirst.ProductQuantity" Width="1.5" PointX="12.25" PointY="10.25" />
+        <AssociationConnector Association="ModelFirst.ProductQuantityProduct" />
+        <AssociationConnector Association="ModelFirst.ShoppingCartProductQuantity" />
+        <AssociationConnector Association="ModelFirst.OrderProductQuantity" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

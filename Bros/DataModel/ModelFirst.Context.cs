@@ -41,5 +41,6 @@ namespace Bros.DataModel
         public DbSet<Profile> Profiles { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<ShoppingCart> ShoppingCarts { get; set; }
+        public DbSet<ProductQuantity> ProductQuantities { get; set; }
     }
 }
