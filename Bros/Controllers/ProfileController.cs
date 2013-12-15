@@ -171,16 +171,22 @@ namespace Bros.Controllers
 
         #region Circles
 
-        public void Circles()
+        public ActionResult Circles()
         {
+            ActionResult result;
+
             IEnumerable<Circle> circles;
             using (ModelFirstContainer context = new ModelFirstContainer())
             {
                 int id = WebSecurity.CurrentUserId;
-                User user = context.Users.SingleOrDefault(u => u.Id == id);
+                User user = context.Users.Include("Circles.Members.Profile").SingleOrDefault(u => u.Id == id);
 
                 circles = user.Circles.ToList();
+
+                result = View(circles);
             }
+
+            return result;
         }
 
         public void CreateCircle(string CircleName)
@@ -193,6 +199,32 @@ namespace Bros.Controllers
                 targetCircle.Name = CircleName;
                 targetCircle.Owner = user;
                 user.Circles.Add(targetCircle);
+
+                context.SaveChanges();
+            }
+        }
+
+        public void RenameCircle(int targetCircleId, string newCircleName)
+        {
+            using (ModelFirstContainer context = new ModelFirstContainer())
+            {
+                Circle targetCircle = context.Circles.SingleOrDefault(x => x.Id == targetCircleId);
+                targetCircle.Name = newCircleName;
+
+                context.SaveChanges();
+            }
+        }
+
+        public void MoveBroBetweenCircles(int donorCircleId, int recieverCircleId, int targetBroId)
+        {
+            using (ModelFirstContainer context = new ModelFirstContainer())
+            {
+                Circle donorCircle = context.Circles.SingleOrDefault(x => x.Id == donorCircleId);
+                Circle recieverCircle = context.Circles.SingleOrDefault(x => x.Id == recieverCircleId);
+                User targetBro = context.Users.SingleOrDefault(x => x.Id == targetBroId);
+
+                donorCircle.Members.Remove(targetBro);
+                recieverCircle.Members.Add(targetBro);
 
                 context.SaveChanges();
             }
