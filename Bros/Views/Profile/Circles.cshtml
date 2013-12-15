@@ -7,15 +7,26 @@
 }
 
 <div class="Circles">
+
+    @using(Html.BeginForm("CreateCircle", "Profile", FormMethod.Post)){
+        @Html.TextBox("CircleName")
+        <input type="submit" value="Create Circle" />
+    }
+
     @foreach (Circle c in Model)
     {
         <div class="CircleBlock">
-            <span class="CircleName">@c.Name</span>
+            <h3 class="CircleName">@c.Name</h3>
             <div class="CircleMembers">
                 <span class="CircleMembersTitle">Members:</span>
                 @foreach (User u in c.Members)
                 {
                     <span class="CircleMemberName">@u.Profile.FirstName @u.Profile.LastName</span>
+                    <span class="RemoveBroLink">@Html.ActionLink("Remove Bro", "ContextRemoveBroFromCircle", new { circleId = c.Id, targetBroId = u.Id })</span>
+                }
+                @if(c.Name != "MyBros"){
+                    <span class="DeleteCircleLink">@Html.ActionLink("Delete This Circle", "DeleteCircle", new { circleId = c.Id })</span>
+                    <span class="DeleteCircleWarning">If you delete this circle, all of the bros inside it will be moved to MyBros.</span>
                 }
             </div>
         </div>
