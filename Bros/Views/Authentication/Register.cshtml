@@ -8,6 +8,7 @@
         @Html.ValidationSummary()
     @using (Html.BeginForm("RegisterUser","Authentication", FormMethod.Post))
     {       
+        @ViewBag.ErrorMessage
         <p>Email: @Html.TextBoxFor(x => x.Email)</p>
         <p>Password: @Html.PasswordFor(x => x.Password)</p>
         <p>Confirm Password: @Html.PasswordFor(x => x.ConfirmPassword)</p> 
