@@ -7,6 +7,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using WebMatrix.WebData;
+using System.Data.Entity;
 
 namespace Bros.Controllers
 {
@@ -239,13 +240,33 @@ namespace Bros.Controllers
             return View("StoreIndex");
         }
 
+        [HttpPost]
+        public ActionResult SortByCategory()
+        {
+            ViewBag.AddToCart = true;
+            int categoryId = Int32.Parse(Request["Category"]);
+            //GenerateProducts();
+            List<Product> temp;
+            using (ModelFirstContainer context = new ModelFirstContainer())
+            {
+                temp = context.Products.Include("Tags").Include("Category").Where(x => !x.IsDeleted && x.CategoryId == categoryId).ToList();
+                ViewBag.Products = temp;
+                Category cat = context.Categories.Single(x => x.Id == categoryId);
+                ViewBag.Categories = context.Categories.Select(c => new { Id = c.Id, Name = c.Name }).ToList();
+                ViewBag.ViewByCat = cat.Name;
+            }
+
+            return View("ViewAllProducts");
+        }
+
         public ActionResult ViewAllProducts()
         {
             ViewBag.AddToCart = true;
             //GenerateProducts();
             using (ModelFirstContainer context = new ModelFirstContainer())
             {
-                ViewBag.Products = context.Products.Include("Tags").Include("Category").Where(x => !x.IsDeleted).ToList(); 
+                ViewBag.Products = context.Products.Include("Tags").Include("Category").Where(x => !x.IsDeleted).ToList();
+                ViewBag.Categories = context.Categories.Select(c => new { Id = c.Id, Name = c.Name }).ToList();
             }
 
             return View();
@@ -411,17 +432,21 @@ namespace Bros.Controllers
         public ActionResult ViewCart()
         {
             int sessionId = (int)Session["UserId"];
-            List<Product> products;
+            List<ProductQuantity> products = new List<ProductQuantity>();
             ViewBag.RemoveFromCart = true;
-            using(var context = new ModelFirstContainer())
+            using (var context = new ModelFirstContainer())
             {
                 User user = context.Users.Single(x => x.Id == WebSecurity.CurrentUserId);
-                
-                ShoppingCart cart = context.ShoppingCarts.Single(x => x.User.Id == sessionId);
-                ViewBag.ItemsInShoppingCart = cart.ProductQuantities;
-            }
 
-           
+                ShoppingCart cart = context.ShoppingCarts.Single(x => x.User.Id == sessionId);
+                foreach (ProductQuantity p in cart.ProductQuantities)
+                {
+                    products.AddRange(context.ProductQuantities.Where(x => x.Id == p.Id).Include(x => x.Product));
+                }
+
+
+            }
+            ViewBag.ItemsInShoppingCart = products;
             return View();
         }
 

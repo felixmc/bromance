@@ -1,23 +1,22 @@
-﻿@model Bros.DataModel.Product
+﻿@model Bros.DataModel.ProductQuantity
 
-<fieldset>
-    <legend>Product</legend>
+@{
+    ViewBag.Title = "ViewProduct";
+}
 
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.Name)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.Name)
-    </div>
+    <link rel="stylesheet" type="text/css" href="~/Content/Styles/store.css" />
 
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.Price)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.Price)
-    </div>
+<div class="ProductView">
+    @{
+        var base64 = Convert.ToBase64String(Model.Product.Image);
+        var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+    }
+    <div class="ProductName">Product Name: @Model.Product.Name</div>
+    <img class="ProductImage" src="@imgSrc" />
+    <div class="ProductPrice">Product Price: $@Model.Product.Price</div>
+   @if((ViewBag.RemoveFromCart) != null && ViewBag.RemoveFromCart)
+    {
+    <span class="ProductLink">@Html.ActionLink("Remove from Cart", "RemoveProductFromCart", new { productId = Model.Id })</span>
+    }
+</div>
 
-</fieldset>
-<p>
-      @Html.ActionLink("Revome Item From List", "RemoveProductFromCart", new { productID = Model.Id },false)
-</p>
