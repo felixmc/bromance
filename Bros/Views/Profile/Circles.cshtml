@@ -24,6 +24,11 @@
                     <span class="CircleMemberName">@u.Profile.FirstName @u.Profile.LastName</span>
                     <span class="RemoveBroLink">@Html.ActionLink("Remove Bro", "ContextRemoveBroFromCircle", new { circleId = c.Id, targetBroId = u.Id })</span>
                 }
+
+                <br />
+
+                <span class="EditCircleLink">@Html.ActionLink("Edit this Circle", "EditCircle", new { circleId = c.Id})</span>
+
                 @if(c.Name != "MyBros"){
                     <span class="DeleteCircleLink">@Html.ActionLink("Delete This Circle", "DeleteCircle", new { circleId = c.Id })</span>
                     <span class="DeleteCircleWarning">If you delete this circle, all of the bros inside it will be moved to MyBros.</span>

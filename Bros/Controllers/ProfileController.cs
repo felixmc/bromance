@@ -232,6 +232,23 @@ namespace Bros.Controllers
             }
         }
 
+        public ActionResult FromEditCircleMoveBroToCircle(int donorCircleId, int recieverCircleId, int targetBroId)
+        {
+            using (ModelFirstContainer context = new ModelFirstContainer())
+            {
+                User user = context.Users.SingleOrDefault(x => x.Id == WebSecurity.CurrentUserId);
+                Circle donorCircle = context.Circles.SingleOrDefault(x => x.Id == donorCircleId);
+                Circle recieverCircle = context.Circles.SingleOrDefault(x => x.Id == recieverCircleId);
+                User targetBro = context.Users.SingleOrDefault(x => x.Id == targetBroId);
+
+                ContextlessMoveBroBetweenCircles(donorCircle, recieverCircle, targetBro);
+
+                context.SaveChanges();
+            }
+
+            return RedirectToAction("EditCircle", new { circleId = donorCircleId });
+        }
+
         public void ContextlessMoveBroBetweenCircles(Circle donorCircle, Circle recieverCircle, User targetBro)
         {
             donorCircle.Members.Remove(targetBro);
@@ -245,6 +262,38 @@ namespace Bros.Controllers
             {
                 targetCircle.Members.Add(broAdded);
             }
+        }
+
+        public ActionResult LinkRenameCircle(int circleId, string circleName)
+        {
+            using (ModelFirstContainer context = new ModelFirstContainer())
+            {
+                Circle targetCircle = context.Circles.SingleOrDefault(x => x.Id == circleId);
+                targetCircle.Name = circleName;
+
+                context.SaveChanges();
+            }
+
+            return RedirectToAction("EditCircle", new { circleId = circleId });
+        }
+
+        public ActionResult EditCircle(int circleId)
+        {
+            ActionResult result;
+
+            using (ModelFirstContainer context = new ModelFirstContainer())
+            {
+                Circle targetCircle = context.Circles.SingleOrDefault(x => x.Id == circleId);
+                User user = context.Users.Include("Circles.Members.Profile").SingleOrDefault(x => x.Id == WebSecurity.CurrentUserId);
+
+                ViewBag.TargetCircle = targetCircle;
+                IEnumerable<Circle> circles = user.Circles.Where(x => x.Id != circleId).ToList();
+                ViewBag.recieverCircleId = new SelectList(circles, "Id", "Name");
+
+                result = View(targetCircle);
+            }
+
+            return result;
         }
 
         public ActionResult DeleteCircle(int circleId)
