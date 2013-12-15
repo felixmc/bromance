@@ -6,7 +6,18 @@
 
 <br/>
 <br/>
-
+ @using (Html.BeginForm("FilterFeedByCircle", "Profile", FormMethod.Post, new { @class = "FiterByCircle" }))
+ {
+     if (ViewBag.Circle != null)
+     {
+            <span class="FiterByCircle">Category: @Html.DropDownList("Circles",new SelectList(ViewBag.Circles, "Id", "Name"))</span>
+     }
+     if (ViewBag.ViewByCat != null)
+     {
+         @: Viewing By Category: @ViewBag.ViewByCat
+     }
+            <input type="submit" value="Go" />
+ }
 @Html.Partial("_StatusUpdateForm")
 
 @if (Model != null)

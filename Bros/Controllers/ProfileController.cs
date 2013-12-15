@@ -55,6 +55,7 @@ namespace Bros.Controllers
                                                     .OrderByDescending(p => p.DateCreated)
                                                             .Take(30).ToList();
 
+                ViewBag.Cirlces = context.Circles.Where(x => x.Owner.Id == userId);
                 feedPosts = broPosts.ToList();
             }
 
@@ -294,6 +295,61 @@ namespace Bros.Controllers
             }
 
             return result;
+        }
+        [HttpPost]
+        public ActionResult FilterFeedByCircle()
+        {
+            int circleId = Int32.Parse(Request["Circles"]);
+            //GenerateProducts();
+            List<User> temp;
+            List<Post> finalList = new List<DataModel.Post>();
+            List<Post> feedPosts = new List<Post>();
+
+            using (ModelFirstContainer context = new ModelFirstContainer())
+            {
+                int userId = (int)Session["UserId"];
+
+                User user = context.Users.Where(u => u.Id == userId).FirstOrDefault();
+
+                IEnumerable<int> feedMembers = user.Circles.Select(c => c.Members).SelectMany(u => u).Union(context.Users.Where(u => u.Id == userId)).Select(u => u.Id);
+                List<Post> broPosts = context.Posts.Include("Comments.Owner.Profile").Include("Author.Profile")
+                                            .Where(p => feedMembers.Contains(p.Author.Id))
+                                                    .OrderByDescending(p => p.DateCreated)
+                                                            .Take(30).ToList();
+
+                feedPosts = broPosts.ToList();
+                Circle tempCircle = context.Circles.FirstOrDefault(x => x.Id == circleId);
+                if(tempCircle != null)
+                {
+                     temp = tempCircle.Members.ToList();
+                     foreach (User u in temp)
+                     {
+                         foreach (Post p in broPosts)
+                         {
+                             if (u.Id == p.Author.Id)
+                             {
+                                 finalList.Add(p);
+                             }
+                         }
+                     }
+                }
+
+                ViewBag.Cirlces = context.Circles.Where(x => x.Owner.Id == userId);
+
+
+            }
+            //using (ModelFirstContainer context = new ModelFirstContainer())
+            //{
+            //    temp = context.Post.Include("Tags").Include("Category").Where(x => !x.IsDeleted && x.CategoryId == categoryId).ToList();
+            //    ViewBag.Products = temp;
+            //    Category cat = context.Categories.Single(x => x.Id == categoryId);
+            //    ViewBag.Categories = context.Categories.Select(c => new { Id = c.Id, Name = c.Name }).ToList();
+            //    ViewBag.ViewByCat = cat.Name;
+            //}
+
+            return View("Feed",finalList);
+
+//return View();
         }
 
         public ActionResult DeleteCircle(int circleId)
