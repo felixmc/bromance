@@ -30,8 +30,37 @@
     <script src="/signalr/hubs"></script>
     <script type="text/javascript">
     	$(function () {
-    		emotify.emoticons("/Content/Images/Smileys", false, {
-				"-_-": ["-_-.png", "annoyed"]
+    		emotify.emoticons("/Content/Images/Smileys/", false, {
+    			"-_-": ["-_-.png", "annoyed"],
+    			"=B": ["=B.png", "buckteeth", ":B", ":-B", "=-B"],
+    			"D=<": ["angry.png", "angry", "D:<"],
+    			":bomb:": ["bomb.png", "bomb"],
+    			":boo:": ["boo.png", "ghost"],
+    			":cool:": ["cool.png", "cool"],
+    			"='(": ["cry.png", "cry", ":'("],
+    			"@@_@@": ["dizzy.png", "dizzy"],
+    			":drunk:": ["drunk.png", "drunk"],
+    			":evil:": ["evil.png", "evil"],
+    			"=D": ["grin.png", "grin", ":D", ":-D", "=-D"],
+    			"=)": ["happy.png", "happy", ":)", ":-)", "=-)"],
+    			"^_^": ["cute.png", "cute"],
+    			":inlove:": ["inlove.png", "inlove"],
+    			"=*": ["kiss.png", "kiss", ":*", ":-*", "=-*"],
+    			":meow:": ["meow.png", "meow"],
+    			":ninja:": ["ninja.png", "ninja"],
+    			"O_O": ["O_O.png", "O_O", "0_0", "o_o"],
+    			":omg:": ["omg.png", "omg"],
+    			":onfire:": ["onfire.png", "onfire"],
+    			":ouch:": ["ouch.png", "ouch"],
+    			":serious:": ["serious.png", "serious"],
+    			":sick:": ["sick.png", "sick"],
+    			":sleep:": ["sleep.png", "sleep"],
+    			"=<": ["snooty.png", "snooty", ":<", ":-<", "=-<"],
+    			"o_O": ["wut.png", "wut", "o_0"],
+    			"x_x": ["x_x.png", "dead", "X_X"],
+    			"xD": ["XD.png", "XD", "XD"],
+    			":yarr:": ["yarr.png", "yarr"],
+    			":zombie:": ["zombie.png", "zombie"]
     		});
 
     		var selfId = $("#me").attr("data-user-id");
