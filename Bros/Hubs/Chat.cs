@@ -42,9 +42,22 @@ namespace Bros.Hubs
 			Clients.Clients(sender.ConnectionIds).receive(senderId, receiverId, message);
 		}
 
+		public void ReadMessage(int userId)
+		{
+			using (var context = new ModelFirstContainer())
+			{
+				foreach (Message mes in context.Messages.Where(m => m.DateRead == null && m.Receiver.Id == WebSecurity.CurrentUserId && m.Sender.Id == userId))
+				{
+					mes.DateRead = DateTime.Now;
+				}
+				context.SaveChanges();
+			}
+		}
+
 		public void Authenticate()
 		{
 			ChatUser user = onlineUsers.FirstOrDefault(u => u.UserId == WebSecurity.CurrentUserId);
+			List<Message> messages = new List<Message>();
 			bool isOnline = user != null;
 			if (!isOnline)
 			{
@@ -54,6 +67,8 @@ namespace Bros.Hubs
 					user.Friends = context.Users.FirstOrDefault(u => u.Id == WebSecurity.CurrentUserId)
 											.Circles.Select(c => c.Members)
 														.SelectMany(u => u).Select(u => u.Id).Distinct().ToList();
+
+					messages = context.Messages.Where(m => m.Receiver.Id == WebSecurity.CurrentUserId && m.DateRead == null).ToList();
 				}
 			}
 
@@ -73,8 +88,13 @@ namespace Bros.Hubs
 
 			Clients.Client(Context.ConnectionId).friendList(onlineFriends);
 
-			
-			onlineUsers.Add(user);
+			foreach (Message message in messages)
+			{
+				Clients.Client(Context.ConnectionId).receive(message.UserId, message.UserId1, message.Content);
+			}
+
+			if (!isOnline)
+				onlineUsers.Add(user);
 		}
 
 		public override Task OnDisconnected()
@@ -95,7 +115,7 @@ namespace Bros.Hubs
 						}
 					}
 
-					onlineUsers.Remove(user);
+					onlineUsers.RemoveAll(u => u.UserId == user.UserId);
 				}
 			}
 

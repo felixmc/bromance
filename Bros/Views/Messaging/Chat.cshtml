@@ -74,8 +74,14 @@
     			message = emotify(message);
     			var fromSelf = senderId == selfId;
     			var userId = fromSelf ? receiverId : senderId;
-    			createChatWindow(userId);
-    			$form = $(".chat-window[data-user-id=" + userId + "]");
+    			$form = createChatWindow(userId);
+
+    			if (!$form.hasClass("in-focus")) {
+    				$form.addClass("flash");
+    			} else {
+    				chat.server.readMessage($form.attr("data-user-id"));
+    			}
+
     			var userName = fromSelf ? "me" : $(".receiverName", $form).text();
     			var uClass = fromSelf ? "me" : "them";
     			$(".messages", $form).append("<p><strong class=\""+uClass+"\">" + userName + ":</strong> " + message + "</p>");
@@ -106,18 +112,22 @@
     				$("body").append($form);
     				$form.css("top", (150 * ($(".chat-window").length - 1)) + "px");
     				$form.css("left", (60 * ($(".chat-window").length - 1)) + "px");
-    				draggable();
+    				ui_bindings();
     			}
 
     			$form.fadeIn(200);
 
     			if (focus === true) {
+    				$(".chat-window").removeClass("in-focus");
+    				$form.addClass("in-focus");
     				$(".messageBox", $form).focus();
     			}
+
+    			return $form;
     		};
 
-    		var draggable = function () {
-    			$(".chat-window").draggable({ handle: ".header", stack: ".chat-window", opacity: .9, distance: 0 });
+    		var ui_bindings = function () {
+    			$(".chat-window").draggable({ handle: ".header", opacity: .9, distance: 0 });
     		};
 
     		$(".chat-window").live("submit", function () {
@@ -132,8 +142,15 @@
     		});
 
     		$(".chat-window").live("click", function () {
-    			$(".chat-window").css("z-index", 1);
-    			$(this).css("z-index", 3);
+    			$(".chat-window").removeClass("in-focus");
+    			$(this).addClass("in-focus");
+
+    			if ($(this).hasClass("flash"))
+    			{
+    				chat.server.readMessage($(this).attr("data-user-id"));
+    				$(this).removeClass("flash");
+    			}
+
     		});
 
     		$("#friend-list li").click(function () {

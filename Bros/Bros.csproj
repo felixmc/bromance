@@ -239,6 +239,7 @@
     <Compile Include="Hubs\Startup.cs" />
     <Compile Include="Models\Compatibility.cs" />
     <Compile Include="Models\Enums.cs" />
+    <Compile Include="Models\ProductFactory.cs" />
     <Compile Include="Models\ProfileSetting.cs" />
     <Compile Include="Models\ProfileFactory.cs" />
     <Compile Include="Models\RegisterModel.cs" />
