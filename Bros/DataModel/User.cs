@@ -16,6 +16,9 @@ namespace Bros.DataModel
     {
         public User()
         {
+            this.IsDeleted = false;
+            this.IsBanned = false;
+            this.IsMuted = false;
             this.JoinedCircles = new HashSet<Circle>();
             this.BlockedBros = new HashSet<User>();
             this.BlockedByBros = new HashSet<User>();

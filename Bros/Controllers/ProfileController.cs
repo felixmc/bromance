@@ -171,16 +171,22 @@ namespace Bros.Controllers
 
         #region Circles
 
-        public void Circles()
+        public ActionResult Circles()
         {
+            ActionResult result;
+
             IEnumerable<Circle> circles;
             using (ModelFirstContainer context = new ModelFirstContainer())
             {
                 int id = WebSecurity.CurrentUserId;
-                User user = context.Users.SingleOrDefault(u => u.Id == id);
+                User user = context.Users.Include("Circles.Members.Profile").SingleOrDefault(u => u.Id == id);
 
                 circles = user.Circles.ToList();
+
+                result = View(circles);
             }
+
+            return result;
         }
 
         public void CreateCircle(string CircleName)
@@ -193,6 +199,32 @@ namespace Bros.Controllers
                 targetCircle.Name = CircleName;
                 targetCircle.Owner = user;
                 user.Circles.Add(targetCircle);
+
+                context.SaveChanges();
+            }
+        }
+
+        public void RenameCircle(int targetCircleId, string newCircleName)
+        {
+            using (ModelFirstContainer context = new ModelFirstContainer())
+            {
+                Circle targetCircle = context.Circles.SingleOrDefault(x => x.Id == targetCircleId);
+                targetCircle.Name = newCircleName;
+
+                context.SaveChanges();
+            }
+        }
+
+        public void MoveBroBetweenCircles(int donorCircleId, int recieverCircleId, int targetBroId)
+        {
+            using (ModelFirstContainer context = new ModelFirstContainer())
+            {
+                Circle donorCircle = context.Circles.SingleOrDefault(x => x.Id == donorCircleId);
+                Circle recieverCircle = context.Circles.SingleOrDefault(x => x.Id == recieverCircleId);
+                User targetBro = context.Users.SingleOrDefault(x => x.Id == targetBroId);
+
+                donorCircle.Members.Remove(targetBro);
+                recieverCircle.Members.Add(targetBro);
 
                 context.SaveChanges();
             }
@@ -258,30 +290,30 @@ namespace Bros.Controllers
 
         private void Merge(List<Compatibility> compatibility, int left, int mid, int right)
         {
-            List<Compatibility> temp = new List<Compatibility>();
-            int left_end, num_elements, tmp_pos;
-            left_end = (mid - 1);
-            tmp_pos = left;
-            num_elements = (right - left + 1);
+			//List<Compatibility> temp = new List<Compatibility>();
+			//int left_end, num_elements, tmp_pos;
+			//left_end = (mid - 1);
+			//tmp_pos = left;
+			//num_elements = (right - left + 1);
 
-            while ((left <= left_end) && (mid <= right))
-            {
-                if (compatibility[left].CompatibilityOfUser <= compatibility[mid].CompatibilityOfUser)
-                    temp[tmp_pos++] = compatibility[left++];
-                else
-                    temp[tmp_pos++] = compatibility[mid++];
-            }
+			//while ((left <= left_end) && (mid <= right))
+			//{
+			//	if (compatibility[left].CompatibilityOfUser <= compatibility[mid].CompatibilityOfUser)
+			//		temp[tmp_pos++] = compatibility[left++];
+			//	else
+			//		temp[tmp_pos++] = compatibility[mid++];
+			//}
 
-            while (left <= left_end)
-                temp[tmp_pos++] = compatibility[left++];
-            while (mid <= right)
-                temp[tmp_pos++] = compatibility[mid++];
+			//while (left <= left_end)
+			//	temp[tmp_pos++] = compatibility[left++];
+			//while (mid <= right)
+			//	temp[tmp_pos++] = compatibility[mid++];
 
-            for (int i = 0; i < num_elements; i++)
-            {
-                compatibility[right] = temp[right];
-                right--;
-            }
+			//for (int i = 0; i < num_elements; i++)
+			//{
+			//	compatibility[right] = temp[right];
+			//	right--;
+			//}
         }
 
         private int CompareProfiles(User currentUser, User user)
@@ -748,7 +780,7 @@ namespace Bros.Controllers
             List<Compatibility> sortedCompatibilities;
             using (ModelFirstContainer context = new ModelFirstContainer())
             {
-                int id = (int)Session["UserID"];
+				int id = WebSecurity.CurrentUserId;
                 User thisUser = context.Users.FirstOrDefault(u => u.Id == id);
                 //bros = context.Users.Where(u => u.Id != id).ToList();
                 bros = context.Users.Include("Profile").Where(u => u.Id != id).ToList();
@@ -767,7 +799,7 @@ namespace Bros.Controllers
                 Session["Compatibilities"] = sortedCompatibilities;
             }
 
-            return View(sortedCompatibilities);
+            return View(bros);
         }
 
         public void RemoveBro(int targetBroId)

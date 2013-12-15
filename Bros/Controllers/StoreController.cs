@@ -1,4 +1,5 @@
 ﻿using Bros.DataModel;
+using Bros.Models;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -14,7 +15,7 @@ namespace Bros.Controllers
     {
         //
         // GET: /Store/
-
+        List<Product> prodList = ProductFactory.ProductList(10);
         public ActionResult StoreIndex()
         {
 
@@ -241,6 +242,7 @@ namespace Bros.Controllers
         public ActionResult ViewAllProducts()
         {
             ViewBag.AddToCart = true;
+            //GenerateProducts();
             using (ModelFirstContainer context = new ModelFirstContainer())
             {
                 ViewBag.Products = context.Products.Include("Tags").Include("Category").Where(x => !x.IsDeleted).ToList(); 
@@ -298,15 +300,6 @@ namespace Bros.Controllers
         {
             ActionResult result;
 
-            if (ImageFile != null)
-            {
-                using (var ms = new MemoryStream())
-                {
-                    ImageFile.InputStream.CopyTo(ms);
-                    product.Image = ms.ToArray();
-                }
-            }
-
             int categoryId = Int32.Parse(Request["Category"]);
 
             if (product.Name != null && product.Price > 0 && Request["Category"] != null)
@@ -318,12 +311,28 @@ namespace Bros.Controllers
 
                     Product target = context.Products.SingleOrDefault(x => x.Id == product.Id);
 
+                    product.Orders = target.Orders;
+
+                    if (ImageFile != null)
+                    {
+                        using (var ms = new MemoryStream())
+                        {
+                            ImageFile.InputStream.CopyTo(ms);
+                            product.Image = ms.ToArray();
+                        }
+                    }
+                    else
+                    {
+                        product.Image = target.Image;
+                    }
+
                     if (target != null)
                     {
                         context.Entry(target).CurrentValues.SetValues(product);
                         target.Category = context.Categories.Single(x => x.Id == categoryId);
                     }
 
+                    
                     context.SaveChanges();
                     //tempCat.Products.Add(p);
 
@@ -445,6 +454,19 @@ namespace Bros.Controllers
             }
 
             return View();
+        }
+
+        void GenerateProducts()
+        {
+            using (var context = new ModelFirstContainer())
+            {
+                foreach(Product prod in prodList)
+                {
+                    context.Products.Add(prod);
+                    
+                }
+                context.SaveChanges();
+            }
         }
     }
 }

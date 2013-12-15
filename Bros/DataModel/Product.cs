@@ -16,6 +16,7 @@ namespace Bros.DataModel
     {
         public Product()
         {
+            this.IsDeleted = false;
             this.Tags = new HashSet<Tag>();
             this.Orders = new HashSet<Order>();
         }

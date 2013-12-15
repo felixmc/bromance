@@ -26,9 +26,43 @@
     <script src="/Content/Scripts/jquery-1.6.4.min.js" ></script>
     <script src="/Content/Scripts/jquery-ui-1.10.3.custom.min.js" ></script>
     <script src="/Content/Scripts/jquery.signalR-2.0.0.min.js"></script>
+	<script src="/Content/Scripts/emotify.js"></script>
     <script src="/signalr/hubs"></script>
     <script type="text/javascript">
     	$(function () {
+    		emotify.emoticons("/Content/Images/Smileys/", false, {
+    			"-_-": ["-_-.png", "annoyed"],
+    			"=B": ["=B.png", "buckteeth", ":B", ":-B", "=-B"],
+    			"D=<": ["angry.png", "angry", "D:<"],
+    			":bomb:": ["bomb.png", "bomb"],
+    			":boo:": ["boo.png", "ghost"],
+    			":cool:": ["cool.png", "cool"],
+    			"='(": ["cry.png", "cry", ":'("],
+    			"@@_@@": ["dizzy.png", "dizzy"],
+    			":drunk:": ["drunk.png", "drunk"],
+    			":evil:": ["evil.png", "evil"],
+    			"=D": ["grin.png", "grin", ":D", ":-D", "=-D"],
+    			"=)": ["happy.png", "happy", ":)", ":-)", "=-)"],
+    			"^_^": ["cute.png", "cute"],
+    			":inlove:": ["inlove.png", "inlove"],
+    			"=*": ["kiss.png", "kiss", ":*", ":-*", "=-*"],
+    			":meow:": ["meow.png", "meow"],
+    			":ninja:": ["ninja.png", "ninja"],
+    			"O_O": ["O_O.png", "O_O", "0_0", "o_o"],
+    			":omg:": ["omg.png", "omg"],
+    			":onfire:": ["onfire.png", "onfire"],
+    			":ouch:": ["ouch.png", "ouch"],
+    			":serious:": ["serious.png", "serious"],
+    			":sick:": ["sick.png", "sick"],
+    			":sleep:": ["sleep.png", "sleep"],
+    			"=<": ["snooty.png", "snooty", ":<", ":-<", "=-<"],
+    			"o_O": ["wut.png", "wut", "o_0"],
+    			"x_x": ["x_x.png", "dead", "X_X"],
+    			"xD": ["XD.png", "XD", "XD"],
+    			":yarr:": ["yarr.png", "yarr"],
+    			":zombie:": ["zombie.png", "zombie"]
+    		});
+
     		var selfId = $("#me").attr("data-user-id");
     		var selfName = $("#me").text();
 
@@ -37,11 +71,13 @@
 
     		// Declare a function on the chat hub so the server can invoke it
     		chat.client.receive = function (senderId, receiverId, message) {
-    			var userId = senderId == selfId ? receiverId : senderId;
+    			message = emotify(message);
+    			var fromSelf = senderId == selfId;
+    			var userId = fromSelf ? receiverId : senderId;
     			createChatWindow(userId);
     			$form = $(".chat-window[data-user-id=" + userId + "]");
-    			var userName = senderId == selfId ? "me" : $(".receiverName", $form).text();
-    			var uClass = senderId == selfId ? "me" : "them";
+    			var userName = fromSelf ? "me" : $(".receiverName", $form).text();
+    			var uClass = fromSelf ? "me" : "them";
     			$(".messages", $form).append("<p><strong class=\""+uClass+"\">" + userName + ":</strong> " + message + "</p>");
     			$('.msgWrap', $form).stop().animate({ scrollTop: $('.messages', $form).height() })
     		};

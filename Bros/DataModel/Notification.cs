@@ -14,6 +14,11 @@ namespace Bros.DataModel
     
     public partial class Notification
     {
+        public Notification()
+        {
+            this.IsRead = false;
+        }
+    
         public int Id { get; set; }
         public bool IsRead { get; set; }
         public System.DateTime DateCreated { get; set; }
