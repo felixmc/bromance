@@ -1,7 +1,20 @@
-﻿@{
+﻿@model Bros.DataModel.Product
+@{
     ViewBag.Title = "ViewAllProducts";
     Layout = "~/Views/Shared/_DefaultLayout.cshtml";
 }
+ @using (Html.BeginForm("SortByCategory", "Store",FormMethod.Post, new { @class = "ProductCategory" }))
+ {
+     if (ViewBag.Categories != null)
+     {
+            <span class="ProductCategory">Category: @Html.DropDownListFor(x => x.Category, new SelectList(ViewBag.Categories, "Id", "Name"))</span>
+     }
+     if (ViewBag.ViewByCat != null)
+     {
+         @: Viewing By Category: @ViewBag.ViewByCat
+     }
+            <input type="submit" value="Go" />
+ }
 
 @foreach (Bros.DataModel.Product p in ViewBag.Products)
 {

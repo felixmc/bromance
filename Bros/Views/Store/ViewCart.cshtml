@@ -8,10 +8,10 @@
 @if (ViewBag.ItemsInShoppingCart != null)
 {
 
-    foreach (Product p in ViewBag.ItemsInShoppingCart)
+    foreach (ProductQuantity p in ViewBag.ItemsInShoppingCart)
 {
-        
-    Html.RenderPartial("ViewProduct", p);
+
+    Html.RenderPartial("_JustForCartPartialViewProduct", p);
         
         
 }

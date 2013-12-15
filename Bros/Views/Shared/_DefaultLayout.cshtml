@@ -22,11 +22,13 @@
 										<li>@Html.ActionLink("Store", "StoreIndex", "Store")</li>
 										<li>@Html.ActionLink("Browse Bros", "ViewBros", "Profile")</li>
 										<li>@Html.ActionLink("My Profile", "MyProfile", "Profile", new { id = userId }, false)</li>
-										<li>@Html.ActionLink("Logout", "Logout", "Authentication")</li>
+		 								<li>@Html.ActionLink("My Circles", "Circles", "Profile")</li>
+                                        <li>@Html.ActionLink("Logout", "Logout", "Authentication")</li>
 										}
 					 else
 					 {
-						<li>@Html.ActionLink("Login", "Login", "Authentication")</li>
+					     <li>@Html.ActionLink("Login", "Login", "Authentication")</li>
+						 <li>@Html.ActionLink("Sign Up", "Register", "Authentication")</li>                         
 					}
 
 				</ul>
