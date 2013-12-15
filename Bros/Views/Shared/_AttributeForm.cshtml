@@ -1,0 +1,18 @@
+﻿@*THIS PARTIAL MUST BE USED WITH A MODEL THAT IS A PROFILE*@ 
+
+@{
+    
+}
+@model Bros.DataModel.Profile
+        <p>Athletic: @Html.Partial("_EnumDropDown", new Tuple<Type, string, string>(typeof(Bros.Enums.Athleticism), "Athleticism", Model.Athleticism))</p>
+        <p>Children: @Html.Partial("_EnumDropDown", new Tuple<Type,string, string>(typeof(Bros.Enums.Children), "Children", Model.Children))</p>
+        <p>Drinks: @Html.Partial("_EnumDropDown", new Tuple<Type,string, string>(typeof(Bros.Enums.Drinks), "Drinks", Model.Drinks))</p>
+        <p>Drugs:@Html.Partial("_EnumDropDown", new Tuple<Type,string, string>(typeof(Bros.Enums.Drugs), "Drugs", Model.Drugs))</p>
+        <p>Education: @Html.Partial("_EnumDropDown", new Tuple<Type,string, string>(typeof(Bros.Enums.Education), "Education", Model.Education))</p>
+        <p>Ethnicity: @Html.Partial("_EnumDropDown", new Tuple<Type,string, string>(typeof(Bros.Enums.Ethnicity), "Ethnicity", Model.Ethnicity))</p>
+        <p>Job: @Html.Partial("_EnumDropDown", new Tuple<Type,string, string>(typeof(Bros.Enums.Job), "Job", Model.Job))</p>
+        <p>Marriage Status: @Html.Partial("_EnumDropDown", new Tuple<Type,string, string>(typeof(Bros.Enums.MarriageStatus), "MarriageStatus", Model.MarriageStatus))</p>
+        <p>Pets: @Html.Partial("_EnumDropDown", new Tuple<Type,string, string>(typeof(Bros.Enums.Pets), "Pets", Model.Pets))</p>
+        <p>Religion: @Html.Partial("_EnumDropDown", new Tuple<Type,string, string>(typeof(Bros.Enums.Religion), "Religion", Model.Religion))</p>
+        <p>Sexual Orientation: @Html.Partial("_EnumDropDown", new Tuple<Type,string, string>(typeof(Bros.Enums.SexualOrientation), "SexualOrientation", Model.SexualOrientation))</p>
+        <p>Smokes: @Html.Partial("_EnumDropDown", new Tuple<Type,string, string>(typeof(Bros.Enums.Smokes), "Smokes", Model.Smokes))</p>

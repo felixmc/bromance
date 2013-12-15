@@ -1,4 +1,4 @@
-﻿@model Tuple<Type, string>
+﻿@model Tuple<Type, string, string>
 
 @{
     
@@ -12,6 +12,6 @@
 
         values.Add(temp);
     }
-    @Html.DropDownList(Model.Item2, new SelectList(values))
+    @Html.DropDownList(Model.Item2, new SelectList(values, Model.Item3))
     
 }

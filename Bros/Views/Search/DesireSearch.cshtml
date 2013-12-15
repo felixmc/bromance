@@ -1,6 +1,16 @@
-﻿@model List<Bros.DataModel.User>
+﻿@model  Bros.DataModel.Profile
 @{
     
 }
 
-<h2>Compatiblity</h2>
+<h1>Compatiblity</h1>
+
+
+<h2>What do you prefer?</h2>
+  @Html.ValidationSummary()
+    @using (Html.BeginForm("MatchBros","Search", FormMethod.Post))
+    {
+        @Html.Partial("~/Views/Shared/_AttributeForm.cshtml", Model);
+        <input type="submit" value="Save Changes" />
+        
+    }

@@ -9,6 +9,53 @@ namespace Bros.Models
     public class Matcher
     {
 
+        public Matcher()
+        {
+
+        }
+
+        public Dictionary<User,double> BaseScoreCompatiblity(Dictionary<string, string> lookFor)
+        {
+            double score = 0;
+            List<User> userList = new List<User>();
+            List<string> keys = new List<string>();
+            foreach(KeyValuePair<string, string> x in lookFor){
+                keys.Add(x.Key);
+            }
+            Dictionary<User, double> scoreList = new Dictionary<User, double>();
+           
+            using (var context = new ModelFirstContainer())
+            {
+                userList = context.Users.Include("Profile").ToList();
+            }
+
+            foreach(User user in userList){
+                score = 0; Dictionary<string, string> profileList = new Dictionary<string, string>()
+                {
+                   {"Athleticism",user.Profile.Athleticism},
+                     {"Pets", user.Profile.Pets},
+                      {"Religion", user.Profile.Religion},
+                       {"Education", user.Profile.Education},
+                        {"Ethnicity", user.Profile.Ethnicity},
+                        {"SexualOrientation", user.Profile.SexualOrientation},
+                         {"MarriageStatus", user.Profile.MarriageStatus},
+                          {"Children", user.Profile.Children},
+                           {"Smokes", user.Profile.Smokes},
+                            {"Drinks", user.Profile.Drinks},
+                             {"Drugs", user.Profile.Drugs},
+                };
+                foreach(string key in keys){
+                    if (lookFor[key].Equals(profileList[key])) score++;
+                }
+                scoreList.Add(user, ((double)score/11*100));
+            }
+
+            return scoreList;
+        }
+
+
+
+
         public List<Compatibility> DetermineCompatability(User currentUser, List<User> browseList)
         {
             List<Compatibility> compatabilityList = new List<Compatibility>();
