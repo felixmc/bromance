@@ -137,7 +137,7 @@ namespace Bros.Controllers
                 // Attempt to register the user
                 try
                 {
-                    string data = WebSecurity.CreateUserAndAccount(model.Email, model.Password, new { dateCreated = DateTime.Now, isbanned = false, isdeleted = false });
+                    string data = WebSecurity.CreateUserAndAccount(model.Email, model.Password, new { dateCreated = DateTime.Now, isbanned = false, isdeleted = false, isMuted = false });
 					Roles.AddUserToRole(model.Email, "User");
 					//WebSecurity.Login(model.Email, model.Password);
                 }
