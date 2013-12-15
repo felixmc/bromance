@@ -39,7 +39,12 @@
 	margin-top: 2em;
 	background: #fff;
 	position: absolute;
+	z-index: 1;
 }
+
+	.chat-window.in-focus {
+		z-index: 3;
+	}
 
 .msgWrap {
 	overflow-y: scroll;
@@ -80,6 +85,14 @@
 	cursor: move;
 }
 
+	.chat-window.flash .header {
+	    -webkit-animation: flash .5s infinite alternate;
+	}
+
+.chat-window.in-focus .header {
+	background: #333;
+}
+
 .chat-window .me {
 	color: green;
 }
@@ -112,4 +125,13 @@
 	max-width: 32px;
 	margin-bottom: -10px;
 	margin-left: 3px;
+}
+
+@-webkit-keyframes flash {
+    from {
+        background: #666;
+    }
+    to {
+        background: #222;
+    }
 }
