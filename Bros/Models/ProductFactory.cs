@@ -5,13 +5,21 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using System.Globalization;
+using System.Drawing;
 
 namespace Bros.Models
 {
-    public class ProductFactory
+    public static class ProductFactory
     {
 
         static Random rand = new Random();
+        static List<Category> categoryList = new List<Category>()
+        {
+           new Category{Name = "Mugs"},
+           new Category{Name="T-Shirts"},
+           new Category{Name="Little Kids"},
+           new Category{Name = "Posters"}
+        };
 
         public static Product Product
         {
@@ -20,12 +28,29 @@ namespace Bros.Models
             Product _Product = new Product(){
                     Name = RandomWord(),
                     Price = RandomDouble(),
-                    Image = defaultPic(),
+                    Image = new byte[100],
                     DateCreated = DateTime.Now,
-                    Description = randomSentence(5)
+                    Description = randomSentence(5),
+                    Category = RandomCategory()
                 };
                 return _Product;
             }
+        }
+
+        static Category RandomCategory()
+        {
+            return categoryList[rand.Next(categoryList.Count)];
+        }
+
+        public static List<Product> ProductList(int number)
+        {
+            List<Product> productList = new List<Product>();
+            for (int i = 0; i < number; i ++ )
+            {
+                productList.Add(Product);
+            }
+
+            return productList;
         }
 
         static private string RandomEnum<T>()
@@ -40,7 +65,9 @@ namespace Bros.Models
         static byte[] defaultPic()
         {
             byte[] arr;
-            System.Drawing.Image img = System.Drawing.Image.FromFile("~/Content/Images/defaultPic.jpg");
+
+            
+            Image img = System.Drawing.Image.FromFile("~/Content/Images/defaultPic.jpg");
             using (MemoryStream ms = new MemoryStream())
             {
                 img.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
