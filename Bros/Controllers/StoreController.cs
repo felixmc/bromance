@@ -18,7 +18,7 @@ namespace Bros.Controllers
         public ActionResult StoreIndex()
         {
 
-            return View();
+            return RedirectToAction("ViewAllProducts");
         }
         
         [HttpPost]
@@ -196,7 +196,8 @@ namespace Bros.Controllers
                         //Category = tempCat,
                         Name = product.Name,
                         Price = product.Price,
-                        Image = product.Image
+                        Image = product.Image,
+                        Description = product.Description
                     };
                     
                     context.Products.Add(p);
