@@ -242,7 +242,7 @@ namespace Bros.Controllers
         public ActionResult ViewAllProducts()
         {
             ViewBag.AddToCart = true;
-            //GenerateProducts();
+            //GenerateProducts(); Use this when db is dropped to generate products
             using (ModelFirstContainer context = new ModelFirstContainer())
             {
                 ViewBag.Products = context.Products.Include("Tags").Include("Category").Where(x => !x.IsDeleted).ToList(); 
