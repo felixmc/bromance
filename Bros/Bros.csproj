@@ -239,6 +239,7 @@
     <Compile Include="Hubs\Startup.cs" />
     <Compile Include="Models\Compatibility.cs" />
     <Compile Include="Models\Enums.cs" />
+    <Compile Include="Models\Matcher.cs" />
     <Compile Include="Models\ProductFactory.cs" />
     <Compile Include="Models\ProfileSetting.cs" />
     <Compile Include="Models\ProfileFactory.cs" />
@@ -344,6 +345,10 @@
     </Content>
     <Content Include="Views\Home\BroCode.cshtml" />
     <Content Include="Views\Store\_JustForCartPartialViewProduct.cshtml" />
+    <Content Include="Views\Profile\EditCircle.cshtml" />
+    <Content Include="Views\Search\_SearchResults.cshtml" />
+    <Content Include="Views\Search\DesireSearch.cshtml" />
+    <Content Include="Views\Shared\_AttributeForm.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
