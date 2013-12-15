@@ -6,4 +6,18 @@
     Layout = "~/Views/Shared/_DefaultLayout.cshtml";
 }
 
-<h2>Circles</h2>
+<div class="Circles">
+    @foreach (Circle c in Model)
+    {
+        <div class="CircleBlock">
+            <span class="CircleName">@c.Name</span>
+            <div class="CircleMembers">
+                <span class="CircleMembersTitle">Members:</span>
+                @foreach (User u in c.Members)
+                {
+                    <span class="CircleMemberName">@u.Profile.FirstName @u.Profile.LastName</span>
+                }
+            </div>
+        </div>
+    }
+</div>
