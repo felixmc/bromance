@@ -55,7 +55,8 @@ namespace Bros.Controllers
                                                     .OrderByDescending(p => p.DateCreated)
                                                             .Take(30).ToList();
 
-                ViewBag.Cirlces = context.Circles.Where(x => x.Owner.Id == userId);
+                List<Circle> tempList = context.Circles.Where(x => x.Owner.Id == userId).ToList();
+                ViewBag.Circles = tempList;
                 feedPosts = broPosts.ToList();
             }
 

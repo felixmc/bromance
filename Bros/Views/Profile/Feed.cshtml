@@ -8,9 +8,9 @@
 <br/>
  @using (Html.BeginForm("FilterFeedByCircle", "Profile", FormMethod.Post, new { @class = "FiterByCircle" }))
  {
-     if (ViewBag.Circle != null)
+     if (ViewBag.Circles != null)
      {
-            <span class="FiterByCircle">Category: @Html.DropDownList("Circles",new SelectList(ViewBag.Circles, "Id", "Name"))</span>
+            <span class="FiterByCircle">Circles: @Html.DropDownList("Circles",new SelectList(ViewBag.Circles, "Id", "Name"))</span>
      }
      if (ViewBag.ViewByCat != null)
      {
