@@ -26,9 +26,14 @@
     <script src="/Content/Scripts/jquery-1.6.4.min.js" ></script>
     <script src="/Content/Scripts/jquery-ui-1.10.3.custom.min.js" ></script>
     <script src="/Content/Scripts/jquery.signalR-2.0.0.min.js"></script>
+	<script src="/Content/Scripts/emotify.js"></script>
     <script src="/signalr/hubs"></script>
     <script type="text/javascript">
     	$(function () {
+    		emotify.emoticons("/Content/Images/Smileys", false, {
+				"-_-": ["-_-.png", "annoyed"]
+    		});
+
     		var selfId = $("#me").attr("data-user-id");
     		var selfName = $("#me").text();
 
@@ -37,11 +42,13 @@
 
     		// Declare a function on the chat hub so the server can invoke it
     		chat.client.receive = function (senderId, receiverId, message) {
-    			var userId = senderId == selfId ? receiverId : senderId;
+    			message = emotify(message);
+    			var fromSelf = senderId == selfId;
+    			var userId = fromSelf ? receiverId : senderId;
     			createChatWindow(userId);
     			$form = $(".chat-window[data-user-id=" + userId + "]");
-    			var userName = senderId == selfId ? "me" : $(".receiverName", $form).text();
-    			var uClass = senderId == selfId ? "me" : "them";
+    			var userName = fromSelf ? "me" : $(".receiverName", $form).text();
+    			var uClass = fromSelf ? "me" : "them";
     			$(".messages", $form).append("<p><strong class=\""+uClass+"\">" + userName + ":</strong> " + message + "</p>");
     			$('.msgWrap', $form).stop().animate({ scrollTop: $('.messages', $form).height() })
     		};

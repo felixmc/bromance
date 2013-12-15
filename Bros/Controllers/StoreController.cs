@@ -18,7 +18,7 @@ namespace Bros.Controllers
         public ActionResult StoreIndex()
         {
 
-            return View();
+            return RedirectToAction("ViewAllProducts");
         }
         
         [HttpPost]
@@ -196,7 +196,8 @@ namespace Bros.Controllers
                         //Category = tempCat,
                         Name = product.Name,
                         Price = product.Price,
-                        Image = product.Image
+                        Image = product.Image,
+                        Description = product.Description
                     };
                     
                     context.Products.Add(p);
@@ -297,15 +298,6 @@ namespace Bros.Controllers
         {
             ActionResult result;
 
-            if (ImageFile != null)
-            {
-                using (var ms = new MemoryStream())
-                {
-                    ImageFile.InputStream.CopyTo(ms);
-                    product.Image = ms.ToArray();
-                }
-            }
-
             int categoryId = Int32.Parse(Request["Category"]);
 
             if (product.Name != null && product.Price > 0 && Request["Category"] != null)
@@ -317,12 +309,28 @@ namespace Bros.Controllers
 
                     Product target = context.Products.SingleOrDefault(x => x.Id == product.Id);
 
+                    product.Orders = target.Orders;
+
+                    if (ImageFile != null)
+                    {
+                        using (var ms = new MemoryStream())
+                        {
+                            ImageFile.InputStream.CopyTo(ms);
+                            product.Image = ms.ToArray();
+                        }
+                    }
+                    else
+                    {
+                        product.Image = target.Image;
+                    }
+
                     if (target != null)
                     {
                         context.Entry(target).CurrentValues.SetValues(product);
                         target.Category = context.Categories.Single(x => x.Id == categoryId);
                     }
 
+                    
                     context.SaveChanges();
                     //tempCat.Products.Add(p);
 
