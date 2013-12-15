@@ -16,6 +16,7 @@ namespace Bros.DataModel
     {
         public Album()
         {
+            this.IsDeleted = false;
             this.Photos = new HashSet<Photo>();
         }
     

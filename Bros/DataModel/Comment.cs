@@ -16,6 +16,8 @@ namespace Bros.DataModel
     {
         public Comment()
         {
+            this.IsFlagged = false;
+            this.IsDeleted = false;
             this.CommentNotifications = new HashSet<CommentNotification>();
         }
     
