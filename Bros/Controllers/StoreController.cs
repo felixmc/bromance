@@ -366,7 +366,7 @@ namespace Bros.Controllers
                     cart = new ShoppingCart{ User = user};
                 }
                 Product product = context.Products.SingleOrDefault(x => x.Id == productID);
-                ProductQuantity quantity = cart.ProductQuantities.Single(x => x.ProductId == productID);
+                ProductQuantity quantity = cart.ProductQuantities.FirstOrDefault(x => x.ProductId == productID);
                 if(quantity == null)
                 {
                     quantity = new ProductQuantity{ ProductId = productID, Product = product,Quantity = 1};
