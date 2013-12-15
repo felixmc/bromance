@@ -283,7 +283,7 @@
     <Content Include="Content\Scripts\emotify.js" />
     <Content Include="Content\Scripts\jquery-ui-1.10.3.custom.min.js" />
     <Content Include="Content\Styles\chat.css" />
-    <Content Include="Content\Styles\default.css" />
+    <Content Include="Content\Styles\main.css" />
     <Content Include="Content\Styles\profile.css" />
     <Content Include="Content\Styles\store.css" />
     <Content Include="DataModel\ModelFirst.edmx.sql" />
@@ -342,6 +342,7 @@
       <SubType>Code</SubType>
     </Content>
     <Content Include="Views\Home\BroCode.cshtml" />
+    <Content Include="Views\Store\_JustForCartPartialViewProduct.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
