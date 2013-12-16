@@ -239,14 +239,16 @@ namespace Bros.Controllers
 
 				if (photo.Comments.Count != 0)
 				{
-					//I need to cascade delete with photo & comments Get Felix's code for this
+					foreach(Comment post in photo.Comments.ToList()){
+                        context.Comments.Remove(post);
+                    }
 				}
 
 				context.Posts.Remove(photo);
 				context.SaveChanges();
 			}
 
-			return RedirectToAction("PhotoGallery", "Content", albumId);
+            return RedirectToAction("PhotoGallery", "Content", new {id = albumId });
 		}
 
 		[HttpGet]
@@ -321,6 +323,33 @@ namespace Bros.Controllers
 			}
 			return RedirectToAction("ManageAlbums", "Content");
 		}
+
+        public ActionResult ViewAlbums(int id)
+        {
+            
+            User user = new User();
+            using (var context = new ModelFirstContainer())
+            {
+               user  = context.Users.Include("Albums.Photos").FirstOrDefault( u => u.Id == id);
+                
+            }
+
+
+            return View(user);
+        }
+
+        public ActionResult SingleAlbum(int id)
+        {
+            Album album = new Album();
+            using (var context = new ModelFirstContainer())
+            {
+                album = context.Albums.Include("Photos.Comments").FirstOrDefault(a => a.Id == id);
+                ViewBag.AlbumId = album.Id;
+            }
+
+            @ViewBag.Title = "Photo Gallery";
+            return View(album.Photos.ToList());
+        }
 
     }
 }

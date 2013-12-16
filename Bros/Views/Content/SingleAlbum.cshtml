@@ -1,0 +1,28 @@
+﻿@model List<Bros.DataModel.Photo>
+
+
+<article>
+    <section>
+
+        @if(Model.Count != 0){
+foreach(Bros.DataModel.Photo photo in Model){
+
+    <header>
+
+        "@photo.Album.Title"
+        <br />
+    <a href="@Url.Action("Post", "Content", new { id = photo.Id })">@Html.Partial("Partials/_Photo", photo.ImageData)</a>
+<br /><span>@photo.Caption<br />@photo.Comments.Count comments</span><br />@photo.DateCreated.ToShortDateString()<br />    
+        <p></p>
+</header>
+}
+
+        }
+        else{
+            <h2>No photos in album</h2>
+        }
+    </section>
+<section>
+
+</section>
+</article>

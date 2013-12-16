@@ -1,12 +1,17 @@
 ﻿@model  Bros.DataModel.Profile
 
-<h2 class="title">@ViewBag.SubTitle</h2>
-
-<p>@ViewBag.Message</p>
-  @Html.ValidationSummary()
-    @using (Html.BeginForm())
-    {
-        @Html.Partial("Partials/_AttributeForm", Model)
-        <input type="submit" value="Save Changes" />
-        
-    }
+<p>Name: @Model.FirstName @Model.LastName</p>
+<p>Gender: @Model.Gender</p>
+<p>Birthday: @Model.BirthDate</p>
+<p>Athleticism: @Model.Athleticism</p>
+<p>Children: @Model.Children</p>
+<p>Drinks: @Model.Drinks</p>
+<p>Drugs: @Model.Drugs</p>
+<p>Education: @Model.Education</p>
+<p>Ethnicity: @Model.Ethnicity</p>
+<p>Job: @Model.Job</p>
+<p>Pets: @Model.Pets</p>
+<p>Religion: @Model.Religion</p>
+<p>Sexual Orientation: @Model.SexualOrientation</p>
+<p>Smokes: @Model.Smokes</p>
+<p>Marriage Status: @Model.MarriageStatus</p>

@@ -375,6 +375,33 @@
     <Content Include="Views\Interaction\Notifications.cshtml" />
     <Content Include="Views\Content\Post.cshtml" />
     <Content Include="Views\Messaging\_ViewStart.cshtml" />
+    <Content Include="Views\Content\AddPhoto.cshtml">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="Views\Content\ChangeProfilePhoto.cshtml">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="Views\Content\CreateAlbum.cshtml">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="Views\Content\ManageAlbums.cshtml">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="Views\Content\PhotoGallery.cshtml">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="Views\Profile\_ViewStart.cshtml">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="Views\Profile\Edit.cshtml">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="Views\Shared\Partials\_AttributeForm.cshtml" />
+    <Content Include="Views\Shared\Partials\_ProfileAttribute.cshtml">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="Views\Content\ViewAlbums.cshtml" />
+    <Content Include="Views\Content\SingleAlbum.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
