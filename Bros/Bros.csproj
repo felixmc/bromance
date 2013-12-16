@@ -144,6 +144,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\Scripts\chat.js" />
+    <Content Include="Content\Scripts\timeago.js" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\AuthenticationController.cs" />
     <Compile Include="Controllers\ContentController.cs" />
@@ -404,6 +405,8 @@
     <Content Include="Views\Content\ViewAlbums.cshtml" />
     <Content Include="Views\Content\SingleAlbum.cshtml" />
     <Content Include="Views\Profile\EditCircle.cshtml" />
+    <Content Include="Views\Bros\Match.cshtml" />
+    <Content Include="Views\Bros\_SearchResults.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

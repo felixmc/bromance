@@ -3,7 +3,7 @@
 <h2 class="title">Search</h2>
 @using (Html.BeginForm("Search", "Bros", FormMethod.Get))
 {
-	<input type="search" placeholder="search for user" name="query" value="@ViewBag.Query" />
+	<p><input type="text" placeholder="search for user" name="query" value="@ViewBag.Query" /></p>
 }
 
 @Html.Partial("Browse", Model)

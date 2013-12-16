@@ -26,6 +26,7 @@ namespace Bros.Controllers
 
 			ViewBag.Query = param;
 			ViewBag.Title = "Search Bros";
+			ViewBag.ContentClass = "semi-condensed";
 
 			return View(users);
 		}
@@ -108,6 +109,7 @@ namespace Bros.Controllers
 			}
 
 			ViewBag.Title = "Browse Bros";
+			ViewBag.ContentClass = "semi-condensed";
 
 			return View(bros);
 		}

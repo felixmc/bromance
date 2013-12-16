@@ -32,9 +32,13 @@
 
 @section Scripts {
 	<script src="/Content/Scripts/jquery.signalR-2.0.0.min.js"></script>
+	<script src="/Content/Scripts/timeago.js"></script>
 	<script src="/Content/Scripts/emotify.js"></script>
     <script src="/signalr/hubs"></script>
 	<script src="/Content/Scripts/chat.js"></script>
+	<script>
+		$(".time").timeago();
+	</script>
 	<link href="~/Content/Styles/chat.css" type="text/css" rel="stylesheet"/>
 	@RenderSection("Scripts", false)
 }
