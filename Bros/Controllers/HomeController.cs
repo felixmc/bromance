@@ -56,6 +56,8 @@ namespace Bros.Controllers
 				feedPosts = broPosts.ToList();
 			}
 
+			ViewBag.ContentClass = "semi-condensed";
+
 			return View("Feed", feedPosts);
 		}
 

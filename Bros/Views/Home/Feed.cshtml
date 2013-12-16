@@ -4,8 +4,8 @@
 
 @using (Html.BeginForm())
 {
-	<p>Circles: @Html.DropDownList("Circle", new SelectList(ViewBag.Circles, "Id", "Name"))
-	<input type="submit" value="Filter Posts" /></p>
+	<p style="width:520px;">@Html.DropDownList("Circle", new SelectList(ViewBag.Circles, "Id", "Name"))
+	<span style="margin-right:50px;"><input type="submit" value="Filter Posts" /></span></p>
 }
 
 @Html.Partial("Partials/_StatusUpdateForm")

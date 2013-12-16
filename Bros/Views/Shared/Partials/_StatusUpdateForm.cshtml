@@ -1,7 +1,7 @@
 ﻿
 @if (!ViewBag.IsMuted)
 {
-	using(Html.BeginForm("PostStatus", "Content", FormMethod.Post))
+	using (Html.BeginForm("PostStatus", "Content", FormMethod.Post, new { @class = "status-form" }))
 	{
 		<p><textarea name="status" placeholder="Enter status update"></textarea>
 		<input type="submit" value="Post Status" /></p>

@@ -417,6 +417,21 @@ a:hover {
 		left: 120px;
 	}
 
+	.comment .time {
+
+	}
+
+.status-form {
+	width: 500px;
+	margin-bottom: 3em;
+}
+
+.comment-form {
+	width: 340px;
+	margin-left: 140px;
+	margin-bottom: 5em;
+}
+
 .mini-profile {
 	position: relative;
 }
