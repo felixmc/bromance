@@ -18,7 +18,9 @@
 @section Header {
 	@if (ViewBag.HideLogin == null || !ViewBag.HideLogin)
 	{
-		Html.RenderPartial("Partials/_LoginForm");
+		<div class="login">
+			@Html.Partial("Partials/_LoginForm")
+		</div>
 	}
 }
 

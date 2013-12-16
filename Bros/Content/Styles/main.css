@@ -280,7 +280,7 @@ a:hover {
 			text-shadow: 0 -1px 0 rgba(0,0,0,.4);
 		}
 
-	#page-header input {
+	#page-header form[class^=icon] input {
 		padding: .4em .5em .4em 2.1em;
 	}
 
@@ -291,6 +291,19 @@ a:hover {
 		left: 32px;
 		top: 2px;
 	}
+
+#page-header .login {
+	float: right;
+}
+
+#page-header .login p {
+	float: left;
+}
+
+#page-header .login input {
+	margin-right: 10px;
+	padding: .4em .5em;
+}
 
 #page-footer {
     background: #368f78;
