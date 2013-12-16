@@ -1,7 +1,6 @@
 ﻿@model Bros.DataModel.Product
 @{
     ViewBag.Title = "ViewAllProducts";
-    Layout = "~/Views/Shared/_DefaultLayout.cshtml";
 }
  @using (Html.BeginForm("SortByCategory", "Store",FormMethod.Post, new { @class = "ProductCategory" }))
  {

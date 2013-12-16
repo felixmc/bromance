@@ -1,0 +1,7 @@
+﻿@model byte[]
+
+@{
+	var imgSrc = String.Format("data:image/jpg;base64,{0}", Convert.ToBase64String(Model));	
+}
+
+<img src=@imgSrc />

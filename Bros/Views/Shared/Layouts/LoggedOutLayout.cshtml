@@ -1,0 +1,25 @@
+﻿@{
+	Layout = "MasterLayout.cshtml";
+}
+
+@section Head {
+	@RenderSection("Head", false)
+}
+
+@section Scripts {
+	@RenderSection("Scripts", false)
+}
+
+@section PreContent {
+	@RenderSection("PreContent", false)
+}
+
+
+@section Header {
+	@if (ViewBag.HideLogin == null || !ViewBag.HideLogin)
+	{
+		Html.RenderPartial("Partials/_LoginForm");
+	}
+}
+
+@RenderBody()

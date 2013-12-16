@@ -145,10 +145,13 @@
   <ItemGroup>
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\AuthenticationController.cs" />
+    <Compile Include="Controllers\ContentController.cs" />
+    <Compile Include="Controllers\InteractionController.cs" />
+    <Compile Include="Models\BroController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MessagingController.cs" />
     <Compile Include="Controllers\ProfileController.cs" />
-    <Compile Include="Controllers\SearchController.cs" />
+    <Compile Include="Controllers\BrosController.cs" />
     <Compile Include="Controllers\StoreController.cs" />
     <Compile Include="DataModel\Album.cs">
       <DependentUpon>ModelFirst.tt</DependentUpon>
@@ -239,6 +242,7 @@
     <Compile Include="Hubs\Startup.cs" />
     <Compile Include="Models\Compatibility.cs" />
     <Compile Include="Models\Enums.cs" />
+    <Compile Include="Models\Matcher.cs" />
     <Compile Include="Models\ProductFactory.cs" />
     <Compile Include="Models\ProfileSetting.cs" />
     <Compile Include="Models\ProfileFactory.cs" />
@@ -294,6 +298,10 @@
     <Content Include="Content\Scripts\jquery-1.6.4.min.js" />
     <Content Include="Content\Scripts\jquery.signalR-2.0.0.js" />
     <Content Include="Content\Scripts\jquery.signalR-2.0.0.min.js" />
+    <Content Include="Views\Shared\_AttributeForm.cshtml">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="Views\Web.config" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -303,30 +311,25 @@
     <Content Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
-    <Content Include="Views\Web.config" />
-    <Content Include="Views\Messaging\Chat.cshtml" />
-    <Content Include="Views\Messaging\CreateMessage.cshtml">
+    <Content Include="Views\Messages\Chat.cshtml" />
+    <Content Include="Views\Messages\CreateMessage.cshtml">
       <SubType>Code</SubType>
     </Content>
-    <Content Include="Views\Messaging\_ConvoPartialView.cshtml" />
-    <Content Include="Views\Messaging\_SendMessageTo.cshtml" />
-    <Content Include="Views\Messaging\_SingleMessagePartialView.cshtml" />
-    <Content Include="Views\Search\SearchResults.cshtml" />
-    <Content Include="Views\Profile\Notifications.cshtml" />
-    <Content Include="Views\Profile\MyProfile.cshtml" />
+    <Content Include="Views\Messages\_ConvoPartialView.cshtml" />
+    <Content Include="Views\Messages\_SendMessageTo.cshtml" />
+    <Content Include="Views\Messages\_SingleMessagePartialView.cshtml" />
+    <Content Include="Views\Bros\SearchResults.cshtml" />
+    <Content Include="Views\Shared\Partials\_NotificationList.cshtml" />
+    <Content Include="Views\Profile\Index.cshtml" />
     <Content Include="Views\Profile\ManageAlbums.cshtml" />
-    <Content Include="Views\Profile\PhotoComments.cshtml" />
     <Content Include="Views\Profile\PhotoGallery.cshtml" />
     <Content Include="Views\Profile\AddPhoto.cshtml" />
     <Content Include="Views\Profile\ChangeProfilePhoto.cshtml" />
     <Content Include="Views\Profile\CreateAlbum.cshtml" />
-    <Content Include="Views\Profile\_AlbumSingle.cshtml">
+    <Content Include="Views\Profile\Partials\_AlbumSingle.cshtml">
       <SubType>Code</SubType>
     </Content>
-    <Content Include="Views\Shared\_ProfilePhoto.cshtml">
-      <SubType>Code</SubType>
-    </Content>
-    <Content Include="Views\Shared\_SinglePhoto.cshtml">
+    <Content Include="Views\Shared\Partials\_ProfilePhoto.cshtml">
       <SubType>Code</SubType>
     </Content>
     <Content Include="Views\Store\LoadTags.cshtml" />
@@ -344,6 +347,30 @@
     </Content>
     <Content Include="Views\Home\BroCode.cshtml" />
     <Content Include="Views\Store\_JustForCartPartialViewProduct.cshtml" />
+    <Content Include="Views\Shared\Layouts\LoggedInLayout.cshtml" />
+    <Content Include="Views\Shared\Layouts\LoggedOutLayout.cshtml" />
+    <Content Include="Views\Admin\_ViewStart.cshtml" />
+    <Content Include="Views\Home\Feed.cshtml">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="Views\Home\About.cshtml">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="Views\Home\Terms.cshtml" />
+    <Content Include="Views\Shared\Partials\_Photo.cshtml" />
+    <Content Include="Views\Shared\Partials\_LoginForm.cshtml" />
+    <Content Include="Views\Shared\Partials\_RegisterForm.cshtml" />
+    <Content Include="Views\Authentication\_ViewStart.cshtml" />
+    <Content Include="Views\Home\_ViewStart.cshtml" />
+    <Content Include="Views\Content\_ViewStart.cshtml" />
+    <Content Include="Views\Interaction\_ViewStart.cshtml" />
+    <Content Include="Views\Store\_ViewStart.cshtml" />
+    <Content Include="Views\Bros\_ViewStart.cshtml" />
+    <Content Include="Views\Shared\Layouts\SearchLayout.cshtml" />
+    <Content Include="Views\Shared\Partials\_BroRequestButton.cshtml" />
+    <Content Include="Views\Shared\Partials\_BlockBroButton.cshtml" />
+    <Content Include="Views\Interaction\Notifications.cshtml" />
+    <Content Include="Views\Content\Post.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -354,52 +381,31 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Home\AboutUs.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\BroCode.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Home\HomeIndex.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\_ViewStart.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Shared\_DefaultLayout.cshtml" />
+    <Content Include="Views\Shared\Layouts\MasterLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Store\StoreIndex.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Home\TermsOfUse.cshtml" />
+    <Content Include="Views\Shared\Partials\_UserPost.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Profile\ProfileIndex.cshtml" />
+    <Content Include="Views\Messages\_MessagePartialView.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Profile\_NewsFeedPartial.cshtml" />
+    <Content Include="Views\Messages\Mail.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Messaging\_MessagePartialView.cshtml" />
+    <Content Include="Views\Bros\Search.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Messaging\Mail.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Search.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Profile\_UserPartialView.cshtml" />
+    <Content Include="Views\Shared\Partials\_User.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Home\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Store\_ProductPartial.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Layouts\_LayoutPageNavBar.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
@@ -427,44 +433,41 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Profile\_StatusUpdateForm.cshtml" />
+    <Content Include="Views\Shared\Partials\_StatusUpdateForm.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Profile\Feed.cshtml" />
+    <Content Include="Views\Home\Feed.cshtml" />
     <Content Include="Views\Authentication\Register.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Profile\_BroRequestPartial.cshtml" />
+    <Content Include="Views\Shared\Partials\_BroRequest.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Profile\_CommentFeed.cshtml" />
+    <Content Include="Views\Shared\Partials\_CommentFeed.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Profile\_SingleComment.cshtml" />
+    <Content Include="Views\Shared\Partials\_SingleComment.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Profile\_CommentForm.cshtml" />
+    <Content Include="Views\Shared\Partials\_CommentForm.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Profile\BroAccept.cshtml" />
-    <Content Include="Views\Profile\_BroRequestAcceptedPartial.cshtml" />
+    <Content Include="Views\Profile\Partials\_BroRequestAcceptedPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Messaging\MessageHome.cshtml" />
+    <Content Include="Views\Messages\MessageHome.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Messaging\_UserMessageList.cshtml" />
-    <Content Include="Views\Messaging\_SendMessagePartialView.cshtml" />
+    <Content Include="Views\Messages\_UserMessageList.cshtml" />
+    <Content Include="Views\Messages\_SendMessagePartialView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Profile\ProfileAttribute.cshtml" />
     <Content Include="Views\Authentication\Login.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Shared\_EnumDropDown.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Profile\ViewBroRequests.cshtml" />
+    <Content Include="Views\Shared\Partials\_EnumDropDown.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Profile\TempUserPartialView.cshtml" />
@@ -473,7 +476,7 @@
     <Content Include="Views\Profile\SendBroRequest.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Profile\ViewBros.cshtml">
+    <Content Include="Views\Bros\Browse.cshtml">
       <SubType>Code</SubType>
     </Content>
   </ItemGroup>
@@ -483,15 +486,14 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Store\CreateProduct.cshtml" />
-    <Content Include="Views\Home\GarbageView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Store\ViewAllProducts.cshtml" />
-    <Content Include="Views\Layouts\_AdminLayout.cshtml" />
-    <Content Include="Views\Layouts\_ProfileLayout.cshtml">
+    <Content Include="Views\Shared\Layouts\AdminLayout.cshtml" />
+    <Content Include="Views\Shared\Layouts\ProfileLayout.cshtml">
       <SubType>Code</SubType>
     </Content>
-    <Content Include="Views\Layouts\_StoreLayout.cshtml" />
+    <Content Include="Views\Shared\Layouts\StoreLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Admin\Admin.cshtml" />

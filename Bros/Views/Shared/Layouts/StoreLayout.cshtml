@@ -1,0 +1,12 @@
+﻿@using System.Collections.Specialized
+@{
+	Layout = "LoggedInLayout.cshtml";
+}
+
+@section SecondaryNavigation
+{
+	<li>@Html.ActionLink("Browse Products", "StoreIndex", "Store")</li>
+    <li>@Html.ActionLink("View Cart", "ViewCart", "Store")</li>
+}
+
+@RenderBody()

@@ -1,0 +1,12 @@
+﻿@{
+	Layout = "LoggedInLayout.cshtml";
+}
+
+@section SecondaryNavigation
+{
+	<li>@Html.ActionLink("Browse", "Browse", "Bros")</li>
+	<li>@Html.ActionLink("Match", "Match", "Bros")</li>
+	<li>@Html.ActionLink("Search", "Search", "Bros")</li>
+}
+
+@RenderBody()

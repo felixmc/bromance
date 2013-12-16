@@ -1,0 +1,48 @@
+﻿@{
+	Layout = "MasterLayout.cshtml";
+	ViewBag.ContentClass = "widget wrapper " + ViewBag.ContentClass;
+}
+
+@section Header {
+	<nav id="main-nav">
+		<ul>
+			<li>@Html.ActionLink(" ", "Index", "Home", null, new { @class = "icon-home", title = "Home" })</li>
+			<li>@Html.ActionLink(" ", "Index", "Profile", null, new { @class = "icon-user", title = "Profile" })</li>
+			<li>@Html.ActionLink(" ", "Notifications", "Interaction", null, new { @class = "icon-download", title = "Notifications" })</li>
+			<li>@Html.ActionLink(" ", "MessageHome", "Messaging", null, new { @class = "icon-mail", title = "Messages" })</li>
+			<li>@Html.ActionLink(" ", "Browse", "Bros", null, new { @class = "icon-users", title = "Find Bros" })</li>
+			<li>@Html.ActionLink(" ", "StoreIndex", "Store", null, new { @class = "icon-grocery-store", title = "Store" })</li>
+			<li>@Html.ActionLink(" ", "Logout", "Authentication", null, new { @class = "icon-logout", title = "Logout" })</li>
+		</ul>
+	</nav>
+	@using (Html.BeginForm("Search", "Bros", FormMethod.Get, new { @class = "icon-search" }))
+ {
+		<input type="search" placeholder="search for user" name="query" />
+ }
+	<nav id="icon-nav">
+		<ul>
+
+		</ul>
+	</nav>
+}
+
+@section Head {
+	@RenderSection("Head", false)
+}
+
+@section Scripts {
+	@RenderSection("Scripts", false)
+}
+
+@section PreContent {
+	@if (IsSectionDefined("SecondaryNavigation"))
+	{
+		<nav id="secondary-nav">
+			<ul class="wrapper">
+			 	@RenderSection("SecondaryNavigation", false)
+			</ul>
+		</nav>
+	}
+}
+
+@RenderBody()

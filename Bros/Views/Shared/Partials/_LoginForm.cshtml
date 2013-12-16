@@ -1,0 +1,7 @@
+﻿<p class="error">@ViewBag.Error</p>
+@using (Html.BeginForm("Login", "Authentication", FormMethod.Post))
+{
+	<p><input type="email" placeholder="email" name="email" /></p>
+	<p><input type="password" placeholder="password" name="password" /></p>
+	<p><input type="submit" value="Login" /></p>
+}

@@ -1,0 +1,21 @@
+﻿@model Bros.DataModel.Post
+
+<article>
+	<p><strong>@Model.Author.Profile.FirstName @Model.Author.Profile.LastName</strong></p>
+@if (@Model is Bros.DataModel.TextPost)
+{
+	var post = Model as Bros.DataModel.TextPost;
+	<p>@post.Content</p>
+}
+else if (@Model is Bros.DataModel.Photo)
+{
+	var post = Model as Bros.DataModel.Photo;
+	@Html.Partial("Partials/_Photo", post.ImageData)
+	<p>@post.Caption</p>
+}
+else
+{
+	<p>something weird?</p>
+}
+</article>
+@Html.Partial("Partials/_CommentFeed", Model)

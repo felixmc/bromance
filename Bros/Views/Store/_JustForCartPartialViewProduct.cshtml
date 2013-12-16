@@ -14,6 +14,10 @@
     <div class="ProductName">Product Name: @Model.Product.Name</div>
     <img class="ProductImage" src="@imgSrc" />
     <div class="ProductPrice">Product Price: $@Model.Product.Price</div>
+    <div class="ProductQuantity">Product Quantity: @Model.Quantity</div>
+
+    <span class="ProductLink">@Html.ActionLink("Return to Store", "ViewAllProducts")</span>
+
    @if((ViewBag.RemoveFromCart) != null && ViewBag.RemoveFromCart)
     {
     <span class="ProductLink">@Html.ActionLink("Remove from Cart", "RemoveProductFromCart", new { productId = Model.Id })</span>

@@ -1,0 +1,14 @@
+﻿@model List<Bros.DataModel.Post>
+
+@using (Html.BeginForm())
+{
+	<p class="FiterByCircle">Circles: @Html.DropDownList("Circle", new SelectList(ViewBag.Circles, "Id", "Name"))</p>
+	<input type="submit" value="Filter" />
+}
+
+@Html.Partial("Partials/_StatusUpdateForm")
+
+@foreach (Bros.DataModel.Post post in Model)
+{
+	Html.RenderPartial("Partials/_UserPost", post);
+}

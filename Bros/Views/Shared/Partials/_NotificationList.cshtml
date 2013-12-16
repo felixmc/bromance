@@ -1,0 +1,16 @@
+﻿@model List<Bros.DataModel.Notification>
+
+@foreach(Bros.DataModel.Notification not in Model)
+{
+	if (not is Bros.DataModel.CommentNotification)
+	{
+		var cnot = not as Bros.DataModel.CommentNotification;
+		<p>@cnot.Comment.Owner.Profile.FirstName @cnot.Comment.Owner.Profile.LastName commented on your 
+			@Html.ActionLink("post", "Post", "Content", new { id = cnot.Comment.PostId }, null).</p>		
+	}
+	else if (not is Bros.DataModel.RequestNotification)
+	{
+		var cnot = not as Bros.DataModel.RequestNotification;
+		Html.RenderPartial("Partials/_BroRequest", cnot.BroRequest);
+	}
+}

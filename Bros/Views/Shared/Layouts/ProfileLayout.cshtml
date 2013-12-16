@@ -1,0 +1,12 @@
+﻿@{
+	Layout = "LoggedInLayout.cshtml";
+}
+
+@section SecondaryNavigation
+{
+	<li>@Html.ActionLink("Change Profile Picture", "ChangeProfilePhoto", "Profile")</li>
+	<li>@Html.ActionLink("Edit Preferences", "EditProfile", "Profile")</li>
+	<li>@Html.ActionLink("Manage Albums", "ManageAlbums", "Profile")</li>
+}
+
+@RenderBody()

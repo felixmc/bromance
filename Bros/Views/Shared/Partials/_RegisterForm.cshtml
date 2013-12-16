@@ -1,0 +1,33 @@
+﻿@using Bros.Models
+@model RegisterModel
+
+@Html.ValidationSummary("", new { @class = "error" })
+@using (Html.BeginForm())
+{       
+	@ViewBag.ErrorMessage
+	<p>
+		<label for="Email">Email:</label>
+		@Html.TextBoxFor(x => x.Email)</p>
+	<p>
+		<label for="Password">Password:</label>
+		@Html.PasswordFor(x => x.Password)</p>
+	<p>
+		<label for="ConfirmPassword">Confirm Password:</label>
+		@Html.PasswordFor(x => x.ConfirmPassword)</p> 
+	<p>
+		<label for="FirstName">First Name:</label>
+		@Html.TextBoxFor(x => x.FirstName)</p>
+	<p>
+		<label for="LastName">Last Name:</label>
+		@Html.TextBoxFor(x => x.LastName)</p>
+	<p>
+		<label for="Birthdate">Birthdate:</label><input type="date" name="Birthdate" /></p>
+	<p>
+		<label for="Gender">Gender:</label>
+		@Html.Partial("Partials/_EnumDropDown", new Tuple<Type, string, string>(typeof(Bros.Enums.Gender), "Gender", Bros.Enums.Gender.Male.ToString()))</p>
+	<p>
+		<label for="Zipcode">Zipcode:</label>
+		@Html.TextBoxFor(x => x.Zipcode)</p>
+	<p>
+		<input type="submit" value="Sign Up" /></p>
+}

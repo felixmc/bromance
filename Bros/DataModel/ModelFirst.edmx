@@ -1142,7 +1142,7 @@
           <NavigationProperty Name="Owner" Relationship="ModelFirst.AlbumUser" FromRole="Album" ToRole="User" />
           <Property Type="Int32" Name="UserId" Nullable="false" />
           <NavigationProperty Name="Photos" Relationship="ModelFirst.AlbumPhoto" FromRole="Album" ToRole="Photo" />
-          <Property Type="Boolean" Name="IsDeleted" Nullable="false" DefaultValue="False" />
+          <Property Type="Boolean" Name="IsDeleted" Nullable="false" DefaultValue="False" annotation:StoreGeneratedPattern="None" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -1166,11 +1166,11 @@
           <NavigationProperty Name="SentFirstBumps" Relationship="ModelFirst.SentFirstBump" FromRole="User" ToRole="FirstBump" />
           <NavigationProperty Name="Notifications" Relationship="ModelFirst.NotificationUser" FromRole="User" ToRole="Notification" />
           <NavigationProperty Name="Comments" Relationship="ModelFirst.CommentUser" FromRole="User" ToRole="Comment" />
-          <Property Type="Boolean" Name="IsDeleted" Nullable="false" DefaultValue="False" />
-          <Property Type="Boolean" Name="IsBanned" Nullable="false" DefaultValue="False" />
+          <Property Type="Boolean" Name="IsDeleted" Nullable="false" DefaultValue="False" annotation:StoreGeneratedPattern="None" />
+          <Property Type="Boolean" Name="IsBanned" Nullable="false" DefaultValue="False" annotation:StoreGeneratedPattern="None" />
           <NavigationProperty Name="Orders" Relationship="ModelFirst.OrderUser" FromRole="User" ToRole="Order" />
           <NavigationProperty Name="ShoppingCart" Relationship="ModelFirst.ShoppingCartUser" FromRole="User" ToRole="ShoppingCart" />
-          <Property Type="Boolean" Name="IsMuted" Nullable="false" DefaultValue="False" />
+          <Property Type="Boolean" Name="IsMuted" Nullable="false" DefaultValue="False" annotation:StoreGeneratedPattern="None" />
         </EntityType>
         <EntityType Name="Photo" BaseType="ModelFirst.Post">
           <Property Type="String" Name="Caption" Nullable="false" />
@@ -1184,13 +1184,13 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="Boolean" Name="IsFlagged" Nullable="false" />
+          <Property Type="Boolean" Name="IsFlagged" Nullable="false" annotation:StoreGeneratedPattern="None" />
           <Property Type="DateTime" Name="DateCreated" Nullable="false" />
           <Property Type="DateTime" Name="DateUpdated" Nullable="true" />
           <NavigationProperty Name="Comments" Relationship="ModelFirst.PostComment" FromRole="Post" ToRole="Comment" />
           <NavigationProperty Name="Author" Relationship="ModelFirst.UserPost" FromRole="Post" ToRole="User" />
           <Property Type="Int32" Name="UserId" Nullable="false" />
-          <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
+          <Property Type="Boolean" Name="IsDeleted" Nullable="false" annotation:StoreGeneratedPattern="None" />
         </EntityType>
         <EntityType Name="Comment">
           <Key>
@@ -1198,14 +1198,14 @@
           </Key>
           <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Type="String" Name="Content" Nullable="false" />
-          <Property Type="Boolean" Name="IsFlagged" Nullable="false" DefaultValue="False" />
+          <Property Type="Boolean" Name="IsFlagged" Nullable="false" DefaultValue="False" annotation:StoreGeneratedPattern="None" />
           <Property Type="DateTime" Name="DateCreated" Nullable="false" />
           <NavigationProperty Name="ParentPost" Relationship="ModelFirst.PostComment" FromRole="Comment" ToRole="Post" />
           <Property Type="Int32" Name="PostId" Nullable="false" />
           <NavigationProperty Name="CommentNotifications" Relationship="ModelFirst.CommentNotificationComment" FromRole="Comment" ToRole="CommentNotification" />
           <NavigationProperty Name="Owner" Relationship="ModelFirst.CommentUser" FromRole="Comment" ToRole="User" />
           <Property Type="Int32" Name="UserId" Nullable="false" />
-          <Property Type="Boolean" Name="IsDeleted" Nullable="false" DefaultValue="False" />
+          <Property Type="Boolean" Name="IsDeleted" Nullable="false" DefaultValue="False" annotation:StoreGeneratedPattern="None" />
         </EntityType>
         <EntityType Name="BroRequest">
           <Key>
@@ -1260,7 +1260,7 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="Boolean" Name="IsRead" Nullable="false" DefaultValue="False" />
+          <Property Type="Boolean" Name="IsRead" Nullable="false" DefaultValue="False" annotation:StoreGeneratedPattern="None" />
           <Property Type="DateTime" Name="DateCreated" Nullable="false" />
           <NavigationProperty Name="Receiver" Relationship="ModelFirst.NotificationUser" FromRole="Notification" ToRole="User" />
           <Property Type="Int32" Name="UserId1" Nullable="false" />
@@ -1287,7 +1287,7 @@
           <Property Type="Int32" Name="CategoryId" Nullable="false" />
           <NavigationProperty Name="Tags" Relationship="ModelFirst.ProductTag" FromRole="Product" ToRole="Tag" />
           <NavigationProperty Name="Orders" Relationship="ModelFirst.OrderProducts" FromRole="Product" ToRole="Order" />
-          <Property Type="Boolean" Name="IsDeleted" Nullable="false" DefaultValue="False" />
+          <Property Type="Boolean" Name="IsDeleted" Nullable="false" DefaultValue="False" annotation:StoreGeneratedPattern="None" />
           <Property Type="DateTime" Name="DateCreated" Nullable="false" />
           <Property Type="String" Name="Description" Nullable="false" />
         </EntityType>
