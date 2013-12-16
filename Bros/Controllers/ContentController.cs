@@ -239,14 +239,16 @@ namespace Bros.Controllers
 
 				if (photo.Comments.Count != 0)
 				{
-					//I need to cascade delete with photo & comments Get Felix's code for this
+					foreach(Comment post in photo.Comments.ToList()){
+                        context.Comments.Remove(post);
+                    }
 				}
 
 				context.Posts.Remove(photo);
 				context.SaveChanges();
 			}
 
-			return RedirectToAction("PhotoGallery", "Content", albumId);
+            return RedirectToAction("PhotoGallery", "Content", new {id = albumId });
 		}
 
 		[HttpGet]
