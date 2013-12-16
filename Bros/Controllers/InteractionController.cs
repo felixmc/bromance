@@ -8,8 +8,56 @@ using WebMatrix.WebData;
 
 namespace Bros.Controllers
 {
-    public class InteractionController : Controller
+	[Authorize(Roles = "User")]
+    public class InteractionController : BroController
     {
+		public ActionResult Notifications()
+		{
+			List<Notification> notifications = new List<Notification>();
+			using (ModelFirstContainer context = new ModelFirstContainer())
+			{
+				int userId = (int)Session["UserId"];
+
+				foreach (Notification not in context.Notifications.Where(n => n.Receiver.Id == userId && n.IsRead == false))
+				{
+					if (not is CommentNotification)
+					{
+						CommentNotification cn = not as CommentNotification;
+						context.Entry(cn.Comment.Owner).Reference(u => u.Profile).Load();
+						notifications.Add(cn);
+					}
+					else if (not is Bros.DataModel.RequestNotification)
+					{
+						Bros.DataModel.RequestNotification cn = not as Bros.DataModel.RequestNotification;
+						context.Entry(cn.BroRequest.Sender).Reference(u => u.Profile).Load();
+						notifications.Add(cn);
+					}
+				}
+			}
+
+			return View(notifications);
+		}
+
+		[HttpPost]
+		public ActionResult ReadNotification(int id)
+		{
+			using (ModelFirstContainer context = new ModelFirstContainer())
+			{
+				Notification not = context.Notifications.Where(n => n.Id == id).FirstOrDefault();
+
+				if (not != null)
+				{
+					not.IsRead = true;
+					context.SaveChanges();
+				}
+			}
+
+			if (Request.IsAjaxRequest())
+				return null;
+			else
+				return Redirect(Request.UrlReferrer.AbsolutePath);
+		}
+
 
 		public ActionResult SendBroRequest(int recieverID)
 		{

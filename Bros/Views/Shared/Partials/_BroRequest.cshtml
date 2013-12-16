@@ -1,7 +1,7 @@
 ﻿@model Bros.DataModel.BroRequest
 
 <div class="BroRequestPartial">
-    @if ((int)Session["UserId"] == Model.Sender.Id)
+    @if (ViewBag.CurrentUserId == Model.Sender.Id)
     {
         <p class="RequestMessage">Request sent to @Model.Receiver.Profile.FirstName @Model.Receiver.Profile.LastName</p>
     }else{

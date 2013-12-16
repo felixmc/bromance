@@ -11,11 +11,10 @@ using System.Data.Entity;
 
 namespace Bros.Controllers
 {
-    //[Authorize(Roles = "Admin, User, StoreAdmin")]
-    public class StoreController : Controller
+    [Authorize(Roles = "Admin, User, StoreAdmin")]
+    public class StoreController : BroController
     {
-        //
-        // GET: /Store/
+
         List<Product> prodList = ProductFactory.ProductList(10);
         public ActionResult StoreIndex()
         {
@@ -24,7 +23,6 @@ namespace Bros.Controllers
         }
         
         [HttpPost]
-        //[Authorize(Roles="Admin, StoreAdmin")]
         public ActionResult AddCategory()
         {
             using (var context = new ModelFirstContainer())
@@ -70,12 +68,6 @@ namespace Bros.Controllers
 
         }
 
-     
-
-
-
-        //[Authorize(Roles = "Admin, StoreAdmin")]
-  
        [HttpPost]
         public ActionResult EditCategory()
         {
@@ -91,7 +83,8 @@ namespace Bros.Controllers
                 return RedirectToAction("LoadCategorys");
 
         }
-       public ActionResult LoadTags()
+
+		public ActionResult LoadTags()
        {
            using (var context = new ModelFirstContainer())
            {
@@ -125,7 +118,6 @@ namespace Bros.Controllers
        }
 
         [HttpPost]
-        //[Authorize(Roles = "Admin, StoreAdmin")]
         public ActionResult AddTag()
         {
             using (var context = new ModelFirstContainer())
@@ -137,7 +129,6 @@ namespace Bros.Controllers
             return RedirectToAction("LoadTags");
         }
 
-        //[Authorize(Roles = "Admin, StoreAdmin")]
         public ActionResult EditTag(Tag t)
         {
             if (t != null)
@@ -153,12 +144,12 @@ namespace Bros.Controllers
             return RedirectToAction("LoadTags");
 
         }
+
         public ActionResult ViewProductsInCategory()
         {
             return View();
         }
 
-      //  [Authorize(Roles = "Admin, StoreAdmin")]
         public ActionResult LoadProductCreation()
         {
             using (ModelFirstContainer context = new ModelFirstContainer())
@@ -171,7 +162,6 @@ namespace Bros.Controllers
         }
 
         [HttpPost]
-        //[Authorize(Roles = "Admin, StoreAdmin")]
         public ActionResult CreateProduct(Product product, HttpPostedFileBase ImageFile)
         {
             using (var ms = new MemoryStream())
@@ -225,7 +215,6 @@ namespace Bros.Controllers
             return result;
         }
 
-        //[Authorize(Roles = "Admin, StoreAdmin")]
         public ActionResult DeleteProductById(int productId)
         {
             using (ModelFirstContainer context = new ModelFirstContainer())
@@ -272,18 +261,6 @@ namespace Bros.Controllers
             return View();
         }
 
-        //public ActionResult ViewProduct(int productID)
-        //{
-        //    Product targetProduct;
-
-        //    using (ModelFirstContainer context = new ModelFirstContainer())
-        //    {
-        //        targetProduct = context.Products.Include("Category").FirstOrDefault(p => p.Id == productID);
-        //    }
-
-        //    return View(targetProduct);
-        //}
-
         public ActionResult ViewProduct(Product product)
         {
             ViewBag.AddToCart = true;
@@ -301,7 +278,6 @@ namespace Bros.Controllers
             return View("ViewProduct", product);
         }
 
-        //[Authorize(Roles = "Admin, StoreAdmin")]
         public ActionResult EditProduct(int productID)
         {
             Product targetProduct;
@@ -316,7 +292,6 @@ namespace Bros.Controllers
         }
 
         [HttpPost]
-        //[Authorize(Roles = "Admin, StoreAdmin")]
         public ActionResult EditProduct(Product product, HttpPostedFileBase ImageFile)
         {
             ActionResult result;

@@ -146,6 +146,7 @@
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\AuthenticationController.cs" />
     <Compile Include="Controllers\ContentController.cs" />
+    <Compile Include="Controllers\InteractionController.cs" />
     <Compile Include="Models\BroController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MessagingController.cs" />
@@ -297,6 +298,9 @@
     <Content Include="Content\Scripts\jquery-1.6.4.min.js" />
     <Content Include="Content\Scripts\jquery.signalR-2.0.0.js" />
     <Content Include="Content\Scripts\jquery.signalR-2.0.0.min.js" />
+    <Content Include="Views\Shared\_AttributeForm.cshtml">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="Views\Web.config" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -315,26 +319,23 @@
     <Content Include="Views\Messages\_SendMessageTo.cshtml" />
     <Content Include="Views\Messages\_SingleMessagePartialView.cshtml" />
     <Content Include="Views\Bros\SearchResults.cshtml" />
-    <Content Include="Views\User\Notifications.cshtml" />
-    <Content Include="Views\Home\Profile.cshtml" />
-    <Content Include="Views\User\ManageAlbums.cshtml" />
-    <Content Include="Views\User\PhotoGallery.cshtml" />
-    <Content Include="Views\User\AddPhoto.cshtml" />
-    <Content Include="Views\User\ChangeProfilePhoto.cshtml" />
-    <Content Include="Views\User\CreateAlbum.cshtml" />
-    <Content Include="Views\User\_AlbumSingle.cshtml">
+    <Content Include="Views\Profile\Notifications.cshtml" />
+    <Content Include="Views\Profile\Profile.cshtml" />
+    <Content Include="Views\Profile\ManageAlbums.cshtml" />
+    <Content Include="Views\Profile\PhotoGallery.cshtml" />
+    <Content Include="Views\Profile\AddPhoto.cshtml" />
+    <Content Include="Views\Profile\ChangeProfilePhoto.cshtml" />
+    <Content Include="Views\Profile\CreateAlbum.cshtml" />
+    <Content Include="Views\Profile\_AlbumSingle.cshtml">
       <SubType>Code</SubType>
     </Content>
     <Content Include="Views\Shared\Partials\_ProfilePhoto.cshtml">
       <SubType>Code</SubType>
     </Content>
-    <Content Include="Views\Shared\_SinglePhoto.cshtml">
-      <SubType>Code</SubType>
-    </Content>
     <Content Include="Views\Store\LoadTags.cshtml" />
     <Content Include="Views\Store\_EditTag.cshtml" />
-    <Content Include="Views\User\Settings.cshtml" />
-    <Content Include="Views\User\Circles.cshtml" />
+    <Content Include="Views\Profile\Settings.cshtml" />
+    <Content Include="Views\Profile\Circles.cshtml" />
     <Content Include="Views\Store\ProductView.cshtml">
       <SubType>Code</SubType>
     </Content>
@@ -347,8 +348,6 @@
     <Content Include="Views\Home\BroCode.cshtml" />
     <Content Include="Views\Store\_JustForCartPartialViewProduct.cshtml" />
     <Content Include="Views\Bros\DesireSearch.cshtml" />
-    <Content Include="Views\Shared\_AttributeForm.cshtml" />
-    <Content Include="Views\Shared\_AttributeForm.cshtml" />
     <Content Include="Views\Shared\Layouts\LoggedInLayout.cshtml" />
     <Content Include="Views\Shared\Layouts\LoggedOutLayout.cshtml" />
     <Content Include="Views\Admin\_ViewStart.cshtml" />
@@ -438,7 +437,7 @@
     <Content Include="Views\Authentication\Register.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\User\_BroRequestPartial.cshtml" />
+    <Content Include="Views\Profile\_BroRequestPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Shared\Partials\_CommentFeed.cshtml" />
@@ -450,8 +449,8 @@
     <Content Include="Views\Shared\Partials\_CommentForm.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\User\BroAccept.cshtml" />
-    <Content Include="Views\User\_BroRequestAcceptedPartial.cshtml" />
+    <Content Include="Views\Profile\BroAccept.cshtml" />
+    <Content Include="Views\Profile\_BroRequestAcceptedPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Messages\MessageHome.cshtml" />
@@ -461,20 +460,17 @@
     <Content Include="Views\Messages\_SendMessagePartialView.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\User\ProfileAttribute.cshtml" />
+    <Content Include="Views\Profile\ProfileAttribute.cshtml" />
     <Content Include="Views\Authentication\Login.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Shared\Partials\_EnumDropDown.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\User\ViewBroRequests.cshtml" />
+    <Content Include="Views\Profile\TempUserPartialView.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\User\TempUserPartialView.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\User\SendBroRequest.cshtml" />
+    <Content Include="Views\Profile\SendBroRequest.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Bros\Browse.cshtml">

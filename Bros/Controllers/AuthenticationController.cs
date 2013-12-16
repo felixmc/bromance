@@ -18,7 +18,7 @@ using WebMatrix.WebData;
 namespace Bros.Controllers
 {
 	[AllowAnonymous]
-	public class AuthenticationController : Controller
+	public class AuthenticationController : BroController
 	{
 		protected override void Initialize(RequestContext requestContext)
 		{

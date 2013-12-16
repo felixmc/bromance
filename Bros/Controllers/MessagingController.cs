@@ -10,10 +10,8 @@ using WebMatrix.WebData;
 namespace Bros.Controllers
 {
 	[Authorize(Roles="User")]
-    public class MessagingController : Controller
+    public class MessagingController : BroController
     {
-        //
-        // GET: /Messaging/
 
         public ActionResult MessageHome()
         {
