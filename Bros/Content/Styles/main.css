@@ -392,6 +392,14 @@ a:hover {
 	margin-bottom: 3em;
 }
 
+	.post .time {
+		position: absolute;
+		font-size: .8em;
+		color: #aaa;
+		top: 5px;
+		left: 300px;
+	}
+
 	.post .status {
 		position: absolute;
 		top: 10px;
