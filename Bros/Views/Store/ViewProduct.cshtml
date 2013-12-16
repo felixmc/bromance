@@ -15,10 +15,10 @@
     <div class="ProductDescription">Product Description: @Model.Description</div>
     <img class="ProductImage" src="@imgSrc" />
     <div class="ProductPrice">Product Price: $@Model.Price</div>
-    @*@if (ViewContext.HttpContext.User.IsInRole("StoreAdmin")){ *@
+    @if (ViewContext.HttpContext.User.IsInRole("StoreAdmin")){ 
         <span class="ProductLink">@Html.ActionLink("Delete", "DeleteProductById", new { productId = Model.Id })</span>
         <span class="ProductLink">@Html.ActionLink("Edit", "EditProduct", new { productId = Model.Id })</span>
-    @*}*@
+    }
         <span class="ProductLink">@Html.ActionLink("Return to Store", "ViewAllProducts")</span>
 
     @if((ViewBag.AddToCart != null) && ViewBag.AddToCart)
