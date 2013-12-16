@@ -132,7 +132,7 @@ namespace Bros.Controllers
 					}
 
 					WebSecurity.Login(model.Email, model.Password);
-					return RedirectToAction("EditProfile", "User", new { firstTime = true });
+					return RedirectToAction("Edit", "Profile", new { firstTime = true });
 				}
 				catch (MembershipCreateUserException e)
 				{

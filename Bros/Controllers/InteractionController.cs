@@ -59,14 +59,14 @@ namespace Bros.Controllers
 		}
 
 
-		public ActionResult SendBroRequest(int recieverID)
+		public ActionResult SendBroRequest(int id)
 		{
 			using (ModelFirstContainer context = new ModelFirstContainer())
 			{
-				int id = WebSecurity.CurrentUserId;
-				User user = context.Users.FirstOrDefault(u => u.Id == id);
+				int senderId = WebSecurity.CurrentUserId;
+				User user = context.Users.FirstOrDefault(u => u.Id == senderId);
 
-				User reciever = context.Users.FirstOrDefault(u => u.Id == recieverID);
+				User reciever = context.Users.FirstOrDefault(u => u.Id == id);
 
 				BroRequest request = CreateRequest(user, reciever);
 

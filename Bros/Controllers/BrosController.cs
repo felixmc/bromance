@@ -9,43 +9,55 @@ using WebMatrix.WebData;
 
 namespace Bros.Controllers
 {
-    public class BrosController : BroController
-    {
-        [Authorize]
-        public ActionResult ByUserName()
-        {
-            String param = Request["searchParam"];
-            var context = new ModelFirstContainer();
-            var users = context.Users.Where(x => x.Email.Contains(param)).ToList<User>();
-            return View("SearchResults",users);
-        }
+	[Authorize(Roles="User")]
+	public class BrosController : BroController
+	{
+		
+		public ActionResult Search()
+		{
+			String param = (Request["query"] ?? "").ToLower();
+			List<User> users = new List<User>();
+			using (var context = new ModelFirstContainer())
+			{
+				users = context.Users.Include("Profile.ProfilePhoto").Where(x => x.Email.ToLower().Contains(param) ||
+														x.Profile.FirstName.ToLower().Contains(param) ||
+														x.Profile.LastName.ToLower().Contains(param)).ToList<User>();
+			}
 
-        public ActionResult DesireSearch()
-        {
+			ViewBag.Query = param;
+			ViewBag.Title = "Search Bros";
 
-            Profile prof = new Profile();
-            using (var context = new ModelFirstContainer())
-            {
-                prof = context.Profiles.FirstOrDefault(u => u.User.Id == WebSecurity.CurrentUserId);
-            }
-            
-            return View(prof);
-        }
+			return View(users);
+		}
+
+		public ActionResult Match()
+		{
+			Profile prof = new Profile();
+			using (var context = new ModelFirstContainer())
+			{
+				prof = context.Profiles.FirstOrDefault(u => u.User.Id == WebSecurity.CurrentUserId);
+			}
+
+			ViewBag.Title = "Match Bros";
+
+			return View(prof);
+		}
 
 
-        [HttpPost]
-        public ActionResult MatchBros(Profile profile)
-        {
-            int score = 0;
-            User thisUser = new User();
-            List<User> compatibleUsers = new List<User>();
-            Dictionary<User, double> scoreList = new Dictionary<User, double>();
-            using(var context = new ModelFirstContainer()){
-                thisUser = context.Users.FirstOrDefault(u => u.Id == WebSecurity.CurrentUserId);
-                compatibleUsers = context.Users.Include("Profile").ToList();
-            }
+		[HttpPost]
+		public ActionResult MatchBros(Profile profile)
+		{
+			int score = 0;
+			User thisUser = new User();
+			List<User> compatibleUsers = new List<User>();
+			Dictionary<User, double> scoreList = new Dictionary<User, double>();
+			using (var context = new ModelFirstContainer())
+			{
+				thisUser = context.Users.FirstOrDefault(u => u.Id == WebSecurity.CurrentUserId);
+				compatibleUsers = context.Users.Include("Profile").ToList();
+			}
 
-            Dictionary<string, string> preferences = new Dictionary<string, string>()
+			Dictionary<string, string> preferences = new Dictionary<string, string>()
             {
                     {"Athleticism", profile.Athleticism},
                      {"Pets", profile.Pets},
@@ -61,23 +73,23 @@ namespace Bros.Controllers
 
             };
 
-            Matcher match = new Matcher();
-            scoreList = match.BaseScoreCompatiblity(preferences);
+			Matcher match = new Matcher();
+			scoreList = match.BaseScoreCompatiblity(preferences);
 
-            IOrderedEnumerable<KeyValuePair<User, double>> sortedScoreList = from entry in scoreList orderby entry.Value descending select entry;
-            
-            return View("SearchResults", sortedScoreList);
-        }
+			IOrderedEnumerable<KeyValuePair<User, double>> sortedScoreList = from entry in scoreList orderby entry.Value descending select entry;
 
-
-        public List<User> ByPreferences()
-        {
-            List<User> compatibleUsers = new List<User>();
+			return View("SearchResults", sortedScoreList);
+		}
 
 
+		public List<User> ByPreferences()
+		{
+			List<User> compatibleUsers = new List<User>();
 
-            return compatibleUsers;
-        }
+
+
+			return compatibleUsers;
+		}
 
 		public ActionResult Browse()
 		{
@@ -90,8 +102,10 @@ namespace Bros.Controllers
 				bros = context.Users.Include("Profile.ProfilePhoto").Where(u => u.Id != id).ToList();
 			}
 
+			ViewBag.Title = "Browse Bros";
+
 			return View(bros);
 		}
 
-    }
+	}
 }

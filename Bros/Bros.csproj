@@ -326,7 +326,7 @@
     <Content Include="Views\Profile\AddPhoto.cshtml" />
     <Content Include="Views\Profile\ChangeProfilePhoto.cshtml" />
     <Content Include="Views\Profile\CreateAlbum.cshtml" />
-    <Content Include="Views\Profile\_AlbumSingle.cshtml">
+    <Content Include="Views\Profile\Partials\_AlbumSingle.cshtml">
       <SubType>Code</SubType>
     </Content>
     <Content Include="Views\Shared\Partials\_ProfilePhoto.cshtml">
@@ -347,7 +347,6 @@
     </Content>
     <Content Include="Views\Home\BroCode.cshtml" />
     <Content Include="Views\Store\_JustForCartPartialViewProduct.cshtml" />
-    <Content Include="Views\Bros\DesireSearch.cshtml" />
     <Content Include="Views\Shared\Layouts\LoggedInLayout.cshtml" />
     <Content Include="Views\Shared\Layouts\LoggedOutLayout.cshtml" />
     <Content Include="Views\Admin\_ViewStart.cshtml" />
@@ -368,6 +367,8 @@
     <Content Include="Views\Store\_ViewStart.cshtml" />
     <Content Include="Views\Bros\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Layouts\SearchLayout.cshtml" />
+    <Content Include="Views\Shared\Partials\_BroRequestButton.cshtml" />
+    <Content Include="Views\Shared\Partials\_BlockBroButton.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -437,7 +438,7 @@
     <Content Include="Views\Authentication\Register.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Profile\_BroRequestPartial.cshtml" />
+    <Content Include="Views\Shared\Partials\_BroRequest.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Shared\Partials\_CommentFeed.cshtml" />
@@ -450,7 +451,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Profile\BroAccept.cshtml" />
-    <Content Include="Views\Profile\_BroRequestAcceptedPartial.cshtml" />
+    <Content Include="Views\Profile\Partials\_BroRequestAcceptedPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Messages\MessageHome.cshtml" />

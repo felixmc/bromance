@@ -216,7 +216,8 @@ a:hover {
 }
 
 	.widget .button.red {
-		background: red;
+		background: #F0321D;
+		border-color: #8F0000;
 	}
 
 .widget label {
@@ -237,7 +238,9 @@ a:hover {
 	border-bottom: 1px solid #106126;
 	box-shadow: inset 0 -1px 0 rgba(255,255,255,.25),
 				0 1px 2px 0 rgba(0,0,0,.25);
-	height: 3em;
+	height: 2em;
+	position: relative;
+	z-index: 2;
 }
 
 	#page-header nav li {
@@ -273,6 +276,22 @@ a:hover {
 #page-header a, #page-footer a {
 	color: #fff;
 }
+
+#secondary-nav {
+	background: #fff;
+	position: relative;
+	z-index: 1;
+	box-shadow: 0 1px 1px 0 rgba(0,0,0,.1);
+	padding: .8em 0;
+	font-size: .8em;
+	border-bottom: 1px solid #999;
+}
+
+	#secondary-nav li {
+		list-style-type: none;
+		float: left;
+		margin-right: 40px;
+	}
 
 .content {
     padding-left: 50px;  

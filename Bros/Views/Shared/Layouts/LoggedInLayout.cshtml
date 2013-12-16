@@ -15,7 +15,7 @@
 			<li>@Html.ActionLink("Logout", "Logout", "Authentication")</li>
 		</ul>
 	</nav>
-	@using(Html.BeginForm("ByName", "Search", FormMethod.Get))
+	@using(Html.BeginForm("Search", "Bros", FormMethod.Get))
 	{
 		<input type="search" placeholder="search for user" name="query" />
 	}

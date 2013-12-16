@@ -1,5 +1,9 @@
-﻿@{
-    ViewBag.Title = "Search";
+﻿@model List<Bros.DataModel.User>
+
+<h2 class="title">Search</h2>
+@using (Html.BeginForm("Search", "Bros", FormMethod.Get))
+{
+	<input type="search" placeholder="search for user" name="query" value="@ViewBag.Query" />
 }
 
-<h2>Search</h2>
+@Html.Partial("Browse", Model)

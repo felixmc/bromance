@@ -1,13 +1,6 @@
 ﻿@model Bros.DataModel.User
 
-<div class="UserPartialView">
-    <!-- User Profile Image? -->
-</br>
-    <div class="UserName">@Model.Profile.FirstName @Model.Profile.LastName</div>
-    <div class="UserGender">@Model.Profile.Gender</div>
-    <div class="SendBroRequest">@Html.ActionLink("Send Bro Request", "SendBroRequest", "Profile", new { recieverID = Model.Id }, null)</div>
-
-    @Html.ActionLink("Block Bro", "BlockBro", "Profile", new { id = Model.Id}, false)
-
-
-</div>
+<figure class="user-photo">
+	@Html.Partial("Partials/_ProfilePhoto", Model.Profile)
+</figure>
+<p class="username"><a href="/Profile/View/@Model.Id" title="view profile">@Model.Profile.FirstName @Model.Profile.LastName</a></p>
