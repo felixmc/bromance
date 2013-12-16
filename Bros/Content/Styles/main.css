@@ -91,7 +91,7 @@ html {
 }
 
 body {
-	background: #ccc;
+	background: #222;
 	color: #333;
 	margin-bottom: 7em;
 }
@@ -231,6 +231,22 @@ a:hover {
 	cursor: pointer;
 	padding: .7em .4em;
 }
+
+	.widget p.no-float:first-of-type {
+		margin-top: 2em;
+	}
+
+	.widget p.no-float {
+		margin-bottom: 1.5em;
+		padding-bottom: 1.5em;
+		border-bottom: 1px solid #ccc;
+	}
+
+	.widget .no-float .button {
+		position: relative;
+		top: -10px;
+		padding: .3em .4em;
+	}
 
 	.widget .button.red {
 		background: #F0321D;

@@ -42,6 +42,7 @@ namespace Bros.Controllers
 
             ViewBag.SubTitle = "What do you prefer in others?";
 			ViewBag.Title = "Match Bros";
+			ViewBag.ContentClass = "condensed";
 
 			return View(prof);
 		}
@@ -83,7 +84,8 @@ namespace Bros.Controllers
 
             ViewBag.Title = "Search Results";
             IOrderedEnumerable<KeyValuePair<User, double>> sortedScoreList = from entry in scoreList where entry.Value > 10 orderby entry.Value descending select entry;
-            
+
+			ViewBag.ContentClass = "semi-condensed";
             return View("_SearchResults", sortedScoreList);
         }
 
@@ -91,8 +93,6 @@ namespace Bros.Controllers
 		public List<User> ByPreferences()
 		{
 			List<User> compatibleUsers = new List<User>();
-
-
 
 			return compatibleUsers;
 		}

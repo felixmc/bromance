@@ -1,7 +1,7 @@
 ﻿@model Bros.DataModel.Profile
 
 
-<h2>@ViewBag.SubTitle</h2>
+<h2 class="title">@ViewBag.SubTitle</h2>
 
      @Html.ValidationSummary()
     @using (Html.BeginForm())
@@ -9,6 +9,6 @@
       @Html.Partial("Partials/_AttributeForm", Model)
      <p>@Html.CheckBox("searchInArea") Search for Bros near me</p> 
         
-        <input type="submit" value="Find Bros" />
+        <p><input type="submit" value="Find Bros" /></p>
         
     }

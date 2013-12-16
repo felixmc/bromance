@@ -1,8 +1,4 @@
-﻿body {
-	background: #171717;
-}
-
-#friend-list {
+﻿#friend-list {
 	position: fixed;
 	right: -10px;
 	top: 150px;
@@ -16,8 +12,8 @@
 
 #friend-list li {
 	list-style-type: none;
-	padding: 5px 10px;
-	border-bottom: 1px solid #777;
+	padding: .7em 10px;
+	border-bottom: 1px solid #ccc;
 }
 
 .offline {

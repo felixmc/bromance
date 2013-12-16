@@ -3,13 +3,13 @@
 
 
 
-<h1>And  your results are...</h1>
+<h2 class="title">Match Results</h2>
 <p class="error">@ViewBag.Message</p>
-<p>
+
     @foreach(KeyValuePair<Bros.DataModel.User, double> x in Model){
         
-        @: @x.Key.Profile.FirstName , @x.Key.Profile.LastName and @x.Value.ToString("F", System.Globalization.CultureInfo.InvariantCulture)%
-    @: <p></p>
-    }
+        <p class="no-float">@x.Key.Profile.FirstName , @x.Key.Profile.LastName and @x.Value.ToString("F", System.Globalization.CultureInfo.InvariantCulture)%
 
-</p>
+			<span>@Html.Partial("Partials/_BroRequestButton", x.Key)</span>
+        </p>
+    }
