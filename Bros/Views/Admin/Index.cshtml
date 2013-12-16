@@ -17,6 +17,20 @@
     }
 </p>
 <p>
+    @using (Html.BeginForm("MuteUser", "Admin"))
+    {
+        <span>Mute user</span>@Html.TextBox("mute")<br /> 
+        <input type="submit" />
+    }
+</p>
+<p>
+    @using (Html.BeginForm("UnMuteUser", "Admin"))
+    {
+        <span>Unmute user</span>@Html.TextBox("mute")<br />
+        <input type="submit" />
+    }
+</p>
+<p>
     @using (Html.BeginForm("PromoteUserByUsername", "Admin"))
     {
         <span>Promote User</span>@Html.TextBox("promote")<br /> 

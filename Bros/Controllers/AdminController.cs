@@ -166,5 +166,45 @@ namespace Bros.Controllers
 
             return isInRole;
         }
+
+        public ActionResult MuteUser()
+        {
+            Session["AdminError"] = null;
+            string userName = Request["mute"].ToString();
+            using (ModelFirstContainer context = new ModelFirstContainer())
+            {
+                var user = context.Users.SingleOrDefault(x => x.Email == userName);
+                if (user != null)
+                {
+                    user.IsMuted = true;
+                    context.SaveChanges();
+                }
+                else
+                {
+                    Session["AdminError"] = "User does not exits.";
+                }
+            }
+            return View("Index");
+        }
+
+        public ActionResult UnMuteUser()
+        {
+              Session["AdminError"] = null;
+            string userName = Request["mute"].ToString();
+            using (ModelFirstContainer context = new ModelFirstContainer())
+            {
+                var user = context.Users.SingleOrDefault(x => x.Email == userName);
+                if (user != null)
+                {
+                    user.IsMuted = false;
+                    context.SaveChanges();
+                }
+                else
+                {
+                    Session["AdminError"] = "User does not exits.";
+                }
+            }
+            return View("Index");
+        }
     }
 }
