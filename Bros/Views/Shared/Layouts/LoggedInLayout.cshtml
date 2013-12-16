@@ -1,0 +1,48 @@
+﻿@{
+	Layout = "MasterLayout.cshtml";
+	ViewBag.ContentClass = "widget wrapper";
+}
+
+@section Header {
+	<nav id="main-nav">
+		<ul>
+			<li>@Html.ActionLink("Home", "Index", "Home")</li>
+			<li>@Html.ActionLink("Profile", "Profile", "Home")</li>
+			<li>@Html.ActionLink("Notifications", "Notifications", "Profile")</li>
+			<li>@Html.ActionLink("Messages", "MessageHome", "Messaging")</li>
+			<li>@Html.ActionLink("Find Bros", "Browse", "Bros")</li>
+			<li>@Html.ActionLink("Store", "StoreIndex", "Store")</li>
+			<li>@Html.ActionLink("Logout", "Logout", "Authentication")</li>
+		</ul>
+	</nav>
+	@using(Html.BeginForm("ByName", "Search", FormMethod.Get))
+	{
+		<input type="search" placeholder="search for user" name="query" />
+	}
+	<nav id="icon-nav">
+		<ul>
+
+		</ul>
+	</nav>
+}
+
+@section Head {
+	@RenderSection("Head", false)
+}
+
+@section Scripts {
+	@RenderSection("Scripts", false)
+}
+
+@section PreContent {
+	@if (IsSectionDefined("SecondaryNavigation"))
+	{
+		<nav id="secondary-nav">
+			<ul class="wrapper">
+			 	@RenderSection("SecondaryNavigation", false)
+			</ul>
+		</nav>
+	}
+}
+
+@RenderBody()

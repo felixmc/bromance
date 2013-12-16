@@ -18,6 +18,7 @@ namespace Bros
         protected void Application_Start()
         {
             WebSecurity.InitializeDatabaseConnection("WebSecurityConectionString", "Users", "Id", "Email", true);
+
             AreaRegistration.RegisterAllAreas();
 
             string[] roles = {

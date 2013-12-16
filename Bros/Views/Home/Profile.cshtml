@@ -1,0 +1,9 @@
+﻿@using System.Globalization
+@model Bros.DataModel.User
+
+@{
+    Layout = "~/Views/Shared/Layouts/ProfileLayout.cshtml";
+}
+
+<h1>Welcome, @Model.Profile.FirstName!</h1>
+@Html.Partial("Partials/_ProfilePhoto", Model.Profile)

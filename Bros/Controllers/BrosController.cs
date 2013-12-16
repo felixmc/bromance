@@ -9,10 +9,8 @@ using WebMatrix.WebData;
 
 namespace Bros.Controllers
 {
-    public class SearchController : Controller
+    public class BrosController : BroController
     {
-        //
-        // GET: /Search/
         [Authorize]
         public ActionResult ByUserName()
         {
@@ -68,7 +66,7 @@ namespace Bros.Controllers
 
             IOrderedEnumerable<KeyValuePair<User, double>> sortedScoreList = from entry in scoreList orderby entry.Value descending select entry;
             
-            return View("_SearchResults", sortedScoreList);
+            return View("SearchResults", sortedScoreList);
         }
 
 
@@ -80,6 +78,20 @@ namespace Bros.Controllers
 
             return compatibleUsers;
         }
+
+		public ActionResult Browse()
+		{
+			List<User> bros = new List<User>();
+
+			using (ModelFirstContainer context = new ModelFirstContainer())
+			{
+				int id = WebSecurity.CurrentUserId;
+				User thisUser = context.Users.FirstOrDefault(u => u.Id == id);
+				bros = context.Users.Include("Profile.ProfilePhoto").Where(u => u.Id != id).ToList();
+			}
+
+			return View(bros);
+		}
 
     }
 }

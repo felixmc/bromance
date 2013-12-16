@@ -11,11 +11,8 @@ using Bros.DataModel;
 namespace Bros.Controllers
 {
     [Authorize(Roles = "Admin")]
-    public class AdminController : Controller
+    public class AdminController : BroController
     {
-        //
-        // GET: /Admin/
-
         public ActionResult Index()
         {
             return View();
@@ -94,7 +91,7 @@ namespace Bros.Controllers
             else
             {
                 User user = userEnumerable.First();
-                if (user.IsBanned)
+                if ((bool)user.IsBanned)
                 {
                     user.IsBanned = false;
                     context.SaveChanges();
@@ -141,7 +138,7 @@ namespace Bros.Controllers
             string userName = Request["promote"].ToString();
             ModelFirstContainer context = new ModelFirstContainer();
             var userEnumerable = context.Users.Single(x => userName == x.Email);
-            if (UserIsInRole(userEnumerable))
+            if (Roles.IsUserInRole(userEnumerable.Email, "Admin"))
             {
                 Session["AdminError"] = userEnumerable.Email.ToString() + " is already an Admin.";
             }
@@ -150,21 +147,6 @@ namespace Bros.Controllers
                 Roles.AddUserToRole(userEnumerable.Email, "Admin");
             }
             return View("Index");
-        }
-
-        private bool UserIsInRole(User userEnumerable)
-        {
-            string[] users = Roles.GetUsersInRole("Admin");
-            bool isInRole = false;
-            foreach (var user in users)
-            {
-                if (user.Equals(userEnumerable.Email))
-                {
-                    isInRole = true;
-                }
-            }
-
-            return isInRole;
         }
     }
 }

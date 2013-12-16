@@ -10,11 +10,12 @@
 else if (@Model is Bros.DataModel.Photo)
 {
 	var post = Model as Bros.DataModel.Photo;
-	<p>Some photo goes here</p>
+	@Html.Partial("Partials/_Photo", post.ImageData)
+	<p>@post.Caption</p>
 }
 else
 {
 	<p>something weird?</p>
 }
 </article>
-@Html.Partial("_CommentFeed", Model)
+@Html.Partial("Partials/_CommentFeed", Model)

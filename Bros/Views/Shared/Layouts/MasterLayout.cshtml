@@ -1,0 +1,31 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title | Bromance</title>
+    <link href="~/Content/Styles/main.css" rel="stylesheet" />
+	@RenderSection("Head", false)
+</head>
+<body>
+	<header id="page-header">
+		<div class="wrapper">
+			@RenderSection("Header")
+		</div>
+	</header>
+	@RenderSection("PreContent", false)
+	<div id="content" class="@ViewBag.ContentClass">
+		@RenderBody()
+	</div>
+	<footer id="page-footer">
+		<nav id="footer-nav" class="wrapper">
+			<ul>
+				<li>@Html.ActionLink("About", "About", "Home")</li>
+				<li>@Html.ActionLink("Bro Code", "BroCode", "Home")</li>
+				<li>@Html.ActionLink("Terms of Use", "Terms", "Home")</li>
+			</ul>
+		</nav>
+		<p class="masthead">Bromance &copy; 2013</p>
+	</footer>
+	@RenderSection("Scripts", false)
+</body>
+</html>

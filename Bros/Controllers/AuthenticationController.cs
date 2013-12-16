@@ -12,48 +12,45 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Routing;
 using System.Web.Security;
 using WebMatrix.WebData;
 namespace Bros.Controllers
 {
-    [AllowAnonymous]
-    public class AuthenticationController : Controller
-    {
-        //
-        // GET: /Authentication/
-        [HttpPost]
-        public ActionResult Login(RegisterModel model)
-        {
-            string loginMessage = "";
-            bool isLoggedIn = WebSecurity.Login(model.Email, model.Password);
-            if (isLoggedIn)
-            {
-                using (ModelFirstContainer context = new ModelFirstContainer())
-                {
-                    Bros.DataModel.User user =
-                        (from u in context.Users
-                         where u.Email == model.Email
-                         select u).FirstOrDefault<User>();
-                    Session.Add("UserId", user.Id);
-                }
+	[AllowAnonymous]
+	public class AuthenticationController : Controller
+	{
+		protected override void Initialize(RequestContext requestContext)
+		{
+			ViewBag.ContentClass = "widget wrapper condensed";
+			base.Initialize(requestContext);
+		}
 
-                return RedirectToAction("Feed", "Profile");
-            }
-            else
-            {
+		[HttpGet]
+		public ActionResult Login()
+		{
+			ViewBag.Title = "Login";
+			ViewBag.HideLogin = true;
+			return View();
+		}
 
-                ViewBag.Error = "Invalid username or password.";
-
-                return View();
-            }
-        }
-
-        [HttpGet]
-        public ActionResult Login()
-        {
-            ViewBag.LoginMessage = "Enter Name";
-            return View();
-        }
+		[HttpPost]
+		public ActionResult Login(RegisterModel model)
+		{
+			bool isLoggedIn = WebSecurity.Login(model.Email, model.Password);
+			if (isLoggedIn)
+			{
+				String redirectUrl = Request["ReturnUrl"] ?? "/Feed";
+				return new RedirectResult(redirectUrl);
+			}
+			else
+			{
+				ViewBag.Error = "Invalid email or password.";
+				ViewBag.Title = "Login";
+				ViewBag.HideLogin = true;
+				return View();
+			}
+		}
 
 		public ActionResult Logout()
 		{
@@ -62,208 +59,126 @@ namespace Bros.Controllers
 			return RedirectToAction("Index", "Home");
 		}
 
-        //[HttpPost]
-        //public ActionResult Register(RegisterModel model)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        // Attempt to register the user
-        //        try
-        //        {
-        //            WebSecurity.CreateUserAndAccount(model.Email, model.Password);
-        //            WebSecurity.Login(model.Email, model.Password);
-        //            return RedirectToAction("Index", "Home");
-        //        }
-        //        catch (MembershipCreateUserException e)
-        //        {
-        //            ModelState.AddModelError("", ErrorCodeToString(e.StatusCode));
-        //        }
-        //    }
-
-        //    // If we got this far, something failed, redisplay form
-        //    return View(model);
-        //}
-
-        private static string ErrorCodeToString(MembershipCreateStatus createStatus)
-        {
-            switch (createStatus)
-            {
-                case MembershipCreateStatus.DuplicateUserName:
-                    return "User name already exists. Please enter a different user name.";
-
-                case MembershipCreateStatus.DuplicateEmail:
-                    return "A user name for that e-mail address already exists. Please enter a different e-mail address.";
-
-                case MembershipCreateStatus.InvalidPassword:
-                    return "The password provided is invalid. Please enter a valid password value.";
-
-                case MembershipCreateStatus.InvalidEmail:
-                    return "The e-mail address provided is invalid. Please check the value and try again.";
-
-                case MembershipCreateStatus.InvalidAnswer:
-                    return "The password retrieval answer provided is invalid. Please check the value and try again.";
-
-                case MembershipCreateStatus.InvalidQuestion:
-                    return "The password retrieval question provided is invalid. Please check the value and try again.";
-
-                case MembershipCreateStatus.InvalidUserName:
-                    return "The user name provided is invalid. Please check the value and try again.";
-
-                case MembershipCreateStatus.ProviderError:
-                    return "The authentication provider returned an error. Please verify your entry and try again. If the problem persists, please contact your system administrator.";
-
-                case MembershipCreateStatus.UserRejected:
-                    return "The user creation request has been canceled. Please verify your entry and try again. If the problem persists, please contact your system administrator.";
-
-                default:
-                    return "An unknown error occurred. Please verify your entry and try again. If the problem persists, please contact your system administrator.";
-            }
-        }
-
-        [HttpGet]
-        public ActionResult Register()
-        {
-            return View();
-        }
-
-		[HttpPost]
-		public ActionResult RegisterUser(RegisterModel model)
+		[HttpGet]
+		public bool IsEmailValid(string email = null)
 		{
-             bool emailIsValid = true;
-             bool isWoman = false;
-            using (var context = new ModelFirstContainer())
-            {
-                List<string> listEmail = context.Users.Select(e => e.Email).ToList();
-               
-                foreach(string email in listEmail){
-                    if (model.Email.ToLower() == email.ToLower())
-                    {
-                        emailIsValid = false;
-                        ViewBag.ErrorMessage = "Email is taken.";
-                    }
-                }
+			email = email ?? Request["Email"];
+			bool isValid = false;
 
-                if (model.Gender == Gender.Female) isWoman = true;
-            }
+			using (var context = new ModelFirstContainer())
+			{
+				isValid = context.Users.FirstOrDefault(u => u.Email.Equals(email)) == null;
+			}
 
-            if (!isWoman)
-            {
-                if (ModelState.IsValid && emailIsValid)
-                {
-                    // Attempt to register the user
-                    try
-                    {
-                        string data = WebSecurity.CreateUserAndAccount(model.Email, model.Password, new { dateCreated = DateTime.Now, isbanned = false, isdeleted = false, isMuted = false });
-                        Roles.AddUserToRole(model.Email, "User");
-                        //WebSecurity.Login(model.Email, model.Password);
-                    }
-                    catch (MembershipCreateUserException e)
-                    {
-                        ModelState.AddModelError("", ErrorCodeToString(e.StatusCode));
-                    }
-                }
-                else
-                    return View("Register");
-
-                using (var context = new ModelFirstContainer())
-                {
-
-                    Profile prof = new Profile()
-                    {
-                        FirstName = model.FirstName,
-                        LastName = model.LastName,
-                        BirthDate = model.BirthDate,
-                        ZipCode = model.Zipcode + "",
-                        Gender = Request["Gender"],
-                        Athleticism = Enums.Athleticism.Casually_Athletic.ToString(),
-                        Children = Enums.Children.Has_No_Children.ToString(),
-                        Drinks = Enums.Drinks.Never.ToString(),
-                        Drugs = Enums.Drugs.Never.ToString(),
-                        Education = Enums.Education.Doctorate.ToString(),
-                        Ethnicity = Enums.Ethnicity.Native_American.ToString(),
-                        Job = Enums.Job.Other.ToString(),
-                        MarriageStatus = Enums.MarriageStatus.Taken.ToString(),
-                        Smokes = Enums.Smokes.Never.ToString(),
-                        SexualOrientation = Enums.SexualOrientation.Asexual.ToString(),
-                        Religion = Enums.Religion.Muslim.ToString(),
-                        Pets = Enums.Pets.Dog_Person.ToString()
-                    };
-
-
-                    ShoppingCart cart = new ShoppingCart();
-
-                    User newUser = context.Users.FirstOrDefault(u => u.Email.Equals(model.Email));
-
-                    if (newUser != null)
-                    {
-                        newUser.ShoppingCart = cart;
-                        cart.User = newUser;
-                        context.ShoppingCarts.Add(cart);
-
-                        prof.User = newUser;
-                        newUser.Profile = prof;
-                        //newUser.ShoppingCart = cart;
-
-                        context.Profiles.Add(prof);
-
-                        try
-                        {
-                            context.SaveChanges();
-                        }
-                        catch (DbEntityValidationException e)
-                        {
-                            foreach (var validationErrors in e.EntityValidationErrors)
-                            {
-                                foreach (var validationError in validationErrors.ValidationErrors)
-                                {
-                                    Trace.TraceInformation("Property: {0} Error: {1}", validationError.PropertyName, validationError.ErrorMessage);
-                                }
-                            }
-                        }
-                    }
-                    else
-                    {
-                        throw new Exception("User email was not added to db");
-                    }
-
-                    Circle defaultFriendCircle = new Circle()
-                    {
-                        Name = "MyBros",
-                        Owner = newUser,
-                    };
-                    context.Circles.Add(defaultFriendCircle);
-
-
-                    var imagePath = Server.MapPath("~/Content/Images/defaultPic.jpg");
-                    Image img = Image.FromFile(imagePath);
-                    byte[] arr;
-                    using (MemoryStream ms = new MemoryStream())
-                    {
-                        img.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
-                        arr = ms.ToArray();
-                    }
-                    ICollection<Photo> photoAlbum = new List<Photo>();
-                    Album album = new Album()
-                    {
-                        Owner = newUser,
-                        Title = "Profile Pictures",
-                        DateCreated = DateTime.Today,
-                        Photos = photoAlbum
-                    };
-                    context.Albums.Add(album);
-                    context.SaveChanges();
-
-                    context.SaveChanges();
-
-
-
-                }
-                return RedirectToAction("Index", "Home");
-            }
-
-            return new RedirectResult(@"http://www.eharmony.com");
-            
+			return isValid;
 		}
 
-    }
+		[HttpGet]
+		public ActionResult Register()
+		{
+			ViewBag.Title = "Register";
+			return View();
+		}
+
+		[HttpPost]
+		public ActionResult Register(RegisterModel model)
+		{
+			if (model.Gender == Gender.Female)
+				return new RedirectResult(@"http://www.eharmony.com");
+
+			if (ModelState.IsValid && IsEmailValid(model.Email))
+			{
+				try
+				{
+					string data = WebSecurity.CreateUserAndAccount(model.Email, model.Password, new { DateCreated = DateTime.Now, IsDeleted = false, IsBanned = false, IsMuted = false });
+					Roles.AddUserToRole(model.Email, "User");
+
+					using (var context = new ModelFirstContainer())
+					{
+						User newUser = context.Users.FirstOrDefault(u => u.Email.Equals(model.Email));
+
+						Profile prof = new Profile()
+						{
+							FirstName = model.FirstName,
+							LastName = model.LastName,
+							BirthDate = model.BirthDate,
+							ZipCode = model.Zipcode + "",
+							Gender = Request["Gender"],
+							User = newUser
+						};
+						prof.User = newUser;
+						context.Profiles.Add(prof);
+
+						ShoppingCart cart = new ShoppingCart() { User = newUser };
+						newUser.ShoppingCart = cart;
+						context.ShoppingCarts.Add(cart);
+
+						Circle defaultFriendCircle = new Circle()
+						{
+							Name = "MyBros",
+							Owner = newUser,
+						};
+						context.Circles.Add(defaultFriendCircle);
+
+						Album album = new Album()
+						{
+							Owner = newUser,
+							Title = "Profile Pictures",
+							DateCreated = DateTime.Now
+						};
+						context.Albums.Add(album);
+
+						context.SaveChanges();
+					}
+
+					WebSecurity.Login(model.Email, model.Password);
+					return RedirectToAction("EditProfile", "User", new { firstTime = true });
+				}
+				catch (MembershipCreateUserException e)
+				{
+					ModelState.AddModelError("", ErrorCodeToString(e.StatusCode));
+				}
+			}
+
+			ViewBag.Title = "Register";
+			return View();
+		}
+
+		private static string ErrorCodeToString(MembershipCreateStatus createStatus)
+		{
+			switch (createStatus)
+			{
+				case MembershipCreateStatus.DuplicateUserName:
+					return "User name already exists. Please enter a different user name.";
+
+				case MembershipCreateStatus.DuplicateEmail:
+					return "A user name for that e-mail address already exists. Please enter a different e-mail address.";
+
+				case MembershipCreateStatus.InvalidPassword:
+					return "The password provided is invalid. Please enter a valid password value.";
+
+				case MembershipCreateStatus.InvalidEmail:
+					return "The e-mail address provided is invalid. Please check the value and try again.";
+
+				case MembershipCreateStatus.InvalidAnswer:
+					return "The password retrieval answer provided is invalid. Please check the value and try again.";
+
+				case MembershipCreateStatus.InvalidQuestion:
+					return "The password retrieval question provided is invalid. Please check the value and try again.";
+
+				case MembershipCreateStatus.InvalidUserName:
+					return "The user name provided is invalid. Please check the value and try again.";
+
+				case MembershipCreateStatus.ProviderError:
+					return "The authentication provider returned an error. Please verify your entry and try again. If the problem persists, please contact your system administrator.";
+
+				case MembershipCreateStatus.UserRejected:
+					return "The user creation request has been canceled. Please verify your entry and try again. If the problem persists, please contact your system administrator.";
+
+				default:
+					return "An unknown error occurred. Please verify your entry and try again. If the problem persists, please contact your system administrator.";
+			}
+		}
+
+	}
 }

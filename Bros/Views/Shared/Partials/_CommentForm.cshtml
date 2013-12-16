@@ -1,0 +1,11 @@
+﻿@model Bros.DataModel.Post
+
+@if (!ViewBag.IsMuted)
+{
+	using(Html.BeginForm("PostComment", "Content", FormMethod.Post))
+	{
+		<input type="hidden" name="postId" value="@Model.Id" />
+		<textarea name="comment" placeholder="Enter comment"></textarea>
+		<input type="submit" value="Comment" />
+	}
+}

@@ -1,0 +1,4 @@
+﻿@{
+	String layoutPart = ViewContext.ViewBag.IsLoggedIn ? "In" : "Out";
+    Layout = String.Format("~/Views/Shared/Layouts/Logged{0}Layout.cshtml", layoutPart);
+}

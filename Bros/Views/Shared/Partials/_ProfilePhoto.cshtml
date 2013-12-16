@@ -1,0 +1,14 @@
+﻿@using System.Globalization
+@model Bros.DataModel.Profile
+
+@{
+	var imgSrc = "/Content/Images/defaultPic.jpg";
+
+	if (Model.ProfilePhoto != null)
+	{
+		imgSrc = String.Format("data:image/jpg;base64,{0}", Convert.ToBase64String(Model.ProfilePhoto.ImageData)); ;
+	}
+
+}
+
+<img class="profile-photo" src="@imgSrc" />

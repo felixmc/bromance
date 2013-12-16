@@ -1,0 +1,21 @@
+﻿@model List<Bros.DataModel.Post>
+
+@using (Html.BeginForm("FilterFeedByCircle", "Profile", FormMethod.Post, new { @class = "FiterByCircle" }))
+{
+	if (ViewBag.Circles != null)
+	{
+	<span class="FiterByCircle">Circles: @Html.DropDownList("Circles", new SelectList(ViewBag.Circles, "Id", "Name"))</span>
+	}
+	if (ViewBag.ViewByCat != null)
+	{
+	@: Viewing By Category: @ViewBag.ViewByCat
+     }
+	<input type="submit" value="Filter" />
+}
+@Html.Partial("Partials/_StatusUpdateForm")
+
+
+@foreach (Bros.DataModel.Post post in Model)
+{
+	Html.RenderPartial("Partials/_UserPost", post);
+}

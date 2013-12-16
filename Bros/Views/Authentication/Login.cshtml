@@ -1,7 +1,2 @@
-﻿<p class="error">@ViewBag.Error</p>
-    @using (Html.BeginForm("Login", "Authentication", FormMethod.Post))
-	{
-		<input type="email" placeholder="email" name="email" />
-		<input type="password" placeholder="password" name="password" />
-		<input type="submit" value="Login" />
-	}
+﻿<h2 class="title">Login</h2>
+@Html.Partial("Partials/_LoginForm")
