@@ -444,16 +444,18 @@ namespace Bros.Controllers
             {
                 User user = context.Users.Single(x => x.Id == id);
                 ShoppingCart cart = context.ShoppingCarts.Single(x => x.User.Id == id);
-                foreach (ProductQuantity p in cart.ProductQuantities)
-                {
-                    user.ShoppingCart.ProductQuantities.Remove(p);
-                }
+                cart.ProductQuantities.Clear();
+                
+                //foreach (ProductQuantity p in cart.ProductQuantities)
+                //{
+                //    user.ShoppingCart.ProductQuantities.Remove(p);
+                //}
 
                 context.SaveChanges();
 
             }
 
-            return View();
+            return View("ViewCheckout");
         }
 
         void GenerateProducts()
