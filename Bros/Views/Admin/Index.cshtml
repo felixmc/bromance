@@ -37,6 +37,9 @@
         <input type="submit" />
     }
 </p>
+<p>
+    @Html.ActionLink("Create a Product", "LoadProductCreation", "Store");
+</p>
 @if (Session["AdminError"] != null)
 {
     <p>
