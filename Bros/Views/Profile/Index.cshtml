@@ -7,3 +7,7 @@
 
 <h1>@Model.Profile.FirstName</h1>
 @Html.Partial("Partials/_ProfilePhoto", Model.Profile)
+<p>@Html.ActionLink("Message " + @Model.Profile.FirstName, "Conversation", "Messaging", new { id = Model.Id }, new { @class="button"})</p>
+<p>@Html.ActionLink("View Albums", "ViewAlbums", "Content", new { id = Model.Id }, new { @class="button"})</p>
+<p>@Html.Partial("Partials/_BroRequestButton", Model)</p>
+<p>@Html.Partial("Partials/_ProfileAttribute", Model.Profile)</p>

@@ -1,8 +1,5 @@
 ﻿@*THIS PARTIAL MUST BE USED WITH A MODEL THAT IS A PROFILE*@ 
 
-@{
-    
-}
 @model Bros.DataModel.Profile
         <p>Athletic: @Html.Partial("Partials/_EnumDropDown", new Tuple<Type, string, string>(typeof(Bros.Enums.Athleticism), "Athleticism", Model.Athleticism))</p>
         <p>Children: @Html.Partial("Partials/_EnumDropDown", new Tuple<Type,string, string>(typeof(Bros.Enums.Children), "Children", Model.Children))</p>
