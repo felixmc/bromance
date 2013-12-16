@@ -406,7 +406,7 @@ namespace Bros.Controllers
 
         public ActionResult ViewCart()
         {
-            int sessionId = (int)Session["UserId"];
+            int sessionId = WebSecurity.CurrentUserId;
             List<ProductQuantity> products = new List<ProductQuantity>();
             ViewBag.RemoveFromCart = true;
             using (var context = new ModelFirstContainer())

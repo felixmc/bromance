@@ -49,16 +49,19 @@ namespace Bros.Controllers
 
 		public ActionResult CreateCircle(string CircleName)
 		{
-			using (ModelFirstContainer context = new ModelFirstContainer())
-			{
-				int id = (int)Session["UserID"];
-				User user = context.Users.FirstOrDefault(u => u.Id == id);
-				Circle targetCircle = new Circle();
-				targetCircle.Name = CircleName;
-				targetCircle.Owner = user;
-				user.Circles.Add(targetCircle);
-				context.SaveChanges();
-			}
+            if (!CircleName.Equals(""))
+            {
+                using (ModelFirstContainer context = new ModelFirstContainer())
+                {
+                    int id = WebSecurity.CurrentUserId;
+                    User user = context.Users.FirstOrDefault(u => u.Id == id);
+                    Circle targetCircle = new Circle();
+                    targetCircle.Name = CircleName;
+                    targetCircle.Owner = user;
+                    user.Circles.Add(targetCircle);
+                    context.SaveChanges();
+                }
+            }
 
 			return RedirectToAction("Circles");
 		}
@@ -119,7 +122,10 @@ namespace Bros.Controllers
 
 				ViewBag.TargetCircle = targetCircle;
 				IEnumerable<Circle> circles = user.Circles.Where(x => x.Id != circleId).ToList();
-				ViewBag.recieverCircleId = new SelectList(circles, "Id", "Name");
+                if (circles.Count() != 0)
+                {
+                    ViewBag.recieverCircleId = new SelectList(circles, "Id", "Name");
+                }
 
 				result = View(targetCircle);
 			}
@@ -141,9 +147,12 @@ namespace Bros.Controllers
 
 					Circle backupCircle = context.Circles.FirstOrDefault(c => c.Owner.Id == userId && c.Name.Equals("MyBros"));
 
-					foreach (User u in targetCircle.Members)
+                    IEnumerable<User> circleMembers = targetCircle.Members.ToList();
+
+					foreach (User u in circleMembers)
 					{
-						MoveBroBetweenCircles(circleId, backupCircle.Id, u.Id);
+                        targetCircle.Members.Remove(u);
+                        backupCircle.Members.Add(u);
 					}
 
 					context.Circles.Remove(targetCircle);
@@ -236,7 +245,7 @@ namespace Bros.Controllers
             ViewBag.SubTitle = "Who are you?";
             ViewBag.Message = "Changes have been saved!";
 
-			return View(user.Profile );
+			return new RedirectResult("/Profile");
 		}
 
 		public ActionResult Settings(int id)
