@@ -60,13 +60,13 @@
 .icon-home:before { content: '\e809'; } /* '' */
 .icon-link:before { content: '\e812'; } /* '' */
 .icon-mail:before { content: '\e80b'; } /* '' */
-.icon-reply:before { content: '\e805'; } /* '' */
 .icon-comment:before { content: '\e800'; } /* '' */
 .icon-chat:before { content: '\e807'; } /* '' */
+.icon-alert:before { content: '\e80d'; } /* '' */
 .icon-cog:before { content: '\e806'; } /* '' */
 .icon-logout:before { content: '\e801'; } /* '' */
 .icon-clock:before { content: '\e811'; } /* '' */
-.icon-download:before { content: '\e804'; } /* '' */
+.icon-reply:before { content: '\e805'; } /* '' */
 
 
 /* RESET */
