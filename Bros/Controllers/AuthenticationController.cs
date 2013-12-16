@@ -37,7 +37,7 @@ namespace Bros.Controllers
 		[HttpPost]
 		public ActionResult Login(RegisterModel model)
 		{
-			bool isLoggedIn = WebSecurity.Login(model.Email, model.Password);
+			bool isLoggedIn = model.Email != null && model.Password != null && WebSecurity.Login(model.Email, model.Password);
 			if (isLoggedIn)
 			{
 				String redirectUrl = Request["ReturnUrl"] ?? "/Feed";
