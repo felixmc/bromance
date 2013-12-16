@@ -9,6 +9,7 @@ using System.Web;
 using System.Web.Mvc;
 using Bros.Models;
 using WebMatrix.WebData;
+using System.Web.Security;
 
 namespace Bros.Controllers
 {
@@ -21,6 +22,16 @@ namespace Bros.Controllers
 			return View(WebSecurity.CurrentUserId);
 		}
 
+
+        public ActionResult MakeMeAnAdmin()
+        {
+            string[] admins = {"Admin", "StoreAdmin"};
+
+            int id = WebSecurity.CurrentUserId;
+            Roles.AddUserToRoles(WebSecurity.CurrentUserName, admins);
+            
+            return new RedirectResult("/");
+        }
 		public ActionResult View(int id)
 		{
 			ViewBag.IsOwner = id == WebSecurity.CurrentUserId;
