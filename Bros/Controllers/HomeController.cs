@@ -44,7 +44,7 @@ namespace Bros.Controllers
 				if (circleId != 0)
 					feedMembers.Remove(userId);
 
-				List<Post> broPosts = context.Posts.Include("Comments.Owner.Profile").Include("Author.Profile")
+				List<Post> broPosts = context.Posts.Include("Comments.Owner.Profile.ProfilePhoto").Include("Author.Profile.ProfilePhoto")
 											.Where(p => feedMembers.Contains(p.Author.Id))
 													.OrderByDescending(p => p.DateCreated)
 															.Take(30).ToList();
@@ -70,6 +70,7 @@ namespace Bros.Controllers
         public ActionResult BroCode()
         {
 			ViewBag.Title = "Bro Code";
+			ViewBag.ContentClass = "widget wrapper";
             return View();
         }
 
@@ -77,6 +78,7 @@ namespace Bros.Controllers
         public ActionResult About()
         {
 			ViewBag.Title = "About Us";
+			ViewBag.ContentClass = "widget wrapper";
             return View();
         }
 
@@ -84,6 +86,7 @@ namespace Bros.Controllers
         public ActionResult Terms()
         {
 			ViewBag.Title = "Terms of Use";
+			ViewBag.ContentClass = "widget wrapper";
             return View();
         }
     }
