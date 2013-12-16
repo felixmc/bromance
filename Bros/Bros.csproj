@@ -403,6 +403,7 @@
     </Content>
     <Content Include="Views\Content\ViewAlbums.cshtml" />
     <Content Include="Views\Content\SingleAlbum.cshtml" />
+    <Content Include="Views\Profile\EditCircle.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
