@@ -319,5 +319,32 @@ namespace Bros.Controllers
 			return RedirectToAction("ManageAlbums", "Content");
 		}
 
+        public ActionResult ViewAlbums(int id)
+        {
+            
+            User user = new User();
+            using (var context = new ModelFirstContainer())
+            {
+               user  = context.Users.Include("Albums.Photos").FirstOrDefault( u => u.Id == id);
+                
+            }
+
+
+            return View(user);
+        }
+
+        public ActionResult SingleAlbum(int id)
+        {
+            Album album = new Album();
+            using (var context = new ModelFirstContainer())
+            {
+                album = context.Albums.Include("Photos.Comments").FirstOrDefault(a => a.Id == id);
+                ViewBag.AlbumId = album.Id;
+            }
+
+            @ViewBag.Title = "Photo Gallery";
+            return View(album.Photos.ToList());
+        }
+
     }
 }
