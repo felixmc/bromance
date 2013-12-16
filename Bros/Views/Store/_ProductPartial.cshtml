@@ -3,13 +3,20 @@
     
 }
 
-<div class="ProductName">@Html.ActionLink(@Model.Name, "ViewProductById", new { productID = Model.Id })</div>
-<div class="ProductCategory">Category: @Model.Category.Name</div>
+<link href="~/Content/Styles/store.css" rel="stylesheet" type="text/css"/>
+
+<div class="ProductName">
+    <p>@Html.ActionLink(@Model.Name, "ViewProductById", new { productID = Model.Id })</p>
+</div>
+<div class="ProductCategory">
+    <p>Category: @Model.Category.Name</p>
+</div>
 @{
     var base64 = Convert.ToBase64String(Model.Image);
     var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
 }
-<!-- TODO: Remove the inline styling here! Currently, it is here for the sake of testing. Letting it remain after real css is added would be a bad idea! -->
-<img class="ProductImage" src="@imgSrc" style="width:100px;" />
-<div class="ProductPrice">Product Price: $@Model.Price</div>
 
+<img class="ProductImage" src="@imgSrc" />
+<div class="ProductPrice">
+    <p>Product Price: $@Model.Price</p>
+</div>

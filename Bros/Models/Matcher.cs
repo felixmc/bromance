@@ -15,20 +15,35 @@ namespace Bros.Models
 
         }
 
-        public Dictionary<User,double> BaseScoreCompatiblity(Dictionary<string, string> lookFor)
+        public Dictionary<User,double> BaseScoreCompatiblity(Dictionary<string, string> lookFor, bool searchInArea)
         {
             double score = 0;
             User thisUser = new User();
             List<User> compatibleUsers = new List<User>();
             List<string> keys = new List<string>();
-            foreach(KeyValuePair<string, string> x in lookFor){
-                keys.Add(x.Key);
-            }
-
             using (var context = new ModelFirstContainer())
             {
-                thisUser = context.Users.FirstOrDefault(u => u.Id == WebSecurity.CurrentUserId);
-                compatibleUsers = context.Users.Include("Profile.ProfilePhoto").Where(u => u.Id != thisUser.Id).ToList();
+                thisUser = context.Users.Include("Profile").FirstOrDefault(u => u.Id == WebSecurity.CurrentUserId);
+
+                foreach (KeyValuePair<string, string> x in lookFor)
+                {
+                    keys.Add(x.Key);
+
+                    Bros.DataModel.Preference pref = new Bros.DataModel.Preference()
+                    {
+                        Key = x.Key,
+                        Value = x.Value,
+                        UserId = thisUser.Id
+                    };
+
+                    context.Preferences.Add(pref);
+                    context.SaveChanges();
+                }
+
+                if (!searchInArea)
+                    compatibleUsers = context.Users.Include("Profile.ProfilePhoto").Where(u => u.Id != thisUser.Id).ToList();
+                else
+                    compatibleUsers = context.Users.Include("Profile.ProfilePhoto").Where(u => u.Id != thisUser.Id && u.Profile.ZipCode.Equals(thisUser.Profile.ZipCode)).ToList();
             }
             Dictionary<User, double> scoreList = new Dictionary<User, double>();
 
@@ -55,9 +70,6 @@ namespace Bros.Models
 
             return scoreList;
         }
-
-
-
 
         public List<Compatibility> DetermineCompatability(User currentUser, List<User> browseList)
         {
