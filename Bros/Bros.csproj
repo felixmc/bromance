@@ -253,6 +253,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Content Include="Content\Fonts\fontello.svg" />
     <Content Include="Content\Images\Brofist.png" />
     <Content Include="Content\Images\defaultPic.jpg" />
     <Content Include="Content\Images\Smileys\-_-.png" />
@@ -293,6 +294,9 @@
     <Content Include="Content\Styles\store.css" />
     <Content Include="DataModel\ModelFirst.edmx.sql" />
     <Content Include="Global.asax" />
+    <Content Include="Content\Fonts\fontello.eot" />
+    <Content Include="Content\Fonts\fontello.ttf" />
+    <Content Include="Content\Fonts\fontello.woff" />
     <None Include="Content\Scripts\jquery-1.6.4-vsdoc.js" />
     <Content Include="Content\Scripts\jquery-1.6.4.js" />
     <Content Include="Content\Scripts\jquery-1.6.4.min.js" />

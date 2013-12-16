@@ -40,7 +40,7 @@ namespace Bros.Controllers
 			bool isLoggedIn = model.Email != null && model.Password != null && WebSecurity.Login(model.Email, model.Password);
 			if (isLoggedIn)
 			{
-				String redirectUrl = Request["ReturnUrl"] ?? "/Feed";
+				String redirectUrl = Request["ReturnUrl"] ?? "/";
 				return new RedirectResult(redirectUrl);
 			}
 			else
