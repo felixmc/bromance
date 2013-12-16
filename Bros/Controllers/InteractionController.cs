@@ -35,6 +35,8 @@ namespace Bros.Controllers
 				}
 			}
 
+			ViewBag.Title = "Notifications";
+
 			return View(notifications);
 		}
 

@@ -6,8 +6,7 @@
 	{
 		var cnot = not as Bros.DataModel.CommentNotification;
 		<p>@cnot.Comment.Owner.Profile.FirstName @cnot.Comment.Owner.Profile.LastName commented on your 
-			@Html.ActionLink("post", "Post", "Content", new { id = cnot.Comment.PostId }, null)
-			.</p>		
+			@Html.ActionLink("post", "Post", "Content", new { id = cnot.Comment.PostId }, null).</p>		
 	}
 	else if (not is Bros.DataModel.RequestNotification)
 	{

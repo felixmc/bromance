@@ -36,7 +36,14 @@ namespace Bros.Controllers
 
 		public ActionResult Post(int id)
 		{
-			return View();
+			Post post = null;
+
+			using (ModelFirstContainer context = new ModelFirstContainer())
+			{
+				post = context.Posts.Include("Comments.Owner.Profile").Include("Author.Profile").FirstOrDefault(p => p.Id == id);
+			}
+
+			return View(post);
 		}
 
 		[HttpPost]

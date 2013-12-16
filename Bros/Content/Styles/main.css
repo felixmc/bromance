@@ -1,20 +1,20 @@
 ﻿/* FONTS */
 @font-face {
-  font-family: 'fontello';
-  src: url('../fonts/fontello.eot?30946767');
-  src: url('../fonts/fontello.eot?30946767#iefix') format('embedded-opentype'),
-       url('../fonts/fontello.woff?30946767') format('woff'),
-       url('../fonts/fontello.ttf?30946767') format('truetype'),
-       url('../fonts/fontello.svg?30946767#fontello') format('svg');
-  font-weight: normal;
-  font-style: normal;
+	font-family: 'fontello';
+	src: url('../Fonts/fontello.eot?4179967');
+	src: url('../Fonts/fontello.eot?4179967#iefix') format('embedded-opentype'),
+			 url('../Fonts/fontello.woff?4179967') format('woff'),
+			 url('../Fonts/fontello.ttf?4179967') format('truetype'),
+			 url('../Fonts/fontello.svg?4179967#fontello') format('svg');
+	font-weight: normal;
+	font-style: normal;
 }
 
 @media screen and (-webkit-min-device-pixel-ratio:0) {
-  @font-face {
-    font-family: 'fontello';
-    src: url('../fonts/fontello.svg?30946767#fontello') format('svg');
-  }
+	@font-face {
+		font-family: 'fontello';
+		src: url('../Fonts/fontello.svg?4179967#fontello') format('svg');
+	}
 }
 
 @font-face {
@@ -52,27 +52,21 @@
 }
  
 .icon-search:before { content: '\e80c'; } /* '' */
-.icon-github:before { content: '\e80f'; } /* '' */
-.icon-heart:before { content: '\e800'; } /* '' */
-.icon-heart-empty:before { content: '\e801'; } /* '' */
+.icon-grocery-store:before { content: '\e80a'; } /* '' */
 .icon-user:before { content: '\e802'; } /* '' */
 .icon-users:before { content: '\e803'; } /* '' */
+.icon-user-add:before { content: '\e808'; } /* '' */
 .icon-picture:before { content: '\e813'; } /* '' */
 .icon-home:before { content: '\e809'; } /* '' */
 .icon-link:before { content: '\e812'; } /* '' */
-.icon-download:before { content: '\e804'; } /* '' */
-.icon-reply:before { content: '\e805'; } /* '' */
 .icon-mail:before { content: '\e80b'; } /* '' */
+.icon-reply:before { content: '\e805'; } /* '' */
+.icon-comment:before { content: '\e800'; } /* '' */
 .icon-chat:before { content: '\e807'; } /* '' */
-.icon-vcard:before { content: '\e815'; } /* '' */
-.icon-location:before { content: '\e80d'; } /* '' */
-.icon-newspaper:before { content: '\e814'; } /* '' */
 .icon-cog:before { content: '\e806'; } /* '' */
-.icon-calendar:before { content: '\e80e'; } /* '' */
+.icon-logout:before { content: '\e801'; } /* '' */
 .icon-clock:before { content: '\e811'; } /* '' */
-.icon-lifebuoy:before { content: '\e810'; } /* '' */
-.icon-briefcase:before { content: '\e808'; } /* '' */
-.icon-retweet:before { content: '\e80a'; } /* '' */
+.icon-download:before { content: '\e804'; } /* '' */
 
 
 /* RESET */
@@ -129,8 +123,8 @@ input {
 	width: 100px;
 	height: 81px;
 	float: left;
-	background: url("../Images/Brofist.png");
-	background-size: cover;
+	background: url("../Images/Brofist.png") no-repeat center center;
+	background-size: 80%;
 	position: absolute;
 	top: -5px;
 }
@@ -260,15 +254,38 @@ a:hover {
 }
 
 	#page-header nav {
-		padding-left: 120px;
-		padding-top: .5em;
+		padding-left: 130px;
+		padding-top: 0;
 	}
 
 	#page-header nav li {
 		list-style-type: none;
 		float: left;
 		margin-right: 40px;
-		font-size: .9em;
+		font-size: 1.4em;
+	}
+
+		#page-header nav li a {
+			color: rgba(0,0,0,.8);
+			text-shadow: 0 1px 0 rgba(255,255,255,.4);
+		}
+
+		#page-header nav li a:hover {
+			text-decoration: none;
+			color: #fff;
+			text-shadow: 0 -1px 0 rgba(0,0,0,.4);
+		}
+
+	#page-header input {
+		padding: .4em .5em .4em 2.1em;
+	}
+
+	#page-header form[class^=icon]:before {
+		color: #666;
+		font-size: 1.1em;
+		position: relative;
+		left: 32px;
+		top: 2px;
 	}
 
 #page-footer {

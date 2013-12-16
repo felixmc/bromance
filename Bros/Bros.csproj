@@ -370,6 +370,7 @@
     <Content Include="Views\Shared\Partials\_BroRequestButton.cshtml" />
     <Content Include="Views\Shared\Partials\_BlockBroButton.cshtml" />
     <Content Include="Views\Interaction\Notifications.cshtml" />
+    <Content Include="Views\Content\Post.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
