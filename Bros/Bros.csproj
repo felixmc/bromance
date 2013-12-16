@@ -319,8 +319,8 @@
     <Content Include="Views\Messages\_SendMessageTo.cshtml" />
     <Content Include="Views\Messages\_SingleMessagePartialView.cshtml" />
     <Content Include="Views\Bros\SearchResults.cshtml" />
-    <Content Include="Views\Profile\Notifications.cshtml" />
-    <Content Include="Views\Profile\Profile.cshtml" />
+    <Content Include="Views\Shared\Partials\_NotificationList.cshtml" />
+    <Content Include="Views\Profile\Index.cshtml" />
     <Content Include="Views\Profile\ManageAlbums.cshtml" />
     <Content Include="Views\Profile\PhotoGallery.cshtml" />
     <Content Include="Views\Profile\AddPhoto.cshtml" />
@@ -369,6 +369,7 @@
     <Content Include="Views\Shared\Layouts\SearchLayout.cshtml" />
     <Content Include="Views\Shared\Partials\_BroRequestButton.cshtml" />
     <Content Include="Views\Shared\Partials\_BlockBroButton.cshtml" />
+    <Content Include="Views\Interaction\Notifications.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

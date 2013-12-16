@@ -1,15 +1,12 @@
 ﻿@using System.Collections.Specialized
 @{
-    ViewBag.Title = "_StoreLayout";
+	Layout = "LoggedInLayout.cshtml";
 }
 
-@section SecondaryNavigation{
-    @Html.ActionLink("Browse", "StoreIndex", "Store")
-    @Html.ActionLink("Cart", "ViewCart", "Store")
-    @using(Html.BeginForm()){
-    @Html.TextBox("SearchParameter")
-    
-    }
-    
-    
+@section SecondaryNavigation
+{
+	<li>@Html.ActionLink("Browse Products", "StoreIndex", "Store")</li>
+    <li>@Html.ActionLink("View Cart", "ViewCart", "Store")</li>
 }
+
+@RenderBody()

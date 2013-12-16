@@ -1,10 +1,5 @@
 ﻿@model Bros.DataModel.Product
 
-@{
-    ViewBag.Title = "CreateProduct";
-    Layout = "~/Views/Shared/_DefaultLayout.cshtml";
-}
-
 <div class="CreateProduct">
     @using (Html.BeginForm("CreateProduct", "Store", FormMethod.Post, new { enctype = "multipart/form-data"}))
     {

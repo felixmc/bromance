@@ -16,7 +16,7 @@ namespace Bros.Controllers
 			List<Notification> notifications = new List<Notification>();
 			using (ModelFirstContainer context = new ModelFirstContainer())
 			{
-				int userId = (int)Session["UserId"];
+				int userId = WebSecurity.CurrentUserId;
 
 				foreach (Notification not in context.Notifications.Where(n => n.Receiver.Id == userId && n.IsRead == false))
 				{
@@ -207,7 +207,7 @@ namespace Bros.Controllers
 		{
 			using (ModelFirstContainer context = new ModelFirstContainer())
 			{
-				int userId = (int)Session["UserId"];
+				int userId = WebSecurity.CurrentUserId;
 
 				// get last bump between the current user and the specified user
 				FirstBump lastBump = context.Notifications.Where(n => (n.Receiver.Id == id || n.Receiver.Id == userId) && n is FirstBump)

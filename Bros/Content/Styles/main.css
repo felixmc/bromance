@@ -125,6 +125,22 @@ input {
 	padding: .25em .5em;
 }
 
+.logo {
+	width: 100px;
+	height: 81px;
+	float: left;
+	background: url("../Images/Brofist.png");
+	background-size: cover;
+	position: absolute;
+	top: -5px;
+}
+
+	.logo a {
+		display: block;
+		width: 100%;
+		height: 100%;
+	}
+
 .error {
 	color: red;
 }
@@ -242,6 +258,11 @@ a:hover {
 	position: relative;
 	z-index: 2;
 }
+
+	#page-header nav {
+		padding-left: 120px;
+		padding-top: .5em;
+	}
 
 	#page-header nav li {
 		list-style-type: none;
