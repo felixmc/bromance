@@ -162,6 +162,7 @@ namespace Bros.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles="StoreAdmin, Admin")]
         public ActionResult CreateProduct(Product product, HttpPostedFileBase ImageFile)
         {
             using (var ms = new MemoryStream())
@@ -215,6 +216,8 @@ namespace Bros.Controllers
             return result;
         }
 
+
+        [Authorize(Roles = "StoreAdmin, Admin")]
         public ActionResult DeleteProductById(int productId)
         {
             using (ModelFirstContainer context = new ModelFirstContainer())
@@ -278,6 +281,7 @@ namespace Bros.Controllers
             return View("ViewProduct", product);
         }
 
+        [Authorize(Roles = "StoreAdmin, Admin")]
         public ActionResult EditProduct(int productID)
         {
             Product targetProduct;
@@ -292,6 +296,7 @@ namespace Bros.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "StoreAdmin, Admin")]
         public ActionResult EditProduct(Product product, HttpPostedFileBase ImageFile)
         {
             ActionResult result;
