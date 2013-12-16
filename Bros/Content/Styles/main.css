@@ -145,6 +145,10 @@ input {
 		margin-left: 30px;
 	}
 
+.info {
+	color: green;
+}
+
 a:link, a:visited, a:active {
 	color: #2c93dd;
 	text-decoration: none;

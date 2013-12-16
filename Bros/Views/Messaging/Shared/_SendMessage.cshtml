@@ -1,0 +1,10 @@
+﻿@model Bros.DataModel.Message
+
+@using (Html.BeginForm("MessageHome", "Message", FormMethod.Post, Model))
+{
+	@Html.Hidden("To", Model.Receiver)
+	@Html.Hidden("From", Model.Sender)
+
+	<p>@:Content @Html.TextBox("Content", Model.Content)</p>        
+	<p><input type="submit" value="Save" /></p>
+}

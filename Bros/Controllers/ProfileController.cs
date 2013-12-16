@@ -29,7 +29,7 @@ namespace Bros.Controllers
 			{
 				user = context.Users.Include("Profile.ProfilePhoto").FirstOrDefault(u => u.Id == id);
 			}
-			return View(user);
+			return View("Index", user);
 		}
 
 		//public ActionResult Circles()

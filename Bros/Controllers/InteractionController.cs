@@ -102,47 +102,37 @@ namespace Bros.Controllers
 			return request;
 		}
 
-		public ActionResult BroAccept(int requestID)
+		public ActionResult BroAccept(int id)
 		{
-
 			using (ModelFirstContainer context = new ModelFirstContainer())
 			{
-				BroRequest request = context.BroRequests.Include("Sender.Profile").Include("Receiver.Profile").FirstOrDefault(r => r.Id == requestID);
-				AcceptRequest(request);
+				BroRequest request = context.BroRequests.Include("Sender.Profile").Include("Receiver.Profile").FirstOrDefault(r => r.Id == id);
 
-				int id = WebSecurity.CurrentUserId;
-				User user = context.Users.Include("Circles").Include("Circles.Members.Profile").FirstOrDefault(u => u.Id == id);
+				context.Circles.FirstOrDefault(c => c.Name.Equals("MyBros") && c.Owner.Id == request.Sender.Id).Members.Add(request.Receiver);
+				context.Circles.FirstOrDefault(c => c.Name.Equals("MyBros") && c.Owner.Id == request.Receiver.Id).Members.Add(request.Sender);
+
+				request.RequestNotification.IsRead = true;
+
+				int userId = WebSecurity.CurrentUserId;
+				User user = context.Users.Include("Circles").Include("Circles.Members.Profile").FirstOrDefault(u => u.Id == userId);
 				ViewBag.Bros = context.Circles.FirstOrDefault(c => c.Name.Equals("MyBros")).Members.Where(u => u.Id != user.Id).ToList();
 				ViewBag.Request = request;
 
 				context.SaveChanges();
 			}
 
-			return View();
+			return new RedirectResult(Request.UrlReferrer.AbsolutePath);
 		}
 
-		public void AcceptRequest(BroRequest request)
+		public ActionResult DismissRequest(int id)
 		{
 			using (ModelFirstContainer context = new ModelFirstContainer())
 			{
-				context.Circles.FirstOrDefault(c => c.Name.Equals("MyBros") && c.Owner.Id == request.Sender.Id).Members.Add(request.Receiver);
-				context.Circles.FirstOrDefault(c => c.Name.Equals("MyBros") && c.Owner.Id == request.Receiver.Id).Members.Add(request.Sender);
-
-				request.RequestNotification.IsRead = true;
-				context.SaveChanges();
-			}
-		}
-
-		public ActionResult DismissRequest(int requestID)
-		{
-			using (ModelFirstContainer context = new ModelFirstContainer())
-			{
-				context.BroRequests.SingleOrDefault(x => x.Id == requestID).RequestNotification.IsRead = true;
-
+				context.BroRequests.SingleOrDefault(x => x.Id == id).RequestNotification.IsRead = true;
 				context.SaveChanges();
 			}
 
-			return RedirectToAction("ProfileIndex");
+			return new RedirectResult(Request.UrlReferrer.AbsolutePath);
 		}
 
 		public ActionResult BlockBro(int id)

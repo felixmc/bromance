@@ -1,0 +1,8 @@
+﻿@Html.ValidationSummary()
+
+@using (Html.BeginForm("CreateMessage", "Messaging", FormMethod.Post))
+{
+	<input type="hidden" value="@ViewBag.ReceiverId" name="Receiver"/>
+	<p>@Html.TextBox("Content")</p>
+	<p><input type="submit" value="Send" /></p>
+}

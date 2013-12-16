@@ -9,107 +9,99 @@ using WebMatrix.WebData;
 
 namespace Bros.Controllers
 {
-	[Authorize(Roles="User")]
-    public class MessagingController : BroController
-    {
+	[Authorize(Roles = "User")]
+	public class MessagingController : BroController
+	{
 
-        public ActionResult MessageHome()
-        {
+		public ActionResult Index()
+		{
+			int id = WebSecurity.CurrentUserId;
+			List<Message> allMessages;
+			using (var context = new ModelFirstContainer())
+			{
+				User thisUser = context.Users.FirstOrDefault(x => x.Id == id);
+				allMessages = thisUser.ReceivedMessages.ToList();
 
-                int id = WebSecurity.CurrentUserId;
-                List<Message> allMessages;
-                using (var context = new ModelFirstContainer())
-                {
-                    User thisUser = context.Users.FirstOrDefault(x => x.Id == id);
-                    allMessages = thisUser.ReceivedMessages.ToList();
-                    //allMessages.AddRange(thisUser.ReceivedMessages.ToList());
+				allMessages = allMessages.OrderBy(x => x.DateSent).ToList();
 
-                    allMessages = allMessages.OrderBy(x => x.DateSent).ToList();
-                    //List<User> uniqueUsers = allMessages.Select(m => m.Receiver).OrderBy(m => m.Id).Distinct().ToList();
-                    List<User> uniqueUsers = context.Users.Include("Profile").ToList();
-                  //List<User> uniqueUsers = context.Users.Include("Users.Profile").Where(x => x.SentMessages != thisUser.SentMessages) && allMessages.Select(m => m.Receiver).OrderBy(m => m.Id).Distinct().ToList();
-                    ViewBag.messages = allMessages;
+				List<User> uniqueUsers = context.Users.Include("Profile").ToList();
 
-                    //ViewBag.UserConversations = uniqueUsers.Select(c => c.ReceivedMessages.Where(y => y.Receiver.Id == thisUser.Id)).Select(m => m.);
-                    IEnumerable<int> messages = thisUser.SentMessages.Union(thisUser.ReceivedMessages).Select(m => m.Id);
-                    List<User> userList = context.Users.Include("Profile").Where(u => u.Id != thisUser.Id).Where(u =>  u.SentMessages.Union(u.ReceivedMessages).Select(m => m.Id).Intersect(messages).Count() != 0 ).Distinct().ToList();
+				ViewBag.messages = allMessages;
 
-                    ViewBag.UserConversations = userList;
-                }
-                return View("MessageHome", allMessages);
-        }
+				IEnumerable<int> messages = thisUser.SentMessages.Union(thisUser.ReceivedMessages).Select(m => m.Id);
+				List<User> userList = context.Users.Include("Profile").Where(u => u.Id != thisUser.Id).Where(u => u.SentMessages.Union(u.ReceivedMessages).Select(m => m.Id).Intersect(messages).Count() != 0).Distinct().ToList();
 
-        public ActionResult LoadMessage(int id)
-        {
-            if (Session["UserId"] != null)
-            {
-                int userId = (int)Session["UserId"];
-                List<Message> allMessages = new List<Message>();
-                using (var context = new ModelFirstContainer())
-                {
-                    User messenger = context.Users.FirstOrDefault(u => u.Id == id);
-                    User thisUser = context.Users.FirstOrDefault(x => x.Id == userId);
-                    allMessages = context.Messages.Include("Sender.Profile").Include("Receiver.Profile").Where(m => (m.Sender.Id == id && m.Receiver.Id == thisUser.Id)
-                                                                                                                || (m.Sender.Id == thisUser.Id && m.Receiver.Id == id)).OrderBy(m => m.DateSent).ToList();
-                    ViewBag.ReceiverId = id;
-                }
-                return View("_ConvoPartialView", allMessages);
-            }
-            else
-                throw new Exception("Session is null, or user is not logged in.");
-            
-        }
+				ViewBag.UserConversations = userList;
+			}
 
-        [HttpGet]
-        public ActionResult CreateMessage()
-        {
-                using(var context = new ModelFirstContainer()){
-                    int id = ((int)Session["UserId"]);
-                User user = context.Users.Include("Profile").FirstOrDefault(x => x.Id == id );
-                List<Circle> circleList = (List<Circle>)context.Circles.Where(x => x.Owner.Id == user.Id).ToList();
-                //List<User> friends = user.Circles.Select(c => c.Members).SelectMany(u => u).ToList();
+			ViewBag.Title = "Messages";
+			ViewBag.ContentClass = "condensed";
 
-                    ViewBag.Users = user.Circles.Select(c => c.Members).SelectMany(u => u).Select(u => new { Id = u.Id, Name = u.Profile.FirstName + " " + u.Profile.LastName }).ToList();
-                    ViewBag.Title = "Create Message";
-                    ViewBag.Me = user;
-                }
-                return View("CreateMessage");
-            
-        }
+			return View(allMessages);
+		}
 
-        [HttpPost]
-        public ActionResult PostCreateMessage(Message message)
-        {
-            int id = (int)Session["UserId"];
-            int receiverId = Int32.Parse(Request["Receiver"]);
-            using (var context = new ModelFirstContainer())
-            {
-                User thisUser = context.Users.FirstOrDefault(x => x.Id == id);
-                Message ms = new Message(){
-                    Content = message.Content,
-                    DateSent = DateTime.Now,
-                    DateRead = DateTime.Now,
-                    Sender = thisUser,
-                    Receiver = context.Users.Where(u => u.Id == receiverId).FirstOrDefault()
-                };
-                context.Messages.Add(ms);
-                context.SaveChanges();
+		public ActionResult Conversation(int id)
+		{
+			int userId = WebSecurity.CurrentUserId;
+			List<Message> allMessages = new List<Message>();
+			using (var context = new ModelFirstContainer())
+			{
+				User messenger = context.Users.FirstOrDefault(u => u.Id == id);
+				User thisUser = context.Users.FirstOrDefault(x => x.Id == userId);
+				allMessages = context.Messages.Include("Sender.Profile").Include("Receiver.Profile").Where(m => (m.Sender.Id == id && m.Receiver.Id == thisUser.Id)
+																											|| (m.Sender.Id == thisUser.Id && m.Receiver.Id == id)).OrderBy(m => m.DateSent).Take(30).ToList();
+				ViewBag.ReceiverId = id;
+				ViewBag.Title = String.Format("{0} {1}", messenger.Profile.FirstName, messenger.Profile.LastName);
+			}
 
-                IEnumerable<int> messages = thisUser.SentMessages.Union(thisUser.ReceivedMessages).Select(m => m.Id);
-                List<User> userList = context.Users.Include("Profile").Where(u => u.SentMessages.Union(u.ReceivedMessages).Select(m => m.Id).Intersect(messages).Count() != 0).ToList();
+			ViewBag.ContentClass = "condensed";
+			return View(allMessages);
+		}
 
-                ViewBag.UserConversations = userList;
-            }
+		[HttpGet]
+		public ActionResult CreateMessage()
+		{
+			using (var context = new ModelFirstContainer())
+			{
+				int id = WebSecurity.CurrentUserId;
+				User user = context.Users.Include("Profile").FirstOrDefault(x => x.Id == id);
 
-           
-            //if (ModelState.isValid)
-            //{
+				IEnumerable<User> users = context.Circles.Include("Members.Profile.ProfilePhoto").Where(x => x.Owner.Id == user.Id).Select(c => c.Members).SelectMany(u => u).Distinct();
 
-            //}
-            
+				foreach (User u in users)
+				{
+					context.Entry(u.Profile).Reference(p => p.ProfilePhoto).Load();
+				}
 
-            return View("MessageHome");
-        }
+				ViewBag.Users = users.ToList();
+				ViewBag.Title = "Create Message";
+			}
+
+			ViewBag.ContentClass = "condensed";
+			return View();
+		}
+
+		[HttpPost]
+		public ActionResult CreateMessage(Message message)
+		{
+			int id = WebSecurity.CurrentUserId;
+			int receiverId = Int32.Parse(Request["Receiver"]);
+			using (var context = new ModelFirstContainer())
+			{
+				User thisUser = context.Users.FirstOrDefault(x => x.Id == id);
+				Message ms = new Message()
+				{
+					Content = message.Content,
+					DateSent = DateTime.Now,
+					Sender = thisUser,
+					Receiver = context.Users.Where(u => u.Id == receiverId).FirstOrDefault()
+				};
+				context.Messages.Add(ms);
+				context.SaveChanges();
+			}
+
+			return new RedirectResult(Request.UrlReferrer.AbsolutePath);
+		}
 
 		public ActionResult Chat()
 		{
@@ -127,5 +119,5 @@ namespace Bros.Controllers
 			return View();
 		}
 
-    }
+	}
 }
