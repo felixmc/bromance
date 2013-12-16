@@ -199,7 +199,7 @@ a:hover {
 	width: 330px;
 	border: 1px solid #ccc;
 	outline: 0;
-	padding: 2.5%;
+	padding: .7em .4em;
 	border-radius: 3px;
 }
 
@@ -209,7 +209,6 @@ a:hover {
 }
 
 .widget textarea {
-	padding: 2%;
 	min-height: 80px;
 }
 
@@ -223,7 +222,7 @@ a:hover {
 	box-shadow: inset 0 1px 0 0 rgba(255,255,255,.4);
 	color: #fff;
 	border-radius: 4px;
-	padding: 1.5% 15px;
+
 	float: right;
 	margin: 5px 0 10px;
 	cursor: pointer;
@@ -358,4 +357,44 @@ a:hover {
 
 .profilePic {
     max-width: 300px;
+}
+
+.post {
+	margin: 1em;
+	position: relative;
+	margin-bottom: 3em;
+}
+
+	.post .status {
+		position: absolute;
+		top: 10px;
+		left: 57px;
+	}
+
+.comment {
+	position: relative;
+	padding-left: 60px;
+}
+
+	.comment>p {
+		position: absolute;
+		top: 10px;
+		left: 120px;
+	}
+
+.mini-profile {
+
+}
+
+.mini-profile .username {
+	font-weight: bold;
+	position: absolute;
+	top: 0;
+	margin-left: 10px;
+}
+
+.mini-profile .profile-photo {
+	max-width: 40px;
+	border: 4px solid #fff;
+	box-shadow: 0 0 3px 0 #aaa;
 }

@@ -3,7 +3,6 @@
 
 @{
     ViewBag.Title = "Circles";
-    Layout = "~/Views/Shared/_DefaultLayout.cshtml";
 }
 
 <div class="Circles">
@@ -22,7 +21,7 @@
                 @foreach (User u in c.Members)
                 {
                     <span class="CircleMemberName">@u.Profile.FirstName @u.Profile.LastName</span>
-                    <span class="RemoveBroLink">@Html.ActionLink("Remove Bro", "ContextRemoveBroFromCircle", new { circleId = c.Id, targetBroId = u.Id })</span>
+                    <span class="RemoveBroLink">@Html.ActionLink("Remove Bro", "RemoveBro", "Interaction", new { targetBroId = u.Id }, null)</span>
                 }
 
                 <br />

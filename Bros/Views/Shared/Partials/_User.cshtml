@@ -1,6 +1,4 @@
 ﻿@model Bros.DataModel.User
 
-<figure class="user-photo">
-	@Html.Partial("Partials/_ProfilePhoto", Model.Profile)
-</figure>
-<p class="username"><a href="/Profile/View/@Model.Id" title="view profile">@Model.Profile.FirstName @Model.Profile.LastName</a></p>
+<p><a href="/Profile/View/@Model.Id" title="view profile">@Html.Partial("Partials/_ProfilePhoto", Model.Profile)
+	<span class="username">@Model.Profile.FirstName @Model.Profile.LastName</span></a></p>

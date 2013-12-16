@@ -4,8 +4,11 @@
    // COURTNEY NEEDS TO ADD CAPTION HERE FOR PROFILE PICTURE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 }
 <p class="info">@ViewBag.Message</p>
-<h1>Set Profile Picture here: (Only jpgs)</h1>
-<article>Here is your profile picture: <p><span>@Html.Partial("Partials/_ProfilePhoto", Model.Profile)</span></p></article>
+<h1 class="title">Set Profile Picture here: (Only jpgs)</h1>
+<article>
+    <p>Here is your profile picture:</p>
+    <p><span>@Html.Partial("Partials/_ProfilePhoto", Model.Profile)</span></p>
+</article>
 
 <article>
     @Html.ValidationSummary()

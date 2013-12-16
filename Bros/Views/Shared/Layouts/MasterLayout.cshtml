@@ -19,6 +19,7 @@
 	<div id="content" class="@ViewBag.ContentClass">
 		@RenderBody()
 	</div>
+	@RenderSection("PostContent", false)
 	<footer id="page-footer">
 		<nav id="footer-nav" class="wrapper">
 			<ul>
@@ -29,6 +30,8 @@
 		</nav>
 		<p class="masthead">Bromance &copy; 2013</p>
 	</footer>
+    <script src="/Content/Scripts/jquery-1.6.4.min.js" ></script>
+    <script src="/Content/Scripts/jquery-ui-1.10.3.custom.min.js" ></script>
 	@RenderSection("Scripts", false)
 </body>
 </html>
