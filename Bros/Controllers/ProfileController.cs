@@ -32,143 +32,128 @@ namespace Bros.Controllers
 			return View("Index", user);
 		}
 
-		//public ActionResult Circles()
-		//{
-		//	ActionResult result;
+		public ActionResult Circles()
+		{
+			List<Circle> circles = new List<Circle>();
+			using (ModelFirstContainer context = new ModelFirstContainer())
+			{
+				int id = WebSecurity.CurrentUserId;
+				User user = context.Users.Include("Circles.Members.Profile").SingleOrDefault(u => u.Id == id);
 
-		//	IEnumerable<Circle> circles;
-		//	using (ModelFirstContainer context = new ModelFirstContainer())
-		//	{
-		//		int id = WebSecurity.CurrentUserId;
-		//		User user = context.Users.Include("Circles.Members.Profile").SingleOrDefault(u => u.Id == id);
+				circles = user.Circles.ToList();
 
-		//		circles = user.Circles.ToList();
+			}
 
-		//		result = View(circles);
-		//	}
+			return View(circles);
+		}
 
-		//	return result;
-		//}
+		public ActionResult CreateCircle(string CircleName)
+		{
+			using (ModelFirstContainer context = new ModelFirstContainer())
+			{
+				int id = (int)Session["UserID"];
+				User user = context.Users.FirstOrDefault(u => u.Id == id);
+				Circle targetCircle = new Circle();
+				targetCircle.Name = CircleName;
+				targetCircle.Owner = user;
+				user.Circles.Add(targetCircle);
+				context.SaveChanges();
+			}
 
-		//public ActionResult CreateCircle(string CircleName)
-		//{
-		//	using (ModelFirstContainer context = new ModelFirstContainer())
-		//	{
-		//		int id = (int)Session["UserID"];
-		//		User user = context.Users.FirstOrDefault(u => u.Id == id);
-		//		Circle targetCircle = new Circle();
-		//		targetCircle.Name = CircleName;
-		//		targetCircle.Owner = user;
-		//		user.Circles.Add(targetCircle);
+			return RedirectToAction("Circles");
+		}
 
-		//		context.SaveChanges();
-		//	}
+		public void RenameCircle(int targetCircleId, string newCircleName)
+		{
+			using (ModelFirstContainer context = new ModelFirstContainer())
+			{
+				Circle targetCircle = context.Circles.SingleOrDefault(x => x.Id == targetCircleId);
+				targetCircle.Name = newCircleName;
 
-		//	return RedirectToAction("Circles");
-		//}
+				context.SaveChanges();
+			}
+		}
 
-		//public void RenameCircle(int targetCircleId, string newCircleName)
-		//{
-		//	using (ModelFirstContainer context = new ModelFirstContainer())
-		//	{
-		//		Circle targetCircle = context.Circles.SingleOrDefault(x => x.Id == targetCircleId);
-		//		targetCircle.Name = newCircleName;
+		public void MoveBroBetweenCircles(int donorCircleId, int recieverCircleId, int targetBroId)
+		{
+			using (ModelFirstContainer context = new ModelFirstContainer())
+			{
+				Circle donorCircle = context.Circles.SingleOrDefault(x => x.Id == donorCircleId);
+				Circle recieverCircle = context.Circles.SingleOrDefault(x => x.Id == recieverCircleId);
+				User targetBro = context.Users.SingleOrDefault(x => x.Id == targetBroId);
 
-		//		context.SaveChanges();
-		//	}
-		//}
+				donorCircle.Members.Remove(targetBro);
+				recieverCircle.Members.Add(targetBro);
 
-		//public void MoveBroBetweenCircles(int donorCircleId, int recieverCircleId, int targetBroId)
-		//{
-		//	using (ModelFirstContainer context = new ModelFirstContainer())
-		//	{
-		//		Circle donorCircle = context.Circles.SingleOrDefault(x => x.Id == donorCircleId);
-		//		Circle recieverCircle = context.Circles.SingleOrDefault(x => x.Id == recieverCircleId);
-		//		User targetBro = context.Users.SingleOrDefault(x => x.Id == targetBroId);
+				context.SaveChanges();
+			}
+		}
 
-		//		donorCircle.Members.Remove(targetBro);
-		//		recieverCircle.Members.Add(targetBro);
+		public ActionResult FromEditCircleMoveBroToCircle(int donorCircleId, int recieverCircleId, int targetBroId)
+		{
+			MoveBroBetweenCircles(donorCircleId, recieverCircleId, targetBroId);
+			return RedirectToAction("EditCircle", new { circleId = donorCircleId });
+		}
 
-		//		context.SaveChanges();
-		//	}
-		//}
+		public ActionResult LinkRenameCircle(int circleId, string circleName)
+		{
+			using (ModelFirstContainer context = new ModelFirstContainer())
+			{
+				Circle targetCircle = context.Circles.SingleOrDefault(x => x.Id == circleId);
+				targetCircle.Name = circleName;
 
-		//public ActionResult FromEditCircleMoveBroToCircle(int donorCircleId, int recieverCircleId, int targetBroId)
-		//{
-		//	using (ModelFirstContainer context = new ModelFirstContainer())
-		//	{
-		//		User user = context.Users.SingleOrDefault(x => x.Id == WebSecurity.CurrentUserId);
-		//		Circle donorCircle = context.Circles.SingleOrDefault(x => x.Id == donorCircleId);
-		//		Circle recieverCircle = context.Circles.SingleOrDefault(x => x.Id == recieverCircleId);
-		//		User targetBro = context.Users.SingleOrDefault(x => x.Id == targetBroId);
+				context.SaveChanges();
+			}
 
-		//		ContextlessMoveBroBetweenCircles(donorCircle, recieverCircle, targetBro);
+			return RedirectToAction("EditCircle", new { circleId = circleId });
+		}
 
-		//		context.SaveChanges();
-		//	}
+		public ActionResult EditCircle(int circleId)
+		{
+			ActionResult result;
 
-		//	return RedirectToAction("EditCircle", new { circleId = donorCircleId });
-		//}
+			using (ModelFirstContainer context = new ModelFirstContainer())
+			{
+				Circle targetCircle = context.Circles.SingleOrDefault(x => x.Id == circleId);
+				User user = context.Users.Include("Circles.Members.Profile").SingleOrDefault(x => x.Id == WebSecurity.CurrentUserId);
 
-		//public ActionResult LinkRenameCircle(int circleId, string circleName)
-		//{
-		//	using (ModelFirstContainer context = new ModelFirstContainer())
-		//	{
-		//		Circle targetCircle = context.Circles.SingleOrDefault(x => x.Id == circleId);
-		//		targetCircle.Name = circleName;
+				ViewBag.TargetCircle = targetCircle;
+				IEnumerable<Circle> circles = user.Circles.Where(x => x.Id != circleId).ToList();
+				ViewBag.recieverCircleId = new SelectList(circles, "Id", "Name");
 
-		//		context.SaveChanges();
-		//	}
+				result = View(targetCircle);
+			}
 
-		//	return RedirectToAction("EditCircle", new { circleId = circleId });
-		//}
+			return result;
+		}
 
-		//public ActionResult EditCircle(int circleId)
-		//{
-		//	ActionResult result;
+		public ActionResult DeleteCircle(int circleId)
+		{
 
-		//	using (ModelFirstContainer context = new ModelFirstContainer())
-		//	{
-		//		Circle targetCircle = context.Circles.SingleOrDefault(x => x.Id == circleId);
-		//		User user = context.Users.Include("Circles.Members.Profile").SingleOrDefault(x => x.Id == WebSecurity.CurrentUserId);
+			using (ModelFirstContainer context = new ModelFirstContainer())
+			{
+				Circle targetCircle = context.Circles.SingleOrDefault(x => x.Id == circleId);
 
-		//		ViewBag.TargetCircle = targetCircle;
-		//		IEnumerable<Circle> circles = user.Circles.Where(x => x.Id != circleId).ToList();
-		//		ViewBag.recieverCircleId = new SelectList(circles, "Id", "Name");
+				if (targetCircle.Name != "MyBros")
+				{
+					int userId = WebSecurity.CurrentUserId;
+					User user = context.Users.SingleOrDefault(x => x.Id == userId);
 
-		//		result = View(targetCircle);
-		//	}
+					Circle backupCircle = context.Circles.FirstOrDefault(c => c.Owner.Id == userId && c.Name.Equals("MyBros"));
 
-		//	return result;
-		//}
+					foreach (User u in targetCircle.Members)
+					{
+						MoveBroBetweenCircles(circleId, backupCircle.Id, u.Id);
+					}
 
-		//public ActionResult DeleteCircle(int circleId)
-		//{
+					context.Circles.Remove(targetCircle);
+				}
 
-		//	using (ModelFirstContainer context = new ModelFirstContainer())
-		//	{
-		//		Circle targetCircle = context.Circles.SingleOrDefault(x => x.Id == circleId);
+				context.SaveChanges();
+			}
 
-		//		if (targetCircle.Name != "MyBros")
-		//		{
-		//			int userId = WebSecurity.CurrentUserId;
-		//			User user = context.Users.SingleOrDefault(x => x.Id == userId);
-
-		//			Circle backupCircle = GetCircleByName(user, "MyBros");
-
-		//			foreach (User u in targetCircle.Members)
-		//			{
-		//				ContextlessMoveBroBetweenCircles(targetCircle, backupCircle, u);
-		//			}
-
-		//			context.Circles.Remove(targetCircle);
-		//		}
-
-		//		context.SaveChanges();
-		//	}
-
-		//	return RedirectToAction("Circles");
-		//}
+			return RedirectToAction("Circles");
+		}
 
 		//public ActionResult AddBroToCircle(int circleId, int targetBroId)
 		//{
@@ -188,20 +173,20 @@ namespace Bros.Controllers
 		//	return RedirectToAction("Circles");
 		//}
 
-		//public ActionResult RemoveBroFromCircle(int circleId, int targetBroId)
-		//{
-		//	using (ModelFirstContainer context = new ModelFirstContainer())
-		//	{
-		//		Circle targetCircle = context.Circles.SingleOrDefault(x => x.Id == circleId);
-		//		User targetBro = context.Users.SingleOrDefault(x => x.Id == targetBroId);
+		public ActionResult RemoveBroFromCircle(int circleId, int targetBroId)
+		{
+			using (ModelFirstContainer context = new ModelFirstContainer())
+			{
+				Circle targetCircle = context.Circles.SingleOrDefault(x => x.Id == circleId);
+				User targetBro = context.Users.SingleOrDefault(x => x.Id == targetBroId);
 
-		//		targetCircle.Members.Remove(targetBro);
+				targetCircle.Members.Remove(targetBro);
 
-		//		context.SaveChanges();
-		//	}
+				context.SaveChanges();
+			}
 
-		//	return RedirectToAction("Circles");
-		//}
+			return RedirectToAction("Circles");
+		}
 
 		[HttpGet]
 		public ActionResult Edit()

@@ -1,9 +1,11 @@
 ﻿@model List<Bros.DataModel.Post>
 
+<h2 class="title">Feed</h2>
+
 @using (Html.BeginForm())
 {
-	<p class="FiterByCircle">Circles: @Html.DropDownList("Circle", new SelectList(ViewBag.Circles, "Id", "Name"))</p>
-	<input type="submit" value="Filter" />
+	<p>Circles: @Html.DropDownList("Circle", new SelectList(ViewBag.Circles, "Id", "Name"))
+	<input type="submit" value="Filter Posts" /></p>
 }
 
 @Html.Partial("Partials/_StatusUpdateForm")

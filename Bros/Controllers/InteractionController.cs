@@ -24,6 +24,7 @@ namespace Bros.Controllers
 					{
 						CommentNotification cn = not as CommentNotification;
 						context.Entry(cn.Comment.Owner).Reference(u => u.Profile).Load();
+						not.IsRead = true;
 						notifications.Add(cn);
 					}
 					else if (not is Bros.DataModel.RequestNotification)
@@ -33,6 +34,8 @@ namespace Bros.Controllers
 						notifications.Add(cn);
 					}
 				}
+
+				context.SaveChanges();
 			}
 
 			ViewBag.Title = "Notifications";

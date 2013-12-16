@@ -60,9 +60,12 @@ namespace Bros.Controllers
 					User user = context.Users.FirstOrDefault(u => u.Id == userId);
 					Comment comment = new Comment() { Content = Request["comment"], Owner = user, ParentPost = post, DateCreated = DateTime.Now };
 
-					CommentNotification not = new CommentNotification() { Comment = comment, DateCreated = DateTime.Now, IsRead = false, Receiver = post.Author };
+					if (userId != post.Author.Id)
+					{
+						CommentNotification not = new CommentNotification() { Comment = comment, DateCreated = DateTime.Now, IsRead = false, Receiver = post.Author };
+						comment.CommentNotifications.Add(not);
+					}
 
-					comment.CommentNotifications.Add(not);
 					user.Comments.Add(comment);
 					post.Comments.Add(comment);
 
