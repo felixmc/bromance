@@ -19,6 +19,7 @@ namespace Bros.Controllers
 			if (WebSecurity.IsAuthenticated)
 				return Feed();
 
+            ViewBag.ContentClass = "widget wrapper";
 			ViewBag.Title = "Welcome";
 
             return View();
