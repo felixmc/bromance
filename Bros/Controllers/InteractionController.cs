@@ -104,7 +104,6 @@ namespace Bros.Controllers
 
 		public ActionResult BroAccept(int id)
 		{
-
 			using (ModelFirstContainer context = new ModelFirstContainer())
 			{
 				BroRequest request = context.BroRequests.Include("Sender.Profile").Include("Receiver.Profile").FirstOrDefault(r => r.Id == id);

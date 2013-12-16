@@ -1,0 +1,10 @@
+﻿@model List<Bros.DataModel.Message>
+
+<h2 class="title">Conversation with @ViewBag.Title</h2>
+
+@foreach (Bros.DataModel.Message ms in Model)
+{
+	Html.RenderPartial("Shared/_SingleMessage", ms);
+}
+
+@Html.Partial("Shared/_SendMessageTo")

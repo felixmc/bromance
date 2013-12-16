@@ -315,13 +315,13 @@
     <Content Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
-    <Content Include="Views\Messages\Chat.cshtml" />
-    <Content Include="Views\Messages\CreateMessage.cshtml">
+    <Content Include="Views\Messaging\Chat.cshtml" />
+    <Content Include="Views\Messaging\CreateMessage.cshtml">
       <SubType>Code</SubType>
     </Content>
-    <Content Include="Views\Messages\_ConvoPartialView.cshtml" />
-    <Content Include="Views\Messages\_SendMessageTo.cshtml" />
-    <Content Include="Views\Messages\_SingleMessagePartialView.cshtml" />
+    <Content Include="Views\Messaging\Conversation.cshtml" />
+    <Content Include="Views\Messaging\Shared\_SendMessageTo.cshtml" />
+    <Content Include="Views\Messaging\Shared\_SingleMessage.cshtml" />
     <Content Include="Views\Bros\SearchResults.cshtml" />
     <Content Include="Views\Shared\Partials\_NotificationList.cshtml" />
     <Content Include="Views\Profile\Index.cshtml" />
@@ -375,6 +375,7 @@
     <Content Include="Views\Shared\Partials\_BlockBroButton.cshtml" />
     <Content Include="Views\Interaction\Notifications.cshtml" />
     <Content Include="Views\Content\Post.cshtml" />
+    <Content Include="Views\Messaging\_ViewStart.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -392,12 +393,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Shared\Partials\_UserPost.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Messages\_MessagePartialView.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Messages\Mail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Bros\Search.cshtml" />
@@ -456,15 +451,14 @@
     <Content Include="Views\Shared\Partials\_CommentForm.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Profile\BroAccept.cshtml" />
     <Content Include="Views\Profile\Partials\_BroRequestAcceptedPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Messages\MessageHome.cshtml" />
+    <Content Include="Views\Messaging\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Messages\_UserMessageList.cshtml" />
-    <Content Include="Views\Messages\_SendMessagePartialView.cshtml" />
+    <Content Include="Views\Messaging\Shared\_UserMessageList.cshtml" />
+    <Content Include="Views\Messaging\Shared\_SendMessage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Profile\ProfileAttribute.cshtml" />

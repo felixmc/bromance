@@ -1,0 +1,9 @@
+﻿@model List<Bros.DataModel.Message>
+
+<h2 class="title">Conversations</h2>
+
+@foreach (Bros.DataModel.User u in ViewBag.UserConversations)
+{
+	Html.RenderPartial("Shared/_UserMessageList", u);
+}
+<p>@Html.ActionLink("New Message", "CreateMessage", "Messaging", null, new { @class = "button" })</p>

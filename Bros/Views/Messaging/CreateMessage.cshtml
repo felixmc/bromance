@@ -1,0 +1,21 @@
+﻿@model Bros.DataModel.Message
+
+<h2 class="title">Create Message</h2>
+
+@Html.ValidationSummary()
+@using (Html.BeginForm())
+{
+	<p>
+		<select name="receiver">
+			@foreach (Bros.DataModel.User user in ViewBag.Users)
+   {
+				<option value="@user.Id">
+					@Html.Partial("Partials/_User", user)
+				</option>
+   }
+		</select>
+	</p>
+		
+	<p>@Html.TextAreaFor(x => x.Content)</p>
+	<p><input type="submit" value="Send" /></p>
+}

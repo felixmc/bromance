@@ -1,0 +1,2 @@
+﻿@model Bros.DataModel.User
+	<p>@Html.ActionLink(Model.Profile.FirstName + " " + Model.Profile.LastName, "Conversation", "Messaging", new { id = Model.Id }, null)</p>
