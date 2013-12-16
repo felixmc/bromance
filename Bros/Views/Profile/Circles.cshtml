@@ -8,25 +8,25 @@
 <div class="Circles">
 
     @using(Html.BeginForm("CreateCircle", "Profile", FormMethod.Post)){
-        @Html.TextBox("CircleName")
+        <p>@Html.TextBox("CircleName")</p>
         <input type="submit" value="Create Circle" />
     }
 
     @foreach (Circle c in Model)
     {
         <div class="CircleBlock">
-            <h3 class="CircleName">@c.Name</h3>
+            <p>@c.Name</p>
             <div class="CircleMembers">
-                <span class="CircleMembersTitle">Members:</span>
+                <p>Members:</p>
                 @foreach (User u in c.Members)
                 {
-                    <span class="CircleMemberName">@u.Profile.FirstName @u.Profile.LastName</span>
-                    <span class="RemoveBroLink">@Html.ActionLink("Remove Bro", "RemoveBro", "Interaction", new { targetBroId = u.Id }, null)</span>
+                    <p>@u.Profile.FirstName @u.Profile.LastName</p>
+                    <p>@Html.ActionLink("Remove Bro", "RemoveBro", "Interaction", new { targetBroId = u.Id }, null)</p>
                 }
 
                 <br />
 
-                <span class="EditCircleLink">@Html.ActionLink("Edit this Circle", "EditCircle", new { circleId = c.Id})</span>
+                <p>@Html.ActionLink("Edit this Circle", "EditCircle", new { circleId = c.Id})</p>
 
                 @if(c.Name != "MyBros"){
                     <span class="DeleteCircleLink">@Html.ActionLink("Delete This Circle", "DeleteCircle", new { circleId = c.Id })</span>
