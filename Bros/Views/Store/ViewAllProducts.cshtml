@@ -6,7 +6,7 @@
  {
      if (ViewBag.Categories != null)
      {
-            <span class="ProductCategory">Category: @Html.DropDownListFor(x => x.Category, new SelectList(ViewBag.Categories, "Id", "Name"))</span>
+            <p>Category: @Html.DropDownListFor(x => x.Category, new SelectList(ViewBag.Categories, "Id", "Name"))</p>
      }
      if (ViewBag.ViewByCat != null)
      {
@@ -22,4 +22,4 @@
 
 <br/>
 <br/>
-@Html.ActionLink("Back", "StoreIndex", "Store")
+<p>@Html.ActionLink("Back", "StoreIndex", "Store")</p>
