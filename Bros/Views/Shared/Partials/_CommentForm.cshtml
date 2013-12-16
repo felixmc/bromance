@@ -2,7 +2,7 @@
 
 @if (!ViewBag.IsMuted)
 {
-	using(Html.BeginForm("PostComment", "Content", FormMethod.Post))
+	using (Html.BeginForm("PostComment", "Content", FormMethod.Post, new { @class = "comment-form" }))
 	{
 		<input type="hidden" name="postId" value="@Model.Id" />
 		<textarea name="comment" placeholder="Enter comment"></textarea>

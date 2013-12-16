@@ -359,3 +359,43 @@ a:hover {
 .profilePic {
     max-width: 300px;
 }
+
+.post {
+	margin: 1em;
+	position: relative;
+	margin-bottom: 3em;
+}
+
+	.post .status {
+		position: absolute;
+		top: 10px;
+		left: 57px;
+	}
+
+.comment {
+	position: relative;
+	padding-left: 60px;
+}
+
+	.comment>p {
+		position: absolute;
+		top: 10px;
+		left: 120px;
+	}
+
+.mini-profile {
+
+}
+
+.mini-profile .username {
+	font-weight: bold;
+	position: absolute;
+	top: 0;
+	margin-left: 10px;
+}
+
+.mini-profile .profile-photo {
+	max-width: 40px;
+	border: 4px solid #fff;
+	box-shadow: 0 0 3px 0 #aaa;
+}

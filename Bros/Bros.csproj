@@ -255,7 +255,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Content Include="Content\Fonts\fontello.svg" />
     <Content Include="Content\Images\Brofist.png" />
-    <Content Include="Content\Images\defaultPic.jpg" />
+    <Content Include="Content\Images\default.png" />
     <Content Include="Content\Images\Smileys\-_-.png" />
     <Content Include="Content\Images\Smileys\=B.png" />
     <Content Include="Content\Images\Smileys\angry.png" />
@@ -290,7 +290,6 @@
     <Content Include="Content\Scripts\jquery-ui-1.10.3.custom.min.js" />
     <Content Include="Content\Styles\chat.css" />
     <Content Include="Content\Styles\main.css" />
-    <Content Include="Content\Styles\profile.css" />
     <Content Include="Content\Styles\store.css" />
     <Content Include="DataModel\ModelFirst.edmx.sql" />
     <Content Include="Global.asax" />
@@ -403,6 +402,7 @@
     </Content>
     <Content Include="Views\Content\ViewAlbums.cshtml" />
     <Content Include="Views\Content\SingleAlbum.cshtml" />
+    <Content Include="Views\Profile\EditCircle.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -1,21 +1,22 @@
 ﻿@model Bros.DataModel.Post
 
-<article>
-	<p><strong>@Model.Author.Profile.FirstName @Model.Author.Profile.LastName</strong></p>
+<article class="post">
+	<div class="mini-profile">@Html.Partial("Partials/_User", Model.Author)</div>
 @if (@Model is Bros.DataModel.TextPost)
 {
 	var post = Model as Bros.DataModel.TextPost;
-	<p>@post.Content</p>
+	<p class="status">@post.Content</p>
 }
 else if (@Model is Bros.DataModel.Photo)
 {
 	var post = Model as Bros.DataModel.Photo;
 	@Html.Partial("Partials/_Photo", post.ImageData)
-	<p>@post.Caption</p>
+	<p class="caption">@post.Caption</p>
 }
 else
 {
 	<p>something weird?</p>
 }
-</article>
+	<span class="time">@Model.DateCreated</span>
 @Html.Partial("Partials/_CommentFeed", Model)
+</article>

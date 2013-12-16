@@ -175,7 +175,7 @@ namespace Bros.Controllers
 			return View("Settings", thisUser);
 		}
 
-		public void RemoveBro(int targetBroId)
+		public ActionResult RemoveBro(int targetBroId)
 		{
 			using (ModelFirstContainer context = new ModelFirstContainer())
 			{
@@ -195,6 +195,8 @@ namespace Bros.Controllers
 
 				context.SaveChanges();
 			}
+
+            return new RedirectResult(Request.UrlReferrer.AbsolutePath);
 		}
 
 		[HttpPost]
