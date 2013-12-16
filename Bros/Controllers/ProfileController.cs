@@ -213,6 +213,7 @@ namespace Bros.Controllers
 
             ViewBag.SubTitle = "Who are you?";
             ViewBag.Title = "Edit Profile";
+			ViewBag.ContentClass = "condensed";
 
 			return View(thisUser.Profile);
 		}
