@@ -30,6 +30,7 @@ namespace Bros.Controllers
 			return View(users);
 		}
 
+        [HttpGet]
 		public ActionResult Match()
 		{
 			Profile prof = new Profile();
@@ -38,26 +39,17 @@ namespace Bros.Controllers
 				prof = context.Profiles.FirstOrDefault(u => u.User.Id == WebSecurity.CurrentUserId);
 			}
 
+            ViewBag.SubTitle = "What do you prefer in others?";
 			ViewBag.Title = "Match Bros";
 
 			return View(prof);
 		}
 
-
-		[HttpPost]
-		public ActionResult MatchBros(Profile profile)
-		{
-			int score = 0;
-			User thisUser = new User();
-			List<User> compatibleUsers = new List<User>();
-			Dictionary<User, double> scoreList = new Dictionary<User, double>();
-			using (var context = new ModelFirstContainer())
-			{
-				thisUser = context.Users.FirstOrDefault(u => u.Id == WebSecurity.CurrentUserId);
-				compatibleUsers = context.Users.Include("Profile").ToList();
-			}
-
-			Dictionary<string, string> preferences = new Dictionary<string, string>()
+        [HttpPost]
+        public ActionResult Match(Profile profile)
+        {
+            Dictionary<User, double> scoreList = new Dictionary<User, double>();
+            Dictionary<string, string> preferences = new Dictionary<string, string>()
             {
                     {"Athleticism", profile.Athleticism},
                      {"Pets", profile.Pets},
@@ -73,13 +65,14 @@ namespace Bros.Controllers
 
             };
 
-			Matcher match = new Matcher();
-			scoreList = match.BaseScoreCompatiblity(preferences);
+            Matcher match = new Matcher();
+            scoreList = match.BaseScoreCompatiblity(preferences);
 
-			IOrderedEnumerable<KeyValuePair<User, double>> sortedScoreList = from entry in scoreList orderby entry.Value descending select entry;
-
-			return View("SearchResults", sortedScoreList);
-		}
+            ViewBag.Title = "Search Results";
+            IOrderedEnumerable<KeyValuePair<User, double>> sortedScoreList = from entry in scoreList where entry.Value > 10 orderby entry.Value descending select entry;
+            
+            return View("_SearchResults", sortedScoreList);
+        }
 
 
 		public List<User> ByPreferences()

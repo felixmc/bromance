@@ -1,26 +1,12 @@
 ﻿@using Bros.DataModel
 
 @model Profile
-@{
-    Layout = null;
-    ViewBag.Title = "Sign-Up Here!";
-}
-        <h2>Preferences</h2>
-        @Html.ValidationSummary()
-    @using (Html.BeginForm("EditProfileAttributes","Profile", FormMethod.Post))
-    {       
-        
 
-       @Html.Partial("~/Views/Shared/_AttributeForm.cshtml", Model);
+<p class="info">@ViewBag.Message</p>
+        @Html.ValidationSummary()
+    @using (Html.BeginForm())
+    {             
+      @Html.Partial("Partials/_AttributeForm", Model);
         <input type="submit" value="Save Changes" />
         
     }
-
-
-
-@*@Html.HiddenFor(x => x.Id);
-        @Html.HiddenFor(x => x.FirstName);
-        @Html.HiddenFor(x => x.LastName);     
-        @Html.HiddenFor(x => x.ProfilePhoto);
-        @Html.HiddenFor(x => x.ZipCode)
-        @Html.HiddenFor(x => x.BirthDate)*@

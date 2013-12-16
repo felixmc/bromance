@@ -1,0 +1,22 @@
+﻿@model Bros.DataModel.Photo
+
+<h2>AddPhoto</h2>
+
+ @using (Html.BeginForm("AddPhoto", "Content", FormMethod.Post, new { enctype = "multipart/form-data" })){
+    @Html.ValidationSummary(true)
+        @Html.Hidden("AlbumId", (int)ViewBag.AlbumId)
+         @Html.Hidden("id", (int)ViewBag.UserId)
+        <p>@Html.TextBox("img", null,new { type = "file", accept="image/jpg"})</p>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Caption)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Caption)
+            @Html.ValidationMessageFor(model => model.Caption)
+        </div>
+
+        <p>
+            <input type="submit" value="Upload Photo" />
+        </p>
+}
+

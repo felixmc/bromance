@@ -204,74 +204,12 @@ namespace Bros.Controllers
 		//}
 
 		[HttpGet]
-		public ActionResult ChangeProfilePhoto()
-		{
-			User thisUser = new User();
-			using (var context = new ModelFirstContainer())
-			{
-				thisUser = context.Users.Include("Profile.ProfilePhoto").FirstOrDefault(u => u.Id == WebSecurity.CurrentUserId);
-			}
-			return View(thisUser);
-		}
-
-		[HttpPost]
-		public ActionResult ChangeProfilePhoto(HttpPostedFileBase img)
-		{
-
-			User thisUser = new User();
-			using (var context = new ModelFirstContainer())
-			{
-				thisUser = context.Users.Include("Profile.ProfilePhoto").FirstOrDefault(u => u.Id == WebSecurity.CurrentUserId);
-				Album album = thisUser.Albums.FirstOrDefault(a => a.Title == "Profile Pictures");
-				if (album == null)
-				{
-					album = new Album()
-					{
-						Title = "Profile Pictures",
-						DateCreated = DateTime.Now,
-						Owner = thisUser,
-						IsDeleted = false
-					};
-				}
-
-				byte[] data = null;
-				if (img != null && img.ContentLength > 0)
-				{
-					using (MemoryStream target = new MemoryStream())
-					{
-						img.InputStream.CopyTo(target);
-						data = target.ToArray();
-
-					}
-				}
-				else
-				{
-					throw new Exception("derpp");
-				}
-
-				Photo photo = new Photo()
-				{
-					ImageData = data,
-					DateCreated = DateTime.Now,
-					IsDeleted = false,
-					IsFlagged = false,
-					Album = album,
-					UserId = thisUser.Id,
-					Caption = "",
-					DateUpdated = DateTime.Now
-
-				};
-
-				album.Photos.Add(photo);
-				thisUser.Profile.ProfilePhoto = photo;
-				context.SaveChanges();
-			}
-			return View("Feed");
-		}
-
-		[HttpGet]
 		public ActionResult Edit()
 		{
+
+            bool isFirstTime = Boolean.Parse(Request["firstTime"]?? "false");
+
+            if (isFirstTime) ViewBag.Message = "Please fill out your profile.";
 			User thisUser = new User();
 			using (var context = new ModelFirstContainer())
 			{
@@ -279,18 +217,21 @@ namespace Bros.Controllers
 				thisUser = context.Users.Include("Profile").FirstOrDefault(u => u.Id == userId);
 			}
 
-			return View("ProfileAttribute", thisUser.Profile);
+            ViewBag.SubTitle = "Who are you?";
+            ViewBag.Title = "Edit Profile";
+
+			return View(thisUser.Profile);
 		}
 
 		[HttpPost]
-		public ActionResult EditAttributes(Profile prof)
+		public ActionResult Edit(Profile prof)
 		{
 			int id = WebSecurity.CurrentUserId;
-
+            User user = new User();
 			if (ModelState.IsValid)
 				using (ModelFirstContainer context = new ModelFirstContainer())
 				{
-					User user = context.Users.FirstOrDefault(u => u.Id == WebSecurity.CurrentUserId);
+					user = context.Users.Include("Profile").FirstOrDefault(u => u.Id == WebSecurity.CurrentUserId);
 					user.Profile.Athleticism = prof.Athleticism;
 					user.Profile.Children = prof.Children;
 					user.Profile.Drinks = prof.Drinks;
@@ -307,7 +248,10 @@ namespace Bros.Controllers
 					context.SaveChanges();
 				}
 
-			return new RedirectResult(Request.UrlReferrer.AbsolutePath);
+            ViewBag.SubTitle = "Who are you?";
+            ViewBag.Message = "Changes have been saved!";
+
+			return View(user.Profile );
 		}
 
 		public ActionResult Settings(int id)

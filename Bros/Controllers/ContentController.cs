@@ -77,6 +77,75 @@ namespace Bros.Controllers
 				return Redirect(Request.UrlReferrer.AbsolutePath);
 		}
 
+        [HttpGet]
+        public ActionResult ChangeProfilePhoto()
+        {
+            User thisUser = new User();
+            using (var context = new ModelFirstContainer())
+            {
+                thisUser = context.Users.Include("Profile.ProfilePhoto").FirstOrDefault(u => u.Id == WebSecurity.CurrentUserId);
+            }
+            return View(thisUser);
+        }
+
+        [HttpPost]
+        public ActionResult ChangeProfilePhoto(HttpPostedFileBase img)
+        {
+
+            User thisUser = new User();
+            using (var context = new ModelFirstContainer())
+            {
+                thisUser = context.Users.Include("Profile.ProfilePhoto").FirstOrDefault(u => u.Id == WebSecurity.CurrentUserId);
+                Album album = thisUser.Albums.FirstOrDefault(a => a.Title == "Profile Pictures");
+                if (album == null)
+                {
+                    album = new Album()
+                    {
+                        Title = "Profile Pictures",
+                        DateCreated = DateTime.Now,
+                        Owner = thisUser,
+                        IsDeleted = false
+                    };
+                }
+
+                byte[] data = null;
+                if (img != null && img.ContentLength > 0)
+                {
+                    using (MemoryStream target = new MemoryStream())
+                    {
+                        img.InputStream.CopyTo(target);
+                        data = target.ToArray();
+
+                    }
+                }
+                else
+                {
+                    throw new Exception("derpp");
+                }
+
+                Photo photo = new Photo()
+                {
+                    ImageData = data,
+                    DateCreated = DateTime.Now,
+                    IsDeleted = false,
+                    IsFlagged = false,
+                    Album = album,
+                    UserId = thisUser.Id,
+                    Caption = "",
+                    DateUpdated = DateTime.Now
+
+                };
+
+                album.Photos.Add(photo);
+                thisUser.Profile.ProfilePhoto = photo;
+                thisUser.Profile.ProfilePhoto.Caption = (string)Request["caption"];
+                context.SaveChanges();
+
+                ViewBag.Message = "Profile Photo was updated successfully!";
+            }
+            return View(thisUser);
+        }
+
 		public ActionResult ManageAlbums()
 		{
 			List<Album> albumList = new List<Album>();
@@ -86,6 +155,9 @@ namespace Bros.Controllers
 				User user = context.Users.Include("Albums.Photos").FirstOrDefault(u => u.Id == id);
 				albumList = user.Albums.ToList();
 			}
+
+            ViewBag.Title = "Manage Albums";
+            ViewBag.SubTitle = "Manage Albums";
 			return View(albumList);
 		}
 
@@ -97,6 +169,8 @@ namespace Bros.Controllers
 				album = context.Albums.Include("Photos.Comments").FirstOrDefault(a => a.Id == id);
 				ViewBag.AlbumId = album.Id;
 			}
+
+            @ViewBag.Title = "Photo Gallery";
 			return View(album.Photos.ToList());
 		}
 
@@ -110,6 +184,8 @@ namespace Bros.Controllers
 				int id = album.Owner.Id;
 				ViewBag.UserId = id;
 			}
+
+            ViewBag.Title = "Upload Photo";
 			return View();
 		}
 
@@ -148,7 +224,7 @@ namespace Bros.Controllers
 				context.Posts.Add(photo2);
 				context.SaveChanges();
 			}
-			return RedirectToAction("PhotoGallery", "Profile", new { id = photo.AlbumId });
+			return RedirectToAction("PhotoGallery", "Content", new { id = photo.AlbumId });
 		}
 
 		public ActionResult RemovePhoto(int id, int albumId)
@@ -167,13 +243,13 @@ namespace Bros.Controllers
 				context.SaveChanges();
 			}
 
-			return RedirectToAction("PhotoGallery", "Profile", albumId);
+			return RedirectToAction("PhotoGallery", "Content", albumId);
 		}
 
 		[HttpGet]
 		public ActionResult CreateAlbum()
 		{
-
+            @ViewBag.Title = "Create album";
 			return View();
 		}
 
@@ -208,7 +284,7 @@ namespace Bros.Controllers
 					return View();
 				}
 			}
-			return RedirectToAction("ManageAlbums", "Profile");
+			return RedirectToAction("ManageAlbums", "Content");
 		}
 
 		public ActionResult DeleteAlbum(int id)
@@ -240,7 +316,7 @@ namespace Bros.Controllers
 				context.Albums.Remove(album);
 				context.SaveChanges();
 			}
-			return RedirectToAction("ManageAlbums", "Profile");
+			return RedirectToAction("ManageAlbums", "Content");
 		}
 
     }

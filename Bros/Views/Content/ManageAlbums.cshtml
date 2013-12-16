@@ -1,0 +1,17 @@
+﻿@model List<Bros.DataModel.Album>
+
+
+
+
+    <h2 class="title">@ViewBag.SubTitle</h2>
+    @Html.ActionLink("Create New Album", "CreateAlbum", "Content")
+    <p>Total albums: @Model.Count</p>
+    
+    @foreach(Bros.DataModel.Album single in Model){
+        
+        <p>
+        @Html.ActionLink(single.Title, "PhotoGallery", "Content", new { id = single.Id }, false)
+        @Html.ActionLink("Remove album", "DeleteAlbum", "Content", new { id=single.Id}, false)
+        </p>
+        
+    }

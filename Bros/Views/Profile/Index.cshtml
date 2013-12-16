@@ -5,5 +5,5 @@
     Layout = "~/Views/Shared/Layouts/ProfileLayout.cshtml";
 }
 
-<h1>Welcome, @Model.Profile.FirstName!</h1>
+<h1>@Model.Profile.FirstName</h1>
 @Html.Partial("Partials/_ProfilePhoto", Model.Profile)

@@ -1,0 +1,12 @@
+﻿@model Bros.DataModel.Profile
+
+
+<h2>@ViewBag.SubTitle</h2>
+
+     @Html.ValidationSummary()
+    @using (Html.BeginForm())
+    {             
+      @Html.Partial("Partials/_AttributeForm", Model);
+        <input type="submit" value="Find Bros" />
+        
+    }

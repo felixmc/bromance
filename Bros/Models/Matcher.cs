@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using WebMatrix.WebData;
 
 namespace Bros.Models
 {
@@ -17,19 +18,21 @@ namespace Bros.Models
         public Dictionary<User,double> BaseScoreCompatiblity(Dictionary<string, string> lookFor)
         {
             double score = 0;
-            List<User> userList = new List<User>();
+            User thisUser = new User();
+            List<User> compatibleUsers = new List<User>();
             List<string> keys = new List<string>();
             foreach(KeyValuePair<string, string> x in lookFor){
                 keys.Add(x.Key);
             }
-            Dictionary<User, double> scoreList = new Dictionary<User, double>();
-           
+
             using (var context = new ModelFirstContainer())
             {
-                userList = context.Users.Include("Profile").ToList();
+                thisUser = context.Users.FirstOrDefault(u => u.Id == WebSecurity.CurrentUserId);
+                compatibleUsers = context.Users.Include("Profile.ProfilePhoto").Where(u => u.Id != thisUser.Id).ToList();
             }
+            Dictionary<User, double> scoreList = new Dictionary<User, double>();
 
-            foreach(User user in userList){
+            foreach(User user in compatibleUsers){
                 score = 0; Dictionary<string, string> profileList = new Dictionary<string, string>()
                 {
                    {"Athleticism",user.Profile.Athleticism},

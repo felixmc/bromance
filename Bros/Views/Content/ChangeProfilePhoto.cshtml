@@ -1,20 +1,19 @@
 ﻿
 @model Bros.DataModel.User
 @{
-    Layout = "~/Views/Layouts/_ProfileLayout.cshtml";
    // COURTNEY NEEDS TO ADD CAPTION HERE FOR PROFILE PICTURE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 }
-     
+<p class="info">@ViewBag.Message</p>
 <h1>Set Profile Picture here: (Only jpgs)</h1>
-
-<article>Here is your profile picture: <p><span>@Html.Partial("~/Views/Shared/_ProfilePhoto.cshtml", Model.Profile)</span></p></article>
+<article>Here is your profile picture: <p><span>@Html.Partial("Partials/_ProfilePhoto", Model.Profile)</span></p></article>
 
 <article>
     @Html.ValidationSummary()
-    @using (Html.BeginForm("ChangeProfilePhoto", "Profile", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    @using (Html.BeginForm("ChangeProfilePhoto", "Content", FormMethod.Post, new { enctype = "multipart/form-data" }))
     {
         
         <p>@Html.TextBox("img", null,new { type = "file", accept="image/jpg"})</p>
+        <p>@Html.TextBox("caption", null, new {placeholder ="Type caption here..." })</p>
         <input type="submit" value="Save" class="my-button" />
     }
 

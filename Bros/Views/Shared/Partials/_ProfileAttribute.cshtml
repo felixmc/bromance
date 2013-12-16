@@ -1,0 +1,12 @@
+﻿@model  Bros.DataModel.Profile
+
+<h2 class="title">@ViewBag.SubTitle</h2>
+
+<p>@ViewBag.Message</p>
+  @Html.ValidationSummary()
+    @using (Html.BeginForm())
+    {
+        @Html.Partial("Partials/_AttributeForm", Model)
+        <input type="submit" value="Save Changes" />
+        
+    }
