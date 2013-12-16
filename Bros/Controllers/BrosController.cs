@@ -46,8 +46,10 @@ namespace Bros.Controllers
 		}
 
         [HttpPost]
-        public ActionResult Match(Profile profile)
+        public ActionResult Match(Profile profile, bool searchInArea)
         {
+
+            bool searchArea = searchInArea;
             Dictionary<User, double> scoreList = new Dictionary<User, double>();
             Dictionary<string, string> preferences = new Dictionary<string, string>()
             {
@@ -66,7 +68,17 @@ namespace Bros.Controllers
             };
 
             Matcher match = new Matcher();
-            scoreList = match.BaseScoreCompatiblity(preferences);
+            if (searchInArea)
+            {
+                scoreList = match.BaseScoreCompatiblity(preferences, true);
+
+                if (scoreList.Count == 0) ViewBag.Message = "0 No one lives near you";
+            }
+            else
+            {
+                scoreList = match.BaseScoreCompatiblity(preferences, false);
+                if (scoreList.Count == 0) ViewBag.Message = "No one would like you";
+            }
 
             ViewBag.Title = "Search Results";
             IOrderedEnumerable<KeyValuePair<User, double>> sortedScoreList = from entry in scoreList where entry.Value > 10 orderby entry.Value descending select entry;

@@ -4,11 +4,10 @@
 
 #friend-list {
 	position: fixed;
-	right: 30px;
+	right: -10px;
 	top: 150px;
 	width: 200px;
 	min-height: 400px;
-	background: #eee;
 	border: 1px solid #999;
 	padding-left: 0;
 	cursor: pointer;
@@ -22,7 +21,7 @@
 }
 
 .offline {
-	background: #ccc;
+
 }
 
 .online {
@@ -39,11 +38,11 @@
 	margin-top: 2em;
 	background: #fff;
 	position: absolute;
-	z-index: 1;
+	z-index: 3;
 }
 
 	.chat-window.in-focus {
-		z-index: 3;
+		z-index: 5;
 	}
 
 .msgWrap {
@@ -75,8 +74,11 @@
 	outline: 0;
 }
 
+    /*#4B5554 //Grayish
+    #A4B799 //Mintish*/
+
 .chat-window .header {
-	background: #666;
+	background: #A4B799;
 	color: #fff;
 	font-weight: bold;
 	margin: 0;
@@ -90,7 +92,7 @@
 	}
 
 .chat-window.in-focus .header {
-	background: #333;
+	background: #78CCA2;
 }
 
 .chat-window .me {
@@ -129,9 +131,9 @@
 
 @-webkit-keyframes flash {
     from {
-        background: #666;
+        background: #78CCA2;
     }
     to {
-        background: #222;
+        background: #A4B799;
     }
 }

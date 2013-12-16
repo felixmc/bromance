@@ -5,7 +5,7 @@
     Layout = "~/Views/Shared/Layouts/ProfileLayout.cshtml";
 }
 
-<h1>@Model.Profile.FirstName</h1>
+<h1 class="title">@Model.Profile.FirstName</h1>
 @Html.Partial("Partials/_ProfilePhoto", Model.Profile)
 <p>@Html.ActionLink("Message " + @Model.Profile.FirstName, "Conversation", "Messaging", new { id = Model.Id }, new { @class="button"})</p>
 <p>@Html.ActionLink("View Albums", "ViewAlbums", "Content", new { id = Model.Id }, new { @class="button"})</p>

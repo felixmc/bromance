@@ -31,6 +31,11 @@
 }
 
 @section Scripts {
+	<script src="/Content/Scripts/jquery.signalR-2.0.0.min.js"></script>
+	<script src="/Content/Scripts/emotify.js"></script>
+    <script src="/signalr/hubs"></script>
+	<script src="/Content/Scripts/chat.js"></script>
+	<link href="~/Content/Styles/chat.css" type="text/css" rel="stylesheet"/>
 	@RenderSection("Scripts", false)
 }
 
@@ -43,6 +48,27 @@
 			</ul>
 		</nav>
 	}
+}
+
+@section PostContent {
+	<ul id="friend-list" class="widget">
+		<h2 class="title">Friends</h2>
+		@foreach(Bros.DataModel.User friend in ViewBag.Friends)
+		{
+			<li data-user-id="@friend.Id" class="offline">@friend.Profile.FirstName @friend.Profile.LastName</li>
+		}
+		<li id="me" style="display:none;" data-user-id="@ViewBag.CurrentUserId" class="offline">@ViewBag.Name</li>
+	</ul>
+	<form id="templateForm" class="chat-window">
+		<div class="close"></div>
+		<p class="header"><span class="receiverName"></span></p>
+        <div class="msgWrap">
+            <ul class="messages"></ul>
+        </div>
+		<div class="messageBoxWrapper">
+			<input type="text" class="messageBox" placeholder="enter message" />
+		</div>
+    </form>
 }
 
 @RenderBody()

@@ -245,7 +245,7 @@ namespace Bros.Controllers
             ViewBag.SubTitle = "Who are you?";
             ViewBag.Message = "Changes have been saved!";
 
-			return View(user.Profile );
+			return new RedirectResult("/Profile");
 		}
 
 		public ActionResult Settings(int id)
